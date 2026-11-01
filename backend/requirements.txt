@@ -1,0 +1,22 @@
+# DHAROHAR AI - Backend Dependencies
+# Milestone 1: Core API & Health Check
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+httpx>=0.28.0
+pytest>=8.3.0
+
+# Milestone 2: Document Ingestion, PDF Processing & Storage
+pymupdf>=1.25.0
+python-multipart>=0.0.20
+
+# Milestone 3: Searchable Knowledge Archive & Semantic Embeddings
+sentence-transformers>=3.3.0
+torch>=2.2.0
+numpy>=1.26.0
+scikit-learn>=1.4.0
+
+# Milestone 4: OCR & Scanned Document Processing
+pytesseract>=0.3.13
+Pillow>=10.0.0
