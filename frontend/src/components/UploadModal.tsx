@@ -6,12 +6,11 @@ import {
   Upload,
   FileText,
   AlertCircle,
-  ShieldCheck,
   CheckCircle2,
   Loader2,
-  Eye,
+  Sparkles,
 } from 'lucide-react';
-import { DocumentItem, uploadDocument } from '@/lib/api';
+import { DocumentItem, uploadDocument, uploadUnifiedAsset } from '@/lib/api';
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -24,7 +23,7 @@ export default function UploadModal({
   isOpen,
   onClose,
   onUploadSuccess,
-  onViewDocument,
+  onViewDocument: _onViewDocument,
 }: UploadModalProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -32,18 +31,22 @@ export default function UploadModal({
   const [error, setError] = useState<string | null>(null);
   const [uploadedDoc, setUploadedDoc] = useState<DocumentItem | null>(null);
 
+  // Known metadata context
+  const [title, setTitle] = useState<string>('');
+  const [region, setRegion] = useState<string>('Gujarat');
+  const [heritageType, setHeritageType] = useState<string>('Stepwell / Baoli');
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Reset modal state when opened/closed
   const handleClose = useCallback(() => {
     if (isUploading) return;
     setSelectedFile(null);
     setError(null);
     setUploadedDoc(null);
+    setTitle('');
     onClose();
   }, [isUploading, onClose]);
 
-  // Handle ESC key to dismiss modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && !isUploading) {
@@ -60,8 +63,10 @@ export default function UploadModal({
     setError(null);
     setUploadedDoc(null);
 
-    if (!file.name.toLowerCase().endsWith('.pdf')) {
-      setError(`Unsupported format: '${file.name}'. Only PDF (.pdf) files are supported.`);
+    const allowed = ['.pdf', '.jpg', '.jpeg', '.png', '.webp', '.txt'];
+    const ext = '.' + file.name.split('.').pop()?.toLowerCase();
+    if (!allowed.includes(ext)) {
+      setError(`Unsupported format: '${file.name}'. Supported: PDF, JPG, PNG, WEBP, TXT.`);
       return;
     }
 
@@ -78,6 +83,10 @@ export default function UploadModal({
     }
 
     setSelectedFile(file);
+    if (!title) {
+      const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' ');
+      setTitle(cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,9 +120,36 @@ export default function UploadModal({
     setError(null);
 
     try {
-      const doc = await uploadDocument(selectedFile);
-      setUploadedDoc(doc);
-      onUploadSuccess(doc);
+      if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
+        const doc = await uploadDocument(selectedFile);
+        setUploadedDoc(doc);
+        onUploadSuccess(doc);
+      } else {
+        // Upload images or TXT notes to unified records pipeline
+        const res = await uploadUnifiedAsset(selectedFile, {
+          title,
+          region,
+          heritage_type: heritageType,
+          source_attribution: 'IITGN Explorer Fellowship Fieldwork',
+        });
+
+        const docAdapter: DocumentItem = {
+          id: res.record.id,
+          original_filename: res.record.original_filename || selectedFile.name,
+          file_size: res.record.file_size || selectedFile.size,
+          content_type: selectedFile.type || 'text/plain',
+          upload_timestamp: res.record.created_at,
+          processing_status: 'completed',
+          extraction_status: 'extracted',
+          page_count: 1,
+          storage_reference: res.record.storage_path || `${res.record.id}`,
+          created_at: res.record.created_at,
+          updated_at: res.record.updated_at,
+        };
+
+        setUploadedDoc(docAdapter);
+        onUploadSuccess(docAdapter);
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'An error occurred during upload';
       setError(msg);
@@ -127,7 +163,7 @@ export default function UploadModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div
-        className="w-full max-w-lg rounded-2xl border border-stone-200 dark:border-stone-800 bg-[#faf8f5] dark:bg-stone-900 shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150"
+        className="w-full max-w-lg rounded-2xl border border-stone-200 dark:border-stone-800 bg-[#faf8f5] dark:bg-stone-900 shadow-2xl p-6 space-y-4 animate-in zoom-in-95 duration-150"
         role="dialog"
         aria-modal="true"
         aria-labelledby="upload-modal-title"
@@ -143,10 +179,10 @@ export default function UploadModal({
                 id="upload-modal-title"
                 className="text-base font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage"
               >
-                Ingest Heritage PDF Document
+                Ingest Cultural Heritage Asset
               </h2>
               <p className="text-xs text-stone-500 dark:text-stone-400">
-                Milestone 2 Ingestion &amp; PyMuPDF Text Extraction
+                Unified Ingestion: PDFs, Architectural Photos &amp; Field Notes (SRS 7.2)
               </p>
             </div>
           </div>
@@ -168,10 +204,10 @@ export default function UploadModal({
             <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 space-y-2">
               <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-semibold text-sm">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-                <span>Document Ingestion Successful!</span>
+                <span>Ingestion &amp; AI Analysis Successful!</span>
               </div>
               <p className="text-xs text-emerald-700 dark:text-emerald-300/90 leading-relaxed">
-                The document has been stored and text extracted page-by-page into the SQLite archive database.
+                The asset has been indexed and queued in the curator review workspace.
               </p>
             </div>
 
@@ -188,129 +224,115 @@ export default function UploadModal({
                   {uploadedDoc.id}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                <span className="text-stone-400">Pages Processed:</span>
-                <span className="font-semibold text-stone-800 dark:text-stone-200">
-                  {uploadedDoc.page_count} {uploadedDoc.page_count === 1 ? 'page' : 'pages'}
-                </span>
-              </div>
-              <div className="flex justify-between py-1">
-                <span className="text-stone-400">Extraction Status:</span>
-                <span
-                  className={`font-semibold capitalize ${
-                    uploadedDoc.extraction_status === 'extracted'
-                      ? 'text-emerald-600 dark:text-emerald-400'
-                      : 'text-amber-600 dark:text-amber-400'
-                  }`}
-                >
-                  {uploadedDoc.extraction_status === 'extracted'
-                    ? 'Extracted (PyMuPDF)'
-                    : 'Requires OCR (Sparse / Scanned)'}
-                </span>
-              </div>
             </div>
 
             <div className="flex justify-end gap-2 pt-2">
               <button
                 type="button"
-                onClick={() => {
-                  setUploadedDoc(null);
-                  setSelectedFile(null);
-                }}
-                className="px-4 py-2 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-medium transition-colors"
+                onClick={handleClose}
+                className="px-4 py-2 rounded-lg bg-stone-900 dark:bg-stone-100 hover:bg-amber-800 text-stone-50 dark:text-stone-900 font-medium text-xs transition-colors"
               >
-                Upload Another
+                Done
               </button>
-              {onViewDocument && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    handleClose();
-                    onViewDocument(uploadedDoc);
-                  }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-800 hover:bg-amber-900 text-white text-xs font-semibold shadow-sm transition-all"
-                >
-                  <Eye className="w-4 h-4" />
-                  <span>Inspect Extracted Text</span>
-                </button>
-              )}
             </div>
           </div>
         ) : (
           /* Upload Form */
           <div className="space-y-4">
-            {/* Hidden native input */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf,application/pdf"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-
-            {/* Dropzone */}
+            {/* Drag & Drop Zone */}
             <div
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+              className={`p-6 rounded-xl border-2 border-dashed text-center cursor-pointer transition-all ${
                 isDragging
-                  ? 'border-amber-600 bg-amber-50/70 dark:bg-amber-950/40'
+                  ? 'border-amber-600 bg-amber-50 dark:bg-amber-950/30'
                   : selectedFile
-                  ? 'border-emerald-500 bg-emerald-50/30 dark:bg-emerald-950/20'
-                  : 'border-stone-300 dark:border-stone-700 bg-stone-100/50 dark:bg-stone-950/40 hover:border-amber-700'
+                  ? 'border-emerald-500 bg-emerald-50/40 dark:bg-emerald-950/20'
+                  : 'border-stone-300 dark:border-stone-700 hover:border-amber-500 bg-white dark:bg-stone-950/40'
               }`}
             >
-              <div className="w-12 h-12 mx-auto rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center mb-3">
-                <FileText className="w-6 h-6" />
-              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,.webp,.txt"
+                onChange={handleFileChange}
+                className="hidden"
+              />
 
-              {selectedFile ? (
-                <div className="space-y-1">
-                  <p className="text-xs font-semibold text-stone-900 dark:text-stone-100 truncate max-w-sm mx-auto">
-                    {selectedFile.name}
-                  </p>
-                  <p className="text-[11px] text-stone-500 font-mono">
-                    {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for ingestion
-                  </p>
-                  <p className="text-[10px] text-amber-700 dark:text-amber-400 pt-1">
-                    Click or drop to replace file
-                  </p>
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center">
+                  <FileText className="w-6 h-6" />
                 </div>
-              ) : (
-                <div className="space-y-1">
-                  <p className="text-xs font-semibold text-stone-800 dark:text-stone-200">
-                    Click to browse or drop historical PDF here
-                  </p>
-                  <p className="text-[11px] text-stone-500 dark:text-stone-400">
-                    Maximum upload size: 15 MB • PDF files with signature validation
-                  </p>
-                </div>
-              )}
+
+                {selectedFile ? (
+                  <div>
+                    <div className="text-xs font-semibold text-stone-900 dark:text-stone-100">
+                      {selectedFile.name}
+                    </div>
+                    <div className="text-[11px] text-stone-500">
+                      {(selectedFile.size / 1024).toFixed(1)} KB
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="text-xs font-semibold text-stone-800 dark:text-stone-200">
+                      Drag &amp; drop field document or click to browse
+                    </div>
+                    <div className="text-[11px] text-stone-400 mt-0.5">
+                      Accepts PDF, JPG, PNG, WEBP, and TXT field notes (up to 15 MB)
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* Error Message */}
+            {/* Context Fields */}
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label className="block text-stone-600 dark:text-stone-400 mb-1">Region</label>
+                <select
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value)}
+                  className="w-full p-2 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-200"
+                >
+                  <option value="Gujarat">Gujarat (IITGN Local)</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Karnataka">Karnataka</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-stone-600 dark:text-stone-400 mb-1">Typology</label>
+                <select
+                  value={heritageType}
+                  onChange={(e) => setHeritageType(e.target.value)}
+                  className="w-full p-2 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-800 dark:text-stone-200"
+                >
+                  <option value="Stepwell / Baoli">Stepwell / Baoli</option>
+                  <option value="Temple">Temple / Kund</option>
+                  <option value="Fort">Hill Fort</option>
+                  <option value="Monolithic Rock-Cut Temple">Rock-Cut Cave</option>
+                </select>
+              </div>
+            </div>
+
             {error && (
-              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-300 flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-                <span className="leading-relaxed">{error}</span>
+              <div className="p-3 rounded-lg bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-xs text-rose-700 dark:text-rose-300 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
+                <span>{error}</span>
               </div>
             )}
 
-            {/* Evidence Policy Reminder */}
-            <div className="flex items-center gap-2 text-stone-600 dark:text-stone-400 text-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-              <span>PyMuPDF extracts text page-by-page. Scanned plates are flagged for OCR.</span>
-            </div>
-
             {/* Actions */}
-            <div className="pt-3 border-t border-stone-200 dark:border-stone-800 flex justify-end gap-2">
+            <div className="flex justify-end gap-2 pt-2 border-t border-stone-200 dark:border-stone-800">
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={isUploading}
-                className="px-4 py-2 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-200/50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-medium transition-colors disabled:opacity-50"
+                className="px-3.5 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 text-stone-600 dark:text-stone-300 text-xs hover:bg-stone-100"
               >
                 Cancel
               </button>
@@ -319,17 +341,17 @@ export default function UploadModal({
                 type="button"
                 onClick={handleSubmitUpload}
                 disabled={!selectedFile || isUploading}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-800 hover:bg-amber-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-1.5 rounded-lg bg-amber-800 hover:bg-amber-900 text-white font-medium text-xs flex items-center gap-1.5 shadow-xs disabled:opacity-50"
               >
                 {isUploading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Extracting Text...</span>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    <span>Extracting &amp; Indexing...</span>
                   </>
                 ) : (
                   <>
-                    <Upload className="w-4 h-4" />
-                    <span>Ingest &amp; Extract PDF</span>
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>Ingest &amp; Extract</span>
                   </>
                 )}
               </button>

@@ -8,6 +8,7 @@ import {
   ExternalLink,
   Server,
   Menu,
+  UserCheck,
 } from 'lucide-react';
 import { HealthCheckState } from '@/lib/api';
 
@@ -16,6 +17,8 @@ interface HeaderProps {
   onRefreshHealth: () => void;
   onOpenUpload: () => void;
   onToggleSidebar?: () => void;
+  currentRole?: string;
+  onSelectRole?: (role: string) => void;
 }
 
 export default function Header({
@@ -23,8 +26,17 @@ export default function Header({
   onRefreshHealth,
   onOpenUpload,
   onToggleSidebar,
+  currentRole = 'archivist',
+  onSelectRole,
 }: HeaderProps) {
   const [showHealthMenu, setShowHealthMenu] = React.useState(false);
+
+  const roles = [
+    { id: 'visitor', label: 'Visitor' },
+    { id: 'archivist', label: 'Archivist' },
+    { id: 'reviewer', label: 'Reviewer' },
+    { id: 'admin', label: 'Admin' },
+  ];
 
   return (
     <header className="sticky top-0 z-30 border-b border-stone-200/80 dark:border-stone-800 bg-[#faf8f5]/90 dark:bg-[#12100e]/90 backdrop-blur-md">
@@ -56,14 +68,33 @@ export default function Header({
                 </span>
               </div>
               <p className="hidden md:block text-[11px] text-stone-500 dark:text-stone-400">
-                Cultural &amp; Architectural Heritage Archive
+                IIT Gandhinagar Explorer Fellowship Cultural Archive
               </p>
             </div>
           </div>
         </div>
 
-        {/* Right: Health Indicator + Upload Action */}
+        {/* Right: Role Switcher + Health Telemetry + Upload Action */}
         <div className="flex items-center gap-2 sm:gap-3">
+          {/* RBAC Role Switcher */}
+          {onSelectRole && (
+            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-xs text-stone-600 dark:text-stone-300 shadow-2xs">
+              <UserCheck className="w-3.5 h-3.5 text-amber-700" />
+              <span className="text-[10px] text-stone-400">Role:</span>
+              <select
+                value={currentRole}
+                onChange={(e) => onSelectRole(e.target.value)}
+                className="bg-transparent font-medium text-stone-800 dark:text-stone-200 focus:outline-hidden cursor-pointer"
+              >
+                {roles.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    {r.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {/* Health Status Indicator */}
           <div className="relative">
             <button
@@ -97,16 +128,16 @@ export default function Header({
                 />
               </span>
 
-              <span className="font-medium capitalize">
+              <span className="font-medium capitalize hidden sm:inline">
                 {healthState.status === 'connected'
                   ? 'Connected'
                   : healthState.status === 'connecting'
                   ? 'Connecting...'
-                  : 'Connection Failed'}
+                  : 'Failed'}
               </span>
 
               {healthState.status === 'connected' && healthState.latencyMs !== null && (
-                <span className="text-[10px] opacity-75 border-l border-emerald-300 dark:border-emerald-700 pl-1.5 hidden sm:inline">
+                <span className="text-[10px] opacity-75 border-l border-emerald-300 dark:border-emerald-700 pl-1.5 hidden md:inline">
                   {healthState.latencyMs}ms
                 </span>
               )}
@@ -143,12 +174,6 @@ export default function Header({
                     </span>
                   </div>
                   <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Endpoint:</span>
-                    <span className="font-mono text-stone-700 dark:text-stone-300 text-[11px]">
-                      GET /api/health
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-0.5">
                     <span className="text-stone-400">Status:</span>
                     <span
                       className={`font-semibold ${
@@ -163,32 +188,21 @@ export default function Header({
                     </span>
                   </div>
                   <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Version:</span>
-                    <span className="font-mono text-stone-700 dark:text-stone-300">
-                      {healthState.data?.version || '0.1.0'}
+                    <span className="text-stone-400">Semantic Search:</span>
+                    <span className="font-medium text-stone-800 dark:text-stone-200">
+                      {healthState.data?.services?.semantic_search || 'sentence_transformers_ready'}
                     </span>
                   </div>
                   <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">API Gateway:</span>
+                    <span className="text-stone-400">Geospatial Cartography:</span>
                     <span className="font-medium text-stone-800 dark:text-stone-200">
-                      {healthState.data?.services?.api || (healthState.status === 'connected' ? 'operational' : 'unreachable')}
-                    </span>
-                  </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Storage Service:</span>
-                    <span className="font-medium text-stone-800 dark:text-stone-200">
-                      {healthState.data?.services?.storage || (healthState.status === 'connected' ? 'initialized' : 'pending')}
+                      {healthState.data?.services?.geospatial_map || 'active'}
                     </span>
                   </div>
                   {healthState.lastChecked && (
                     <div className="flex justify-between py-0.5 pt-1 text-[10px] text-stone-400 border-t border-stone-100 dark:border-stone-800">
                       <span>Last Verified:</span>
                       <span>{new Date(healthState.lastChecked).toLocaleTimeString()}</span>
-                    </div>
-                  )}
-                  {healthState.error && (
-                    <div className="mt-2 p-2 rounded bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-[11px] leading-relaxed">
-                      <strong>Diagnostics:</strong> {healthState.error}
                     </div>
                   )}
                 </div>
@@ -200,12 +214,12 @@ export default function Header({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-[11px] text-amber-700 dark:text-amber-400 hover:underline"
                   >
-                    Swagger Docs <ExternalLink className="w-3 h-3" />
+                    Interactive Swagger Docs <ExternalLink className="w-3 h-3" />
                   </a>
                   <button
                     type="button"
                     onClick={() => setShowHealthMenu(false)}
-                    className="px-2 py-1 rounded bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 text-[11px]"
+                    className="px-2 py-1 rounded bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 text-[11px]"
                   >
                     Close
                   </button>
@@ -218,10 +232,10 @@ export default function Header({
           <button
             type="button"
             onClick={onOpenUpload}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-stone-900 dark:bg-stone-100 hover:bg-amber-800 dark:hover:bg-amber-400 text-stone-50 dark:text-stone-950 text-xs sm:text-sm font-medium transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1 active:scale-[0.98]"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-stone-900 dark:bg-stone-100 hover:bg-amber-800 dark:hover:bg-amber-400 text-stone-50 dark:text-stone-950 text-xs sm:text-sm font-medium transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 active:scale-[0.98]"
           >
             <Upload className="w-3.5 h-3.5" />
-            <span>Ingest Document</span>
+            <span>Ingest Asset</span>
           </button>
         </div>
       </div>

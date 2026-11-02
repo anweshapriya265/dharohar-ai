@@ -1,0 +1,60 @@
+# Python dependencies for Heritage Archive Intelligence Platform
+# Python: 3.11 recommended
+#
+# Install:
+#   python -m venv .venv
+#   # Windows: .venv\Scripts\activate
+#   # macOS/Linux: source .venv/bin/activate
+#   pip install -r requirements.txt
+#
+# Keep frontend dependencies in package.json.
+# For production, pin exact versions after a clean install and test run.
+
+# API and validation
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+pydantic>=2.8,<3.0
+pydantic-settings>=2.4,<3.0
+python-multipart>=0.0.9
+email-validator>=2.2,<3.0
+
+# Database and migrations
+sqlalchemy>=2.0,<3.0
+psycopg[binary]>=3.2,<4.0
+alembic>=1.13,<2.0
+
+# Authentication and security
+pwdlib[argon2]>=0.2,<1.0
+PyJWT>=2.9,<3.0
+slowapi>=0.1.9,<1.0
+
+# File handling and image processing
+Pillow>=10.4,<13.0
+opencv-python-headless>=4.10,<5.0
+pypdf>=5.0,<7.0
+python-magic-bin>=0.4.14; platform_system == "Windows"
+python-magic>=0.4.27; platform_system != "Windows"
+
+# OCR: install and evaluate on the target machine.
+# PaddleOCR may pull large ML dependencies; enable only if used by the MVP.
+paddleocr>=2.9,<4.0
+paddlepaddle>=2.6,<4.0
+
+# Optional semantic search / embeddings
+sentence-transformers>=3.0,<6.0
+pgvector>=0.3,<1.0
+
+# Background processing
+redis>=5.0,<7.0
+rq>=1.16,<3.0
+
+# HTTP, configuration and logging
+httpx>=0.27,<1.0
+python-dotenv>=1.0,<2.0
+structlog>=24.4,<26.0
+
+# Testing and quality
+pytest>=8.3,<9.0
+pytest-asyncio>=0.24,<2.0
+httpx>=0.27,<1.0
+ruff>=0.6,<1.0

@@ -82,11 +82,80 @@ def init_db(db_path: Path | None = None) -> None:
             CREATE INDEX IF NOT EXISTS idx_documents_timestamp ON documents(upload_timestamp DESC);
             CREATE INDEX IF NOT EXISTS idx_chunks_doc_id ON document_chunks(document_id);
             CREATE INDEX IF NOT EXISTS idx_chunks_page ON document_chunks(document_id, page_number);
+
+            -- SRS Heritage Archive Entities
+            CREATE TABLE IF NOT EXISTS heritage_records (
+                id TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                description TEXT NOT NULL,
+                heritage_type TEXT NOT NULL,
+                region TEXT NOT NULL,
+                language TEXT NOT NULL DEFAULT 'English',
+                period TEXT,
+                latitude REAL,
+                longitude REAL,
+                location_name TEXT,
+                location_source TEXT,
+                visibility TEXT NOT NULL DEFAULT 'public',
+                status TEXT NOT NULL DEFAULT 'approved',
+                created_by TEXT NOT NULL DEFAULT 'IITGN Explorer Fellow',
+                original_filename TEXT,
+                file_type TEXT,
+                file_size INTEGER DEFAULT 0,
+                storage_path TEXT,
+                thumbnail_url TEXT,
+                tags TEXT,
+                source_attribution TEXT,
+                created_at TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS ai_suggestions (
+                id TEXT PRIMARY KEY,
+                record_id TEXT NOT NULL,
+                field_name TEXT NOT NULL,
+                suggested_value TEXT NOT NULL,
+                confidence REAL NOT NULL,
+                model_name TEXT NOT NULL,
+                evidence TEXT,
+                review_status TEXT NOT NULL DEFAULT 'pending',
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (record_id) REFERENCES heritage_records (id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE IF NOT EXISTS review_events (
+                id TEXT PRIMARY KEY,
+                record_id TEXT NOT NULL,
+                reviewer_name TEXT NOT NULL,
+                reviewer_role TEXT NOT NULL,
+                action TEXT NOT NULL,
+                comment TEXT,
+                created_at TEXT NOT NULL,
+                FOREIGN KEY (record_id) REFERENCES heritage_records (id) ON DELETE CASCADE
+            );
+
+            CREATE TABLE IF NOT EXISTS audit_logs (
+                id TEXT PRIMARY KEY,
+                actor_name TEXT NOT NULL,
+                actor_role TEXT NOT NULL,
+                action TEXT NOT NULL,
+                entity_type TEXT NOT NULL,
+                entity_id TEXT NOT NULL,
+                details TEXT,
+                created_at TEXT NOT NULL
+            );
+
+            CREATE INDEX IF NOT EXISTS idx_records_status ON heritage_records(status);
+            CREATE INDEX IF NOT EXISTS idx_records_type ON heritage_records(heritage_type);
+            CREATE INDEX IF NOT EXISTS idx_records_region ON heritage_records(region);
+            CREATE INDEX IF NOT EXISTS idx_records_coords ON heritage_records(latitude, longitude);
+            CREATE INDEX IF NOT EXISTS idx_suggestions_record ON ai_suggestions(record_id);
+            CREATE INDEX IF NOT EXISTS idx_review_events_record ON review_events(record_id);
+            CREATE INDEX IF NOT EXISTS idx_audit_created ON audit_logs(created_at DESC);
             """
         )
 
         # Non-destructive migration for existing documents table:
-        # Check if indexing_status column exists in documents
         columns_cursor = conn.execute("PRAGMA table_info(documents)")
         existing_cols = {row["name"] for row in columns_cursor.fetchall()}
         if "indexing_status" not in existing_cols:

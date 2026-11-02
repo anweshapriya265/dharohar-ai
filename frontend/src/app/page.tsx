@@ -11,6 +11,11 @@ import SearchSection from '@/components/SearchSection';
 import RecentDocumentsSection from '@/components/RecentDocumentsSection';
 import UploadModal from '@/components/UploadModal';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
+import GeospatialMapSection from '@/components/GeospatialMapSection';
+import Monument3DViewer from '@/components/Monument3DViewer';
+import ReviewQueueSection from '@/components/ReviewQueueSection';
+import AdminDashboardSection from '@/components/AdminDashboardSection';
+import HeritageRecordsSection from '@/components/HeritageRecordsSection';
 import {
   fetchBackendHealth,
   fetchDocuments,
@@ -28,8 +33,9 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
-  // Navigation & UI state
+  // Navigation & Role state
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
+  const [currentRole, setCurrentRole] = useState<string>('archivist');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
   const [selectedViewerDoc, setSelectedViewerDoc] = useState<DocumentItem | null>(null);
@@ -85,7 +91,6 @@ export default function Home() {
     }
   }, []);
 
-  // Manual refresh that sets 'connecting' status upfront
   const handleManualRefresh = useCallback(async () => {
     setHealthState((prev) => ({
       ...prev,
@@ -95,7 +100,6 @@ export default function Home() {
     await checkHealth();
   }, [checkHealth]);
 
-  // Load documents from backend
   const loadDocuments = useCallback(async () => {
     try {
       const res = await fetchDocuments();
@@ -109,7 +113,6 @@ export default function Home() {
     }
   }, []);
 
-  // Search submission handler
   const handleSearchSubmit = useCallback(async (query: string) => {
     const trimmed = query.trim();
     if (!trimmed) return;
@@ -131,7 +134,6 @@ export default function Home() {
     }
   }, []);
 
-  // Clear search handler
   const handleClearSearch = useCallback(() => {
     setSearchQuery('');
     setSearchResults([]);
@@ -140,7 +142,6 @@ export default function Home() {
     setHasSearched(false);
   }, []);
 
-  // Source inspection handler: opens viewer directly to the cited page
   const handleInspectSource = useCallback(
     (documentId: string, pageNumber: number) => {
       const doc = documents.find((d) => d.id === documentId);
@@ -148,7 +149,6 @@ export default function Home() {
         setSelectedViewerDoc(doc);
         setSelectedViewerPage(pageNumber);
       } else {
-        // Fallback document item
         setSelectedViewerDoc({
           id: documentId,
           original_filename: documentId,
@@ -168,7 +168,6 @@ export default function Home() {
     [documents]
   );
 
-  // Initial data loading + periodic refresh every 30s
   useEffect(() => {
     let isMounted = true;
 
@@ -228,7 +227,6 @@ export default function Home() {
     };
   }, [checkHealth]);
 
-  // Keyboard shortcut '/' to focus search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
@@ -242,30 +240,36 @@ export default function Home() {
   }, []);
 
   const handleScrollToSearch = () => {
-    searchRef.current?.scrollIntoView({ behavior: 'smooth' });
-    const input = searchRef.current?.querySelector('input');
-    input?.focus();
+    if (currentTab !== 'dashboard') {
+      setCurrentTab('dashboard');
+    }
+    setTimeout(() => {
+      searchRef.current?.scrollIntoView({ behavior: 'smooth' });
+      const input = searchRef.current?.querySelector('input');
+      input?.focus();
+    }, 100);
   };
 
   const handleUploadSuccess = (newDoc: DocumentItem) => {
     setDocuments((prev) => [newDoc, ...prev]);
   };
 
-  // Metrics calculation
   const totalPagesCount = documents.reduce((acc, doc) => acc + (doc.page_count || 0), 0);
   const needsOcrCount = documents.filter((doc) => doc.extraction_status === 'needs_ocr').length;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#faf8f5] dark:bg-[#12100e] text-[#1c1917] dark:text-[#f5f0eb]">
-      {/* Top Navigation */}
+      {/* Top Header */}
       <Header
         healthState={healthState}
         onRefreshHealth={handleManualRefresh}
         onOpenUpload={() => setIsUploadOpen(true)}
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        currentRole={currentRole}
+        onSelectRole={setCurrentRole}
       />
 
-      {/* Main Container: Sidebar + Content */}
+      {/* Main Container: Sidebar + Active Tab Content */}
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
         <Sidebar
           currentTab={currentTab}
@@ -273,12 +277,42 @@ export default function Home() {
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
           backendConnected={healthState.status === 'connected'}
+          currentRole={currentRole}
         />
 
-        {/* Content Area */}
+        {/* Dynamic Content Views */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-x-hidden">
-          {/* Diagnostics View */}
-          {currentTab === 'diagnostics' ? (
+          {/* TAB 1: GEOSPATIAL HERITAGE MAP (Pathway 3) */}
+          {currentTab === 'cartography' && (
+            <GeospatialMapSection
+              onSelectRecord={(_recId) => {
+                setCurrentTab('records');
+              }}
+            />
+          )}
+
+          {/* TAB 2: 3D MONUMENT DIGITAL TWIN (Pathway 1) */}
+          {currentTab === '3d-viewer' && <Monument3DViewer />}
+
+          {/* TAB 3: CURATOR REVIEW QUEUE (SRS 6.2 & 12.1) */}
+          {currentTab === 'review-queue' && <ReviewQueueSection />}
+
+          {/* TAB 4: HERITAGE CORPUS & FIELD RECORDS */}
+          {currentTab === 'records' && (
+            <HeritageRecordsSection
+              onOpenUpload={() => setIsUploadOpen(true)}
+              onInspectRecord={(_recId) => {
+                setCurrentTab('dashboard');
+                handleScrollToSearch();
+              }}
+            />
+          )}
+
+          {/* TAB 5: ADMIN & AUDIT TRAIL (SRS 7.8) */}
+          {currentTab === 'admin' && <AdminDashboardSection />}
+
+          {/* TAB 6: SYSTEM HEALTH & TELEMETRY */}
+          {currentTab === 'diagnostics' && (
             <div className="space-y-6">
               <div>
                 <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage flex items-center gap-2">
@@ -290,10 +324,8 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Health status card */}
               <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
 
-              {/* Technical Specifications */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-3">
                   <h2 className="text-xs font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
@@ -314,15 +346,15 @@ export default function Home() {
                       </span>
                     </div>
                     <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                      <span className="text-stone-400">Embedding Model:</span>
+                      <span className="text-stone-400">Geospatial Endpoint:</span>
                       <span className="font-mono text-stone-800 dark:text-stone-200">
-                        all-MiniLM-L6-v2 (384-dim)
+                        GET /api/map/records
                       </span>
                     </div>
                     <div className="flex justify-between py-1">
                       <span className="text-stone-400">Persistence Store:</span>
                       <span className="font-mono text-stone-800 dark:text-stone-200">
-                        SQLite (document_chunks &amp; documents)
+                        SQLite (WAL Mode, heritage_records &amp; chunks)
                       </span>
                     </div>
                   </div>
@@ -343,10 +375,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          ) : (
-            /* Main Dashboard View */
+          )}
+
+          {/* TAB 7: DEFAULT DASHBOARD VIEW (Semantic Search & Discovery) */}
+          {currentTab === 'dashboard' && (
             <div className="space-y-6">
-              {/* If connection is failing, display the health notice upfront */}
               {healthState.status === 'error' && (
                 <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
               )}
