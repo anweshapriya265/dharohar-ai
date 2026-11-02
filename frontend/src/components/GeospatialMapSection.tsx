@@ -118,11 +118,11 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
 
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // CartoDB Voyager tiles for warm heritage aesthetic
+        // 100% Free OpenStreetMap raster tiles (Zero API key required, no watermarks)
         L.tileLayer(
-          'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           {
-            attribution: '&copy; <a href="https://carto.com/">CARTO</a> OpenStreetMap contributors',
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             maxZoom: 19,
           }
         ).addTo(map);
