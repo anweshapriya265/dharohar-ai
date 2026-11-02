@@ -9,9 +9,7 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  AlertTriangle,
   Loader2,
-  Scan,
 } from 'lucide-react';
 import { DocumentItem, DocumentPage, fetchDocumentPages } from '@/lib/api';
 
@@ -58,14 +56,15 @@ export default function DocumentViewerModal({
           const targetIndex = res.pages.findIndex(
             (p) => p.page_number === initialPageNumber
           );
-          setActivePageIndex(targetIndex >= 0 ? targetIndex : 0);
-        } else {
-          setActivePageIndex(0);
+          if (targetIndex !== -1) {
+            setActivePageIndex(targetIndex);
+          }
         }
       })
       .catch((err) => {
         if (!isMounted) return;
-        setError(err instanceof Error ? err.message : 'Failed to load document pages');
+        const msg = err instanceof Error ? err.message : 'Failed to load document pages';
+        setError(msg);
         setIsLoading(false);
       });
 
@@ -74,63 +73,50 @@ export default function DocumentViewerModal({
     };
   }, [document, initialPageNumber]);
 
-  if (!document) return null;
-
   const currentPage = pages[activePageIndex];
 
-  const handleCopyText = () => {
-    if (!currentPage || !currentPage.text) return;
-    navigator.clipboard.writeText(currentPage.text).then(() => {
+  const handleCopyText = async () => {
+    if (!currentPage?.text) return;
+    try {
+      await navigator.clipboard.writeText(currentPage.text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    });
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+    }
   };
 
+  if (!document) return null;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-950/70 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div
-        className="w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl border border-stone-200 dark:border-stone-800 bg-[#faf8f5] dark:bg-stone-900 shadow-2xl overflow-hidden"
+        className="w-full max-w-4xl max-h-[90vh] flex flex-col rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage-md overflow-hidden animate-in zoom-in-95 duration-150"
         role="dialog"
         aria-modal="true"
         aria-labelledby="viewer-modal-title"
       >
-        {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between gap-3 bg-white/70 dark:bg-stone-950/40">
+        {/* Top bar */}
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-stone-100 bg-[#f7f5f0] gap-4">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-[#fbeee9] text-[#9c381e] flex items-center justify-center shrink-0">
               <FileText className="w-5 h-5" />
             </div>
             <div className="overflow-hidden">
               <h2
                 id="viewer-modal-title"
-                className="text-sm sm:text-base font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage truncate"
+                className="text-sm sm:text-base font-serif font-bold text-stone-900 font-heritage truncate"
                 title={document.original_filename}
               >
                 {document.original_filename}
               </h2>
-              <div className="flex flex-wrap items-center gap-2 text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+              <div className="flex flex-wrap items-center gap-2 text-xs text-stone-500 mt-0.5">
                 <span className="font-mono text-[11px] text-stone-400">{document.id}</span>
                 <span>•</span>
                 <span>{document.page_count} {document.page_count === 1 ? 'page' : 'pages'}</span>
                 <span>•</span>
-                <span
-                  className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border ${
-                    document.extraction_status === 'extracted'
-                      ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                      : document.extraction_status === 'ocr'
-                      ? 'bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300 border-sky-200 dark:border-sky-800'
-                      : document.extraction_status === 'hybrid'
-                      ? 'bg-violet-100 dark:bg-violet-950 text-violet-800 dark:text-violet-300 border-violet-200 dark:border-violet-800'
-                      : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800'
-                  }`}
-                >
-                  {document.extraction_status === 'extracted'
-                    ? 'Extracted (Digital PyMuPDF)'
-                    : document.extraction_status === 'ocr'
-                    ? 'Extracted (Tesseract OCR)'
-                    : document.extraction_status === 'hybrid'
-                    ? 'Hybrid (PyMuPDF + OCR)'
-                    : 'Requires OCR (Scanned / Sparse)'}
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0]">
+                  Grounded Citation Active
                 </span>
               </div>
             </div>
@@ -139,7 +125,7 @@ export default function DocumentViewerModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200/60 dark:hover:bg-stone-800 transition-colors shrink-0"
+            className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors shrink-0"
             aria-label="Close document viewer"
           >
             <X className="w-5 h-5" />
@@ -150,11 +136,11 @@ export default function DocumentViewerModal({
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
           {isLoading ? (
             <div className="py-20 flex flex-col items-center justify-center gap-3 text-stone-500">
-              <Loader2 className="w-6 h-6 animate-spin text-amber-700" />
+              <Loader2 className="w-6 h-6 animate-spin text-[#9c381e]" />
               <p className="text-xs">Loading extracted pages from database...</p>
             </div>
           ) : error ? (
-            <div className="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-300">
+            <div className="p-4 rounded-xl bg-[#fdf0ee] border border-[#f4cbc5] text-xs text-[#a6382a]">
               <p className="font-semibold">Error Loading Pages</p>
               <p className="mt-1">{error}</p>
             </div>
@@ -165,19 +151,19 @@ export default function DocumentViewerModal({
           ) : (
             <div className="space-y-4">
               {/* Pagination controls & Page info */}
-              <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-stone-100/80 dark:bg-stone-950/60 border border-stone-200/60 dark:border-stone-800 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5] text-xs">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setActivePageIndex((prev) => Math.max(0, prev - 1))}
                     disabled={activePageIndex === 0}
-                    className="p-1.5 rounded-lg bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 disabled:opacity-40 hover:bg-stone-50 transition-colors"
+                    className="p-1.5 rounded-lg bg-white text-stone-700 border border-[#e5dfd5] disabled:opacity-40 hover:bg-stone-50 transition-colors shadow-2xs"
                     aria-label="Previous page"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
 
-                  <span className="font-medium text-stone-800 dark:text-stone-200 font-mono">
+                  <span className="font-semibold text-stone-800 font-mono">
                     Page {currentPage?.page_number} of {pages.length}
                   </span>
 
@@ -185,23 +171,17 @@ export default function DocumentViewerModal({
                     type="button"
                     onClick={() => setActivePageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
                     disabled={activePageIndex === pages.length - 1}
-                    className="p-1.5 rounded-lg bg-white dark:bg-stone-800 text-stone-700 dark:text-stone-300 border border-stone-200 dark:border-stone-700 disabled:opacity-40 hover:bg-stone-50 transition-colors"
+                    className="p-1.5 rounded-lg bg-white text-stone-700 border border-[#e5dfd5] disabled:opacity-40 hover:bg-stone-50 transition-colors shadow-2xs"
                     aria-label="Next page"
                   >
                     <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>
 
-                {/* Page Stats & Citation Anchor */}
-                <div className="flex flex-wrap items-center gap-3 text-stone-500 dark:text-stone-400 text-[11px]">
-                  <span>{currentPage?.character_count || 0} characters</span>
-                  <span>•</span>
-                  <span>{currentPage?.word_count || 0} words</span>
-                  <span className="hidden sm:inline">•</span>
-                  <div className="hidden sm:flex items-center gap-1 px-2 py-0.5 rounded bg-amber-100/70 dark:bg-amber-950/70 text-amber-900 dark:text-amber-300 font-mono text-[10px]">
-                    <ShieldCheck className="w-3 h-3 text-amber-700 dark:text-amber-400" />
-                    <span>Citation: [{document.id} · p.{currentPage?.page_number}]</span>
-                  </div>
+                {/* Citation Anchor */}
+                <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#fbeee9] border border-[#f0d4ca] text-[#9c381e] font-mono text-[10px] font-semibold">
+                  <ShieldCheck className="w-3 h-3" />
+                  <span>Exact Anchor: [{document.id} · p.{currentPage?.page_number}]</span>
                 </div>
 
                 {/* Copy Page Text Button */}
@@ -209,55 +189,18 @@ export default function DocumentViewerModal({
                   type="button"
                   onClick={handleCopyText}
                   disabled={!currentPage?.text}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-white dark:bg-stone-800 border border-stone-200 dark:border-stone-700 text-stone-700 dark:text-stone-300 hover:bg-stone-50 transition-colors text-xs font-medium disabled:opacity-50"
+                  className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white border border-[#e5dfd5] text-stone-700 hover:text-stone-900 transition-colors text-xs font-semibold shadow-2xs disabled:opacity-50"
                   title="Copy extracted text to clipboard"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-[#2d5e4a]" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied' : 'Copy Text'}</span>
                 </button>
               </div>
 
-              {/* Page-level extraction status notification */}
-              {currentPage?.extraction_status === 'ocr_extracted' && (
-                <div className="p-3 rounded-xl bg-sky-50/80 dark:bg-sky-950/40 border border-sky-200/80 dark:border-sky-900/60 text-xs text-sky-900 dark:text-sky-200 flex items-start gap-2">
-                  <Scan className="w-4 h-4 text-sky-700 dark:text-sky-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold">OCR Extracted Page:</span>
-                    <span className="ml-1 opacity-90">
-                      Page {currentPage.page_number} was recognized via Tesseract OCR at 300 DPI from a scanned plate or raster image.
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {currentPage?.extraction_status === 'ocr_failed' && (
-                <div className="p-3 rounded-xl bg-rose-50/80 dark:bg-rose-950/40 border border-rose-200/80 dark:border-rose-900/60 text-xs text-rose-900 dark:text-rose-200 flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-700 dark:text-rose-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold">OCR Processing Issue:</span>
-                    <span className="ml-1 opacity-90">
-                      Optical character recognition was attempted for Page {currentPage.page_number} but encountered an error or yielded no recognized characters.
-                    </span>
-                  </div>
-                </div>
-              )}
-
-              {currentPage?.extraction_status === 'needs_ocr' && (
-                <div className="p-3 rounded-xl bg-amber-50/80 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-900/60 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-700 dark:text-amber-400 shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-semibold">Sparse / Scanned Page:</span>
-                    <span className="ml-1 opacity-90">
-                      Page {currentPage.page_number} contains little or no text. It may be a blank plate, architectural photograph, or blueprint without recognized typography.
-                    </span>
-                  </div>
-                </div>
-              )}
-
               {/* Text Container */}
-              <div className="rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950 p-4 sm:p-6 shadow-inner min-h-[300px]">
+              <div className="rounded-xl border border-[#e5dfd5] bg-[#f7f5f0]/40 p-5 sm:p-6 min-h-[300px]">
                 {currentPage?.text ? (
-                  <pre className="font-mono text-xs sm:text-[13px] leading-relaxed text-stone-800 dark:text-stone-200 whitespace-pre-wrap font-normal selection:bg-amber-200 dark:selection:bg-amber-900">
+                  <pre className="font-serif text-xs sm:text-[13px] leading-relaxed text-stone-800 whitespace-pre-wrap font-normal selection:bg-[#fbeee9]">
                     {currentPage.text}
                   </pre>
                 ) : (
@@ -274,12 +217,12 @@ export default function DocumentViewerModal({
         </div>
 
         {/* Footer */}
-        <div className="p-3 sm:p-4 border-t border-stone-200 dark:border-stone-800 bg-white/70 dark:bg-stone-950/40 flex items-center justify-between text-xs text-stone-500">
-          <span className="font-mono text-[11px]">DHAROHAR Evidence Protocol (Milestone 3)</span>
+        <div className="p-3 sm:p-4 border-t border-stone-100 bg-[#f7f5f0] flex items-center justify-between text-xs text-stone-500">
+          <span className="font-mono text-[11px]">DHAROHAR Strict Evidence Protocol</span>
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-1.5 rounded-xl bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200 font-medium transition-colors"
+            className="px-4 py-1.5 rounded-xl bg-white border border-[#e5dfd5] text-stone-700 font-semibold hover:bg-stone-50 transition-colors shadow-2xs"
           >
             Done
           </button>

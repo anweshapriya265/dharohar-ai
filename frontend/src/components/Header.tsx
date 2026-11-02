@@ -1,90 +1,101 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Landmark,
   Upload,
   RefreshCw,
-  ExternalLink,
   Server,
-  Menu,
   UserCheck,
+  MapPin,
+  Box,
+  Search,
+  BookOpen,
+  ShieldCheck,
+  Activity,
 } from 'lucide-react';
-import { HealthCheckState } from '@/lib/api';
+import { HealthCheckState, getApiBaseUrl } from '@/lib/api';
 
 interface HeaderProps {
   healthState: HealthCheckState;
   onRefreshHealth: () => void;
   onOpenUpload: () => void;
-  onToggleSidebar?: () => void;
   currentRole?: string;
   onSelectRole?: (role: string) => void;
+  currentTab: string;
+  onSelectTab: (tab: string) => void;
 }
 
 export default function Header({
   healthState,
   onRefreshHealth,
   onOpenUpload,
-  onToggleSidebar,
   currentRole = 'archivist',
   onSelectRole,
+  currentTab,
+  onSelectTab,
 }: HeaderProps) {
-  const [showHealthMenu, setShowHealthMenu] = React.useState(false);
+  const [showHealthMenu, setShowHealthMenu] = useState(false);
 
   const roles = [
-    { id: 'visitor', label: 'Visitor' },
-    { id: 'archivist', label: 'Archivist' },
-    { id: 'reviewer', label: 'Reviewer' },
-    { id: 'admin', label: 'Admin' },
+    { id: 'visitor', label: 'Visitor / Public', desc: 'Read-only search & 3D view' },
+    { id: 'archivist', label: 'IITGN Fellow (Archivist)', desc: 'Upload field notes & photos' },
+    { id: 'reviewer', label: 'Archival Reviewer', desc: 'Verify AI suggestions' },
+    { id: 'admin', label: 'Administrator', desc: 'Full provenance & system logs' },
   ];
 
-  return (
-    <header className="sticky top-0 z-30 border-b border-stone-200/80 dark:border-stone-800 bg-[#faf8f5]/90 dark:bg-[#12100e]/90 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-        {/* Left: Mobile hamburger & Brand */}
-        <div className="flex items-center gap-3">
-          {onToggleSidebar && (
-            <button
-              type="button"
-              onClick={onToggleSidebar}
-              className="lg:hidden p-2 rounded-lg text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              aria-label="Toggle navigation menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          )}
+  const primaryTabs = [
+    { id: 'cartography', label: 'Expedition Map', icon: MapPin, badge: 'Geospatial' },
+    { id: '3d-viewer', label: '3D Stepwell Twin', icon: Box, badge: 'WebGL' },
+    { id: 'dashboard', label: 'Semantic Search', icon: Search, badge: 'Vectors' },
+    { id: 'records', label: 'Heritage Corpus', icon: BookOpen, badge: 'Archives' },
+    { id: 'review-queue', label: 'Curator Queue', icon: ShieldCheck, badge: 'Human-in-Loop' },
+    { id: 'diagnostics', label: 'Audit & Health', icon: Activity, badge: 'System' },
+  ];
 
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-700 to-amber-900 dark:from-amber-600 dark:to-amber-800 text-amber-50 flex items-center justify-center shadow-sm ring-1 ring-amber-600/30">
+  const isConnected = healthState.status === 'connected';
+
+  return (
+    <header className="sticky top-0 z-30 bg-[#f7f5f0]/95 backdrop-blur-md border-b border-[#e5dfd5] transition-all">
+      {/* Top Banner & Quick Controls */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        {/* Brand & Institution */}
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => onSelectTab('cartography')}
+            className="flex items-center gap-3 text-left group focus:outline-hidden"
+          >
+            <div className="w-10 h-10 rounded-xl bg-[#9c381e] text-[#f7f5f0] flex items-center justify-center shadow-sm ring-1 ring-[#9c381e]/20 group-hover:bg-[#832e17] transition-colors">
               <Landmark className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-serif font-bold text-lg text-stone-900 dark:text-stone-100 tracking-wide font-heritage">
+                <span className="font-serif font-bold text-lg text-stone-900 tracking-tight font-heritage">
                   DHAROHAR AI
                 </span>
-                <span className="hidden sm:inline-block text-xs font-medium px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#fbeee9] text-[#9c381e] border border-[#f0d4ca]">
                   धरोहर
                 </span>
               </div>
-              <p className="hidden md:block text-[11px] text-stone-500 dark:text-stone-400">
-                IIT Gandhinagar Explorer Fellowship Cultural Archive
+              <p className="text-[11px] text-stone-500 font-medium">
+                IIT Gandhinagar · Explorer Fellowship Cultural Archive
               </p>
             </div>
-          </div>
+          </button>
         </div>
 
-        {/* Right: Role Switcher + Health Telemetry + Upload Action */}
+        {/* Right Utility Belt: Role Switcher + Health Telemetry + Primary Action */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* RBAC Role Switcher */}
+          {/* RBAC Role Selector */}
           {onSelectRole && (
-            <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-xs text-stone-600 dark:text-stone-300 shadow-2xs">
-              <UserCheck className="w-3.5 h-3.5 text-amber-700" />
-              <span className="text-[10px] text-stone-400">Role:</span>
+            <div className="relative hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#e5dfd5] bg-white text-xs text-stone-700 shadow-2xs">
+              <UserCheck className="w-3.5 h-3.5 text-[#9c381e]" />
+              <span className="text-[11px] text-stone-400 font-medium">Role:</span>
               <select
                 value={currentRole}
                 onChange={(e) => onSelectRole(e.target.value)}
-                className="bg-transparent font-medium text-stone-800 dark:text-stone-200 focus:outline-hidden cursor-pointer"
+                className="bg-transparent font-semibold text-stone-800 focus:outline-hidden cursor-pointer pr-1"
+                aria-label="Select User Role"
               >
                 {roles.map((r) => (
                   <option key={r.id} value={r.id}>
@@ -95,49 +106,28 @@ export default function Header({
             </div>
           )}
 
-          {/* Health Status Indicator */}
+          {/* System Health Status Popover */}
           <div className="relative">
             <button
               type="button"
               onClick={() => setShowHealthMenu(!showHealthMenu)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 ${
-                healthState.status === 'connected'
-                  ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100/70'
-                  : healthState.status === 'connecting'
-                  ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-300 hover:bg-amber-100/70'
-                  : 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 hover:bg-rose-100/70'
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-medium transition-all ${
+                isConnected
+                  ? 'border-[#c3dcd0] bg-[#edf5f1] text-[#2d5e4a] hover:bg-[#e2f0e8]'
+                  : 'border-[#f4cbc5] bg-[#fdf0ee] text-[#a6382a] hover:bg-[#fce6e3]'
               }`}
-              title="Click to view backend health telemetry"
-              aria-label={`Backend Status: ${healthState.status}`}
+              title="Click to view live backend telemetry"
             >
-              <span className="relative flex h-2 w-2">
-                {healthState.status === 'connected' && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                )}
-                {healthState.status === 'connecting' && (
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
-                )}
-                <span
-                  className={`relative inline-flex rounded-full h-2 w-2 ${
-                    healthState.status === 'connected'
-                      ? 'bg-emerald-500'
-                      : healthState.status === 'connecting'
-                      ? 'bg-amber-500'
-                      : 'bg-rose-500'
-                  }`}
-                />
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  isConnected ? 'bg-[#2d5e4a] animate-pulse' : 'bg-[#a6382a]'
+                }`}
+              />
+              <span className="hidden sm:inline">
+                {isConnected ? 'Archive Online' : 'Connecting'}
               </span>
-
-              <span className="font-medium capitalize hidden sm:inline">
-                {healthState.status === 'connected'
-                  ? 'Connected'
-                  : healthState.status === 'connecting'
-                  ? 'Connecting...'
-                  : 'Failed'}
-              </span>
-
-              {healthState.status === 'connected' && healthState.latencyMs !== null && (
-                <span className="text-[10px] opacity-75 border-l border-emerald-300 dark:border-emerald-700 pl-1.5 hidden md:inline">
+              {isConnected && healthState.latencyMs !== null && (
+                <span className="text-[10px] opacity-75 font-mono">
                   {healthState.latencyMs}ms
                 </span>
               )}
@@ -145,99 +135,94 @@ export default function Header({
 
             {/* Health Telemetry Dropdown */}
             {showHealthMenu && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-900 shadow-xl p-4 text-xs z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="flex items-center justify-between pb-3 border-b border-stone-100 dark:border-stone-800">
-                  <div className="flex items-center gap-2">
-                    <Server className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-                    <span className="font-semibold text-stone-900 dark:text-stone-100">
-                      Backend Telemetry
-                    </span>
+              <div className="absolute right-0 mt-2 w-80 rounded-xl border border-[#e5dfd5] bg-white shadow-heritage-md p-4 space-y-3 z-50 text-xs">
+                <div className="flex items-center justify-between pb-2 border-b border-stone-100">
+                  <div className="flex items-center gap-2 font-semibold text-stone-900">
+                    <Server className="w-4 h-4 text-[#9c381e]" />
+                    <span>Backend Diagnostics</span>
                   </div>
                   <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
+                    onClick={() => {
                       onRefreshHealth();
                     }}
-                    className="p-1 rounded text-stone-500 hover:text-stone-800 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800"
-                    title="Refresh health check"
+                    className="p-1 rounded text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
+                    title="Refresh status"
                   >
                     <RefreshCw className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <div className="py-3 space-y-2 text-stone-600 dark:text-stone-300">
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Service:</span>
-                    <span className="font-mono font-medium text-stone-800 dark:text-stone-200">
-                      {healthState.data?.app || 'DHAROHAR AI Backend'}
-                    </span>
+                <div className="space-y-1.5 text-[11px] text-stone-600">
+                  <div className="flex justify-between py-1 border-b border-stone-50">
+                    <span className="text-stone-400">FastAPI Host:</span>
+                    <span className="font-mono text-stone-800">{getApiBaseUrl()}</span>
                   </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Status:</span>
-                    <span
-                      className={`font-semibold ${
-                        healthState.status === 'connected'
-                          ? 'text-emerald-600 dark:text-emerald-400'
-                          : healthState.status === 'connecting'
-                          ? 'text-amber-600 dark:text-amber-400'
-                          : 'text-rose-600 dark:text-rose-400'
-                      }`}
-                    >
-                      {healthState.data?.status || healthState.status}
-                    </span>
+                  <div className="flex justify-between py-1 border-b border-stone-50">
+                    <span className="text-stone-400">Vector Embeddings:</span>
+                    <span className="text-[#2d5e4a] font-semibold">all-MiniLM-L6-v2 (384-dim)</span>
                   </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Semantic Search:</span>
-                    <span className="font-medium text-stone-800 dark:text-stone-200">
-                      {healthState.data?.services?.semantic_search || 'sentence_transformers_ready'}
-                    </span>
+                  <div className="flex justify-between py-1 border-b border-stone-50">
+                    <span className="text-stone-400">Database Engine:</span>
+                    <span className="font-semibold text-stone-800">SQLite WAL Repository</span>
                   </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-stone-400">Geospatial Cartography:</span>
-                    <span className="font-medium text-stone-800 dark:text-stone-200">
-                      {healthState.data?.services?.geospatial_map || 'active'}
-                    </span>
+                  <div className="flex justify-between py-1 border-b border-stone-50">
+                    <span className="text-stone-400">OCR Fallback Engine:</span>
+                    <span className="text-stone-500 font-mono">PyMuPDF Native + Tesseract</span>
                   </div>
-                  {healthState.lastChecked && (
-                    <div className="flex justify-between py-0.5 pt-1 text-[10px] text-stone-400 border-t border-stone-100 dark:border-stone-800">
-                      <span>Last Verified:</span>
-                      <span>{new Date(healthState.lastChecked).toLocaleTimeString()}</span>
-                    </div>
-                  )}
                 </div>
 
-                <div className="pt-2 border-t border-stone-100 dark:border-stone-800 flex justify-between items-center">
-                  <a
-                    href="http://localhost:8000/docs"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[11px] text-amber-700 dark:text-amber-400 hover:underline"
-                  >
-                    Interactive Swagger Docs <ExternalLink className="w-3 h-3" />
-                  </a>
-                  <button
-                    type="button"
-                    onClick={() => setShowHealthMenu(false)}
-                    className="px-2 py-1 rounded bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200 text-[11px]"
-                  >
-                    Close
-                  </button>
+                <div className="pt-1 flex items-center justify-between text-[11px]">
+                  <span className="text-stone-400">Active Role:</span>
+                  <span className="font-semibold text-[#9c381e] capitalize">{currentRole}</span>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Prominent Upload Document Action */}
+          {/* Primary Ingestion Action */}
           <button
             type="button"
             onClick={onOpenUpload}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-stone-900 dark:bg-stone-100 hover:bg-amber-800 dark:hover:bg-amber-400 text-stone-50 dark:text-stone-950 text-xs sm:text-sm font-medium transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500 active:scale-[0.98]"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#9c381e] hover:bg-[#832e17] text-[#f7f5f0] text-xs font-semibold shadow-2xs transition-all focus:outline-hidden"
           >
             <Upload className="w-3.5 h-3.5" />
-            <span>Ingest Asset</span>
+            <span className="hidden sm:inline">Contribute Record</span>
+            <span className="sm:hidden">Upload</span>
           </button>
         </div>
+      </div>
+
+      {/* Primary Navigation Tabs: Highly visible, effortless 1-click switching */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-[#ede7dc] overflow-x-auto scrollbar-none">
+        <nav className="flex items-center gap-1 sm:gap-2 py-2 min-w-max" aria-label="Global Tabs">
+          {primaryTabs.map((tab) => {
+            const Icon = tab.icon;
+            const isActive = currentTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onSelectTab(tab.id)}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                  isActive
+                    ? 'bg-[#9c381e] text-[#f7f5f0] shadow-2xs font-semibold'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-[#ede7dc]/60'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#f7f5f0]' : 'text-stone-500'}`} />
+                <span>{tab.label}</span>
+                <span
+                  className={`text-[9px] px-1.5 py-0.2 rounded font-mono ${
+                    isActive
+                      ? 'bg-black/20 text-[#fbeee9]'
+                      : 'bg-stone-200/70 text-stone-600'
+                  }`}
+                >
+                  {tab.badge}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
     </header>
   );

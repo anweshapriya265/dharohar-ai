@@ -31,7 +31,6 @@ export default function ReviewQueueSection() {
   const loadPendingRecords = async () => {
     setLoading(true);
     try {
-      // Fetch both pending and all records
       const res = await fetchHeritageRecords('all', 'all', 'all');
       setRecords(res.records || []);
       if (res.records && res.records.length > 0 && !selectedRecord) {
@@ -97,7 +96,6 @@ export default function ReviewQueueSection() {
         reviewerComment || `Action ${decision} applied by curator.`
       );
       setActionMessage(`Record successfully ${decision}!`);
-      // Refresh list
       await loadPendingRecords();
     } catch (err) {
       console.error('Error submitting review:', err);
@@ -109,40 +107,39 @@ export default function ReviewQueueSection() {
 
   return (
     <div className="space-y-4">
-      {/* Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900">
+      {/* Top Header Card */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
-              <ShieldCheck className="w-5 h-5" />
-            </span>
-            <h1 className="text-lg font-bold font-serif text-stone-900 dark:text-stone-100">
-              Human-in-the-Loop Curation &amp; Review Workspace
-            </h1>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#edf5f1] text-[#2d5e4a] mb-1">
+            <ShieldCheck className="w-3.5 h-3.5" />
+            <span>Human-in-the-Loop Verification</span>
           </div>
-          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
-            Section 6.2 &amp; 12.1 SRS: Verified knowledge protocol ensuring zero hallucinations before public catalog publication
+          <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
+            Curator Curation &amp; Review Workspace
+          </h1>
+          <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
+            Strict human oversight verifying AI-generated architectural typology suggestions before public catalog publication
           </p>
         </div>
 
         <button
           onClick={loadPendingRecords}
-          className="text-xs px-3 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 font-medium flex items-center gap-1.5 hover:bg-stone-100 dark:hover:bg-stone-750"
+          className="text-xs px-3.5 py-2 rounded-xl border border-[#e5dfd5] hover:bg-stone-50 text-stone-700 font-semibold flex items-center gap-2 transition-colors shadow-2xs"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-          Refresh Queue
+          <span>Refresh Queue</span>
         </button>
       </div>
 
       {/* Main Grid: Queue List + Inspection/Decision Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Pending Records Queue List */}
-        <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-3">
-          <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-800 pb-2">
-            <span className="text-xs font-semibold text-stone-800 dark:text-stone-200">
+        <div className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-3">
+          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
+            <span className="text-xs font-semibold text-stone-800">
               Submissions Queue
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400">
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-stone-100 text-stone-600">
               {records.length} items
             </span>
           </div>
@@ -150,35 +147,38 @@ export default function ReviewQueueSection() {
           <div className="space-y-2 max-h-[560px] overflow-y-auto pr-1">
             {records.map((r) => {
               const isSelected = selectedRecord?.id === r.id;
-              const isPending = r.status === 'pending_review';
+              const isPending = r.status === 'pending_review' || r.status === 'pending';
+              const isApproved = r.status === 'approved';
 
               return (
                 <div
                   key={r.id}
                   onClick={() => loadRecordDetails(r.id)}
-                  className={`p-3 rounded-lg border text-xs cursor-pointer transition-all ${
+                  className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
                     isSelected
-                      ? 'border-amber-600 bg-amber-50/70 dark:bg-amber-950/40 shadow-xs'
-                      : 'border-stone-200 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-850'
+                      ? 'border-[#9c381e] bg-[#fbeee9] shadow-2xs'
+                      : 'border-[#e5dfd5] bg-white hover:bg-[#f7f5f0]'
                   }`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold text-stone-900 dark:text-stone-100 truncate">
+                    <span className="font-semibold text-stone-900 truncate">
                       {r.title}
                     </span>
                     <span
                       className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider shrink-0 ${
-                        isPending
-                          ? 'bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300'
-                          : 'bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300'
+                        isApproved
+                          ? 'bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0]'
+                          : isPending
+                          ? 'bg-[#fbf5eb] text-[#b67322] border border-[#f0dec3]'
+                          : 'bg-stone-100 text-stone-600'
                       }`}
                     >
                       {r.status.replace('_', ' ')}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-[11px] text-stone-500 dark:text-stone-400 mt-1.5">
+                  <div className="flex items-center justify-between text-[11px] text-stone-500 mt-1.5">
                     <span>{r.region} · {r.heritage_type}</span>
-                    <span className="font-mono text-[10px]">{r.period?.split(' ')[0] || 'Historical'}</span>
+                    <span className="font-mono text-[10px]">{r.period || 'Historical'}</span>
                   </div>
                 </div>
               );
@@ -187,126 +187,133 @@ export default function ReviewQueueSection() {
         </div>
 
         {/* Curator Decision Workspace */}
-        <div className="lg:col-span-2 p-5 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-4">
+        <div className="lg:col-span-2 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-4">
           {selectedRecord ? (
             <div className="space-y-4">
               {/* Record Title & Metadata Header */}
-              <div className="border-b border-stone-100 dark:border-stone-800 pb-3">
+              <div className="border-b border-stone-100 pb-3">
                 <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-stone-100 text-stone-600">
                     ID: {selectedRecord.id}
                   </span>
                   <span className="text-[11px] text-stone-400">
-                    Uploader: {selectedRecord.created_by}
+                    Logged by: {selectedRecord.created_by || 'IITGN Fellow'}
                   </span>
                 </div>
-                <h2 className="text-base font-bold font-serif text-stone-900 dark:text-stone-100 mt-2">
+                <h2 className="text-lg font-serif font-bold text-stone-900 font-heritage mt-2">
                   {selectedRecord.title}
                 </h2>
-                <p className="text-xs text-stone-600 dark:text-stone-300 mt-1 leading-relaxed">
-                  {selectedRecord.description}
-                </p>
-              </div>
-
-              {/* AI-Generated Suggestions vs Human Ground Truth */}
-              <div>
-                <h3 className="text-xs font-semibold text-stone-800 dark:text-stone-200 mb-2 flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                  AI Model Suggestions (all-MiniLM-L6-v2 + Heuristic Matcher)
-                </h3>
-
-                <div className="space-y-2">
-                  {suggestions.length > 0 ? (
-                    suggestions.map((s) => (
-                      <div
-                        key={s.id}
-                        className="p-3 rounded-lg border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-950/60 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2"
-                      >
-                        <div>
-                          <div className="font-semibold text-stone-800 dark:text-stone-200 flex items-center gap-2">
-                            <span>{s.field_name.replace('_', ' ').toUpperCase()}</span>
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300">
-                              {(s.confidence * 100).toFixed(0)}% Confidence
-                            </span>
-                          </div>
-                          <div className="text-stone-700 dark:text-stone-300 font-mono mt-1 text-[11px]">
-                            {s.suggested_value}
-                          </div>
-                          {s.evidence && (
-                            <div className="text-[10px] text-stone-400 mt-0.5">
-                              Evidence: {s.evidence}
-                            </div>
-                          )}
-                        </div>
-
-                        <span className="px-2 py-1 rounded-md text-[10px] uppercase font-semibold border border-stone-200 dark:border-stone-700 self-start sm:self-center">
-                          {s.review_status}
-                        </span>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="p-3 rounded-lg border border-dashed border-stone-200 dark:border-stone-800 text-xs text-stone-400 text-center">
-                      No automated suggestions recorded for this legacy asset.
-                    </div>
-                  )}
+                <div className="flex items-center gap-3 text-xs text-stone-500 mt-1">
+                  <span>Typology: <strong className="text-stone-800">{selectedRecord.heritage_type}</strong></span>
+                  <span>Region: <strong className="text-stone-800">{selectedRecord.region}</strong></span>
+                  <span>Status: <strong className="text-[#9c381e] uppercase">{selectedRecord.status.replace('_', ' ')}</strong></span>
                 </div>
               </div>
 
-              {/* Curator Notes & Decision Controls */}
-              <div className="pt-2 border-t border-stone-100 dark:border-stone-800 space-y-3">
-                <label className="block text-xs font-medium text-stone-700 dark:text-stone-300 flex items-center gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 text-stone-400" />
-                  Curator / Reviewer Notes
-                </label>
-                <textarea
-                  value={reviewerComment}
-                  onChange={(e) => setReviewerComment(e.target.value)}
-                  placeholder="Enter peer-review feedback, epigraph verification notes, or reason for rejection..."
-                  rows={3}
-                  className="w-full text-xs p-3 rounded-lg border border-stone-200 dark:border-stone-700 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-1 focus:ring-amber-500"
-                />
+              {/* Original Field Notes Text */}
+              <div className="space-y-1.5">
+                <h3 className="text-xs font-semibold text-stone-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <FileText className="w-3.5 h-3.5 text-[#9c381e]" />
+                  <span>Archival Documentation Text</span>
+                </h3>
+                <div className="p-3.5 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5] text-xs leading-relaxed text-stone-800 font-serif">
+                  {selectedRecord.description}
+                </div>
+              </div>
+
+              {/* AI-Generated Suggestions for Curator Review */}
+              <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-stone-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[#b67322]" />
+                  <span>AI Structural Suggestions (Awaiting Human Verdict)</span>
+                </h3>
+
+                {suggestions.length === 0 ? (
+                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-500">
+                    No pending AI suggestions for this record.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {suggestions.map((sug) => (
+                      <div
+                        key={sug.id}
+                        className="p-3 rounded-xl border border-[#e5dfd5] bg-white flex items-center justify-between gap-3 text-xs shadow-2xs"
+                      >
+                        <div className="space-y-0.5">
+                          <span className="font-mono text-[10px] text-stone-400 uppercase">
+                            Field: {sug.field_name}
+                          </span>
+                          <p className="font-semibold text-stone-900">
+                            Suggested: &ldquo;{sug.suggested_value}&rdquo;
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0] font-semibold">
+                            {Math.round((sug.confidence || 0.85) * 100)}% Confidence
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Curator Feedback & Decision Actions */}
+              <div className="pt-2 border-t border-stone-100 space-y-3">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-stone-700 flex items-center gap-1.5">
+                    <MessageSquare className="w-3.5 h-3.5 text-stone-500" />
+                    <span>Curator Audit Rationale / Verification Notes</span>
+                  </label>
+                  <textarea
+                    rows={2}
+                    value={reviewerComment}
+                    onChange={(e) => setReviewerComment(e.target.value)}
+                    placeholder="Document justification for approving or requesting revisions on this archival record..."
+                    className="w-full p-2.5 rounded-xl border border-[#e5dfd5] bg-[#f7f5f0]/60 text-xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:ring-1 focus:ring-[#9c381e]"
+                  />
+                </div>
 
                 {actionMessage && (
-                  <div className="p-2.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-800 dark:text-emerald-200 flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                    <span>{actionMessage}</span>
+                  <div className="p-2.5 rounded-xl bg-[#edf5f1] border border-[#c3dcd0] text-xs text-[#2d5e4a] font-medium">
+                    {actionMessage}
                   </div>
                 )}
 
-                <div className="flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2.5">
                   <button
                     disabled={submitting}
                     onClick={() => handleDecision('approved')}
-                    className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-xs disabled:opacity-50"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#2d5e4a] hover:bg-[#234a3b] text-white text-xs font-semibold shadow-2xs transition-all disabled:opacity-50"
                   >
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    Approve &amp; Publish to Corpus
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Approve &amp; Publish to Public Catalog</span>
                   </button>
 
                   <button
                     disabled={submitting}
                     onClick={() => handleDecision('changes_requested')}
-                    className="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-xs disabled:opacity-50"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#f0dec3] bg-[#fbf5eb] hover:bg-[#faebd5] text-[#b67322] text-xs font-semibold transition-all disabled:opacity-50"
                   >
-                    <AlertTriangle className="w-3.5 h-3.5" />
-                    Request Field Note Changes
+                    <AlertTriangle className="w-4 h-4" />
+                    <span>Request Changes</span>
                   </button>
 
                   <button
                     disabled={submitting}
                     onClick={() => handleDecision('rejected')}
-                    className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs flex items-center gap-1.5 transition-colors shadow-xs disabled:opacity-50"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#f4cbc5] bg-[#fdf0ee] hover:bg-[#fadcd8] text-[#a6382a] text-xs font-semibold transition-all disabled:opacity-50"
                   >
-                    <XCircle className="w-3.5 h-3.5" />
-                    Reject Submission
+                    <XCircle className="w-4 h-4" />
+                    <span>Reject Submission</span>
                   </button>
                 </div>
               </div>
             </div>
           ) : (
-            <div className="h-64 flex flex-col items-center justify-center text-center text-stone-400">
-              <FileText className="w-10 h-10 mb-2 opacity-50" />
-              <p className="text-xs">Select a record from the queue to start curation.</p>
+            <div className="h-full flex flex-col items-center justify-center text-center text-stone-400 p-8 space-y-2">
+              <ShieldCheck className="w-10 h-10 stroke-1" />
+              <p className="text-xs">Select a record from the submissions queue to inspect and curate.</p>
             </div>
           )}
         </div>
@@ -314,4 +321,3 @@ export default function ReviewQueueSection() {
     </div>
   );
 }
-

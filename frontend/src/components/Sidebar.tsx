@@ -10,7 +10,7 @@ import {
   Activity,
   Server,
   X,
-  Compass,
+  Landmark,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -32,10 +32,24 @@ export default function Sidebar({
 }: SidebarProps) {
   const navItems = [
     {
+      id: 'cartography',
+      label: 'Expedition Heritage Map',
+      icon: MapPin,
+      badge: 'Geospatial',
+      description: 'Stepwells & expedition trails',
+    },
+    {
+      id: '3d-viewer',
+      label: '3D Stepwell Twin',
+      icon: Box,
+      badge: 'WebGL',
+      description: 'Interactive subterranean twin',
+    },
+    {
       id: 'dashboard',
       label: 'Semantic Vector Search',
       icon: LayoutDashboard,
-      badge: 'all-MiniLM',
+      badge: 'Embeddings',
       description: 'Zero-hallucination evidence search',
     },
     {
@@ -44,20 +58,6 @@ export default function Sidebar({
       icon: BookOpen,
       badge: 'Archive',
       description: 'IITGN Explorer documentation',
-    },
-    {
-      id: 'cartography',
-      label: 'Geospatial Heritage Map',
-      icon: MapPin,
-      badge: 'Leaflet',
-      description: 'Stepwells & expedition trails',
-    },
-    {
-      id: '3d-viewer',
-      label: '3D Monument Twin',
-      icon: Box,
-      badge: 'Three.js',
-      description: 'WebGL subterranean baoli twin',
     },
     {
       id: 'review-queue',
@@ -95,21 +95,21 @@ export default function Sidebar({
 
       {/* Sidebar container */}
       <aside
-        className={`fixed lg:sticky top-0 lg:top-16 z-40 lg:z-10 h-full lg:h-[calc(100vh-4rem)] w-64 border-r border-stone-200/80 dark:border-stone-800 bg-[#faf8f5] dark:bg-[#12100e] flex flex-col justify-between transition-transform duration-200 ease-in-out ${
+        className={`fixed lg:sticky top-0 lg:top-28 z-40 lg:z-10 h-full lg:h-[calc(100vh-7rem)] w-64 border-r border-[#e5dfd5] bg-[#f7f5f0] flex flex-col justify-between transition-transform duration-200 ease-in-out shrink-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Mobile Header */}
-        <div className="flex items-center justify-between p-4 border-b border-stone-200 dark:border-stone-800 lg:hidden">
+        <div className="flex items-center justify-between p-4 border-b border-[#e5dfd5] lg:hidden">
           <div className="flex items-center gap-2">
-            <Compass className="w-5 h-5 text-amber-700" />
-            <span className="font-serif font-bold text-stone-900 dark:text-stone-100">
+            <Landmark className="w-5 h-5 text-[#9c381e]" />
+            <span className="font-serif font-bold text-stone-900 font-heritage">
               DHAROHAR AI
             </span>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-stone-500 hover:bg-stone-100 dark:hover:bg-stone-800"
+            className="p-1 rounded-lg text-stone-500 hover:bg-stone-100"
           >
             <X className="w-5 h-5" />
           </button>
@@ -118,7 +118,7 @@ export default function Sidebar({
         {/* Navigation list */}
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
           <div className="px-3 py-2 text-[10px] font-semibold tracking-wider text-stone-400 uppercase">
-            Platform Capabilities
+            Platform Pathways
           </div>
 
           {navItems.map((item) => {
@@ -132,16 +132,16 @@ export default function Sidebar({
                   onSelectTab(item.id);
                   onClose();
                 }}
-                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all text-left ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left ${
                   isSelected
-                    ? 'bg-stone-900 dark:bg-stone-100 text-stone-50 dark:text-stone-900 shadow-xs'
-                    : 'text-stone-700 dark:text-stone-300 hover:bg-stone-200/60 dark:hover:bg-stone-800'
+                    ? 'bg-[#9c381e] text-[#f7f5f0] shadow-2xs font-semibold'
+                    : 'text-stone-700 hover:bg-[#ede7dc]/60 hover:text-stone-900'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
                   <Icon
                     className={`w-4 h-4 ${
-                      isSelected ? 'text-amber-400 dark:text-amber-600' : 'text-stone-500 dark:text-stone-400'
+                      isSelected ? 'text-[#f7f5f0]' : 'text-stone-500'
                     }`}
                   />
                   <div>
@@ -150,10 +150,10 @@ export default function Sidebar({
                 </div>
 
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded font-mono ${
+                  className={`text-[9px] px-1.5 py-0.5 rounded font-mono ${
                     isSelected
-                      ? 'bg-stone-800 dark:bg-stone-200 text-stone-200 dark:text-stone-800'
-                      : 'bg-stone-200/70 dark:bg-stone-800 text-stone-500 dark:text-stone-400'
+                      ? 'bg-black/20 text-[#fbeee9]'
+                      : 'bg-stone-200/80 text-stone-600'
                   }`}
                 >
                   {item.badge}
@@ -164,17 +164,17 @@ export default function Sidebar({
         </div>
 
         {/* Footer info: IIT Gandhinagar Institutional Banner */}
-        <div className="p-3 m-3 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 text-[11px] space-y-1.5">
+        <div className="p-3 m-3 rounded-2xl border border-[#e5dfd5] bg-white text-[11px] space-y-1.5 shadow-heritage">
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-stone-800 dark:text-stone-200">
+            <span className="font-semibold text-stone-800 font-heritage">
               IIT Gandhinagar
             </span>
-            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="w-2 h-2 rounded-full bg-[#2d5e4a]" />
           </div>
-          <p className="text-[10px] text-stone-500 dark:text-stone-400 leading-tight">
-            Explorer Fellowship &amp; Grassroots Cultural Revitalization Archive
+          <p className="text-[10px] text-stone-500 leading-tight">
+            Explorer Fellowship &amp; Cultural Heritage Revitalisation
           </p>
-          <div className="pt-1 border-t border-stone-100 dark:border-stone-800 text-[9px] font-mono text-stone-400">
+          <div className="pt-1 border-t border-stone-100 text-[9px] font-mono text-stone-400">
             HackCult &apos;26 · HC26-CULT01
           </div>
         </div>

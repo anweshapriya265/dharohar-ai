@@ -6,8 +6,6 @@ import {
   AlertCircle,
   Loader2,
   RefreshCw,
-  Terminal,
-  Database,
 } from 'lucide-react';
 import { HealthCheckState, getApiBaseUrl } from '@/lib/api';
 
@@ -26,138 +24,116 @@ export default function HealthStatusCard({ healthState, onRefresh }: HealthStatu
     setIsRetrying(false);
   };
 
+  const isConnected = healthState.status === 'connected';
+
   return (
-    <div className="rounded-xl border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-stone-900/90 p-4 sm:p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-stone-100 dark:border-stone-800">
+    <div className="rounded-2xl border border-[#e5dfd5] bg-white p-5 sm:p-6 shadow-heritage">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-stone-100">
         <div className="flex items-center gap-3">
           <div
             className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-              healthState.status === 'connected'
-                ? 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400'
+              isConnected
+                ? 'bg-[#edf5f1] text-[#2d5e4a]'
                 : healthState.status === 'connecting'
-                ? 'bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400'
-                : 'bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-400'
+                ? 'bg-[#fbf5eb] text-[#b67322]'
+                : 'bg-[#fdf0ee] text-[#a6382a]'
             }`}
           >
-            {healthState.status === 'connected' && <CheckCircle2 className="w-5 h-5" />}
+            {isConnected && <CheckCircle2 className="w-5 h-5" />}
             {healthState.status === 'connecting' && <Loader2 className="w-5 h-5 animate-spin" />}
             {healthState.status === 'error' && <AlertCircle className="w-5 h-5" />}
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <h2 className="text-sm font-semibold text-stone-900 dark:text-stone-100">
-                Backend System Status
+              <h2 className="text-sm font-serif font-bold text-stone-900 font-heritage">
+                FastAPI &amp; Machine Learning Subsystem
               </h2>
               <span
                 className={`text-[10px] font-semibold px-2 py-0.5 rounded-full capitalize ${
-                  healthState.status === 'connected'
-                    ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
+                  isConnected
+                    ? 'bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0]'
                     : healthState.status === 'connecting'
-                    ? 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
-                    : 'bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800'
+                    ? 'bg-[#fbf5eb] text-[#b67322] border border-[#f0dec3]'
+                    : 'bg-[#fdf0ee] text-[#a6382a] border border-[#f4cbc5]'
                 }`}
               >
-                {healthState.status === 'connected'
-                  ? 'Connected'
+                {isConnected
+                  ? 'Active & Grounded'
                   : healthState.status === 'connecting'
                   ? 'Connecting...'
-                  : 'Connection Failed'}
+                  : 'Disconnected'}
               </span>
             </div>
-            <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
+            <p className="text-xs text-stone-500 mt-0.5">
               Live FastAPI service pinging at{' '}
-              <code className="px-1 py-0.5 bg-stone-100 dark:bg-stone-800 rounded font-mono text-[11px]">
-                {baseUrl}/api/health
+              <code className="px-1.5 py-0.5 bg-[#f7f5f0] border border-[#e5dfd5] rounded font-mono text-[11px] text-stone-800">
+                {baseUrl}
               </code>
             </p>
           </div>
         </div>
 
-        {/* Action button */}
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <button
-            type="button"
-            onClick={handleManualRefresh}
-            disabled={isRetrying || healthState.status === 'connecting'}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-medium hover:bg-stone-100 dark:hover:bg-stone-700 transition-colors disabled:opacity-60"
-          >
-            <RefreshCw
-              className={`w-3.5 h-3.5 ${
-                isRetrying || healthState.status === 'connecting' ? 'animate-spin' : ''
-              }`}
-            />
-            <span>{isRetrying ? 'Checking...' : 'Ping Health Endpoint'}</span>
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={handleManualRefresh}
+          disabled={isRetrying || healthState.status === 'connecting'}
+          className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-[#e5dfd5] hover:bg-stone-50 text-stone-700 text-xs font-semibold shadow-2xs transition-colors self-start sm:self-auto disabled:opacity-50"
+        >
+          <RefreshCw className={`w-3.5 h-3.5 ${isRetrying ? 'animate-spin' : ''}`} />
+          <span>Check Status</span>
+        </button>
       </div>
 
-      {/* State-specific Body */}
-      {healthState.status === 'connected' && healthState.data && (
+      {/* Services breakdown */}
+      {isConnected && healthState.data?.services && (
         <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-          <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950/60 border border-stone-200/60 dark:border-stone-800">
-            <span className="text-stone-500 text-[11px] block">Application</span>
-            <span className="font-semibold text-stone-900 dark:text-stone-100 font-mono mt-0.5 block truncate">
-              {healthState.data.app}
-            </span>
-          </div>
-
-          <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950/60 border border-stone-200/60 dark:border-stone-800">
-            <span className="text-stone-500 text-[11px] block">API Gateway</span>
-            <span className="font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <div className="p-3 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5]">
+            <span className="text-[10px] uppercase font-semibold text-stone-400 block">API Gateway</span>
+            <span className="font-semibold text-[#2d5e4a] mt-0.5 block capitalize">
               {healthState.data.services.api}
             </span>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950/60 border border-stone-200/60 dark:border-stone-800">
-            <span className="text-stone-500 text-[11px] block">Storage Layer</span>
-            <span className="font-semibold text-stone-800 dark:text-stone-200 mt-0.5 flex items-center gap-1">
-              <Database className="w-3.5 h-3.5 text-stone-400" />
-              {healthState.data.services.storage}
+          <div className="p-3 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5]">
+            <span className="text-[10px] uppercase font-semibold text-stone-400 block">PDF Ingestion</span>
+            <span className="font-semibold text-[#2d5e4a] mt-0.5 block capitalize">
+              {healthState.data.services.pdf_extraction?.replace('_', ' ')}
             </span>
           </div>
 
-          <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950/60 border border-stone-200/60 dark:border-stone-800">
-            <span className="text-stone-500 text-[11px] block">Roundtrip Latency</span>
-            <span className="font-semibold text-stone-900 dark:text-stone-100 font-mono mt-0.5 block">
-              {healthState.latencyMs !== null ? `${healthState.latencyMs} ms` : 'N/A'}
+          <div className="p-3 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5]">
+            <span className="text-[10px] uppercase font-semibold text-stone-400 block">Vector Retrieval</span>
+            <span className="font-semibold text-[#2d5e4a] mt-0.5 block">
+              SentenceTransformers
+            </span>
+          </div>
+
+          <div className="p-3 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5]">
+            <span className="text-[10px] uppercase font-semibold text-stone-400 block">Knowledge Store</span>
+            <span className="font-semibold text-stone-900 mt-0.5 block">
+              SQLite WAL Active
             </span>
           </div>
         </div>
       )}
 
-      {healthState.status === 'connecting' && (
-        <div className="pt-4 flex items-center gap-3 text-xs text-amber-700 dark:text-amber-300">
-          <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
-          <span>Attempting handshake with FastAPI backend server at {baseUrl}...</span>
-        </div>
-      )}
-
+      {/* Error troubleshooting block */}
       {healthState.status === 'error' && (
-        <div className="pt-4 space-y-3">
-          <div className="p-3 rounded-lg bg-rose-50/70 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-300 space-y-1">
-            <p className="font-semibold flex items-center gap-1.5">
-              <AlertCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
-              Backend Connection Unreachable
-            </p>
-            <p className="text-[11px] leading-relaxed">
-              {healthState.error ||
-                `Failed to fetch health check from ${baseUrl}/api/health. The backend server might be stopped.`}
-            </p>
+        <div className="mt-4 p-4 rounded-xl bg-[#fdf0ee] border border-[#f4cbc5] text-xs space-y-2">
+          <div className="font-semibold text-[#a6382a] flex items-center gap-1.5">
+            <AlertCircle className="w-4 h-4 text-[#a6382a]" />
+            <span>Connection Failure</span>
           </div>
-
-          <div className="p-3 rounded-lg bg-stone-100 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 text-xs text-stone-700 dark:text-stone-300 space-y-2">
-            <div className="flex items-center gap-2 text-stone-800 dark:text-stone-200 font-medium">
-              <Terminal className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-              <span>How to launch the backend server:</span>
-            </div>
-            <div className="font-mono text-[11px] bg-white dark:bg-stone-900 p-2.5 rounded border border-stone-200 dark:border-stone-800 overflow-x-auto select-all">
-              cd backend ; .\.venv\Scripts\activate ; uvicorn app.main:app --reload --port 8000
-            </div>
-            <p className="text-[11px] text-stone-500 dark:text-stone-400">
-              Once the server starts, click <strong>Ping Health Endpoint</strong> above to establish connection.
-            </p>
+          <p className="text-stone-700 leading-relaxed font-mono text-[11px]">
+            {healthState.error}
+          </p>
+          <div className="pt-2 border-t border-[#f4cbc5] space-y-1 text-stone-600">
+            <p className="font-semibold text-stone-800">Resolution Checklist:</p>
+            <ol className="list-decimal list-inside space-y-0.5 text-[11px]">
+              <li>Ensure the FastAPI backend is running: <code className="bg-white px-1 py-0.5 rounded border border-[#e5dfd5]">cd backend; uvicorn app.main:app --port 8000</code></li>
+              <li>Verify CORS settings permit connections from <code className="bg-white px-1 py-0.5 rounded border border-[#e5dfd5]">http://localhost:3000</code></li>
+            </ol>
           </div>
         </div>
       )}

@@ -29,39 +29,39 @@ export default function ArchiveSummaryArea({
   const metrics = [
     {
       id: 'documents',
-      title: 'Ingested Documents',
+      title: 'Indexed Monographs',
       actual: documentCount,
       sample: 14,
-      unit: 'PDFs in SQLite',
+      unit: 'Documents',
       icon: BookOpen,
-      desc: 'Colonial gazetteers, surveys & reports in storage',
+      desc: 'ASI gazetteers, surveys & expedition journals',
     },
     {
       id: 'pages',
-      title: 'Extracted Pages',
+      title: 'Extracted Folios',
       actual: pageCount,
       sample: 186,
-      unit: 'Pages Indexed',
+      unit: 'Pages Grounded',
       icon: FileText,
-      desc: '1-based page numbered records with text content',
+      desc: 'One-based numbered pages with vector embeddings',
     },
     {
       id: 'needs_ocr',
-      title: 'Scanned / Sparse Pages',
+      title: 'Scanned Archival Plates',
       actual: needsOcrCount,
       sample: 4,
-      unit: 'Flagged for OCR',
+      unit: 'Plates Detected',
       icon: AlertTriangle,
-      desc: 'Plates & photos detected without digital text streams',
+      desc: 'Photographic plates routed to OCR engine',
     },
     {
       id: 'storage',
-      title: 'Archive Database',
+      title: 'Knowledge Store',
       actual: storageStatus === 'initialized' ? 'Online' : 'Standby',
-      sample: '100% Verified',
+      sample: '100% Operational',
       unit: 'SQLite WAL',
       icon: Database,
-      desc: 'Local SQLite tables: documents & document_pages',
+      desc: 'Local SQLite WAL repository & 384-dim index',
     },
   ];
 
@@ -70,74 +70,56 @@ export default function ArchiveSummaryArea({
       {/* Bar with title + toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
         <div>
-          <h2 className="text-base font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage flex items-center gap-2">
-            <span>Archive Summary</span>
-            <span className="text-[11px] font-sans font-medium px-2 py-0.5 rounded-full bg-stone-200/70 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
-              {showSampleData ? 'Preview Schema Mode' : 'Live Archive Baseline'}
+          <h2 className="text-base font-serif font-bold text-stone-900 font-heritage flex items-center gap-2">
+            <span>Archival Knowledge Base Metric Highlights</span>
+            <span className="text-[11px] font-sans font-medium px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">
+              {showSampleData ? 'Preview Mode' : 'Live Archive'}
             </span>
           </h2>
-          <p className="text-xs text-stone-500 dark:text-stone-400">
+          <p className="text-xs text-stone-500">
             {showSampleData
-              ? 'Displaying labeled temporary placeholder values to inspect future archive capacity'
-              : 'Real counts of documents and pages stored in the local SQLite database'}
+              ? 'Displaying simulated explorer collection metrics'
+              : 'Live system stats from persistent local storage'}
           </p>
         </div>
 
-        {/* Toggle between authentic empty state and labeled sample preview */}
-        <div className="flex items-center gap-2 self-start sm:self-auto">
-          <label className="flex items-center gap-2 cursor-pointer text-xs text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-stone-800/80 px-3 py-1.5 rounded-lg border border-stone-200/80 dark:border-stone-700 select-none">
-            <input
-              type="checkbox"
-              checked={showSampleData}
-              onChange={(e) => onToggleSampleData(e.target.checked)}
-              className="rounded border-stone-300 text-amber-700 focus:ring-amber-500"
-            />
-            <Eye className="w-3.5 h-3.5 text-stone-500" />
-            <span>Show Sample Schema Preview</span>
-          </label>
-        </div>
+        <button
+          type="button"
+          onClick={() => onToggleSampleData(!showSampleData)}
+          className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#e5dfd5] bg-white hover:bg-stone-50 text-stone-700 text-xs font-semibold shadow-2xs transition-colors"
+        >
+          <Eye className="w-3.5 h-3.5 text-[#9c381e]" />
+          <span>{showSampleData ? 'Show Real Metrics' : 'Preview Large Corpus'}</span>
+        </button>
       </div>
 
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-        {metrics.map((item) => {
-          const Icon = item.icon;
-          const displayVal = showSampleData ? item.sample : item.actual;
+      {/* Metric Cards Grid */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {metrics.map((m) => {
+          const Icon = m.icon;
+          const displayVal = showSampleData ? m.sample : m.actual;
 
           return (
             <div
-              key={item.id}
-              className="relative p-4 rounded-xl border border-stone-200/80 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-xs flex flex-col justify-between"
+              key={m.id}
+              className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage flex flex-col justify-between space-y-3"
             >
-              <div className="flex items-center justify-between pb-2">
-                <span className="text-xs font-medium text-stone-500 dark:text-stone-400">
-                  {item.title}
-                </span>
-                <div className="w-8 h-8 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 flex items-center justify-center">
-                  <Icon className="w-4 h-4 text-amber-800 dark:text-amber-400" />
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-stone-600">{m.title}</span>
+                <div className="w-8 h-8 rounded-xl bg-[#fbeee9] text-[#9c381e] flex items-center justify-center">
+                  <Icon className="w-4 h-4" />
                 </div>
               </div>
 
-              <div className="my-2">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-bold font-serif text-stone-900 dark:text-stone-100 font-heritage">
-                    {displayVal}
-                  </span>
-                  <span className="text-xs text-stone-500 dark:text-stone-400 font-medium">
-                    {item.unit}
-                  </span>
+              <div>
+                <div className="text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
+                  {displayVal}
                 </div>
-
-                {showSampleData && (
-                  <span className="inline-block mt-1 text-[9px] font-mono tracking-wider px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-200/60 dark:border-amber-900">
-                    [SAMPLE PLACEHOLDER]
-                  </span>
-                )}
+                <div className="text-[11px] font-mono text-[#9c381e] font-semibold mt-0.5">
+                  {m.unit}
+                </div>
+                <p className="text-[11px] text-stone-500 mt-1 leading-snug">{m.desc}</p>
               </div>
-
-              <p className="text-[11px] text-stone-500 dark:text-stone-400 border-t border-stone-100 dark:border-stone-800 pt-2 mt-1">
-                {item.desc}
-              </p>
             </div>
           );
         })}

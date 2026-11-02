@@ -34,7 +34,7 @@ import {
 
 export default function Home() {
   // Navigation & Role state
-  const [currentTab, setCurrentTab] = useState<string>('dashboard');
+  const [currentTab, setCurrentTab] = useState<string>('cartography');
   const [currentRole, setCurrentRole] = useState<string>('archivist');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
@@ -100,82 +100,86 @@ export default function Home() {
     await checkHealth();
   }, [checkHealth]);
 
+  // Documents loader
   const loadDocuments = useCallback(async () => {
+    setIsLoadingDocs(true);
+    setDocsError(null);
     try {
       const res = await fetchDocuments();
       setDocuments(res.documents);
-      setDocsError(null);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to load documents';
+      const msg = err instanceof Error ? err.message : 'Failed to retrieve documents';
       setDocsError(msg);
     } finally {
       setIsLoadingDocs(false);
     }
   }, []);
 
-  const handleSearchSubmit = useCallback(async (query: string) => {
-    const trimmed = query.trim();
-    if (!trimmed) return;
+  // Search handler
+  const handleSearchSubmit = async (queryToSearch: string) => {
+    const q = queryToSearch.trim();
+    if (!q) return;
 
     setIsSearching(true);
     setSearchError(null);
     setHasSearched(true);
 
     try {
-      const res = await searchArchive(trimmed, 8, -0.5);
-      setSearchResponse(res);
-      setSearchResults(res.results || []);
+      const response = await searchArchive(q, 8);
+      setSearchResponse(response);
+      setSearchResults(response.results);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'An error occurred during search';
-      setSearchError(msg);
+      const errorMsg =
+        err instanceof Error ? err.message : 'An unexpected error occurred while searching';
+      setSearchError(errorMsg);
       setSearchResults([]);
+      setSearchResponse(null);
     } finally {
       setIsSearching(false);
     }
-  }, []);
+  };
 
-  const handleClearSearch = useCallback(() => {
+  const handleClearSearch = () => {
     setSearchQuery('');
     setSearchResults([]);
     setSearchResponse(null);
     setSearchError(null);
     setHasSearched(false);
-  }, []);
+  };
 
-  const handleInspectSource = useCallback(
-    (documentId: string, pageNumber: number) => {
-      const doc = documents.find((d) => d.id === documentId);
-      if (doc) {
-        setSelectedViewerDoc(doc);
-        setSelectedViewerPage(pageNumber);
-      } else {
-        setSelectedViewerDoc({
-          id: documentId,
-          original_filename: documentId,
-          file_size: 0,
-          content_type: 'application/pdf',
-          upload_timestamp: new Date().toISOString(),
-          processing_status: 'completed',
-          extraction_status: 'extracted',
-          page_count: pageNumber,
-          storage_reference: `${documentId}.pdf`,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
-        setSelectedViewerPage(pageNumber);
-      }
-    },
-    [documents]
-  );
+  const handleInspectSource = (documentId: string, pageNumber: number) => {
+    const matchedDoc = documents.find((d) => d.id === documentId);
+    if (matchedDoc) {
+      setSelectedViewerDoc(matchedDoc);
+      setSelectedViewerPage(pageNumber);
+    } else {
+      const stubDoc: DocumentItem = {
+        id: documentId,
+        original_filename: documentId,
+        file_size: 0,
+        content_type: 'application/pdf',
+        upload_timestamp: new Date().toISOString(),
+        processing_status: 'completed',
+        extraction_status: 'extracted',
+        page_count: pageNumber,
+        storage_reference: documentId,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      setSelectedViewerDoc(stubDoc);
+      setSelectedViewerPage(pageNumber);
+    }
+  };
 
+  // Initial load effect
   useEffect(() => {
     let isMounted = true;
 
     const initData = async () => {
-      const healthPromise = fetchBackendHealth();
-      const docsPromise = fetchDocuments();
-
-      const [healthRes, docsRes] = await Promise.allSettled([healthPromise, docsPromise]);
+      const [healthRes, docsRes] = await Promise.allSettled([
+        fetchBackendHealth(),
+        fetchDocuments(),
+      ]);
 
       if (!isMounted) return;
 
@@ -188,14 +192,14 @@ export default function Home() {
           lastChecked: new Date().toISOString(),
         });
       } else {
-        const msg =
+        const errorMsg =
           healthRes.reason instanceof Error
             ? healthRes.reason.message
-            : 'Unknown network failure while connecting to backend';
+            : 'Initial connection failed';
         setHealthState({
           status: 'error',
           data: null,
-          error: msg,
+          error: errorMsg,
           latencyMs: null,
           lastChecked: new Date().toISOString(),
         });
@@ -231,8 +235,11 @@ export default function Home() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
         e.preventDefault();
-        const input = searchRef.current?.querySelector('input');
-        input?.focus();
+        setCurrentTab('dashboard');
+        setTimeout(() => {
+          const input = searchRef.current?.querySelector('input');
+          input?.focus();
+        }, 100);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -258,18 +265,19 @@ export default function Home() {
   const needsOcrCount = documents.filter((doc) => doc.extraction_status === 'needs_ocr').length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf8f5] dark:bg-[#12100e] text-[#1c1917] dark:text-[#f5f0eb]">
-      {/* Top Header */}
+    <div className="min-h-screen flex flex-col bg-[#f7f5f0] text-[#1c1917]">
+      {/* Top Header with Unified Navigation Tabs */}
       <Header
         healthState={healthState}
         onRefreshHealth={handleManualRefresh}
         onOpenUpload={() => setIsUploadOpen(true)}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         currentRole={currentRole}
         onSelectRole={setCurrentRole}
+        currentTab={currentTab}
+        onSelectTab={setCurrentTab}
       />
 
-      {/* Main Container: Sidebar + Active Tab Content */}
+      {/* Main Container */}
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
         <Sidebar
           currentTab={currentTab}
@@ -294,7 +302,7 @@ export default function Home() {
           {/* TAB 2: 3D MONUMENT DIGITAL TWIN (Pathway 1) */}
           {currentTab === '3d-viewer' && <Monument3DViewer />}
 
-          {/* TAB 3: CURATOR REVIEW QUEUE (SRS 6.2 & 12.1) */}
+          {/* TAB 3: CURATOR REVIEW QUEUE (Human-in-the-Loop) */}
           {currentTab === 'review-queue' && <ReviewQueueSection />}
 
           {/* TAB 4: HERITAGE CORPUS & FIELD RECORDS */}
@@ -308,18 +316,21 @@ export default function Home() {
             />
           )}
 
-          {/* TAB 5: ADMIN & AUDIT TRAIL (SRS 7.8) */}
+          {/* TAB 5: ADMIN & AUDIT TRAIL */}
           {currentTab === 'admin' && <AdminDashboardSection />}
 
           {/* TAB 6: SYSTEM HEALTH & TELEMETRY */}
           {currentTab === 'diagnostics' && (
             <div className="space-y-6">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-amber-700 dark:text-amber-400" />
+              <div className="p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#fbeee9] text-[#9c381e] mb-1">
+                  <Activity className="w-3.5 h-3.5" />
+                  <span>Telemetry &amp; Service Health</span>
+                </div>
+                <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
                   System Diagnostics &amp; Health Telemetry
                 </h1>
-                <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
+                <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
                   Real-time status of FastAPI service, all-MiniLM-L6-v2 embeddings, and SQLite database
                 </p>
               </div>
@@ -327,57 +338,53 @@ export default function Home() {
               <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-3">
-                  <h2 className="text-xs font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                    <Server className="w-4 h-4 text-amber-700" />
-                    Frontend &amp; API Configuration
+                <div className="p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-3">
+                  <h2 className="text-sm font-serif font-bold text-stone-900 font-heritage flex items-center gap-2">
+                    <Server className="w-4 h-4 text-[#9c381e]" />
+                    <span>Frontend &amp; API Configuration</span>
                   </h2>
-                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-300">
-                    <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
+                  <div className="space-y-2 text-xs text-stone-600">
+                    <div className="flex justify-between py-1.5 border-b border-stone-100">
                       <span className="text-stone-400">NEXT_PUBLIC_API_BASE_URL:</span>
-                      <span className="font-mono text-stone-800 dark:text-stone-200">
-                        {getApiBaseUrl()}
+                      <span className="font-mono text-stone-800">{getApiBaseUrl()}</span>
+                    </div>
+                    <div className="flex justify-between py-1.5 border-b border-stone-100">
+                      <span className="text-stone-400">Semantic Search Endpoint:</span>
+                      <span className="font-mono text-[#2d5e4a] font-semibold">
+                        POST /api/search (SentenceTransformers)
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                      <span className="text-stone-400">Semantic Search:</span>
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400">
-                        POST /api/search (Sentence Transformers)
-                      </span>
+                    <div className="flex justify-between py-1.5 border-b border-stone-100">
+                      <span className="text-stone-400">Geospatial Trail Endpoint:</span>
+                      <span className="font-mono text-stone-800">GET /api/map/records</span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                      <span className="text-stone-400">Geospatial Endpoint:</span>
-                      <span className="font-mono text-stone-800 dark:text-stone-200">
-                        GET /api/map/records
-                      </span>
-                    </div>
-                    <div className="flex justify-between py-1">
+                    <div className="flex justify-between py-1.5">
                       <span className="text-stone-400">Persistence Store:</span>
-                      <span className="font-mono text-stone-800 dark:text-stone-200">
+                      <span className="font-mono text-stone-800 font-semibold">
                         SQLite (WAL Mode, heritage_records &amp; chunks)
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-3">
-                  <h2 className="text-xs font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    Zero-Hallucination Integrity Check
+                <div className="p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-3">
+                  <h2 className="text-sm font-serif font-bold text-stone-900 font-heritage flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#2d5e4a]" />
+                    <span>Zero-Hallucination Integrity Check</span>
                   </h2>
-                  <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
-                    DHAROHAR AI enforces an evidence retrieval protocol. Every retrieved passage
-                    strictly attributes the source document ID, filename, and exact one-based page number.
+                  <p className="text-xs text-stone-600 leading-relaxed font-serif">
+                    DHAROHAR AI enforces a strict evidence retrieval protocol. Every retrieved passage
+                    attributes the source document ID, filename, and exact one-based page number.
                   </p>
-                  <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950 text-[11px] font-mono text-stone-600 dark:text-stone-400 border border-stone-200 dark:border-stone-800">
-                    Policy: Strict Source Grounding [ENFORCED]
+                  <div className="p-3 rounded-xl bg-[#edf5f1] border border-[#c3dcd0] text-[11px] font-mono text-[#2d5e4a] font-semibold">
+                    Policy: Strict Page-Level Grounding [ENFORCED]
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* TAB 7: DEFAULT DASHBOARD VIEW (Semantic Search & Discovery) */}
+          {/* TAB 7: SEARCH & EXPLORATION HUB */}
           {currentTab === 'dashboard' && (
             <div className="space-y-6">
               {healthState.status === 'error' && (
@@ -387,8 +394,26 @@ export default function Home() {
               {/* Welcome Hero */}
               <WelcomeHero
                 onOpenUpload={() => setIsUploadOpen(true)}
-                onExploreClick={handleScrollToSearch}
+                onNavigateTab={setCurrentTab}
+                totalRecordsCount={documents.length + 8}
               />
+
+              {/* Semantic Knowledge Search Section */}
+              <div ref={searchRef}>
+                <SearchSection
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  onSearchSubmit={handleSearchSubmit}
+                  isSearching={isSearching}
+                  searchResults={searchResults}
+                  searchResponse={searchResponse}
+                  searchError={searchError}
+                  hasSearched={hasSearched}
+                  totalIndexedDocs={documents.length + 8}
+                  onInspectSource={handleInspectSource}
+                  onClearSearch={handleClearSearch}
+                />
+              </div>
 
               {/* Document Processing Pipeline Status */}
               <DocumentProcessingSection />
@@ -402,23 +427,6 @@ export default function Home() {
                 onToggleSampleData={setShowSampleData}
                 storageStatus={healthState.data?.services?.storage || 'initialized'}
               />
-
-              {/* Milestone 3: Semantic Knowledge Search Section */}
-              <div ref={searchRef}>
-                <SearchSection
-                  searchQuery={searchQuery}
-                  onSearchChange={setSearchQuery}
-                  onSearchSubmit={handleSearchSubmit}
-                  isSearching={isSearching}
-                  searchResults={searchResults}
-                  searchResponse={searchResponse}
-                  searchError={searchError}
-                  hasSearched={hasSearched}
-                  totalIndexedDocs={documents.length}
-                  onInspectSource={handleInspectSource}
-                  onClearSearch={handleClearSearch}
-                />
-              </div>
 
               {/* Recent Documents Section */}
               <RecentDocumentsSection
