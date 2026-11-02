@@ -51,3 +51,4 @@ export default function DharoharLogo({ className = '', size = 40 }: DharoharLogo
     </svg>
   );
 }
+
