@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import {
-  Landmark,
   Upload,
   RefreshCw,
   Server,
@@ -14,6 +13,7 @@ import {
   ShieldCheck,
   Activity,
 } from 'lucide-react';
+import DharoharLogo from '@/components/DharoharLogo';
 import { HealthCheckState, getApiBaseUrl } from '@/lib/api';
 
 interface HeaderProps {
@@ -65,9 +65,7 @@ export default function Header({
             onClick={() => onSelectTab('cartography')}
             className="flex items-center gap-3 text-left group focus:outline-hidden"
           >
-            <div className="w-10 h-10 rounded-xl bg-[#9c381e] text-[#f7f5f0] flex items-center justify-center shadow-sm ring-1 ring-[#9c381e]/20 group-hover:bg-[#832e17] transition-colors">
-              <Landmark className="w-5 h-5" />
-            </div>
+            <DharoharLogo size={42} className="group-hover:scale-105 transition-transform" />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-serif font-bold text-lg text-stone-900 tracking-tight font-heritage">

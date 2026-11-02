@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <defs>
+    <linearGradient id="terracottaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B84424" />
+      <stop offset="100%" stop-color="#832A14" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3C669" />
+      <stop offset="100%" stop-color="#B67322" />
+    </linearGradient>
+    <linearGradient id="stoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF9F5" />
+      <stop offset="100%" stop-color="#E5DFD5" />
+    </linearGradient>
+    <filter id="subtleShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#1C1917" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Seal (Indian Architectural Terracotta) -->
+  <rect x="6" y="6" width="108" height="108" rx="26" fill="url(#terracottaGrad)" />
+  <rect x="8" y="8" width="104" height="104" rx="24" stroke="url(#goldGrad)" stroke-width="1.5" stroke-opacity="0.6" />
+
+  <!-- Stepwell Subterranean Geometry: Tier 1 (Outer Stepped Square) -->
+  <rect x="22" y="22" width="76" height="76" rx="10" stroke="url(#goldGrad)" stroke-width="2.5" stroke-opacity="0.9" />
+
+  <!-- Stepwell Stepped Geometry: Tier 2 (Intermediate Stepped Square rotated 45 degrees / Ashta-mandapa) -->
+  <rect x="33" y="33" width="54" height="54" rx="6" stroke="#FBF9F5" stroke-width="2" stroke-opacity="0.75" />
+
+  <!-- Stepwell Stepped Geometry: Tier 3 (Inner Mandapa Core) -->
+  <rect x="42" y="42" width="36" height="36" rx="4" fill="#6A200E" stroke="url(#goldGrad)" stroke-width="1.8" />
+
+  <!-- Center Sacred Pillar & Digital Revitalization Star / Kalasha -->
+  <!-- Stepped Gateway Arch (Torana) -->
+  <path d="M48 68V54C48 49 53 46 60 46C67 46 72 49 72 54V68" stroke="#FBF9F5" stroke-width="2" stroke-linecap="round" />
+  <path d="M53 68V56C53 52 56 50 60 50C64 50 67 52 67 56V68" stroke="url(#goldGrad)" stroke-width="1.5" />
+
+  <!-- Central Digital Intelligence Spark / Diamond -->
+  <path d="M60 38L62.5 43.5L68 46L62.5 48.5L60 54L57.5 48.5L52 46L57.5 43.5L60 38Z" fill="url(#goldGrad)" filter="url(#subtleShadow)" />
+  
+  <!-- Subterranean Water Well Ripple -->
+  <circle cx="60" cy="62" r="3" fill="#38BDF8" />
+  <circle cx="60" cy="62" r="5.5" stroke="#38BDF8" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="2 2" />
+</svg>

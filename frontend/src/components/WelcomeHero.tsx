@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   FileText,
 } from 'lucide-react';
+import DharoharLogo from '@/components/DharoharLogo';
 
 interface WelcomeHeroProps {
   onOpenUpload: () => void;
@@ -38,15 +39,18 @@ export default function WelcomeHero({
         </div>
 
         {/* Headline */}
-        <div className="space-y-2">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-stone-900 tracking-tight font-heritage leading-tight">
-            Digital Revitalisation of Cultural & Architectural Archives
-          </h1>
-          <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
-            Transforming thousands of subterranean stepwell photographs, colonial gazetteers,
-            regional epigraphs, and student expedition journals into interactive 3D digital twins,
-            geospatial routes, and zero-hallucination semantic knowledge.
-          </p>
+        <div className="flex items-start gap-4">
+          <DharoharLogo size={56} className="mt-1 hidden sm:block drop-shadow-sm" />
+          <div className="space-y-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-stone-900 tracking-tight font-heritage leading-tight">
+              Digital Revitalisation of Cultural &amp; Architectural Archives
+            </h1>
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
+              Transforming thousands of subterranean stepwell photographs, colonial gazetteers,
+              regional epigraphs, and student expedition journals into interactive 3D digital twins,
+              geospatial routes, and zero-hallucination semantic knowledge.
+            </p>
+          </div>
         </div>
 
         {/* Feature Badges */}

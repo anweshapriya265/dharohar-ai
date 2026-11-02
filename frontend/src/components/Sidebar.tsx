@@ -10,8 +10,8 @@ import {
   Activity,
   Server,
   X,
-  Landmark,
 } from 'lucide-react';
+import DharoharLogo from '@/components/DharoharLogo';
 
 interface SidebarProps {
   currentTab: string;
@@ -102,7 +102,7 @@ export default function Sidebar({
         {/* Mobile Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#e5dfd5] lg:hidden">
           <div className="flex items-center gap-2">
-            <Landmark className="w-5 h-5 text-[#9c381e]" />
+            <DharoharLogo size={28} />
             <span className="font-serif font-bold text-stone-900 font-heritage">
               DHAROHAR AI
             </span>

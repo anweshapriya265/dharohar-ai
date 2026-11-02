@@ -17,6 +17,11 @@ export const metadata: Metadata = {
     "Rani ki Vav",
     "Kailasa Temple",
   ],
+  icons: {
+    icon: '/dharohar-logo.svg',
+    shortcut: '/dharohar-logo.svg',
+    apple: '/dharohar-logo.svg',
+  },
 };
 
 export default function RootLayout({
