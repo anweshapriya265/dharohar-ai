@@ -31,33 +31,33 @@ export default function Monument3DViewer() {
       id: 1,
       title: 'Entrance Portico & Stepped Pavilion',
       level: 'Ground Level (0.0 m)',
-      description: 'Single-entry portal leading into the subterranean axial descent, framed by carved Solanki pillar capitals and lintels.',
-      cameraPos: { x: 0, y: 8, z: 22 },
-      target: { x: 0, y: 1, z: 10 },
+      description: 'Single-entry Solanki portico with pyramidal chhatri roof, leading into the subterranean axial descent.',
+      cameraPos: { x: 0, y: 10, z: 24 },
+      target: { x: 0, y: 0, z: 12 },
     },
     {
       id: 2,
       title: 'Octagonal Shaft & Carved Mandapa',
-      level: 'Intermediate Tier (-10.5 m)',
-      description: 'Open octagonal light well allowing atmospheric sunlight to cascade down onto intricately carved friezes of celestial dancers and floral motifs.',
-      cameraPos: { x: 12, y: 4, z: 8 },
-      target: { x: 0, y: -2, z: 0 },
+      level: 'Intermediate Tier (-6.6 m)',
+      description: 'Open octagonal light well allowing atmospheric sunlight to cascade down onto carved friezes and hypostyle pillars.',
+      cameraPos: { x: 12, y: 2, z: 4 },
+      target: { x: 0, y: -5, z: -3 },
     },
     {
       id: 3,
       title: 'Subterranean Stepped Terraces',
-      level: 'Deep Tier (-18.2 m)',
-      description: 'Five distinct subterranean storeys engineered with interlocking sandstone masonry to withstand lateral earth pressure while cooling ambient air by 5–7°C.',
+      level: 'Deep Tier (-8.8 m)',
+      description: 'Descending flights of sandstone steps and colonnaded landings engineered to moderate ambient air by 5–7°C.',
       cameraPos: { x: -14, y: -2, z: 2 },
-      target: { x: 0, y: -6, z: -4 },
+      target: { x: 0, y: -6, z: -6 },
     },
     {
       id: 4,
       title: 'Aquifer Spring Basin',
-      level: 'Basal Water Table (-24.0 m)',
-      description: 'Circular masonry reservoir catching natural subterranean aquifer runoff, functioning as perpetual drought insurance and a community sacred cooling retreat.',
-      cameraPos: { x: 0, y: -6, z: -18 },
-      target: { x: 0, y: -12, z: -12 },
+      level: 'Basal Water Table (-11.0 m)',
+      description: 'Deep circular masonry reservoir catching subterranean groundwater, providing constant cooling and drought insurance.',
+      cameraPos: { x: 0, y: 4, z: -22 },
+      target: { x: 0, y: -10, z: -14 },
     },
   ];
 
@@ -71,7 +71,7 @@ export default function Monument3DViewer() {
 
   const handleResetCamera = () => {
     if (cameraRef.current) {
-      cameraRef.current.position.set(22, 18, 28);
+      cameraRef.current.position.set(20, 18, 26);
       cameraRef.current.lookAt(0, -4, 0);
     }
     setActiveHotspot(1);
@@ -87,12 +87,12 @@ export default function Monument3DViewer() {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const bgColor = lightingMode === 'twilight' ? 0x1c1917 : 0xf2eee6;
+    const bgColor = lightingMode === 'twilight' ? 0x1c1917 : 0xf4f1eb;
     scene.background = new THREE.Color(bgColor);
 
-    // 2. Camera
+    // 2. Camera: Isometric 3/4 cutaway overview looking down into the open trench
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(22, 18, 28);
+    camera.position.set(20, 18, 26);
     camera.lookAt(0, -4, 0);
     cameraRef.current = camera;
 
@@ -108,27 +108,27 @@ export default function Monument3DViewer() {
 
     // 4. Lighting Rig
     if (lightingMode === 'twilight') {
-      const ambient = new THREE.AmbientLight(0xfff1e0, 0.45);
+      const ambient = new THREE.AmbientLight(0xffecd2, 0.5);
       scene.add(ambient);
 
-      // Golden sunset sun
-      const sun = new THREE.DirectionalLight(0xe88a43, 1.5);
-      sun.position.set(25, 20, 25);
+      // Sunset sun angle
+      const sun = new THREE.DirectionalLight(0xe88a43, 1.6);
+      sun.position.set(24, 22, 20);
       sun.castShadow = true;
       sun.shadow.mapSize.width = 1024;
       sun.shadow.mapSize.height = 1024;
       scene.add(sun);
 
-      // Deep subterranean candle-light glow
-      const wellPoint = new THREE.PointLight(0xffaa44, 2.0, 30);
-      wellPoint.position.set(0, -10, 0);
-      scene.add(wellPoint);
+      // Warm glow from deep inside the well
+      const wellGlow = new THREE.PointLight(0xffaa44, 2.5, 35);
+      wellGlow.position.set(0, -8, -14);
+      scene.add(wellGlow);
     } else {
-      // Natural museum gallery lighting
-      const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+      // Gallery daylight
+      const ambient = new THREE.AmbientLight(0xffffff, 0.75);
       scene.add(ambient);
 
-      const sunlight = new THREE.DirectionalLight(0xfff7ed, 1.2);
+      const sunlight = new THREE.DirectionalLight(0xfff7ed, 1.3);
       sunlight.position.set(20, 30, 20);
       sunlight.castShadow = true;
       sunlight.shadow.mapSize.width = 1024;
@@ -145,79 +145,230 @@ export default function Monument3DViewer() {
     monumentGroupRef.current = monumentGroup;
     scene.add(monumentGroup);
 
-    // Authentic Sandstone Material
+    // Materials
     const stoneColor = lightingMode === 'twilight' ? 0xd47a3e : 0xb8885b;
     const stoneMat = new THREE.MeshStandardMaterial({
       color: stoneColor,
-      roughness: 0.85,
+      roughness: 0.8,
       metalness: 0.05,
       wireframe: wireframe,
     });
 
-    const waterMat = new THREE.MeshStandardMaterial({
-      color: 0x2b7a9e,
-      roughness: 0.15,
-      metalness: 0.8,
-      transparent: true,
-      opacity: 0.8,
+    const darkStoneMat = new THREE.MeshStandardMaterial({
+      color: lightingMode === 'twilight' ? 0x2e2925 : 0x8a6b4b,
+      roughness: 0.9,
+      wireframe: wireframe,
     });
 
-    // Outer Ground Level
-    const groundGeo = new THREE.BoxGeometry(36, 1, 48);
-    const groundMesh = new THREE.Mesh(
-      groundGeo,
-      new THREE.MeshStandardMaterial({
-        color: lightingMode === 'twilight' ? 0x2e2925 : 0xded8cc,
-        roughness: 0.95,
-      })
-    );
-    groundMesh.position.y = 2;
-    groundMesh.receiveShadow = true;
-    monumentGroup.add(groundMesh);
+    const groundTerrainMat = new THREE.MeshStandardMaterial({
+      color: lightingMode === 'twilight' ? 0x24201c : 0xd8d2c4,
+      roughness: 0.95,
+      wireframe: wireframe,
+    });
 
-    // Stepwell descending tiers (5 subterranean levels)
-    const tiers = 6;
-    for (let i = 0; i < tiers; i++) {
-      const stepWidth = 14 - i * 1.4;
-      const stepLength = 32 - i * 3.5;
-      const tierHeight = 2.2;
-      const tierY = -i * tierHeight;
+    const waterMat = new THREE.MeshStandardMaterial({
+      color: 0x1d7c9e,
+      roughness: 0.1,
+      metalness: 0.7,
+      transparent: true,
+      opacity: 0.85,
+    });
 
-      // Retaining masonry side walls
-      const wallGeo = new THREE.BoxGeometry(stepWidth, tierHeight, stepLength);
-      const wallMesh = new THREE.Mesh(wallGeo, stoneMat);
-      wallMesh.position.set(0, tierY, -i * 1.2);
-      wallMesh.castShadow = true;
-      wallMesh.receiveShadow = true;
-      monumentGroup.add(wallMesh);
+    // A. SURROUNDING GROUND EMBANKMENTS (Cutaway Trench Open in Center)
+    // Left embankment (x < -4.5)
+    const leftEmbankGeo = new THREE.BoxGeometry(10, 4, 38);
+    const leftEmbank = new THREE.Mesh(leftEmbankGeo, groundTerrainMat);
+    leftEmbank.position.set(-9.5, -2, 0);
+    leftEmbank.receiveShadow = true;
+    monumentGroup.add(leftEmbank);
 
-      // Carved Solanki Pillars at each pavilion level
-      const pillarCount = 4;
-      for (let p = 0; p < pillarCount; p++) {
-        const pillarGeo = new THREE.CylinderGeometry(0.3, 0.35, tierHeight * 1.5, 12);
-        const pillarMesh = new THREE.Mesh(pillarGeo, stoneMat);
-        const px = (p % 2 === 0 ? 1 : -1) * (stepWidth * 0.38);
-        const pz = (p < 2 ? 1 : -1) * (stepLength * 0.35);
-        pillarMesh.position.set(px, tierY + tierHeight * 0.5, pz - i * 1.2);
-        pillarMesh.castShadow = true;
-        monumentGroup.add(pillarMesh);
-      }
+    // Right embankment (x > +4.5)
+    const rightEmbankGeo = new THREE.BoxGeometry(10, 4, 38);
+    const rightEmbank = new THREE.Mesh(rightEmbankGeo, groundTerrainMat);
+    rightEmbank.position.set(9.5, -2, 0);
+    rightEmbank.receiveShadow = true;
+    monumentGroup.add(rightEmbank);
+
+    // Back embankment behind the circular well
+    const backEmbankGeo = new THREE.BoxGeometry(29, 4, 8);
+    const backEmbank = new THREE.Mesh(backEmbankGeo, groundTerrainMat);
+    backEmbank.position.set(0, -2, -23);
+    backEmbank.receiveShadow = true;
+    monumentGroup.add(backEmbank);
+
+    // B. MASONRY RETAINING WALLS ALONG THE OPEN TRENCH
+    // Left retaining wall (x = -4.5)
+    const leftWallGeo = new THREE.BoxGeometry(0.6, 12, 34);
+    const leftWall = new THREE.Mesh(leftWallGeo, stoneMat);
+    leftWall.position.set(-4.5, -6, 0);
+    leftWall.castShadow = true;
+    leftWall.receiveShadow = true;
+    monumentGroup.add(leftWall);
+
+    // Right retaining wall (x = +4.5)
+    const rightWallGeo = new THREE.BoxGeometry(0.6, 12, 34);
+    const rightWall = new THREE.Mesh(rightWallGeo, stoneMat);
+    rightWall.position.set(4.5, -6, 0);
+    rightWall.castShadow = true;
+    rightWall.receiveShadow = true;
+    monumentGroup.add(rightWall);
+
+    // C. GROUND ENTRANCE CHHATRI / PORTICO (z = +16, y = 0)
+    const porticoRoofGeo = new THREE.ConeGeometry(3, 1.8, 4);
+    const porticoRoof = new THREE.Mesh(porticoRoofGeo, darkStoneMat);
+    porticoRoof.position.set(0, 3.8, 16);
+    porticoRoof.rotation.y = Math.PI / 4;
+    porticoRoof.castShadow = true;
+    monumentGroup.add(porticoRoof);
+
+    // Portico plinth
+    const plinthGeo = new THREE.BoxGeometry(6, 0.6, 6);
+    const plinth = new THREE.Mesh(plinthGeo, stoneMat);
+    plinth.position.set(0, 0.3, 16);
+    monumentGroup.add(plinth);
+
+    // Portico entrance pillars
+    for (let i = 0; i < 4; i++) {
+      const px = (i % 2 === 0 ? 1 : -1) * 2.2;
+      const pz = (i < 2 ? 1 : -1) * 2.2 + 16;
+      const pilGeo = new THREE.CylinderGeometry(0.25, 0.3, 2.6, 8);
+      const pil = new THREE.Mesh(pilGeo, stoneMat);
+      pil.position.set(px, 1.6, pz);
+      pil.castShadow = true;
+      monumentGroup.add(pil);
     }
 
-    // Basal Water Pool (Deep Aquifer)
-    const poolGeo = new THREE.CylinderGeometry(4.8, 4.8, 1.5, 32);
-    const poolMesh = new THREE.Mesh(poolGeo, waterMat);
-    poolMesh.position.set(0, -tiers * 2.2, -tiers * 1.2);
-    monumentGroup.add(poolMesh);
+    // D. DESCENDING TIERS & FLIGHTS OF STEPS
+    const tierLevels = [
+      { y: 0.0, zStart: 16, zEnd: 11, label: 'Entry Flight' },
+      { y: -2.4, zStart: 11, zEnd: 6, label: 'Pavilion Tier 1' },
+      { y: -4.8, zStart: 6, zEnd: 1, label: 'Pavilion Tier 2' },
+      { y: -7.2, zStart: 1, zEnd: -5, label: 'Octagonal Mandapa Tier 3' },
+      { y: -9.6, zStart: -5, zEnd: -10, label: 'Deep Hypostyle Tier 4' },
+    ];
 
-    // Subtle Architectural Grid Base
+    tierLevels.forEach((tier, tIdx) => {
+      // 1. Landing Platform
+      const landingLength = 3.5;
+      const landingZ = (tier.zStart + tier.zEnd) / 2;
+      const landingGeo = new THREE.BoxGeometry(8.2, 0.5, landingLength);
+      const landingMesh = new THREE.Mesh(landingGeo, stoneMat);
+      landingMesh.position.set(0, tier.y, landingZ);
+      landingMesh.receiveShadow = true;
+      monumentGroup.add(landingMesh);
+
+      // 2. Colonnaded Pillars on this Landing
+      if (tIdx > 0 && tIdx < 5) {
+        const pillarPositions = [
+          [-3, landingZ - 1.2],
+          [3, landingZ - 1.2],
+          [-3, landingZ + 1.2],
+          [3, landingZ + 1.2],
+        ];
+
+        // Pillar height up to ground level
+        const pHeight = Math.abs(tier.y) + 1.2;
+        pillarPositions.forEach(([px, pz]) => {
+          const colGeo = new THREE.CylinderGeometry(0.22, 0.28, pHeight, 10);
+          const col = new THREE.Mesh(colGeo, stoneMat);
+          col.position.set(px, tier.y + pHeight / 2, pz);
+          col.castShadow = true;
+          monumentGroup.add(col);
+
+          // Capital bracket on top
+          const capGeo = new THREE.BoxGeometry(0.8, 0.3, 0.8);
+          const cap = new THREE.Mesh(capGeo, darkStoneMat);
+          cap.position.set(px, tier.y + pHeight, pz);
+          monumentGroup.add(cap);
+        });
+
+        // Architrave cross-beams connecting pillar tops
+        const beamGeo = new THREE.BoxGeometry(6.6, 0.35, 0.5);
+        const beam1 = new THREE.Mesh(beamGeo, darkStoneMat);
+        beam1.position.set(0, tier.y + pHeight + 0.2, landingZ - 1.2);
+        monumentGroup.add(beam1);
+
+        const beam2 = new THREE.Mesh(beamGeo, darkStoneMat);
+        beam2.position.set(0, tier.y + pHeight + 0.2, landingZ + 1.2);
+        monumentGroup.add(beam2);
+      }
+
+      // 3. Flight of descending stairs leading down to next tier
+      if (tIdx < tierLevels.length - 1) {
+        const nextY = tierLevels[tIdx + 1].y;
+        const stepsCount = 7;
+        const stepDz = 0.35;
+        const stepDy = (nextY - tier.y) / stepsCount;
+
+        for (let s = 0; s < stepsCount; s++) {
+          const sGeo = new THREE.BoxGeometry(7.8, 0.38, 0.45);
+          const sMesh = new THREE.Mesh(sGeo, darkStoneMat);
+          const sZ = tier.zEnd - s * stepDz;
+          const sY = tier.y + s * stepDy;
+          sMesh.position.set(0, sY, sZ);
+          sMesh.receiveShadow = true;
+          monumentGroup.add(sMesh);
+        }
+      }
+    });
+
+    // E. OCTAGONAL LIGHT WELL AT TIER 3 (z = -2)
+    const octRadius = 3.2;
+    for (let o = 0; o < 8; o++) {
+      const angle = (o * Math.PI) / 4;
+      const ox = Math.cos(angle) * octRadius;
+      const oz = Math.sin(angle) * octRadius - 2;
+      const octColGeo = new THREE.CylinderGeometry(0.24, 0.3, 9, 8);
+      const octCol = new THREE.Mesh(octColGeo, stoneMat);
+      octCol.position.set(ox, -2.7, oz);
+      octCol.castShadow = true;
+      monumentGroup.add(octCol);
+    }
+
+    // F. DEEP CIRCULAR WELL SHAFT AT FAR END (z = -15)
+    const wellCenterZ = -15.5;
+    const wellRadius = 4.2;
+    const wellDepth = 12;
+
+    // Outer masonry cylinder
+    const wellWallGeo = new THREE.CylinderGeometry(
+      wellRadius + 0.8,
+      wellRadius + 0.8,
+      wellDepth,
+      32,
+      1,
+      true
+    );
+    const wellWall = new THREE.Mesh(wellWallGeo, stoneMat);
+    wellWall.position.set(0, -6, wellCenterZ);
+    wellWall.castShadow = true;
+    wellWall.receiveShadow = true;
+    monumentGroup.add(wellWall);
+
+    // Stone spiral brackets inside well
+    for (let w = 0; w < 5; w++) {
+      const ringGeo = new THREE.TorusGeometry(wellRadius, 0.35, 8, 32);
+      const ring = new THREE.Mesh(ringGeo, darkStoneMat);
+      ring.rotation.x = Math.PI / 2;
+      ring.position.set(0, -2.2 - w * 2.2, wellCenterZ);
+      monumentGroup.add(ring);
+    }
+
+    // Water pool at bottom of well
+    const waterGeo = new THREE.CircleGeometry(wellRadius - 0.1, 32);
+    const waterMesh = new THREE.Mesh(waterGeo, waterMat);
+    waterMesh.rotation.x = -Math.PI / 2;
+    waterMesh.position.set(0, -11.2, wellCenterZ);
+    monumentGroup.add(waterMesh);
+
+    // G. Subtle architectural ground grid below the well
     const gridHelper = new THREE.GridHelper(
-      60,
-      30,
+      50,
+      25,
       lightingMode === 'twilight' ? 0xb67322 : 0x9c381e,
       lightingMode === 'twilight' ? 0x44403c : 0xc7c1b5
     );
-    gridHelper.position.y = -tiers * 2.2 - 0.5;
+    gridHelper.position.y = -12.5;
     scene.add(gridHelper);
 
     // 6. Mouse Drag Orbit Controls
@@ -298,10 +449,10 @@ export default function Monument3DViewer() {
             <span>Pathway 1: Computer Vision &amp; 3D Digital Twin</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
-            Adalaj Subterranean Stepwell (Baoli) — Interactive 3D Twin
+            Adalaj Subterranean Stepwell (Baoli) — Interactive 3D Cutaway
           </h1>
           <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
-            Photogrammetric reconstruction of subterranean tiers, hypostyle pavilions, and water table architecture
+            Photogrammetric reconstruction of open subterranean tiers, flights of stairs, hypostyle pavilions, and aquifer water well
           </p>
         </div>
 
@@ -371,7 +522,7 @@ export default function Monument3DViewer() {
           {/* Overlay Interaction Hint */}
           <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm border border-[#e5dfd5] rounded-xl px-3 py-1.5 text-[11px] text-stone-600 shadow-heritage flex items-center gap-2 pointer-events-none">
             <Compass className="w-3.5 h-3.5 text-[#9c381e]" />
-            <span>Click &amp; drag mouse to orbit 360° · Scroll to inspect subterranean storeys</span>
+            <span>Click &amp; drag mouse to orbit 360° · Scroll to zoom into subterranean pavilions &amp; well</span>
           </div>
         </div>
 
@@ -384,7 +535,7 @@ export default function Monument3DViewer() {
                 <span>Architectural Tiers &amp; Hotspots</span>
               </h3>
               <p className="text-xs text-stone-500 mt-0.5">
-                Select a subterranean tier to position camera and inspect engineering details
+                Select a subterranean tier to position camera and inspect structural details
               </p>
             </div>
 
