@@ -1,0 +1,1469 @@
+{
+  "timestamp": "2026-11-01T18:10:42Z",
+  "validation_db": "E:\\projects\\dharohar-ai\\backend\\data\\dharohar_sample_validation.db",
+  "total_queries": 35,
+  "configurations": {
+    "dense": {
+      "name": "dense",
+      "retrieval_mode": "dense",
+      "threshold": 0.32,
+      "lexical_min_similarity": 0.32,
+      "lexical_min_term_coverage": 1.0,
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.9,
+      "recall_at_10": 0.9,
+      "precision_at_5": 0.2067,
+      "mrr": 0.8056,
+      "false_positive_count": 5,
+      "false_positive_rate": 1.0,
+      "multipage_coverage": 0.5,
+      "mean_latency_ms": 30.29,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 30.45
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.3
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 31.21
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 9,
+          "has_sufficient_evidence": true,
+          "latency_ms": 28.87
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 34.59
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 30.07
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 29.41
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 28.7
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 31.42
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 27.66
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 29.69
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 27.78
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 26.99
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.83
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 30.09
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 28.04
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 28.99
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 27.04
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 30.16
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 29.34
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.04
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 35.21
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 30.83
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 27.78
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.77
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 31.49
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 35.15
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 30.75
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 26.77
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.45
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.89
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 26.03
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 28.76
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 29.59
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 32.0
+        }
+      ]
+    },
+    "lexical": {
+      "name": "lexical",
+      "retrieval_mode": "lexical",
+      "threshold": 0.32,
+      "lexical_min_similarity": 0.1,
+      "lexical_min_term_coverage": 0.5,
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.8667,
+      "recall_at_10": 0.8667,
+      "precision_at_5": 0.2,
+      "mrr": 0.7861,
+      "false_positive_count": 4,
+      "false_positive_rate": 0.8,
+      "multipage_coverage": 0.5,
+      "mean_latency_ms": 54.7,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 53.66
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 56.59
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 55.3
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 2,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.03
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 9,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.57
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.37
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 39.23
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 46.4
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 64.22
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.55
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 51.17
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.57
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 42.42
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 64.13
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.92
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 2,
+          "has_sufficient_evidence": true,
+          "latency_ms": 40.18
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 2,
+          "has_sufficient_evidence": true,
+          "latency_ms": 63.15
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 51.78
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 3,
+          "has_sufficient_evidence": true,
+          "latency_ms": 51.75
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 60.25
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 57.63
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 60.96
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 61.82
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 56.9
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 58.27
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "status": "HIT @ Rank 4",
+          "rank": 4,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 65.52
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 69.28
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 61.85
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 51.81
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 55.26
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 62.72
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "status": "CORRECT REJECTION",
+          "rank": null,
+          "evidence_count": 0,
+          "has_sufficient_evidence": false,
+          "latency_ms": 47.75
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 53.52
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 47.67
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 58.33
+        }
+      ]
+    },
+    "hybrid_baseline": {
+      "name": "hybrid_baseline",
+      "retrieval_mode": "hybrid",
+      "threshold": 0.32,
+      "lexical_min_similarity": 0.32,
+      "lexical_min_term_coverage": 1.0,
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.9,
+      "recall_at_10": 0.9,
+      "precision_at_5": 0.2133,
+      "mrr": 0.8222,
+      "false_positive_count": 5,
+      "false_positive_rate": 1.0,
+      "multipage_coverage": 0.6667,
+      "mean_latency_ms": 47.08,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 37.59
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 37.18
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 42.0
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 9,
+          "has_sufficient_evidence": true,
+          "latency_ms": 35.83
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 9,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.05
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 49.76
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 42.12
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 43.34
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 55.62
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 38.17
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 43.72
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 49.24
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 38.63
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.94
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 43.83
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 33.25
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 48.8
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.39
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 59.77
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 63.36
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 56.55
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 55.2
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 46.11
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 40.14
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.07
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 53.03
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.61
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.36
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 40.69
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 53.83
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.33
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 39.3
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 42.91
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 43.63
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 57.55
+        }
+      ]
+    },
+    "hybrid_calibrated": {
+      "name": "hybrid_calibrated",
+      "retrieval_mode": "hybrid",
+      "threshold": 0.32,
+      "lexical_min_similarity": 0.1,
+      "lexical_min_term_coverage": 0.5,
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.9,
+      "recall_at_10": 0.9,
+      "precision_at_5": 0.2133,
+      "mrr": 0.8222,
+      "false_positive_count": 5,
+      "false_positive_rate": 1.0,
+      "multipage_coverage": 0.6667,
+      "mean_latency_ms": 57.36,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 58.53
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 50.19
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 51.37
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 9,
+          "has_sufficient_evidence": true,
+          "latency_ms": 54.14
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 9,
+          "has_sufficient_evidence": true,
+          "latency_ms": 51.31
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 58.87
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 43.99
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 48.25
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 66.05
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 55.62
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.98
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 56.38
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 40.58
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 61.62
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 59.91
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 39.69
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 2,
+          "has_sufficient_evidence": true,
+          "latency_ms": 65.76
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 61.71
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 60.62
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 62.79
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 53.39
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 4,
+          "has_sufficient_evidence": true,
+          "latency_ms": 66.53
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 59.06
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 8,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.65
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 65.9
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 64.05
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "status": "MISS",
+          "rank": null,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 75.07
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 58.94
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "evidence_count": 7,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.85
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 61.82
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 5,
+          "has_sufficient_evidence": true,
+          "latency_ms": 63.75
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 1,
+          "has_sufficient_evidence": true,
+          "latency_ms": 63.07
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 54.84
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 10,
+          "has_sufficient_evidence": true,
+          "latency_ms": 52.26
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "evidence_count": 6,
+          "has_sufficient_evidence": true,
+          "latency_ms": 62.96
+        }
+      ]
+    }
+  },
+  "targeted_test_cases": [
+    {
+      "id": "tc1_exact_name_low_sim",
+      "description": "1. Exact historical name with cosine similarity below 0.32",
+      "query": "E. W. West",
+      "target_chunk": "sample_doc_02_sample_22087_p2_c2",
+      "target_cosine_similarity": 0.1658,
+      "is_negative": false,
+      "policy_a_strict": "DROPPED",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 5
+    },
+    {
+      "id": "tc2_exact_date_dim_low_sim",
+      "description": "2. Exact date or numerical measurement with cosine similarity below 0.32",
+      "query": "725-755 a.d.",
+      "target_chunk": "sample_doc_03_sample_fergusson_burgess_1880_p2_c2",
+      "target_cosine_similarity": 0.1202,
+      "is_negative": false,
+      "policy_a_strict": "DROPPED",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 1
+    },
+    {
+      "id": "tc3_exact_inscription_term_low_sim",
+      "description": "3. Exact inscription terminology with cosine similarity below 0.32",
+      "query": "z.c. 200",
+      "target_chunk": "sample_doc_02_sample_22087_p2_c5",
+      "target_cosine_similarity": 0.1103,
+      "is_negative": false,
+      "policy_a_strict": "DROPPED",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 1
+    },
+    {
+      "id": "tc4_rare_transliteration",
+      "description": "4. Rare transliteration with an exact lexical match",
+      "query": "Dumar Lena",
+      "target_chunk": "sample_doc_01_sample_1544_p3_c1",
+      "target_cosine_similarity": 0.1936,
+      "is_negative": false,
+      "policy_a_strict": "DROPPED",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 3
+    },
+    {
+      "id": "tc5_common_word_distractor",
+      "description": "5. Common-word matches that are lexically present but irrelevant",
+      "query": "Dutch East India Company spice trading warehouse inside rock caves",
+      "target_chunk": null,
+      "target_cosine_similarity": 0.0,
+      "is_negative": true,
+      "policy_a_strict": "DROPPED",
+      "policy_b_unrestricted": "DROPPED",
+      "policy_c_calibrated": "DROPPED",
+      "evidence_count_calibrated": 9
+    },
+    {
+      "id": "tc6_exact_phrase_distractor",
+      "description": "6. Exact phrase match in an unrelated context",
+      "query": "Buddha and attendants from the Bagh Caves",
+      "target_chunk": "sample_doc_01_sample_1544_p4_c4",
+      "target_cosine_similarity": 0.6182,
+      "is_negative": false,
+      "policy_a_strict": "FOUND",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 5
+    },
+    {
+      "id": "tc7_dense_only_paraphrase",
+      "description": "7. Dense-only paraphrase with no lexical match",
+      "query": "Colonial antiquarian memorandum recorded during late Victorian expedition",
+      "target_chunk": "sample_doc_02_sample_22087_p2_c0",
+      "target_cosine_similarity": 0.3828,
+      "is_negative": false,
+      "policy_a_strict": "FOUND",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 2
+    },
+    {
+      "id": "tc8_both_modes_match",
+      "description": "8. Relevant candidates appearing in both retrieval systems",
+      "query": "Dantidurga reign 725-755 conquered the whole of the Dekhan",
+      "target_chunk": "sample_doc_03_sample_fergusson_burgess_1880_p2_c2",
+      "target_cosine_similarity": 0.6172,
+      "is_negative": false,
+      "policy_a_strict": "FOUND",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 6
+    },
+    {
+      "id": "tc9_no_evidence_absent",
+      "description": "9. A question with no supporting evidence",
+      "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery",
+      "target_chunk": null,
+      "target_cosine_similarity": 0.0,
+      "is_negative": true,
+      "policy_a_strict": "DROPPED",
+      "policy_b_unrestricted": "DROPPED",
+      "policy_c_calibrated": "DROPPED",
+      "evidence_count_calibrated": 2
+    },
+    {
+      "id": "tc10_multipage_evidence",
+      "description": "10. A question requiring evidence from multiple pages",
+      "query": "Architectural description of Kailasa gateway entrance and main spire height 96 feet",
+      "target_chunk": "sample_doc_03_sample_fergusson_burgess_1880_p8_c0",
+      "target_cosine_similarity": 0.4327,
+      "is_negative": false,
+      "policy_a_strict": "FOUND",
+      "policy_b_unrestricted": "FOUND",
+      "policy_c_calibrated": "FOUND",
+      "evidence_count_calibrated": 7
+    }
+  ]
+}

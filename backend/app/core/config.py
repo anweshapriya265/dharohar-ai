@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     OCR_CHAR_THRESHOLD: int = int(os.getenv("DHAROHAR_OCR_CHAR_THRESHOLD", "15"))
     OCR_DEFAULT_LANGUAGE: str = os.getenv("DHAROHAR_OCR_DEFAULT_LANGUAGE", "eng")
 
-    # Milestone 5.1: Retrieval Optimization & Context Engine
+    # Milestone 5.1 & 5.6.3: Retrieval Optimization & Hybrid Retrieval Engine
     RAG_SIMILARITY_THRESHOLD: float = float(
         os.getenv("DHAROHAR_RAG_SIMILARITY_THRESHOLD", "0.32")
     )
@@ -52,7 +52,36 @@ class Settings(BaseSettings):
         os.getenv("DHAROHAR_RAG_MAX_PAGES_PER_DOC", "3")
     )
     RAG_CANDIDATE_POOL_SIZE: int = int(
-        os.getenv("DHAROHAR_RAG_CANDIDATE_POOL_SIZE", "15")
+        os.getenv("DHAROHAR_RAG_CANDIDATE_POOL_SIZE", "50")
+    )
+    RAG_RETRIEVAL_MODE: str = os.getenv("DHAROHAR_RAG_RETRIEVAL_MODE", "hybrid")
+    RAG_RRF_K: int = int(os.getenv("DHAROHAR_RAG_RRF_K", "60"))
+    RAG_DENSE_WEIGHT: float = float(os.getenv("DHAROHAR_RAG_DENSE_WEIGHT", "1.0"))
+    RAG_LEXICAL_WEIGHT: float = float(os.getenv("DHAROHAR_RAG_LEXICAL_WEIGHT", "1.0"))
+    RAG_LEXICAL_POOL_SIZE: int = int(os.getenv("DHAROHAR_RAG_LEXICAL_POOL_SIZE", "50"))
+    RAG_LEXICAL_MIN_SIMILARITY: float = float(
+        os.getenv("DHAROHAR_RAG_LEXICAL_MIN_SIMILARITY", "0.10")
+    )
+    RAG_LEXICAL_MIN_TERM_COVERAGE: float = float(
+        os.getenv("DHAROHAR_RAG_LEXICAL_MIN_TERM_COVERAGE", "0.50")
+    )
+
+    # Milestone 5.6.3.3: OCR-Aware Lexical Normalization & Multi-Query Retrieval
+    RAG_ENABLE_OCR_NORMALIZATION: bool = os.getenv("DHAROHAR_RAG_ENABLE_OCR_NORMALIZATION", "true").lower() in ("true", "1", "yes")
+    RAG_ENABLE_MULTI_QUERY: bool = os.getenv("DHAROHAR_RAG_ENABLE_MULTI_QUERY", "true").lower() in ("true", "1", "yes")
+
+    # Milestone 5.2: Local LLM Provider & Evidence-Grounded Generation
+    LLM_PROVIDER: str = os.getenv("DHAROHAR_LLM_PROVIDER", "ollama")
+    OLLAMA_BASE_URL: str = os.getenv("DHAROHAR_OLLAMA_BASE_URL", "http://localhost:11434")
+    OLLAMA_MODEL: str = os.getenv("DHAROHAR_OLLAMA_MODEL", "llama3.2:3b")
+    LLM_CONNECT_TIMEOUT_SECONDS: float = float(
+        os.getenv("DHAROHAR_LLM_CONNECT_TIMEOUT_SECONDS", "5.0")
+    )
+    LLM_REQUEST_TIMEOUT_SECONDS: float = float(
+        os.getenv("DHAROHAR_LLM_REQUEST_TIMEOUT_SECONDS", "60.0")
+    )
+    LLM_TEMPERATURE: float = float(
+        os.getenv("DHAROHAR_LLM_TEMPERATURE", "0.0")
     )
 
 

@@ -1,0 +1,415 @@
+[
+  {
+    "id": "ADV_01",
+    "category": "Unsupported Inscription / False Historical Author",
+    "question": "What edicts did Emperor Ashoka carve on the pillar inside Kailasa Cave 16?",
+    "false_premise": "Emperor Ashoka carved edicts on the pillars of Kailasa Cave 16 (Ashoka lived c. 268\u2013232 BCE; Kailasa is an 8th century CE Rashtrakuta excavation; no Ashokan edicts exist at Ellora).",
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.5639,
+      "candidates_count": 111,
+      "evidence_blocks_count": 8,
+      "tokens_used": 1489,
+      "snippets": [
+        {
+          "evidence_id": "E1",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 1]",
+          "score": 0.5639,
+          "text_snippet": "KAILASA\u2014ELURA. 449 by whicli they are replaced, it would be difl&cult to feel sure to which religion"
+        },
+        {
+          "evidence_id": "E2",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.5322,
+          "text_snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+        },
+        {
+          "evidence_id": "E3",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 7]",
+          "score": 0.5251,
+          "text_snippet": "KAILASA\u2014ELURA. 455 not crowd it to the same extent. Perhaps it was the failure that followed from th"
+        },
+        {
+          "evidence_id": "E4",
+          "citation": "[sample_1544.pdf \u00b7 Page 4]",
+          "score": 0.5211,
+          "text_snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+        },
+        {
+          "evidence_id": "E5",
+          "citation": "[sample_22087.pdf \u00b7 Page 3]",
+          "score": 0.521,
+          "text_snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+        },
+        {
+          "evidence_id": "E6",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.4956,
+          "text_snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. "
+        },
+        {
+          "evidence_id": "E7",
+          "citation": "[sample_1544.pdf \u00b7 Page 5]",
+          "score": 0.4951,
+          "text_snippet": "cl  OF THE  ARCHAOLOGICAL SURVEY OF WESTERN INDIA.  THE ELURA CAVES  AND  OTHER BRAHMANICAL AND JAIN"
+        },
+        {
+          "evidence_id": "E8",
+          "citation": "[sample_1544.pdf \u00b7 Page 6]",
+          "score": 0.4911,
+          "text_snippet": "f the school of the Greater Vehicle, but there is no such marked advance im decorative seulpture as "
+        }
+      ]
+    },
+    "assistant_response": {
+      "grounding_state": "insufficient_evidence",
+      "has_sufficient_evidence": true,
+      "claims": [],
+      "missing_information": [
+        "Information or premises requested by the user but not established or mentioned in the evidence. Specifically, the user inquired about edicts carved by Emperor Ashoka on the pillar inside Kailasa Cave 16, but the evidence does not mention this specific detail.",
+        "The claim that 'The edicts of Emperor Ashoka were carved on the pillar inside Kailasa Cave 16.' is not established by the cited archival records.",
+        "Archival records do not contain information to establish: 'The edicts of Emperor Ashoka were carved on the pillar inside Kailasa Cave 16.'."
+      ],
+      "conflicts": [],
+      "verified_citations": [],
+      "answer": "The available archival records do not contain this information: Information or premises requested by the user but not established or mentioned in the evidence. Specifically, the user inquired about edicts carved by Emperor Ashoka on the pillar inside Kailasa Cave 16, but the evidence does not mention this specific detail.; The claim that 'The edicts of Emperor Ashoka were carved on the pillar inside Kailasa Cave 16.' is not established by the cited archival records.; Archival records do not contain information to establish: 'The edicts of Emperor Ashoka were carved on the pillar inside Kailasa Cave 16.'.."
+    },
+    "correctly_guarded": true,
+    "notes": "Model explicitly recorded the false premise in missing_information or noted it was not established by the archival records."
+  },
+  {
+    "id": "ADV_02",
+    "category": "Anachronistic Mughal Attribution",
+    "question": "In which year did Emperor Akbar build the main stone gopura of Kailasa temple?",
+    "false_premise": "Emperor Akbar built the stone gopura of Kailasa (Akbar was a 16th-century Mughal emperor; the rock-cut monolithic gopura was excavated in the 8th century CE under the Rashtrakutas).",
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.6355,
+      "candidates_count": 41,
+      "evidence_blocks_count": 5,
+      "tokens_used": 868,
+      "snippets": [
+        {
+          "evidence_id": "E1",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 1]",
+          "score": 0.6355,
+          "text_snippet": "KAILASA\u2014ELURA. 449 by whicli they are replaced, it would be difl&cult to feel sure to which religion"
+        },
+        {
+          "evidence_id": "E2",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.5863,
+          "text_snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+        },
+        {
+          "evidence_id": "E3",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.5647,
+          "text_snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign o"
+        },
+        {
+          "evidence_id": "E4",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]",
+          "score": 0.5219,
+          "text_snippet": "KAILASA\u2014ELURA. 453 / remains of the trisula of Siva on the top, making up the total height to 49 fee"
+        },
+        {
+          "evidence_id": "E5",
+          "citation": "[sample_22087.pdf \u00b7 Page 3]",
+          "score": 0.4105,
+          "text_snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+        }
+      ]
+    },
+    "assistant_response": {
+      "grounding_state": "partial",
+      "has_sufficient_evidence": true,
+      "claims": [
+        {
+          "text": "The Kailasa temple was excavated during the reign of Dantidurga.",
+          "evidence_ids": [
+            "E3"
+          ],
+          "source_citations": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E3",
+              "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+              "filename": "sample_fergusson_burgess_1880.pdf",
+              "page_number": 3,
+              "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+              "citation_valid": true,
+              "semantic_support": "not_independently_verified"
+            }
+          ]
+        }
+      ],
+      "missing_information": [
+        "The year in which Emperor Akbar built the main stone gopura of Kailasa temple."
+      ],
+      "conflicts": [],
+      "verified_citations": [
+        "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+      ],
+      "answer": "The Kailasa temple was excavated during the reign of Dantidurga. Note: The available records do not establish: The year in which Emperor Akbar built the main stone gopura of Kailasa temple.."
+    },
+    "correctly_guarded": true,
+    "notes": "Model explicitly recorded the false premise in missing_information or noted it was not established by the archival records."
+  },
+  {
+    "id": "ADV_03",
+    "category": "Fictitious Greek Inscription",
+    "question": "What Greek inscriptions did Alexander the Great leave at the Buddhist caves of Western India?",
+    "false_premise": "Alexander the Great left Greek inscriptions at Western Indian caves (Alexander never entered Western India/Maharashtra; inscriptions are in Prakrit/Sanskrit using Brahmi/Devanagari scripts).",
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.5565,
+      "candidates_count": 96,
+      "evidence_blocks_count": 8,
+      "tokens_used": 1097,
+      "snippets": [
+        {
+          "evidence_id": "E1",
+          "citation": "[sample_22087.pdf \u00b7 Page 3]",
+          "score": 0.5565,
+          "text_snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+        },
+        {
+          "evidence_id": "E2",
+          "citation": "[sample_22087.pdf \u00b7 Page 1]",
+          "score": 0.5463,
+          "text_snippet": "i |  Archeological Survey of Western Buiia. yo  INSCRIPTIONS  FROM  THE CAVE-TEMPLES OF WESTERN INDI"
+        },
+        {
+          "evidence_id": "E3",
+          "citation": "[sample_1544.pdf \u00b7 Page 10]",
+          "score": 0.5438,
+          "text_snippet": "BUDDHIST CAVES OF ELURA. m  hirwidi\u2014are on a considerably larger scale aud more magnificent in their"
+        },
+        {
+          "evidence_id": "E4",
+          "citation": "[sample_1544.pdf \u00b7 Page 1]",
+          "score": 0.5343,
+          "text_snippet": "REPORT,  A ON THE \u2018:  ELURA CAVE TEMPLES THE BRAHMANICAL AND JAINA CAVES IN WESTERN INDIA  COMPLETIN"
+        },
+        {
+          "evidence_id": "E5",
+          "citation": "[sample_1544.pdf \u00b7 Page 2]",
+          "score": 0.5294,
+          "text_snippet": "in this work on the Elura Caves, and on the Brahmanical and Jaina Caves elsewhere in Western India. "
+        },
+        {
+          "evidence_id": "E6",
+          "citation": "[sample_22087.pdf \u00b7 Page 2]",
+          "score": 0.5041,
+          "text_snippet": "in 1877-78, being in England, Dr. West\u2019s very excellent copies have been employed in their place.  I"
+        },
+        {
+          "evidence_id": "E7",
+          "citation": "[sample_22087.pdf \u00b7 Page 2]",
+          "score": 0.4912,
+          "text_snippet": "In several cases their object is chiefly to indicate distinetly the position of each inscription.  T"
+        },
+        {
+          "evidence_id": "E8",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 2]",
+          "score": 0.4855,
+          "text_snippet": "450 BRAHMANICAL CAVE-TEMPLES. Kalyan, and in the country where all the principal caves are situated."
+        }
+      ]
+    },
+    "assistant_response": {
+      "grounding_state": "insufficient_evidence",
+      "has_sufficient_evidence": true,
+      "claims": [],
+      "missing_information": [
+        "Greek inscriptions left by Alexander the Great at the Buddhist caves of Western India",
+        "The claim that 'The inscriptions in the Elura Caves were prepared by Pandit Bhagwanlal Indraji and the author.' is not established by the cited archival records."
+      ],
+      "conflicts": [],
+      "verified_citations": [],
+      "answer": "The available archival records do not contain this information: Greek inscriptions left by Alexander the Great at the Buddhist caves of Western India; The claim that 'The inscriptions in the Elura Caves were prepared by Pandit Bhagwanlal Indraji and the author.' is not established by the cited archival records.."
+    },
+    "correctly_guarded": true,
+    "notes": "Model explicitly recorded the false premise in missing_information or noted it was not established by the archival records."
+  },
+  {
+    "id": "ADV_04",
+    "category": "Fictitious Modern Demolition Order",
+    "question": "Which British governor general ordered the destruction of the Kailasa temple vimana in 1945?",
+    "false_premise": "A British Governor General ordered the destruction of the Kailasa vimana in 1945 (The temple spire stands intact and was never ordered destroyed in 1945).",
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.5036,
+      "candidates_count": 12,
+      "evidence_blocks_count": 6,
+      "tokens_used": 882,
+      "snippets": [
+        {
+          "evidence_id": "E1",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 1]",
+          "score": 0.5036,
+          "text_snippet": "one much in this direction their progress was stopped by a revolution of rather a startling nature. "
+        },
+        {
+          "evidence_id": "E2",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.4687,
+          "text_snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+        },
+        {
+          "evidence_id": "E3",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.4333,
+          "text_snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign o"
+        },
+        {
+          "evidence_id": "E4",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 7]",
+          "score": 0.4258,
+          "text_snippet": "va and Yama near the north corner of the west face of the great temple, beginning \" Sake 1384 (a.d. "
+        },
+        {
+          "evidence_id": "E5",
+          "citation": "[sample_1544.pdf \u00b7 Page 6]",
+          "score": 0.4208,
+          "text_snippet": "e mythology of India during the period of its greatest vigour, such as is nowhere else to be found. "
+        },
+        {
+          "evidence_id": "E6",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 7]",
+          "score": 0.3784,
+          "text_snippet": "KAILASA\u2014ELURA. 455 not crowd it to the same extent. Perhaps it was the failure that followed from th"
+        }
+      ]
+    },
+    "assistant_response": {
+      "grounding_state": "partial",
+      "has_sufficient_evidence": true,
+      "claims": [
+        {
+          "text": "The Kailasa temple was excavated during the reign of Vikramaditya Chalukya in the year 733 a.d.",
+          "evidence_ids": [
+            "E3"
+          ],
+          "source_citations": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E3",
+              "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+              "filename": "sample_fergusson_burgess_1880.pdf",
+              "page_number": 3,
+              "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+              "citation_valid": true,
+              "semantic_support": "not_independently_verified"
+            }
+          ]
+        }
+      ],
+      "missing_information": [
+        "The British governor general who ordered the destruction of the Kailasa temple in 1945.",
+        "Archival records do not contain information to establish: 'The Kailasa temple was excavated during the reign of Vikramaditya Chalukya in the year 733 a.d.'."
+      ],
+      "conflicts": [],
+      "verified_citations": [
+        "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+      ],
+      "answer": "The Kailasa temple was excavated during the reign of Vikramaditya Chalukya in the year 733 a.d. Note: The available records do not establish: The British governor general who ordered the destruction of the Kailasa temple in 1945.; Archival records do not contain information to establish: 'The Kailasa temple was excavated during the reign of Vikramaditya Chalukya in the year 733 a.d.'.."
+    },
+    "correctly_guarded": true,
+    "notes": "Model explicitly recorded the false premise in missing_information or noted it was not established by the archival records."
+  },
+  {
+    "id": "ADV_05",
+    "category": "Fictitious Copper Plate Grant",
+    "question": "What Sanskrit copper plate grant of Shivaji Maharaj was discovered embedded in the Nandi mandapa floor at Ellora Cave 16?",
+    "false_premise": "A copper plate grant of Shivaji Maharaj was embedded in the Nandi mandapa floor (No Maratha copper plate grant was embedded in the Nandi shrine floor).",
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.5077,
+      "candidates_count": 89,
+      "evidence_blocks_count": 10,
+      "tokens_used": 1474,
+      "snippets": [
+        {
+          "evidence_id": "E1",
+          "citation": "[sample_22087.pdf \u00b7 Page 3]",
+          "score": 0.5077,
+          "text_snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+        },
+        {
+          "evidence_id": "E2",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]",
+          "score": 0.4781,
+          "text_snippet": "esent the Gopura, or great gateway pyramid, which is an indispensable adjunct of Dravidian temples. "
+        },
+        {
+          "evidence_id": "E3",
+          "citation": "[sample_1544.pdf \u00b7 Page 4]",
+          "score": 0.4675,
+          "text_snippet": "LIST OF PLATES.  aes PLATE Pack 1. View oy Karnasa Rock Tewrie at Exvna rrom tur Norra-West (Autotyp"
+        },
+        {
+          "evidence_id": "E4",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 7]",
+          "score": 0.4576,
+          "text_snippet": "eads quite round the outside of the shrine, which forms the base of the vimdna, sikJiara, or spire. "
+        },
+        {
+          "evidence_id": "E5",
+          "citation": "[sample_1544.pdf \u00b7 Page 1]",
+          "score": 0.4493,
+          "text_snippet": "REPORT,  A ON THE \u2018:  ELURA CAVE TEMPLES THE BRAHMANICAL AND JAINA CAVES IN WESTERN INDIA  COMPLETIN"
+        },
+        {
+          "evidence_id": "E6",
+          "citation": "[sample_1544.pdf \u00b7 Page 2]",
+          "score": 0.448,
+          "text_snippet": "in this work on the Elura Caves, and on the Brahmanical and Jaina Caves elsewhere in Western India. "
+        },
+        {
+          "evidence_id": "E7",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]",
+          "score": 0.4478,
+          "text_snippet": "high at the back. In the front part of the court stands a mandapa or shrine for the Bull Nandi {B. i"
+        },
+        {
+          "evidence_id": "E8",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.447,
+          "text_snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign o"
+        },
+        {
+          "evidence_id": "E9",
+          "citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "score": 0.4464,
+          "text_snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. "
+        },
+        {
+          "evidence_id": "E10",
+          "citation": "[sample_1544.pdf \u00b7 Page 4]",
+          "score": 0.4386,
+          "text_snippet": "VL Exvei: Fig. 1, Transverse section of the Vigvakarma Cave; 2, Padmapdniin Cave [V.; 3, Sarasvati  "
+        }
+      ]
+    },
+    "assistant_response": {
+      "grounding_state": "insufficient_evidence",
+      "has_sufficient_evidence": true,
+      "claims": [],
+      "missing_information": [
+        "{'text': 'The Sanskrit copper plate grant of Shivaji Maharaj discovered embedded in the Nandi mandapa floor at Ellora Cave 16.'}",
+        "The claim that 'The Silahdra Grant of Mirasimha was inscribed on a copper plate.' is not established by the cited archival records."
+      ],
+      "conflicts": [],
+      "verified_citations": [],
+      "answer": "The available archival records do not contain this information: {'text': 'The Sanskrit copper plate grant of Shivaji Maharaj discovered embedded in the Nandi mandapa floor at Ellora Cave 16.'}; The claim that 'The Silahdra Grant of Mirasimha was inscribed on a copper plate.' is not established by the cited archival records.."
+    },
+    "correctly_guarded": true,
+    "notes": "Model explicitly recorded the false premise in missing_information or noted it was not established by the archival records."
+  }
+]

@@ -2,11 +2,11 @@
 
 import React from 'react';
 import {
-  FileCheck2,
   Cpu,
   Layers,
   Sparkles,
-  Info,
+  ShieldCheck,
+  Zap,
 } from 'lucide-react';
 
 export default function DocumentProcessingSection() {
@@ -14,59 +14,55 @@ export default function DocumentProcessingSection() {
     {
       step: '01',
       title: 'Multimodal Ingestion',
-      description: 'PDF format, %PDF- signature validation & 15 MB streaming limit',
+      description: 'PDF format, %PDF- signature validation & streaming upload limit',
       status: 'Operational',
-      statusColor: 'emerald',
       icon: Layers,
       note: 'POST /api/documents/upload',
     },
     {
       step: '02',
-      title: 'PyMuPDF Text Extraction',
-      description: 'Page-by-page text extraction with 1-based numbering',
+      title: 'OCR & Dual Pagination',
+      description: 'PyMuPDF digital stream + Tesseract OCR with printed page labels',
       status: 'Operational',
-      statusColor: 'emerald',
       icon: Cpu,
-      note: 'Active in Python 3.12 backend runtime',
+      note: 'Dual pagination: PDF index & printed book labels',
     },
     {
       step: '03',
-      title: 'Semantic Vector Embeddings',
-      description: 'all-MiniLM-L6-v2 384-dimensional text chunk embeddings',
-      status: 'Operational',
-      statusColor: 'emerald',
+      title: 'Hybrid Indexing',
+      description: 'all-MiniLM-L6-v2 (384-dim) vector embeddings + SQLite FTS5 BM25',
+      status: 'Calibrated',
       icon: Sparkles,
-      note: 'Persistent in SQLite document_chunks',
+      note: 'Reciprocal Rank Fusion (RRF k=60)',
     },
     {
       step: '04',
-      title: 'Evidence-Grounded Search',
-      description: 'Cosine similarity ranking with direct page & document citation',
+      title: 'Evidence-Grounded AI',
+      description: 'Local Ollama llama3.2:3b inference with anti-hallucination verification',
       status: 'Enforced',
-      statusColor: 'emerald',
-      icon: FileCheck2,
-      note: 'POST /api/search (Zero hallucinations)',
+      icon: ShieldCheck,
+      note: 'POST /api/assistant/ask (Ground-truth citations)',
     },
   ];
 
   return (
-    <div className="rounded-xl border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-stone-900/90 p-5 shadow-xs space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-stone-100 dark:border-stone-800">
+    <div className="rounded-2xl border border-[#2e2923] bg-[#12100e] p-5 shadow-xl space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#2e2923]">
         <div>
-          <h2 className="text-sm font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
-            <span>Archival Processing Pipeline</span>
-            <span className="text-[10px] px-2 py-0.5 rounded font-mono font-medium bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
-              Milestone 3 Active
+          <h2 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
+            <span>Archival Processing &amp; Intelligence Pipeline</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-medium bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/30">
+              Pipeline Active
             </span>
           </h2>
-          <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-            Real-time pipeline architecture status for heritage documents and semantic retrieval
+          <p className="text-xs text-[#9c9282] mt-0.5">
+            Architecture for archival text extraction, dual pagination, hybrid vector-lexical indexing, and grounded AI.
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 text-xs text-stone-500 dark:text-stone-400">
-          <Info className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-          <span>Upload PDFs to automatically extract text &amp; index embeddings</span>
+        <div className="flex items-center gap-1.5 text-xs text-[#eed27c]">
+          <Zap className="w-3.5 h-3.5 text-[#d4af37]" />
+          <span className="font-mono text-[11px]">Real-time RAG Pipeline</span>
         </div>
       </div>
 
@@ -77,38 +73,23 @@ export default function DocumentProcessingSection() {
           return (
             <div
               key={stage.step}
-              className="p-3.5 rounded-xl border border-stone-200/70 dark:border-stone-800 bg-stone-50/60 dark:bg-stone-950/40 flex flex-col justify-between space-y-3"
+              className="p-4 rounded-xl border border-[#2e2923] bg-[#161411] flex flex-col justify-between space-y-3 hover:border-[#d4af37]/40 transition-all"
             >
-              <div className="flex items-start justify-between">
-                <div className="w-7 h-7 rounded-lg bg-amber-100/70 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center font-mono text-xs font-semibold">
-                  {stage.step}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-[11px] font-bold text-[#d4af37]">{stage.step}</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/25">
+                    {stage.status}
+                  </span>
                 </div>
-                <span
-                  className={`text-[10px] font-medium px-2 py-0.5 rounded-full ${
-                    stage.statusColor === 'emerald'
-                      ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
-                      : stage.statusColor === 'amber'
-                      ? 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'
-                      : 'bg-stone-200 dark:bg-stone-800 text-stone-600 dark:text-stone-400'
-                  }`}
-                >
-                  {stage.status}
-                </span>
+                <div className="flex items-center gap-2 text-xs font-serif font-semibold text-[#fcf9f2]">
+                  <Icon className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
+                  <span>{stage.title}</span>
+                </div>
+                <p className="text-[11px] text-[#9c9282] leading-snug">{stage.description}</p>
               </div>
 
-              <div className="space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <Icon className="w-3.5 h-3.5 text-stone-500 dark:text-stone-400" />
-                  <h3 className="text-xs font-semibold text-stone-900 dark:text-stone-100">
-                    {stage.title}
-                  </h3>
-                </div>
-                <p className="text-[11px] text-stone-500 dark:text-stone-400 leading-normal">
-                  {stage.description}
-                </p>
-              </div>
-
-              <div className="pt-2 border-t border-stone-200/50 dark:border-stone-800 text-[10px] text-stone-500 dark:text-stone-400">
+              <div className="pt-2 border-t border-[#24201a] font-mono text-[10px] text-[#6e6659]">
                 {stage.note}
               </div>
             </div>

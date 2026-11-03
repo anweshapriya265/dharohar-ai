@@ -1,29 +1,63 @@
 @import "tailwindcss";
 
+/* --------------------------------------------------------------------------
+ * DHAROHAR AI - Premium Heritage Intelligence Design System
+ * Inspired by ancient Indian monolithic rock-cut architecture,
+ * classical museum curation, and modern intelligence workspaces.
+ * -------------------------------------------------------------------------- */
+
 :root {
-  --background: #faf8f5;
-  --foreground: #1c1917;
-  --card: #ffffff;
-  --card-foreground: #1c1917;
-  --muted: #f3ede2;
-  --muted-foreground: #78716c;
-  --border: #e7dfd5;
-  --accent-gold: #b45309;
-  --accent-terracotta: #c2410c;
+  /* Obsidian and Charcoal Background Palette */
+  --bg-obsidian-deep: #080706;
+  --bg-obsidian-card: #12100e;
+  --bg-obsidian-surface: #181613;
+  --bg-obsidian-elevated: #221f1a;
+  
+  /* Stone Borders and Dividers */
+  --border-stone: #2e2923;
+  --border-stone-light: #3d372f;
+  --border-gold-subtle: rgba(212, 175, 55, 0.2);
+  --border-gold-glow: rgba(212, 175, 55, 0.45);
+  
+  /* Warm Ivory and Sandstone Typography */
+  --text-ivory-primary: #fcf9f2;
+  --text-ivory-secondary: #ded6c5;
+  --text-stone-muted: #9c9282;
+  --text-stone-dim: #6e6659;
+  
+  /* Heritage Accents */
+  --accent-gold: #d4af37;
+  --accent-gold-dark: #b89124;
+  --accent-gold-light: #eed27c;
+  --accent-bronze: #a66a38;
+  --accent-terracotta: #c85a2b;
+  --accent-verdigris: #3ba87e;
+  --accent-crimson: #c53838;
+
+  /* Theme Tokens */
+  --background: var(--bg-obsidian-deep);
+  --foreground: var(--text-ivory-primary);
+  --card: var(--bg-obsidian-card);
+  --card-foreground: var(--text-ivory-primary);
+  --muted: var(--bg-obsidian-elevated);
+  --muted-foreground: var(--text-stone-muted);
+  --border: var(--border-stone);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #12100e;
-    --foreground: #f5f0eb;
-    --card: #1c1917;
-    --card-foreground: #f5f0eb;
-    --muted: #292524;
-    --muted-foreground: #a8a29e;
-    --border: #38322d;
-    --accent-gold: #f59e0b;
-    --accent-terracotta: #ea580c;
-  }
+/* Light Theme (Preserved for accessibility & print preferences) */
+.light-mode {
+  --bg-obsidian-deep: #f8f5ee;
+  --bg-obsidian-card: #ffffff;
+  --bg-obsidian-surface: #f1ede2;
+  --bg-obsidian-elevated: #e6dfce;
+  --border-stone: #d8cfbe;
+  --border-stone-light: #c8bda9;
+  --border-gold-subtle: rgba(184, 145, 36, 0.25);
+  --text-ivory-primary: #1c1813;
+  --text-ivory-secondary: #3b352c;
+  --text-stone-muted: #6e6454;
+  --text-stone-dim: #998d78;
+  --accent-gold: #b89124;
 }
 
 body {
@@ -32,12 +66,52 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Classical Museum / Heritage Title Accent */
 .font-heritage {
   font-family: "Cinzel", "Palatino Linotype", "Book Antiqua", Palatino, "Georgia", serif;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.025em;
+}
+
+.font-editorial {
+  font-family: "Playfair Display", "Cormorant Garamond", "Georgia", serif;
+  letter-spacing: -0.01em;
+}
+
+/* Architectural Stone Card Surfaces */
+.stone-card {
+  background: var(--bg-obsidian-card);
+  border: 1px solid var(--border-stone);
+  box-shadow: 0 8px 32px -4px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.04);
+  border-radius: 1rem;
+}
+
+.stone-card-elevated {
+  background: var(--bg-obsidian-surface);
+  border: 1px solid var(--border-stone-light);
+  box-shadow: 0 12px 40px -6px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  border-radius: 1rem;
+}
+
+.gold-border-glow {
+  border-color: var(--border-gold-subtle);
+  box-shadow: 0 0 24px -6px rgba(212, 175, 55, 0.12);
+}
+
+.gold-border-glow:hover {
+  border-color: var(--border-gold-glow);
+  box-shadow: 0 0 30px -4px rgba(212, 175, 55, 0.22);
+}
+
+/* Architectural Grid Background (Subtle excavation blueprint grid) */
+.heritage-grid-bg {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
 }
 
 /* Custom subtle scrollbar */
@@ -47,14 +121,24 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-obsidian-deep);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(120, 113, 108, 0.25);
+  background: var(--border-stone-light);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(120, 113, 108, 0.4);
+  background: var(--accent-gold-dark);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

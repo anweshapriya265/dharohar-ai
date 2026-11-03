@@ -39,6 +39,8 @@ class DocumentListResponse(BaseModel):
 
 class PageResponse(BaseModel):
     page_number: int
+    pdf_page_index: int = 1
+    printed_page_label: Optional[str] = None
     text: str
     character_count: int
     word_count: int
@@ -64,6 +66,8 @@ class ChunkItemResponse(BaseModel):
     id: str
     document_id: str
     page_number: int
+    pdf_page_index: int = 1
+    printed_page_label: Optional[str] = None
     chunk_index: int
     text: str
     character_count: int
@@ -229,6 +233,8 @@ def get_document_pages(document_id: str):
         pages=[
             PageResponse(
                 page_number=p["page_number"],
+                pdf_page_index=p.get("pdf_page_index", p["page_number"]),
+                printed_page_label=p.get("printed_page_label"),
                 text=p["text"],
                 character_count=p["character_count"],
                 word_count=p["word_count"],
@@ -280,6 +286,8 @@ def get_document_chunks(document_id: str):
                 id=c["id"],
                 document_id=c["document_id"],
                 page_number=c["page_number"],
+                pdf_page_index=c.get("pdf_page_index", c["page_number"]),
+                printed_page_label=c.get("printed_page_label"),
                 chunk_index=c["chunk_index"],
                 text=c["text"],
                 character_count=c["character_count"],

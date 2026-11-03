@@ -1,0 +1,4948 @@
+{
+  "system_a": {
+    "summary": {
+      "system_name": "System A: Calibrated Hybrid Baseline",
+      "total_queries": 45,
+      "positive_queries": 37,
+      "negative_queries": 8,
+      "recall_at_5": 0.9189,
+      "recall_at_10": 0.9189,
+      "mrr": 0.8041,
+      "precision_at_5": 0.2108,
+      "multipage_coverage": 1.0,
+      "compound_coverage": 0.3333,
+      "false_positive_rate": 1.0,
+      "avg_latency_ms": 492.02
+    },
+    "queries": [
+      {
+        "id": "q01_west_pahlavi",
+        "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 19409.72,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dr. E. W. West translations of Pahlavi inscriptions"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q02_dantidurga_reign",
+        "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 76.66,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquest of the Dekhan and reign 725-755"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q03_jacobi_kuda",
+        "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          2,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 67.46,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Prof. H. Jacobi transliteration of Kuda inscription"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q04_vikramaditya_733",
+        "query": "Vikramaditya Chalukya in the year 733 a.d.",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 63.94,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Vikramaditya Chalukya in the year 733 a.d."
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q05_elura_brahmanical",
+        "query": "Elura cave temples Brahmanical and Jaina",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          8,
+          10
+        ],
+        "expected_pages": [
+          1,
+          5
+        ],
+        "latency_ms": 57.78,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura cave temples Brahmanical and Jaina"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q06_kailasa_rock_temple",
+        "query": "Kailasa rock temple excavation from top to bottom",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 63.8,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kailasa rock temple excavation from top to bottom"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q07_dwajastambha_pillars",
+        "query": "Dwajastambha ensign staff square pillar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 43.22,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dwajastambha ensign staff square pillar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q08_digoba_cells_mhar",
+        "query": "Digoba in rock cut cells at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 57.4,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Digoba in rock cut cells at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q09_court_276_154_107",
+        "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 82.31,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "court of the temple measures 276 in length breadth 154 scarp 107 feet"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q10_spire_96_feet",
+        "query": "spire rises to a height of 96 feet from the court below",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 57.92,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "spire rises to a height of 96 feet from the court below"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q11_nandi_26_square",
+        "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          10,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 69.65,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "mandapa or shrine for the Bull Nandi 26 feet square"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q12_verandah_61_by_22",
+        "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          9
+        ],
+        "latency_ms": 64.95,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "verandah is 61 feet by 22 inclusive of the two pillars"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q13_february_1880",
+        "query": "descriptive notes in this memorandum were prepared in February 1880",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 1,
+        "retrieved_pages": [
+          2
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 42.64,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "descriptive notes in this memorandum were prepared in February 1880"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q14_maurya_period",
+        "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 67.08,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Indian paleography from the later Maurya period about 200 BC to 7th century AD"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q15_successors_govinda_amoghavarsha",
+        "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 65.06,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "successors Govinda III AD 785-810 and Amoghavarsha 810"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q16_sagharakhita_deyadhama",
+        "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          5,
+          6,
+          7,
+          9,
+          10
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 32.01,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gahapatiputasa sethisa agharakhitasa deyadhama lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q17_podhio_be_2_cisterns",
+        "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 2,
+        "retrieved_pages": [
+          10,
+          5
+        ],
+        "expected_pages": [
+          10
+        ],
+        "latency_ms": 54.59,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "podhio be 2 deya dhamam charitable gift of two cisterns"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q18_vishnu_prakrit_vhenu",
+        "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          8,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          5
+        ],
+        "latency_ms": 48.17,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Sanskrit Vishnu changed to Prakrit Vhenu"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q19_dumar_lena_caves",
+        "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          3,
+          4,
+          6
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 62.39,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Caves North of Kailasa Cave XXIX Dumar Lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q20_mhar_caves_pal",
+        "query": "Rock Temples at Mhar small village of Pal Savitri river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 60.9,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mhar small village of Pal Savitri river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q21_kuda_caves_kalwa_mohola",
+        "query": "Kuda caves Kalwa khadi creek hill Mohola",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 63.43,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kuda caves Kalwa khadi creek hill Mohola"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q22_multiconcept_dantidurga_dravidian",
+        "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 3,
+        "retrieved_pages": [
+          2,
+          3,
+          6
+        ],
+        "expected_pages": [
+          2,
+          3
+        ],
+        "latency_ms": 60.18,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q23_multiconcept_gopura_nandi_bridge",
+        "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          10,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 74.74,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q24_paraphrase_memorandum",
+        "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 58.75,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q25_paraphrase_monolithic_height",
+        "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 69.6,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Total elevation from bottom of courtyard to top of main temple sanctuary roof"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q26_multipage_kailasa_gopura_to_spire",
+        "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8,
+          4
+        ],
+        "latency_ms": 82.59,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q27_multipage_mhar_and_kuda_epigraphy",
+        "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          8,
+          10
+        ],
+        "expected_pages": [
+          10,
+          6
+        ],
+        "latency_ms": 95.23,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q28_distractor_bagh_caves",
+        "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 73.25,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Buddha and attendants sculpture from the Bagh Caves plate illustration"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q29_distractor_barbosa_mandabad",
+        "query": "Barbosa 1514 account of Mandabad river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 66.8,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Barbosa 1514 account of Mandabad river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q30_partial_support_krishna_dantidurga",
+        "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          2,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 85.65,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Did King Krishna I construct the Kailasa court measuring 276 feet in length?"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q31_absent_locomotives",
+        "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "expected_pages": [],
+        "latency_ms": 73.35,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "steam locomotives and railway transport lines constructed inside Ellora caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q32_absent_napoleon",
+        "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 1,
+        "retrieved_pages": [
+          1
+        ],
+        "expected_pages": [],
+        "latency_ms": 64.39,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q33_absent_dutch_voc",
+        "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          10
+        ],
+        "expected_pages": [],
+        "latency_ms": 66.3,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q34_false_premise_shivaji_coins",
+        "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 10,
+        "retrieved_pages": [
+          3,
+          4,
+          6,
+          7,
+          9
+        ],
+        "expected_pages": [],
+        "latency_ms": 57.52,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji gold coins embedded in the Kailasa mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q35_false_premise_ashoka_edicts",
+        "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          6
+        ],
+        "expected_pages": [],
+        "latency_ms": 68.34,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v01_elura_spelling",
+        "query": "Elura rock-cut cave temples",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          1
+        ],
+        "latency_ms": 45.07,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura rock-cut cave temples"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v02_dekhan_spelling",
+        "query": "Dantidurga conquered the whole of the Dekhan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 56.11,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquered the whole of the Dekhan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v03_mbar_ocr_erratum",
+        "query": "Rock Temples at Mbar village of Pal",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 55.47,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mbar village of Pal"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v04_diacritic_siva",
+        "query": "\u015aiva temple at Kailasa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 47.67,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "\u015aiva temple at Kailasa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v05_diacritic_dumar",
+        "query": "Dumar Le\u1e47a cave plan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          8,
+          3,
+          4
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 48.56,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dumar Le\u1e47a cave plan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v06_compound_partial",
+        "query": "Comparing the caves at Mhar with the rock temples of Atlantis",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          5,
+          6
+        ],
+        "latency_ms": 51.49,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Comparing the caves at Mhar with the rock temples of Atlantis"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v07_compound_unsupported",
+        "query": "Comparing the rock temples of Atlantis with the lost city of El Dorado",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [],
+        "latency_ms": 54.81,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Comparing the rock temples of Atlantis with the lost city of El Dorado"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v08_adversarial_shivaji",
+        "query": "Shivaji copper plate embedded in the Nandi mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [],
+        "latency_ms": 58.59,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji copper plate embedded in the Nandi mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v09_adversarial_ashoka",
+        "query": "Ashoka edicts carved on a pillar at Kailasa Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          6
+        ],
+        "expected_pages": [],
+        "latency_ms": 58.0,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a pillar at Kailasa Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v10_compound_kailasa_mhar",
+        "query": "Comparing the height of Kailasa at Ellora with the caves at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 11,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          10
+        ],
+        "expected_pages": [
+          8,
+          5
+        ],
+        "latency_ms": 57.48,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Comparing the height of Kailasa at Ellora with the caves at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      }
+    ]
+  },
+  "system_b": {
+    "summary": {
+      "system_name": "System B: OCR-Normalized Hybrid",
+      "total_queries": 45,
+      "positive_queries": 37,
+      "negative_queries": 8,
+      "recall_at_5": 0.8919,
+      "recall_at_10": 0.9189,
+      "mrr": 0.8048,
+      "precision_at_5": 0.2108,
+      "multipage_coverage": 1.0,
+      "compound_coverage": 0.3333,
+      "false_positive_rate": 1.0,
+      "avg_latency_ms": 99.22
+    },
+    "queries": [
+      {
+        "id": "q01_west_pahlavi",
+        "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 73.54,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dr. E. W. West translations of Pahlavi inscriptions"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q02_dantidurga_reign",
+        "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 87.34,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquest of the Dekhan and reign 725-755"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q03_jacobi_kuda",
+        "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          3,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 84.53,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Prof. H. Jacobi transliteration of Kuda inscription"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q04_vikramaditya_733",
+        "query": "Vikramaditya Chalukya in the year 733 a.d.",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          6,
+          7,
+          10
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 90.13,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Vikramaditya Chalukya in the year 733 a.d."
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q05_elura_brahmanical",
+        "query": "Elura cave temples Brahmanical and Jaina",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          10
+        ],
+        "expected_pages": [
+          1,
+          5
+        ],
+        "latency_ms": 81.2,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura cave temples Brahmanical and Jaina"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q06_kailasa_rock_temple",
+        "query": "Kailasa rock temple excavation from top to bottom",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 96.23,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kailasa rock temple excavation from top to bottom"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q07_dwajastambha_pillars",
+        "query": "Dwajastambha ensign staff square pillar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          9,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 62.27,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dwajastambha ensign staff square pillar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q08_digoba_cells_mhar",
+        "query": "Digoba in rock cut cells at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 74.92,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Digoba in rock cut cells at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q09_court_276_154_107",
+        "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 126.33,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "court of the temple measures 276 in length breadth 154 scarp 107 feet"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q10_spire_96_feet",
+        "query": "spire rises to a height of 96 feet from the court below",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 98.46,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "spire rises to a height of 96 feet from the court below"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q11_nandi_26_square",
+        "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          10,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 108.39,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "mandapa or shrine for the Bull Nandi 26 feet square"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q12_verandah_61_by_22",
+        "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          9
+        ],
+        "latency_ms": 100.31,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "verandah is 61 feet by 22 inclusive of the two pillars"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q13_february_1880",
+        "query": "descriptive notes in this memorandum were prepared in February 1880",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 3,
+        "retrieved_pages": [
+          1,
+          2,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 60.69,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "descriptive notes in this memorandum were prepared in February 1880"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q14_maurya_period",
+        "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          2,
+          10,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 130.97,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Indian paleography from the later Maurya period about 200 BC to 7th century AD"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q15_successors_govinda_amoghavarsha",
+        "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 106.39,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "successors Govinda III AD 785-810 and Amoghavarsha 810"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q16_sagharakhita_deyadhama",
+        "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          3,
+          5,
+          6,
+          7,
+          9,
+          10
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 32.44,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gahapatiputasa sethisa agharakhitasa deyadhama lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q17_podhio_be_2_cisterns",
+        "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          10,
+          5,
+          6
+        ],
+        "expected_pages": [
+          10
+        ],
+        "latency_ms": 103.0,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "podhio be 2 deya dhamam charitable gift of two cisterns"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q18_vishnu_prakrit_vhenu",
+        "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          8,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          5
+        ],
+        "latency_ms": 89.46,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Sanskrit Vishnu changed to Prakrit Vhenu"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q19_dumar_lena_caves",
+        "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          1,
+          3,
+          6
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 106.03,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Caves North of Kailasa Cave XXIX Dumar Lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q20_mhar_caves_pal",
+        "query": "Rock Temples at Mhar small village of Pal Savitri river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          7,
+          8
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 109.46,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mhar small village of Pal Savitri river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q21_kuda_caves_kalwa_mohola",
+        "query": "Kuda caves Kalwa khadi creek hill Mohola",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          3,
+          6,
+          7
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 88.9,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kuda caves Kalwa khadi creek hill Mohola"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q22_multiconcept_dantidurga_dravidian",
+        "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          2,
+          3
+        ],
+        "latency_ms": 105.36,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q23_multiconcept_gopura_nandi_bridge",
+        "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          10,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 113.34,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q24_paraphrase_memorandum",
+        "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 106.79,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q25_paraphrase_monolithic_height",
+        "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 112.19,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Total elevation from bottom of courtyard to top of main temple sanctuary roof"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q26_multipage_kailasa_gopura_to_spire",
+        "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8,
+          4
+        ],
+        "latency_ms": 127.13,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q27_multipage_mhar_and_kuda_epigraphy",
+        "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          10
+        ],
+        "expected_pages": [
+          10,
+          6
+        ],
+        "latency_ms": 141.94,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q28_distractor_bagh_caves",
+        "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          2,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 103.24,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Buddha and attendants sculpture from the Bagh Caves plate illustration"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q29_distractor_barbosa_mandabad",
+        "query": "Barbosa 1514 account of Mandabad river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 105.2,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Barbosa 1514 account of Mandabad river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q30_partial_support_krishna_dantidurga",
+        "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 130.22,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Did King Krishna I construct the Kailasa court measuring 276 feet in length?"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q31_absent_locomotives",
+        "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "expected_pages": [],
+        "latency_ms": 131.44,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "steam locomotives and railway transport lines constructed inside Ellora caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q32_absent_napoleon",
+        "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 3,
+        "retrieved_pages": [
+          1,
+          2,
+          7
+        ],
+        "expected_pages": [],
+        "latency_ms": 103.07,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q33_absent_dutch_voc",
+        "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          10
+        ],
+        "expected_pages": [],
+        "latency_ms": 97.42,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q34_false_premise_shivaji_coins",
+        "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          3,
+          4,
+          6,
+          7,
+          9
+        ],
+        "expected_pages": [],
+        "latency_ms": 109.27,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji gold coins embedded in the Kailasa mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q35_false_premise_ashoka_edicts",
+        "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          3,
+          6
+        ],
+        "expected_pages": [],
+        "latency_ms": 115.9,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v01_elura_spelling",
+        "query": "Elura rock-cut cave temples",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          8
+        ],
+        "expected_pages": [
+          1
+        ],
+        "latency_ms": 59.7,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura rock-cut cave temples"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v02_dekhan_spelling",
+        "query": "Dantidurga conquered the whole of the Dekhan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 82.56,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquered the whole of the Dekhan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v03_mbar_ocr_erratum",
+        "query": "Rock Temples at Mbar village of Pal",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 89.81,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mbar village of Pal"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v04_diacritic_siva",
+        "query": "\u015aiva temple at Kailasa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          1,
+          3,
+          5
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 63.83,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "\u015aiva temple at Kailasa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v05_diacritic_dumar",
+        "query": "Dumar Le\u1e47a cave plan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          8,
+          3,
+          4
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 76.75,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dumar Le\u1e47a cave plan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v06_compound_partial",
+        "query": "Comparing the caves at Mhar with the rock temples of Atlantis",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          5,
+          6
+        ],
+        "latency_ms": 98.63,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Comparing the caves at Mhar with the rock temples of Atlantis"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v07_compound_unsupported",
+        "query": "Comparing the rock temples of Atlantis with the lost city of El Dorado",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [],
+        "latency_ms": 118.19,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Comparing the rock temples of Atlantis with the lost city of El Dorado"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v08_adversarial_shivaji",
+        "query": "Shivaji copper plate embedded in the Nandi mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 10,
+        "retrieved_pages": [
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [],
+        "latency_ms": 126.63,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji copper plate embedded in the Nandi mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v09_adversarial_ashoka",
+        "query": "Ashoka edicts carved on a pillar at Kailasa Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          3,
+          6,
+          7
+        ],
+        "expected_pages": [],
+        "latency_ms": 125.06,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a pillar at Kailasa Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v10_compound_kailasa_mhar",
+        "query": "Comparing the height of Kailasa at Ellora with the caves at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          3,
+          5,
+          7,
+          8,
+          10
+        ],
+        "expected_pages": [
+          8,
+          5
+        ],
+        "latency_ms": 110.07,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Comparing the height of Kailasa at Ellora with the caves at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      }
+    ]
+  },
+  "system_c": {
+    "summary": {
+      "system_name": "System C: Multi-Query Hybrid",
+      "total_queries": 45,
+      "positive_queries": 37,
+      "negative_queries": 8,
+      "recall_at_5": 0.8919,
+      "recall_at_10": 0.8919,
+      "mrr": 0.7793,
+      "precision_at_5": 0.2054,
+      "multipage_coverage": 0.5,
+      "compound_coverage": 0.6667,
+      "false_positive_rate": 0.875,
+      "avg_latency_ms": 74.29
+    },
+    "queries": [
+      {
+        "id": "q01_west_pahlavi",
+        "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 60.87,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dr. E. W. West translations of Pahlavi inscriptions"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q02_dantidurga_reign",
+        "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 73.9,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquest of the Dekhan and reign 725-755"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q03_jacobi_kuda",
+        "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          2,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 81.25,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Prof. H. Jacobi transliteration of Kuda inscription"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q04_vikramaditya_733",
+        "query": "Vikramaditya Chalukya in the year 733 a.d.",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 67.81,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Vikramaditya Chalukya in the year 733 a.d."
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q05_elura_brahmanical",
+        "query": "Elura cave temples Brahmanical and Jaina",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          8,
+          10
+        ],
+        "expected_pages": [
+          1,
+          5
+        ],
+        "latency_ms": 65.27,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura cave temples Brahmanical and Jaina"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q06_kailasa_rock_temple",
+        "query": "Kailasa rock temple excavation from top to bottom",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 70.89,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kailasa rock temple excavation from top to bottom"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q07_dwajastambha_pillars",
+        "query": "Dwajastambha ensign staff square pillar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 57.47,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dwajastambha ensign staff square pillar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q08_digoba_cells_mhar",
+        "query": "Digoba in rock cut cells at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 66.67,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Digoba in rock cut cells at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q09_court_276_154_107",
+        "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 88.45,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "court of the temple measures 276 in length breadth 154 scarp 107 feet"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q10_spire_96_feet",
+        "query": "spire rises to a height of 96 feet from the court below",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 70.71,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "spire rises to a height of 96 feet from the court below"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q11_nandi_26_square",
+        "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          10,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 66.76,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "mandapa or shrine for the Bull Nandi 26 feet square"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q12_verandah_61_by_22",
+        "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          9
+        ],
+        "latency_ms": 62.23,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "verandah is 61 feet by 22 inclusive of the two pillars"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q13_february_1880",
+        "query": "descriptive notes in this memorandum were prepared in February 1880",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 1,
+        "retrieved_pages": [
+          2
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 42.29,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "descriptive notes in this memorandum were prepared in February 1880"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q14_maurya_period",
+        "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 73.19,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Indian paleography from the later Maurya period about 200 BC to 7th century AD"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q15_successors_govinda_amoghavarsha",
+        "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 71.79,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "successors Govinda III AD 785-810 and Amoghavarsha 810"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q16_sagharakhita_deyadhama",
+        "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          5,
+          6,
+          7,
+          9,
+          10
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 33.06,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gahapatiputasa sethisa agharakhitasa deyadhama lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q17_podhio_be_2_cisterns",
+        "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 2,
+        "retrieved_pages": [
+          10,
+          5
+        ],
+        "expected_pages": [
+          10
+        ],
+        "latency_ms": 62.78,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "podhio be 2 deya dhamam charitable gift of two cisterns"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q18_vishnu_prakrit_vhenu",
+        "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          8,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          5
+        ],
+        "latency_ms": 70.03,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Sanskrit Vishnu changed to Prakrit Vhenu"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q19_dumar_lena_caves",
+        "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          3,
+          4,
+          6
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 125.17,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Caves North of Kailasa Cave XXIX Dumar Lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q20_mhar_caves_pal",
+        "query": "Rock Temples at Mhar small village of Pal Savitri river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 59.67,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mhar small village of Pal Savitri river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q21_kuda_caves_kalwa_mohola",
+        "query": "Kuda caves Kalwa khadi creek hill Mohola",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 65.65,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kuda caves Kalwa khadi creek hill Mohola"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q22_multiconcept_dantidurga_dravidian",
+        "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 3,
+        "retrieved_pages": [
+          2,
+          3,
+          6
+        ],
+        "expected_pages": [
+          2,
+          3
+        ],
+        "latency_ms": 84.71,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q23_multiconcept_gopura_nandi_bridge",
+        "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          10,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 105.6,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q24_paraphrase_memorandum",
+        "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 109.48,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q25_paraphrase_monolithic_height",
+        "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 77.2,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Total elevation from bottom of courtyard to top of main temple sanctuary roof"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q26_multipage_kailasa_gopura_to_spire",
+        "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 10,
+        "retrieved_pages": [
+          2,
+          4,
+          5,
+          6,
+          8,
+          10
+        ],
+        "expected_pages": [
+          8,
+          4
+        ],
+        "latency_ms": 127.46,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 2,
+          "missing_count": 0,
+          "supported_components": [
+            "Architectural description of Kailasa gateway entrance on pag",
+            "main spire height on page 8"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q27_multipage_mhar_and_kuda_epigraphy",
+        "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          10
+        ],
+        "expected_pages": [
+          10,
+          6
+        ],
+        "latency_ms": 135.02,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 2,
+          "missing_count": 0,
+          "supported_components": [
+            "Mhar donation cave on page 6",
+            "Kuda cistern donation on page 10"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q28_distractor_bagh_caves",
+        "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 63.71,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Buddha and attendants sculpture from the Bagh Caves plate illustration"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q29_distractor_barbosa_mandabad",
+        "query": "Barbosa 1514 account of Mandabad river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 51.44,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Barbosa 1514 account of Mandabad river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q30_partial_support_krishna_dantidurga",
+        "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          2,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 80.16,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Did King Krishna I construct the Kailasa court measuring 276 feet in length?"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q31_absent_locomotives",
+        "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          3,
+          5,
+          6,
+          7,
+          8
+        ],
+        "expected_pages": [],
+        "latency_ms": 71.77,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "steam locomotives and railway transport lines constructed inside Ellora caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q32_absent_napoleon",
+        "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 1,
+        "retrieved_pages": [
+          1
+        ],
+        "expected_pages": [],
+        "latency_ms": 57.49,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q33_absent_dutch_voc",
+        "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          2,
+          4,
+          5,
+          6,
+          7,
+          10
+        ],
+        "expected_pages": [],
+        "latency_ms": 72.84,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q34_false_premise_shivaji_coins",
+        "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 10,
+        "retrieved_pages": [
+          3,
+          4,
+          6,
+          7,
+          9
+        ],
+        "expected_pages": [],
+        "latency_ms": 58.53,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji gold coins embedded in the Kailasa mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q35_false_premise_ashoka_edicts",
+        "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          6
+        ],
+        "expected_pages": [],
+        "latency_ms": 64.8,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v01_elura_spelling",
+        "query": "Elura rock-cut cave temples",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          1
+        ],
+        "latency_ms": 49.91,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura rock-cut cave temples"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v02_dekhan_spelling",
+        "query": "Dantidurga conquered the whole of the Dekhan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 53.94,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquered the whole of the Dekhan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v03_mbar_ocr_erratum",
+        "query": "Rock Temples at Mbar village of Pal",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 59.47,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mbar village of Pal"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v04_diacritic_siva",
+        "query": "\u015aiva temple at Kailasa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 50.92,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "\u015aiva temple at Kailasa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v05_diacritic_dumar",
+        "query": "Dumar Le\u1e47a cave plan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          8,
+          3,
+          4
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 52.78,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dumar Le\u1e47a cave plan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v06_compound_partial",
+        "query": "Comparing the caves at Mhar with the rock temples of Atlantis",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          10
+        ],
+        "expected_pages": [
+          5,
+          6
+        ],
+        "latency_ms": 116.07,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 1,
+          "missing_count": 1,
+          "supported_components": [
+            "the caves at Mhar"
+          ],
+          "missing_components": [
+            "the rock temples of Atlantis"
+          ],
+          "state": "partially_supported"
+        }
+      },
+      {
+        "id": "v07_compound_unsupported",
+        "query": "Comparing the rock temples of Atlantis with the lost city of El Dorado",
+        "is_negative": true,
+        "has_sufficient_evidence": false,
+        "evidence_count": 0,
+        "retrieved_pages": [],
+        "expected_pages": [],
+        "latency_ms": 113.71,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 0,
+          "missing_count": 2,
+          "supported_components": [],
+          "missing_components": [
+            "the rock temples of Atlantis",
+            "the lost city of El Dorado"
+          ],
+          "state": "none_supported"
+        }
+      },
+      {
+        "id": "v08_adversarial_shivaji",
+        "query": "Shivaji copper plate embedded in the Nandi mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [],
+        "latency_ms": 69.13,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji copper plate embedded in the Nandi mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v09_adversarial_ashoka",
+        "query": "Ashoka edicts carved on a pillar at Kailasa Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          6
+        ],
+        "expected_pages": [],
+        "latency_ms": 65.16,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a pillar at Kailasa Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v10_compound_kailasa_mhar",
+        "query": "Comparing the height of Kailasa at Ellora with the caves at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          8,
+          5
+        ],
+        "latency_ms": 115.95,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 2,
+          "missing_count": 0,
+          "supported_components": [
+            "the height of Kailasa at Ellora",
+            "the caves at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      }
+    ]
+  },
+  "system_d": {
+    "summary": {
+      "system_name": "System D: Combined OCR-Normalized & Multi-Query",
+      "total_queries": 45,
+      "positive_queries": 37,
+      "negative_queries": 8,
+      "recall_at_5": 0.9189,
+      "recall_at_10": 0.9189,
+      "mrr": 0.8221,
+      "precision_at_5": 0.2162,
+      "multipage_coverage": 1.0,
+      "compound_coverage": 0.6667,
+      "false_positive_rate": 0.875,
+      "avg_latency_ms": 107.16
+    },
+    "queries": [
+      {
+        "id": "q01_west_pahlavi",
+        "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 78.09,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dr. E. W. West translations of Pahlavi inscriptions"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q02_dantidurga_reign",
+        "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 88.68,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquest of the Dekhan and reign 725-755"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q03_jacobi_kuda",
+        "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          3,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 84.17,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Prof. H. Jacobi transliteration of Kuda inscription"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q04_vikramaditya_733",
+        "query": "Vikramaditya Chalukya in the year 733 a.d.",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          6,
+          7,
+          10
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 94.33,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Vikramaditya Chalukya in the year 733 a.d."
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q05_elura_brahmanical",
+        "query": "Elura cave temples Brahmanical and Jaina",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          10
+        ],
+        "expected_pages": [
+          1,
+          5
+        ],
+        "latency_ms": 84.6,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura cave temples Brahmanical and Jaina"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q06_kailasa_rock_temple",
+        "query": "Kailasa rock temple excavation from top to bottom",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          3,
+          4,
+          5,
+          6
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 96.54,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kailasa rock temple excavation from top to bottom"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q07_dwajastambha_pillars",
+        "query": "Dwajastambha ensign staff square pillar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          9,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 55.98,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dwajastambha ensign staff square pillar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q08_digoba_cells_mhar",
+        "query": "Digoba in rock cut cells at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 67.38,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Digoba in rock cut cells at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q09_court_276_154_107",
+        "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 130.04,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "court of the temple measures 276 in length breadth 154 scarp 107 feet"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q10_spire_96_feet",
+        "query": "spire rises to a height of 96 feet from the court below",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 97.28,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "spire rises to a height of 96 feet from the court below"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q11_nandi_26_square",
+        "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          10,
+          4,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 91.17,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "mandapa or shrine for the Bull Nandi 26 feet square"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q12_verandah_61_by_22",
+        "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [
+          9
+        ],
+        "latency_ms": 96.26,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "verandah is 61 feet by 22 inclusive of the two pillars"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q13_february_1880",
+        "query": "descriptive notes in this memorandum were prepared in February 1880",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 3,
+        "retrieved_pages": [
+          1,
+          2,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 50.4,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "descriptive notes in this memorandum were prepared in February 1880"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q14_maurya_period",
+        "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          2,
+          10,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 113.1,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Indian paleography from the later Maurya period about 200 BC to 7th century AD"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q15_successors_govinda_amoghavarsha",
+        "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 116.11,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "successors Govinda III AD 785-810 and Amoghavarsha 810"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q16_sagharakhita_deyadhama",
+        "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          3,
+          5,
+          6,
+          7,
+          9,
+          10
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 32.79,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gahapatiputasa sethisa agharakhitasa deyadhama lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q17_podhio_be_2_cisterns",
+        "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          10,
+          5,
+          6
+        ],
+        "expected_pages": [
+          10
+        ],
+        "latency_ms": 83.8,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "podhio be 2 deya dhamam charitable gift of two cisterns"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q18_vishnu_prakrit_vhenu",
+        "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          8,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          5
+        ],
+        "latency_ms": 86.94,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Sanskrit Vishnu changed to Prakrit Vhenu"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q19_dumar_lena_caves",
+        "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          1,
+          3,
+          6
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 107.18,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Caves North of Kailasa Cave XXIX Dumar Lena"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q20_mhar_caves_pal",
+        "query": "Rock Temples at Mhar small village of Pal Savitri river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          7,
+          8
+        ],
+        "expected_pages": [
+          4,
+          6
+        ],
+        "latency_ms": 123.16,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mhar small village of Pal Savitri river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q21_kuda_caves_kalwa_mohola",
+        "query": "Kuda caves Kalwa khadi creek hill Mohola",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          3,
+          6,
+          7
+        ],
+        "expected_pages": [
+          6
+        ],
+        "latency_ms": 107.18,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Kuda caves Kalwa khadi creek hill Mohola"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q22_multiconcept_dantidurga_dravidian",
+        "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          2,
+          3
+        ],
+        "latency_ms": 105.37,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q23_multiconcept_gopura_nandi_bridge",
+        "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          10,
+          4,
+          5,
+          7
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 201.4,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q24_paraphrase_memorandum",
+        "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          6
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 115.42,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q25_paraphrase_monolithic_height",
+        "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          8,
+          4,
+          5
+        ],
+        "expected_pages": [
+          8
+        ],
+        "latency_ms": 109.27,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Total elevation from bottom of courtyard to top of main temple sanctuary roof"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q26_multipage_kailasa_gopura_to_spire",
+        "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          4,
+          5,
+          6,
+          8,
+          10
+        ],
+        "expected_pages": [
+          8,
+          4
+        ],
+        "latency_ms": 164.69,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 2,
+          "missing_count": 0,
+          "supported_components": [
+            "Architectural description of Kailasa gateway entrance on pag",
+            "main spire height on page 8"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q27_multipage_mhar_and_kuda_epigraphy",
+        "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          6,
+          10
+        ],
+        "expected_pages": [
+          10,
+          6
+        ],
+        "latency_ms": 194.68,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 2,
+          "missing_count": 0,
+          "supported_components": [
+            "Mhar donation cave on page 6",
+            "Kuda cistern donation on page 10"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q28_distractor_bagh_caves",
+        "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          9,
+          2,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 100.04,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Buddha and attendants sculpture from the Bagh Caves plate illustration"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q29_distractor_barbosa_mandabad",
+        "query": "Barbosa 1514 account of Mandabad river",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          7
+        ],
+        "latency_ms": 125.47,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Barbosa 1514 account of Mandabad river"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q30_partial_support_krishna_dantidurga",
+        "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          3,
+          4,
+          5
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 136.51,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Did King Krishna I construct the Kailasa court measuring 276 feet in length?"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q31_absent_locomotives",
+        "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          3,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "expected_pages": [],
+        "latency_ms": 119.16,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "steam locomotives and railway transport lines constructed inside Ellora caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q32_absent_napoleon",
+        "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 3,
+        "retrieved_pages": [
+          1,
+          2,
+          7
+        ],
+        "expected_pages": [],
+        "latency_ms": 118.49,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q33_absent_dutch_voc",
+        "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          6,
+          7,
+          10
+        ],
+        "expected_pages": [],
+        "latency_ms": 111.87,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q34_false_premise_shivaji_coins",
+        "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          3,
+          4,
+          6,
+          7,
+          9
+        ],
+        "expected_pages": [],
+        "latency_ms": 93.07,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji gold coins embedded in the Kailasa mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "q35_false_premise_ashoka_edicts",
+        "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 6,
+        "retrieved_pages": [
+          1,
+          3,
+          6
+        ],
+        "expected_pages": [],
+        "latency_ms": 107.19,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v01_elura_spelling",
+        "query": "Elura rock-cut cave temples",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 9,
+        "retrieved_pages": [
+          1,
+          2,
+          3,
+          5,
+          8
+        ],
+        "expected_pages": [
+          1
+        ],
+        "latency_ms": 61.01,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Elura rock-cut cave temples"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v02_dekhan_spelling",
+        "query": "Dantidurga conquered the whole of the Dekhan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 8,
+        "retrieved_pages": [
+          2,
+          3,
+          5,
+          6,
+          7
+        ],
+        "expected_pages": [
+          2
+        ],
+        "latency_ms": 76.65,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dantidurga conquered the whole of the Dekhan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v03_mbar_ocr_erratum",
+        "query": "Rock Temples at Mbar village of Pal",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "expected_pages": [
+          4
+        ],
+        "latency_ms": 89.33,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Rock Temples at Mbar village of Pal"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v04_diacritic_siva",
+        "query": "\u015aiva temple at Kailasa",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 5,
+        "retrieved_pages": [
+          1,
+          3,
+          5
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 71.49,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "\u015aiva temple at Kailasa"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v05_diacritic_dumar",
+        "query": "Dumar Le\u1e47a cave plan",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 4,
+        "retrieved_pages": [
+          8,
+          3,
+          4
+        ],
+        "expected_pages": [
+          3
+        ],
+        "latency_ms": 72.49,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Dumar Le\u1e47a cave plan"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v06_compound_partial",
+        "query": "Comparing the caves at Mhar with the rock temples of Atlantis",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          2,
+          3,
+          4,
+          5,
+          10
+        ],
+        "expected_pages": [
+          5,
+          6
+        ],
+        "latency_ms": 155.54,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 1,
+          "missing_count": 1,
+          "supported_components": [
+            "the caves at Mhar"
+          ],
+          "missing_components": [
+            "the rock temples of Atlantis"
+          ],
+          "state": "partially_supported"
+        }
+      },
+      {
+        "id": "v07_compound_unsupported",
+        "query": "Comparing the rock temples of Atlantis with the lost city of El Dorado",
+        "is_negative": true,
+        "has_sufficient_evidence": false,
+        "evidence_count": 0,
+        "retrieved_pages": [],
+        "expected_pages": [],
+        "latency_ms": 159.86,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 0,
+          "missing_count": 2,
+          "supported_components": [],
+          "missing_components": [
+            "the rock temples of Atlantis",
+            "the lost city of El Dorado"
+          ],
+          "state": "none_supported"
+        }
+      },
+      {
+        "id": "v08_adversarial_shivaji",
+        "query": "Shivaji copper plate embedded in the Nandi mandapa floor",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 10,
+        "retrieved_pages": [
+          10,
+          4,
+          5
+        ],
+        "expected_pages": [],
+        "latency_ms": 127.65,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Shivaji copper plate embedded in the Nandi mandapa floor"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v09_adversarial_ashoka",
+        "query": "Ashoka edicts carved on a pillar at Kailasa Cave 16",
+        "is_negative": true,
+        "has_sufficient_evidence": true,
+        "evidence_count": 7,
+        "retrieved_pages": [
+          1,
+          3,
+          6,
+          7
+        ],
+        "expected_pages": [],
+        "latency_ms": 136.33,
+        "component_coverage": {
+          "total": 1,
+          "supported_count": 1,
+          "missing_count": 0,
+          "supported_components": [
+            "Ashoka edicts carved on a pillar at Kailasa Cave 16"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      },
+      {
+        "id": "v10_compound_kailasa_mhar",
+        "query": "Comparing the height of Kailasa at Ellora with the caves at Mhar",
+        "is_negative": false,
+        "has_sufficient_evidence": true,
+        "evidence_count": 10,
+        "retrieved_pages": [
+          3,
+          4,
+          5,
+          7,
+          8,
+          9
+        ],
+        "expected_pages": [
+          8,
+          5
+        ],
+        "latency_ms": 184.17,
+        "component_coverage": {
+          "total": 2,
+          "supported_count": 2,
+          "missing_count": 0,
+          "supported_components": [
+            "the height of Kailasa at Ellora",
+            "the caves at Mhar"
+          ],
+          "missing_components": [],
+          "state": "all_components_supported"
+        }
+      }
+    ]
+  }
+}

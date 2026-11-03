@@ -39,3 +39,7 @@ backend/data/uploads/*
 *.db-shm
 .DS_Store
 Thumbs.db
+
+# Large test datasets
+test_dataset/*.pdf
+test_dataset/samples/*.pdf

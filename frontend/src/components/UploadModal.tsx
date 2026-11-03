@@ -125,28 +125,28 @@ export default function UploadModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-150">
       <div
-        className="w-full max-w-lg rounded-2xl border border-stone-200 dark:border-stone-800 bg-[#faf8f5] dark:bg-stone-900 shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150"
+        className="w-full max-w-lg rounded-2xl border border-[#2e2923] bg-[#0c0a09] text-[#fcf9f2] shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150"
         role="dialog"
         aria-modal="true"
         aria-labelledby="upload-modal-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-stone-200 dark:border-stone-800">
+        <div className="flex items-center justify-between pb-3 border-b border-[#24201a]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-800 text-white flex items-center justify-center shadow-xs">
-              <Upload className="w-4 h-4" />
+            <div className="w-9 h-9 rounded-xl bg-[#1d1914] border border-[#d4af37]/40 text-[#eed27c] flex items-center justify-center shadow-xs">
+              <Upload className="w-4 h-4 text-[#d4af37]" />
             </div>
             <div>
               <h2
                 id="upload-modal-title"
-                className="text-base font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage"
+                className="text-base font-serif font-bold text-[#fcf9f2] font-heritage"
               >
                 Ingest Heritage PDF Document
               </h2>
-              <p className="text-xs text-stone-500 dark:text-stone-400">
-                Milestone 2 Ingestion &amp; PyMuPDF Text Extraction
+              <p className="text-xs text-[#a89f91]">
+                Archival Document Ingestion &amp; PyMuPDF Text Extraction
               </p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function UploadModal({
             type="button"
             onClick={handleClose}
             disabled={isUploading}
-            className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-200/60 dark:hover:bg-stone-800 transition-colors disabled:opacity-50"
+            className="p-1.5 rounded-lg text-[#a89f91] hover:text-[#fcf9f2] hover:bg-[#1d1914] transition-colors disabled:opacity-40"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -165,42 +165,42 @@ export default function UploadModal({
         {/* Success View */}
         {uploadedDoc ? (
           <div className="space-y-4 py-2">
-            <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-800 dark:text-emerald-300 font-semibold text-sm">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-800/80 space-y-2">
+              <div className="flex items-center gap-2 text-emerald-300 font-semibold text-sm">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                 <span>Document Ingestion Successful!</span>
               </div>
-              <p className="text-xs text-emerald-700 dark:text-emerald-300/90 leading-relaxed">
-                The document has been stored and text extracted page-by-page into the SQLite archive database.
+              <p className="text-xs text-emerald-300/80 leading-relaxed font-serif">
+                The document has been securely stored and text extracted page-by-page into the SQLite archive database.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-950/60 space-y-2 text-xs">
-              <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                <span className="text-stone-400">Filename:</span>
-                <span className="font-semibold text-stone-800 dark:text-stone-200 truncate max-w-[240px]">
+            <div className="p-4 rounded-xl border border-[#24201a] bg-[#141210] space-y-2 text-xs">
+              <div className="flex justify-between py-1 border-b border-[#24201a]">
+                <span className="text-[#a89f91]">Filename:</span>
+                <span className="font-semibold text-[#fcf9f2] truncate max-w-[240px]">
                   {uploadedDoc.original_filename}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                <span className="text-stone-400">Document ID:</span>
-                <span className="font-mono text-stone-700 dark:text-stone-300">
+              <div className="flex justify-between py-1 border-b border-[#24201a]">
+                <span className="text-[#a89f91]">Document ID:</span>
+                <span className="font-mono text-[#eed27c]">
                   {uploadedDoc.id}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                <span className="text-stone-400">Pages Processed:</span>
-                <span className="font-semibold text-stone-800 dark:text-stone-200">
+              <div className="flex justify-between py-1 border-b border-[#24201a]">
+                <span className="text-[#a89f91]">Pages Processed:</span>
+                <span className="font-semibold text-[#fcf9f2]">
                   {uploadedDoc.page_count} {uploadedDoc.page_count === 1 ? 'page' : 'pages'}
                 </span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-stone-400">Extraction Status:</span>
+                <span className="text-[#a89f91]">Extraction Status:</span>
                 <span
                   className={`font-semibold capitalize ${
                     uploadedDoc.extraction_status === 'extracted'
-                      ? 'text-emerald-600 dark:text-emerald-400'
-                      : 'text-amber-600 dark:text-amber-400'
+                      ? 'text-emerald-400'
+                      : 'text-[#d4af37]'
                   }`}
                 >
                   {uploadedDoc.extraction_status === 'extracted'
@@ -217,7 +217,7 @@ export default function UploadModal({
                   setUploadedDoc(null);
                   setSelectedFile(null);
                 }}
-                className="px-4 py-2 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-medium transition-colors"
+                className="px-4 py-2 rounded-xl border border-[#2e2923] hover:border-[#383127] hover:bg-[#1a1714] text-[#ded6c5] text-xs font-medium transition-colors"
               >
                 Upload Another
               </button>
@@ -228,7 +228,7 @@ export default function UploadModal({
                     handleClose();
                     onViewDocument(uploadedDoc);
                   }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-800 hover:bg-amber-900 text-white text-xs font-semibold shadow-sm transition-all"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b38f2a] text-[#080706] font-semibold text-xs shadow-md hover:brightness-110 transition-all"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Inspect Extracted Text</span>
@@ -256,34 +256,34 @@ export default function UploadModal({
               onClick={() => fileInputRef.current?.click()}
               className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
                 isDragging
-                  ? 'border-amber-600 bg-amber-50/70 dark:bg-amber-950/40'
+                  ? 'border-[#d4af37] bg-[#1d1914]'
                   : selectedFile
-                  ? 'border-emerald-500 bg-emerald-50/30 dark:bg-emerald-950/20'
-                  : 'border-stone-300 dark:border-stone-700 bg-stone-100/50 dark:bg-stone-950/40 hover:border-amber-700'
+                  ? 'border-emerald-600 bg-emerald-950/20'
+                  : 'border-[#2e2923] bg-[#12100e] hover:border-[#d4af37]/60'
               }`}
             >
-              <div className="w-12 h-12 mx-auto rounded-xl bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 flex items-center justify-center mb-3">
-                <FileText className="w-6 h-6" />
+              <div className="w-12 h-12 mx-auto rounded-xl bg-[#1d1914] border border-[#d4af37]/30 text-[#eed27c] flex items-center justify-center mb-3">
+                <FileText className="w-6 h-6 text-[#d4af37]" />
               </div>
 
               {selectedFile ? (
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-stone-900 dark:text-stone-100 truncate max-w-sm mx-auto">
+                  <p className="text-xs font-semibold text-[#fcf9f2] truncate max-w-sm mx-auto font-serif">
                     {selectedFile.name}
                   </p>
-                  <p className="text-[11px] text-stone-500 font-mono">
+                  <p className="text-[11px] text-[#eed27c] font-mono">
                     {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for ingestion
                   </p>
-                  <p className="text-[10px] text-amber-700 dark:text-amber-400 pt-1">
+                  <p className="text-[10px] text-[#a89f91] pt-1">
                     Click or drop to replace file
                   </p>
                 </div>
               ) : (
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-stone-800 dark:text-stone-200">
+                  <p className="text-xs font-semibold text-[#fcf9f2] font-serif">
                     Click to browse or drop historical PDF here
                   </p>
-                  <p className="text-[11px] text-stone-500 dark:text-stone-400">
+                  <p className="text-[11px] text-[#a89f91]">
                     Maximum upload size: 15 MB • PDF files with signature validation
                   </p>
                 </div>
@@ -292,25 +292,25 @@ export default function UploadModal({
 
             {/* Error Message */}
             {error && (
-              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-300 flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+              <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-900/60 text-xs text-rose-300 flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
                 <span className="leading-relaxed">{error}</span>
               </div>
             )}
 
             {/* Evidence Policy Reminder */}
-            <div className="flex items-center gap-2 text-stone-600 dark:text-stone-400 text-xs">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <div className="flex items-center gap-2 text-[#a89f91] text-xs font-serif">
+              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>PyMuPDF extracts text page-by-page. Scanned plates are flagged for OCR.</span>
             </div>
 
             {/* Actions */}
-            <div className="pt-3 border-t border-stone-200 dark:border-stone-800 flex justify-end gap-2">
+            <div className="pt-3 border-t border-[#24201a] flex justify-end gap-2">
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={isUploading}
-                className="px-4 py-2 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-200/50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 text-xs font-medium transition-colors disabled:opacity-50"
+                className="px-4 py-2 rounded-xl border border-[#2e2923] hover:bg-[#1a1714] text-[#ded6c5] text-xs font-medium transition-colors disabled:opacity-40"
               >
                 Cancel
               </button>
@@ -319,7 +319,7 @@ export default function UploadModal({
                 type="button"
                 onClick={handleSubmitUpload}
                 disabled={!selectedFile || isUploading}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-800 hover:bg-amber-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b38f2a] text-[#080706] text-xs font-semibold shadow-sm hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {isUploading ? (
                   <>

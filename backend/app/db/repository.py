@@ -1,6 +1,7 @@
 import sqlite3
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timezone
+from app.services.text_normalization_service import normalize_archival_text
 
 
 def utc_now_iso() -> str:
@@ -55,14 +56,16 @@ class DocumentRepository:
         now = utc_now_iso()
         query = """
         INSERT INTO document_pages (
-            document_id, page_number, text, character_count,
-            word_count, extraction_status, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?)
+            document_id, page_number, pdf_page_index, printed_page_label,
+            text, character_count, word_count, extraction_status, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         rows = [
             (
                 p["document_id"],
-                p["page_number"],
+                p.get("page_number", p.get("pdf_page_index", 1)),
+                p.get("pdf_page_index", p.get("page_number", 1)),
+                p.get("printed_page_label"),
                 p["text"],
                 p["character_count"],
                 p["word_count"],
@@ -102,10 +105,13 @@ class DocumentRepository:
     def get_document_pages(self, doc_id: str) -> List[Dict[str, Any]]:
         cursor = self.conn.execute(
             """
-            SELECT id, document_id, page_number, text, character_count, word_count, extraction_status, created_at
+            SELECT id, document_id, page_number,
+                   COALESCE(pdf_page_index, page_number) AS pdf_page_index,
+                   printed_page_label,
+                   text, character_count, word_count, extraction_status, created_at
             FROM document_pages
             WHERE document_id = ?
-            ORDER BY page_number ASC
+            ORDER BY COALESCE(pdf_page_index, page_number) ASC
             """,
             (doc_id,),
         )
@@ -134,17 +140,20 @@ class DocumentRepository:
         now = utc_now_iso()
         query = """
         INSERT INTO document_chunks (
-            id, document_id, page_number, chunk_index, text,
-            character_count, word_count, embedding, created_at
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            id, document_id, page_number, pdf_page_index, printed_page_label,
+            chunk_index, text, normalized_text, character_count, word_count, embedding, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         rows = [
             (
                 c["id"],
                 c["document_id"],
-                c["page_number"],
+                c.get("page_number", c.get("pdf_page_index", 1)),
+                c.get("pdf_page_index", c.get("page_number", 1)),
+                c.get("printed_page_label"),
                 c["chunk_index"],
                 c["text"],
+                c.get("normalized_text") or normalize_archival_text(c["text"]),
                 c["character_count"],
                 c["word_count"],
                 c.get("embedding"),
@@ -161,12 +170,14 @@ class DocumentRepository:
         """
         cursor = self.conn.execute(
             """
-            SELECT id, document_id, page_number, chunk_index, text,
-                   character_count, word_count, created_at,
+            SELECT id, document_id, page_number,
+                   COALESCE(pdf_page_index, page_number) AS pdf_page_index,
+                   printed_page_label,
+                   chunk_index, text, character_count, word_count, created_at,
                    (embedding IS NOT NULL) AS has_embedding
             FROM document_chunks
             WHERE document_id = ?
-            ORDER BY page_number ASC, chunk_index ASC
+            ORDER BY COALESCE(pdf_page_index, page_number) ASC, chunk_index ASC
             """,
             (doc_id,),
         )
@@ -207,26 +218,81 @@ class DocumentRepository:
                 return []
             placeholders = ",".join(["?"] * len(document_ids))
             query = f"""
-            SELECT c.id, c.document_id, c.page_number, c.chunk_index, c.text,
+            SELECT c.id, c.document_id, c.page_number,
+                   COALESCE(c.pdf_page_index, c.page_number) AS pdf_page_index,
+                   c.printed_page_label,
+                   c.chunk_index, c.text,
                    c.character_count, c.word_count, c.embedding,
                    d.original_filename
             FROM document_chunks c
             JOIN documents d ON c.document_id = d.id
             WHERE c.embedding IS NOT NULL AND c.document_id IN ({placeholders})
-            ORDER BY c.document_id, c.page_number, c.chunk_index
+            ORDER BY c.document_id, COALESCE(c.pdf_page_index, c.page_number), c.chunk_index
             """
             cursor = self.conn.execute(query, tuple(document_ids))
         else:
             query = """
-            SELECT c.id, c.document_id, c.page_number, c.chunk_index, c.text,
+            SELECT c.id, c.document_id, c.page_number,
+                   COALESCE(c.pdf_page_index, c.page_number) AS pdf_page_index,
+                   c.printed_page_label,
+                   c.chunk_index, c.text,
                    c.character_count, c.word_count, c.embedding,
                    d.original_filename
             FROM document_chunks c
             JOIN documents d ON c.document_id = d.id
             WHERE c.embedding IS NOT NULL
-            ORDER BY c.document_id, c.page_number, c.chunk_index
+            ORDER BY c.document_id, COALESCE(c.pdf_page_index, c.page_number), c.chunk_index
             """
             cursor = self.conn.execute(query)
+        return [dict(row) for row in cursor.fetchall()]
+
+    def search_chunks_fts(
+        self,
+        sanitized_fts_query: str,
+        limit: int = 50,
+        document_ids: Optional[List[str]] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Executes high-performance lexical BM25 search across document_chunks_fts.
+        Returns matching chunks joined with parent document metadata and embedding blob.
+        """
+        if not sanitized_fts_query or not sanitized_fts_query.strip():
+            return []
+
+        doc_filter = ""
+        params: List[Any] = [sanitized_fts_query]
+
+        if document_ids is not None:
+            if not document_ids:
+                return []
+            placeholders = ",".join(["?"] * len(document_ids))
+            doc_filter = f" AND c.document_id IN ({placeholders})"
+            params.extend(document_ids)
+
+        params.append(limit)
+
+        query = f"""
+        SELECT c.id AS id,
+               c.document_id,
+               c.page_number,
+               COALESCE(c.pdf_page_index, c.page_number) AS pdf_page_index,
+               c.printed_page_label,
+               c.chunk_index,
+               c.text,
+               c.normalized_text,
+               c.character_count,
+               c.word_count,
+               c.embedding,
+               d.original_filename,
+               bm25(document_chunks_fts) AS bm25_score
+        FROM document_chunks_fts
+        JOIN document_chunks c ON document_chunks_fts.chunk_id = c.id
+        JOIN documents d ON c.document_id = d.id
+        WHERE document_chunks_fts MATCH ?{doc_filter}
+        ORDER BY bm25_score ASC
+        LIMIT ?
+        """
+        cursor = self.conn.execute(query, tuple(params))
         return [dict(row) for row in cursor.fetchall()]
 
     def search_chunks_keyword(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
@@ -242,7 +308,10 @@ class DocumentRepository:
         params = [f"%{term}%" for term in terms] + [limit]
         
         sql = f"""
-        SELECT c.id, c.document_id, c.page_number, c.chunk_index, c.text,
+        SELECT c.id, c.document_id, c.page_number,
+               COALESCE(c.pdf_page_index, c.page_number) AS pdf_page_index,
+               c.printed_page_label,
+               c.chunk_index, c.text,
                c.character_count, c.word_count, d.original_filename
         FROM document_chunks c
         JOIN documents d ON c.document_id = d.id

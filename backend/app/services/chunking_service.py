@@ -1,5 +1,5 @@
 import re
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from app.core.config import settings
 
 
@@ -65,21 +65,26 @@ def chunk_page(
     page_text: str,
     chunk_size: int = settings.CHUNK_SIZE_CHARS,
     overlap: int = settings.CHUNK_OVERLAP_CHARS,
+    pdf_page_index: Optional[int] = None,
+    printed_page_label: Optional[str] = None,
 ) -> List[Dict[str, Any]]:
     """
-    Chunks a single page's text while strictly preserving 1-based page attribution.
+    Chunks a single page's text while strictly preserving physical PDF page and printed label attribution.
     Returns list of chunk dictionaries with deterministic IDs.
     """
+    p_idx = pdf_page_index if pdf_page_index is not None else page_number
     raw_chunks = split_text_into_chunks(page_text, chunk_size=chunk_size, overlap=overlap)
     page_chunks: List[Dict[str, Any]] = []
 
     for idx, chunk_text in enumerate(raw_chunks):
-        chunk_id = f"{document_id}_p{page_number}_c{idx}"
+        chunk_id = f"{document_id}_p{p_idx}_c{idx}"
         page_chunks.append(
             {
                 "id": chunk_id,
                 "document_id": document_id,
-                "page_number": page_number,
+                "page_number": p_idx,
+                "pdf_page_index": p_idx,
+                "printed_page_label": printed_page_label,
                 "chunk_index": idx,
                 "text": chunk_text,
                 "character_count": len(chunk_text),
@@ -102,14 +107,17 @@ def chunk_document_pages(
     """
     all_chunks: List[Dict[str, Any]] = []
     for page in pages:
-        p_num = page.get("page_number", 1)
+        p_idx = page.get("pdf_page_index", page.get("page_number", 1))
+        p_label = page.get("printed_page_label")
         p_text = page.get("text", "")
         chunks = chunk_page(
             document_id=document_id,
-            page_number=p_num,
+            page_number=p_idx,
             page_text=p_text,
             chunk_size=chunk_size,
             overlap=overlap,
+            pdf_page_index=p_idx,
+            printed_page_label=p_label,
         )
         all_chunks.extend(chunks)
 

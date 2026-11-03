@@ -50,30 +50,29 @@ export default function SearchSection({
   };
 
   const formatScore = (score: number): string => {
-    // Cosine similarity is [-1, 1], typically [0, 1] for positive similarity
     const pct = Math.max(0, Math.min(100, Math.round(score * 100)));
     return `${pct}% Match (${score.toFixed(2)})`;
   };
 
   return (
-    <div className="rounded-xl border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-stone-900/90 p-4 sm:p-5 shadow-xs space-y-4">
+    <div className="rounded-2xl border border-[#2e2923] bg-[#12100e] p-5 sm:p-6 shadow-xl space-y-4">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-stone-100 dark:border-stone-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#2e2923]">
         <div>
-          <h2 className="text-base font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage flex items-center gap-2">
-            <span>Semantic Knowledge Retrieval</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-amber-100 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900">
-              all-MiniLM-L6-v2 Embeddings
+          <h2 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
+            <span>Semantic Hybrid Retrieval</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono bg-[#1f1910] text-[#eed27c] border border-[#d4af37]/40">
+              Dense Vector + FTS5 BM25
             </span>
           </h2>
-          <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">
-            Query across historical gazetteers, architectural plans, and epigraphical reports with page-level citations
+          <p className="text-xs text-[#9c9282] mt-0.5">
+            Query across historical gazetteers, blue-prints, and epigraphical reports with dual-pagination citation linkage.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400">
-          <ShieldCheck className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-          <span>Zero Hallucinations: Grounded to source pages</span>
+        <div className="flex items-center gap-2 text-xs text-[#eed27c]">
+          <ShieldCheck className="w-4 h-4 text-[#3ba87e]" />
+          <span className="font-mono text-[11px]">Strict Provenance Grounding</span>
         </div>
       </div>
 
@@ -81,7 +80,7 @@ export default function SearchSection({
       <form onSubmit={handleSubmit} className="space-y-3">
         <div className="relative flex items-center gap-2">
           <div className="relative flex-1">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#9c9282]">
               <Search className="w-4 h-4" />
             </div>
 
@@ -89,23 +88,23 @@ export default function SearchSection({
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Ask a question or search concepts (e.g. 'monolithic cave temple carving', 'Rashtrakuta dynasty inscription')..."
-              className="w-full pl-10 pr-20 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 bg-[#faf8f5]/60 dark:bg-stone-950/60 text-stone-900 dark:text-stone-100 placeholder-stone-400 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all"
+              placeholder="Search historical terms, dimensions, or inscriptions (e.g. '107 feet deep', 'Dantidurga reign', 'z.c. 200')..."
+              className="w-full pl-10 pr-20 py-2.5 rounded-xl border border-[#2e2923] bg-[#181613] text-[#fcf9f2] placeholder-[#6e6659] text-xs sm:text-sm focus:outline-none focus:border-[#d4af37] transition-all"
             />
 
             {searchQuery && (
               <button
                 type="button"
                 onClick={onClearSearch}
-                className="absolute inset-y-0 right-10 pr-2 flex items-center text-stone-400 hover:text-stone-600 dark:hover:text-stone-200"
+                className="absolute inset-y-0 right-10 pr-2 flex items-center text-[#9c9282] hover:text-[#fcf9f2]"
                 aria-label="Clear search query"
               >
                 <X className="w-4 h-4" />
               </button>
             )}
 
-            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-mono text-stone-400">
-              <kbd className="px-1.5 py-0.5 rounded bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700">
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-[10px] font-mono text-[#9c9282]">
+              <kbd className="px-1.5 py-0.5 rounded bg-[#100e0c] border border-[#2e2923]">
                 /
               </kbd>
             </div>
@@ -114,12 +113,12 @@ export default function SearchSection({
           <button
             type="submit"
             disabled={!searchQuery.trim() || isSearching}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-800 hover:bg-amber-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white text-xs sm:text-sm font-semibold shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#d4af37] hover:bg-[#b89124] text-[#080706] text-xs sm:text-sm font-serif font-semibold shadow-md transition-all disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
           >
             {isSearching ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span className="hidden sm:inline">Searching...</span>
+                <span className="hidden sm:inline">Retrieving...</span>
               </>
             ) : (
               <>
@@ -133,16 +132,16 @@ export default function SearchSection({
 
       {/* Search State Outputs */}
       {isSearching && (
-        <div className="p-8 rounded-xl bg-stone-50/70 dark:bg-stone-950/40 border border-stone-200/60 dark:border-stone-800 text-center flex flex-col items-center justify-center gap-2 text-stone-500">
-          <Loader2 className="w-6 h-6 animate-spin text-amber-700" />
-          <p className="text-xs">Computing semantic query vector &amp; ranking passages...</p>
+        <div className="p-8 rounded-xl bg-[#161411] border border-[#2e2923] text-center flex flex-col items-center justify-center gap-2 text-[#9c9282]">
+          <Loader2 className="w-6 h-6 animate-spin text-[#d4af37]" />
+          <p className="text-xs font-serif">Computing 384-dimensional dense vectors &amp; SQLite FTS5 ranks...</p>
         </div>
       )}
 
       {/* Error state */}
       {!isSearching && searchError && (
-        <div className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900 text-xs text-rose-800 dark:text-rose-300 flex items-start gap-2">
-          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+        <div className="p-3.5 rounded-xl bg-[#221010] border border-[#c53838]/40 text-xs text-[#c53838] flex items-start gap-2">
+          <AlertCircle className="w-4 h-4 text-[#c53838] shrink-0 mt-0.5" />
           <div className="space-y-1">
             <span className="font-semibold">Search Request Error:</span>
             <p className="opacity-90">{searchError}</p>
@@ -154,33 +153,33 @@ export default function SearchSection({
       {!isSearching && hasSearched && !searchError && (
         <div className="space-y-3 pt-1">
           {totalIndexedDocs === 0 ? (
-            <div className="p-6 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-950/30 text-center space-y-2">
-              <Database className="w-8 h-8 mx-auto text-stone-400" />
-              <h3 className="text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-200">
+            <div className="p-8 rounded-xl border border-[#2e2923] bg-[#161411] text-center space-y-2">
+              <Database className="w-8 h-8 mx-auto text-[#6e6659]" />
+              <h3 className="text-xs sm:text-sm font-serif font-bold text-[#fcf9f2]">
                 Archive Has No Indexed Documents
               </h3>
-              <p className="text-xs text-stone-500 max-w-md mx-auto">
+              <p className="text-xs text-[#9c9282] max-w-md mx-auto">
                 No documents are currently indexed in the semantic knowledge repository. Ingest historical PDFs to enable semantic search.
               </p>
             </div>
           ) : searchResults.length === 0 ? (
-            <div className="p-6 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/70 dark:bg-stone-950/30 text-center space-y-1.5">
-              <Search className="w-6 h-6 mx-auto text-stone-400" />
-              <h3 className="text-xs sm:text-sm font-semibold text-stone-800 dark:text-stone-200">
-                No Relevant Heritage Passages Found
+            <div className="p-8 rounded-xl border border-[#2e2923] bg-[#161411] text-center space-y-1.5">
+              <Search className="w-6 h-6 mx-auto text-[#6e6659]" />
+              <h3 className="text-xs sm:text-sm font-serif font-bold text-[#fcf9f2]">
+                No Relevant Archival Passages Found
               </h3>
-              <p className="text-xs text-stone-500">
-                No indexed passages matched &quot;{searchQuery}&quot;. Try different historical terms or general architectural themes.
+              <p className="text-xs text-[#9c9282]">
+                No indexed passages matched &quot;{searchQuery}&quot;. Try different historical terms or general architectural concepts.
               </p>
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="flex items-center justify-between text-xs text-stone-500 px-1">
-                <span className="font-medium text-stone-700 dark:text-stone-300">
+              <div className="flex items-center justify-between text-xs text-[#9c9282] px-1">
+                <span className="font-medium text-[#ded6c5]">
                   Found {searchResults.length} {searchResults.length === 1 ? 'passage' : 'passages'} for &quot;{searchResponse?.query}&quot;
                 </span>
-                <span className="font-mono text-[11px] text-amber-800 dark:text-amber-400">
-                  Mode: Semantic Vector Cosine Ranking
+                <span className="font-mono text-[11px] text-[#eed27c]">
+                  Engine: Calibrated Hybrid (RRF k=60)
                 </span>
               </div>
 
@@ -189,26 +188,40 @@ export default function SearchSection({
                 {searchResults.map((item) => (
                   <div
                     key={item.chunk_id}
-                    className="p-4 rounded-xl border border-stone-200/90 dark:border-stone-800 bg-stone-50/40 dark:bg-stone-950/40 space-y-3 hover:border-amber-400/80 transition-colors"
+                    className="p-4 rounded-xl border border-[#2e2923] bg-[#161411] space-y-3 hover:border-[#d4af37]/60 transition-all"
                   >
                     {/* Header: Document, Page, Score */}
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                      <div className="flex items-center gap-2 overflow-hidden">
-                        <FileText className="w-4 h-4 text-amber-700 shrink-0" />
-                        <span className="font-semibold text-stone-900 dark:text-stone-100 truncate max-w-xs sm:max-w-md font-serif font-heritage">
+                      <div className="flex items-center gap-2 overflow-hidden flex-wrap">
+                        <FileText className="w-4 h-4 text-[#d4af37] shrink-0" />
+                        <span className="font-semibold text-[#fcf9f2] truncate max-w-xs sm:max-w-md font-serif font-heritage">
                           {item.original_filename}
                         </span>
-                        <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-300">
-                          Page {item.page_number}
+                        <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#100e0c] text-[#ded6c5] border border-[#2e2923]">
+                          PDF Page {item.pdf_page_index ?? item.page_number}
                         </span>
+                        {item.printed_page_label ? (
+                          <span className="font-serif text-[10px] px-2 py-0.5 rounded bg-[#1f1910] text-[#eed27c] border border-[#d4af37]/40 font-medium">
+                            Printed Page {item.printed_page_label}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] px-2 py-0.5 rounded bg-[#100e0c] text-[#6e6659] italic border border-[#2e2923]">
+                            Printed page unavailable
+                          </span>
+                        )}
                       </div>
 
                       <div className="flex items-center gap-2">
+                        {item.retrieval_source && (
+                          <span className="text-[9px] font-mono uppercase tracking-wider px-2 py-0.5 rounded bg-[#100e0c] text-[#eed27c] border border-[#2e2923]">
+                            {item.retrieval_source === 'both' ? 'Hybrid Match' : `${item.retrieval_source} Match`}
+                          </span>
+                        )}
                         <span
                           className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-semibold ${
                             item.similarity_score >= 0.5
-                              ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800'
-                              : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800'
+                              ? 'bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/30'
+                              : 'bg-[#1f1910] text-[#eed27c] border border-[#d4af37]/30'
                           }`}
                         >
                           {formatScore(item.similarity_score)}
@@ -217,25 +230,26 @@ export default function SearchSection({
                     </div>
 
                     {/* Passage Quote */}
-                    <div className="p-3 rounded-lg bg-white dark:bg-stone-900 border border-stone-200/70 dark:border-stone-800 text-xs sm:text-[13px] leading-relaxed text-stone-800 dark:text-stone-200 font-serif">
+                    <div className="p-3.5 rounded-xl bg-[#12100e] border border-[#2e2923] text-xs sm:text-[13px] leading-relaxed text-[#ded6c5] font-serif">
                       &ldquo;{item.text}&rdquo;
                     </div>
 
                     {/* Footer: Provenance link & inspect action */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-stone-500">
-                      <div className="flex items-center gap-1.5 font-mono text-amber-800 dark:text-amber-300 text-[10px]">
-                        <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
+                    <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-[#9c9282]">
+                      <div className="flex items-center gap-1.5 font-mono text-[#eed27c] text-[10px]">
+                        <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
                         <span>Citation: {item.source_citation}</span>
                       </div>
 
                       <button
                         type="button"
-                        onClick={() => onInspectSource(item.document_id, item.page_number)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-stone-100 dark:bg-stone-800 hover:bg-amber-100 dark:hover:bg-amber-950 text-stone-700 hover:text-amber-900 dark:text-stone-300 dark:hover:text-amber-200 text-xs font-medium transition-colors"
+                        onClick={() => onInspectSource(item.document_id, item.pdf_page_index ?? item.page_number)}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#1c1915] hover:bg-[#25211b] text-[#eed27c] text-xs font-serif font-medium border border-[#2e2923] transition-colors cursor-pointer"
+                        title={item.citation_display || (item.printed_page_label ? `Printed page ${item.printed_page_label} · PDF page ${item.pdf_page_index ?? item.page_number}` : `PDF page ${item.pdf_page_index ?? item.page_number} · Printed page unavailable`)}
                       >
                         <Eye className="w-3.5 h-3.5" />
-                        <span>Inspect Page {item.page_number}</span>
-                        <ArrowRight className="w-3 h-3 text-stone-400" />
+                        <span>Inspect PDF Page {item.pdf_page_index ?? item.page_number}</span>
+                        <ArrowRight className="w-3 h-3 text-[#9c9282]" />
                       </button>
                     </div>
                   </div>

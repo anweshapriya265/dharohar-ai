@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.db.database import init_db
-from app.routers import documents, search
+from app.routers import documents, search, assistant
 from app.services.embedding_service import embedding_service
 from app.services.ocr_service import is_tesseract_available
 
@@ -40,6 +40,8 @@ app.add_middleware(
 app.include_router(documents.router)
 # Milestone 3: Semantic search router
 app.include_router(search.router)
+# Milestone 5.3: Assistant API router
+app.include_router(assistant.router)
 
 
 @app.get("/")
@@ -52,6 +54,7 @@ def read_root():
         "health_check": "/api/health",
         "documents_url": "/api/documents",
         "search_url": "/api/search",
+        "assistant_url": "/api/assistant/ask",
     }
 
 

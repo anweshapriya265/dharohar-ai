@@ -1,0 +1,157 @@
+[
+  {
+    "id": "prod_q1_kailasa_court",
+    "query": "What are the dimensions and depth of the court of the Kailasa temple at Ellora?",
+    "latency_ms": 25782.45,
+    "has_sufficient_evidence": true,
+    "evidence_count": 6,
+    "is_compound": false,
+    "top_candidates": [
+      {
+        "evidence_id": "E1",
+        "score": 0.6621,
+        "document_id": "doc_1544_pdf",
+        "page_number": 14,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E2",
+        "score": 0.6205,
+        "document_id": "doc_fergusson_burgess_1880_pdf",
+        "page_number": 431,
+        "printed_page_label": "403"
+      },
+      {
+        "evidence_id": "E3",
+        "score": 0.6789,
+        "document_id": "doc_1544_pdf",
+        "page_number": 45,
+        "printed_page_label": null
+      }
+    ]
+  },
+  {
+    "id": "prod_q2_krishna_patronage",
+    "query": "Which Rashtrakuta king constructed or patronized the Kailasa temple at Ellora?",
+    "latency_ms": 364.93,
+    "has_sufficient_evidence": true,
+    "evidence_count": 6,
+    "is_compound": false,
+    "top_candidates": [
+      {
+        "evidence_id": "E1",
+        "score": 0.6379,
+        "document_id": "doc_1544_pdf",
+        "page_number": 14,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E2",
+        "score": 0.5756,
+        "document_id": "doc_fergusson_burgess_1880_pdf",
+        "page_number": 429,
+        "printed_page_label": "401"
+      },
+      {
+        "evidence_id": "E3",
+        "score": 0.613,
+        "document_id": "doc_1544_pdf",
+        "page_number": 49,
+        "printed_page_label": null
+      }
+    ]
+  },
+  {
+    "id": "prod_q3_dantidurga_reign",
+    "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+    "latency_ms": 320.64,
+    "has_sufficient_evidence": true,
+    "evidence_count": 9,
+    "is_compound": false,
+    "top_candidates": [
+      {
+        "evidence_id": "E1",
+        "score": 0.6385,
+        "document_id": "doc_fergusson_burgess_1880_pdf",
+        "page_number": 478,
+        "printed_page_label": "450"
+      },
+      {
+        "evidence_id": "E2",
+        "score": 0.4554,
+        "document_id": "doc_22087_pdf",
+        "page_number": 181,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E3",
+        "score": 0.4499,
+        "document_id": "doc_1544_pdf",
+        "page_number": 125,
+        "printed_page_label": null
+      }
+    ]
+  },
+  {
+    "id": "prod_q4_compound_mhar_kuda",
+    "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+    "latency_ms": 588.2,
+    "has_sufficient_evidence": true,
+    "evidence_count": 11,
+    "is_compound": true,
+    "top_candidates": [
+      {
+        "evidence_id": "E1",
+        "score": 0.4686,
+        "document_id": "doc_fergusson_burgess_1880_pdf",
+        "page_number": 10,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E2",
+        "score": 0.5234,
+        "document_id": "doc_22087_pdf",
+        "page_number": 11,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E3",
+        "score": 0.3507,
+        "document_id": "doc_1544_pdf",
+        "page_number": 120,
+        "printed_page_label": null
+      }
+    ]
+  },
+  {
+    "id": "prod_q5_absent_locomotives",
+    "query": "Steam locomotives and railway lines operating at Ellora caves in 1880",
+    "latency_ms": 368.31,
+    "has_sufficient_evidence": true,
+    "evidence_count": 7,
+    "is_compound": false,
+    "top_candidates": [
+      {
+        "evidence_id": "E1",
+        "score": 0.4359,
+        "document_id": "doc_1544_pdf",
+        "page_number": 19,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E2",
+        "score": 0.4173,
+        "document_id": "doc_1544_pdf",
+        "page_number": 63,
+        "printed_page_label": null
+      },
+      {
+        "evidence_id": "E3",
+        "score": 0.3978,
+        "document_id": "doc_fergusson_burgess_1880_pdf",
+        "page_number": 677,
+        "printed_page_label": null
+      }
+    ]
+  }
+]

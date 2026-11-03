@@ -1,0 +1,248 @@
+[
+  {
+    "case": {
+      "id": "fp_01_shivaji_coins",
+      "name": "Shivaji Gold Coins in Mandapa Floor",
+      "question": "Were Shivaji gold coins embedded in the Kailasa mandapa floor during its construction?",
+      "unsupported_premise": "Shivaji gold coins"
+    },
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.482,
+      "passages": [
+        {
+          "evidence_id": "E1",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "similarity_score": 0.4818,
+          "retrieval_source": "both",
+          "snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign of Dantidurga. Thus c"
+        },
+        {
+          "evidence_id": "E2",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 1]",
+          "similarity_score": 0.482,
+          "retrieval_source": "dense",
+          "snippet": "KAILASA\u2014ELURA. 449 by whicli they are replaced, it would be difl&cult to feel sure to which religion any particular cave"
+        },
+        {
+          "evidence_id": "E3",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "similarity_score": 0.4772,
+          "retrieval_source": "both",
+          "snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. As the case at prese"
+        },
+        {
+          "evidence_id": "E4",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 7]",
+          "similarity_score": 0.4564,
+          "retrieval_source": "both",
+          "snippet": "KAILASA\u2014ELURA. 455 not crowd it to the same extent. Perhaps it was the failure that followed from the architect not prov"
+        },
+        {
+          "evidence_id": "E5",
+          "source_citation": "[sample_1544.pdf \u00b7 Page 6]",
+          "similarity_score": 0.3888,
+          "retrieval_source": "both",
+          "snippet": "e mythology of India during the period of its greatest vigour, such as is nowhere else to be found. (More- over, besides"
+        },
+        {
+          "evidence_id": "E6",
+          "source_citation": "[sample_1544.pdf \u00b7 Page 4]",
+          "similarity_score": 0.3852,
+          "retrieval_source": "both",
+          "snippet": "the Dis Avitora Cave; 2, The same from Kuailisa corridor, XXV. Enurdi: Fig 1. XXNVI. Kat.isa: Fig. 1, Sculpture from the"
+        },
+        {
+          "evidence_id": "E7",
+          "source_citation": "[sample_22087.pdf \u00b7 Page 4]",
+          "similarity_score": 0.3659,
+          "retrieval_source": "both",
+          "snippet": "ny detail, the following rough notes may be of use. Beginning from the south end of the series :\u2014 Excavation No. 1 is th"
+        },
+        {
+          "evidence_id": "E8",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 7]",
+          "similarity_score": 0.3962,
+          "retrieval_source": "dense",
+          "snippet": "square inside, with a large rosette on the roof. The present altar or sdluhhhd is a modern affair. What originally occup"
+        }
+      ]
+    },
+    "generation": {
+      "grounding_state": "insufficient_evidence",
+      "claims": [],
+      "missing_information": [
+        "Information or premises requested by the user but not established or mentioned in the evidence: Were Shivaji gold coins embedded in the Kailasa mandapa floor during its construction?",
+        "The claim that 'The Kailasa mandapa floor was excavated during the reign of Dantidurga.' is not established by the cited archival records.",
+        "Archival records do not contain information to establish: 'The Kailasa mandapa floor was excavated during the reign of Dantidurga.'."
+      ],
+      "conflicts": [],
+      "answer": "The available archival records do not contain this information: Information or premises requested by the user but not established or mentioned in the evidence: Were Shivaji gold coins embedded in the Kailasa mandapa floor during its construction?; The claim that 'The Kailasa mandapa floor was excavated during the reign of Dantidurga.' is not established by the cited archival records.; Archival records do not contain information to establish: 'The Kailasa mandapa floor was excavated during the reign of Dantidurga.'.."
+    },
+    "premise_leaked": false,
+    "leaked_claims": []
+  },
+  {
+    "case": {
+      "id": "fp_02_ashoka_edicts",
+      "name": "Ashoka Edicts on Kailasa Monolithic Pillar",
+      "question": "Are Ashoka edicts carved on the monolithic pillar inside Kailasa temple Cave 16?",
+      "unsupported_premise": "Ashoka edicts"
+    },
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.634,
+      "passages": [
+        {
+          "evidence_id": "E1",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 1]",
+          "similarity_score": 0.5974,
+          "retrieval_source": "both",
+          "snippet": "KAILASA\u2014ELURA. 449 by whicli they are replaced, it would be difl&cult to feel sure to which religion any particular cave"
+        },
+        {
+          "evidence_id": "E2",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "similarity_score": 0.634,
+          "retrieval_source": "both",
+          "snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. As the case at prese"
+        },
+        {
+          "evidence_id": "E3",
+          "source_citation": "[sample_1544.pdf \u00b7 Page 4]",
+          "similarity_score": 0.5253,
+          "retrieval_source": "both",
+          "snippet": "VL Exvei: Fig. 1, Transverse section of the Vigvakarma Cave; 2, Padmapdniin Cave [V.; 3, Sarasvati in Cave VL; 4, Pillar"
+        },
+        {
+          "evidence_id": "E4",
+          "source_citation": "[sample_22087.pdf \u00b7 Page 3]",
+          "similarity_score": 0.5849,
+          "retrieval_source": "both",
+          "snippet": "\u2014_ San eanon 10. 11. 12. 13. 14. 15. 16. 17. CONTENTS. . Notes on the Rock-Temples at Mhar and KuqA and their ne Koda Ca"
+        },
+        {
+          "evidence_id": "E5",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 6]",
+          "similarity_score": 0.5021,
+          "retrieval_source": "both",
+          "snippet": "produce the best possible architectural effect, by di\\ading the hall into a centre and side aisles. Here, on the contrar"
+        },
+        {
+          "evidence_id": "E6",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "similarity_score": 0.527,
+          "retrieval_source": "both",
+          "snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign of Dantidurga. Thus c"
+        }
+      ]
+    },
+    "generation": {
+      "grounding_state": "partial",
+      "claims": [
+        {
+          "text": "The Kailasa temple was excavated during the reign of Dantidurga.",
+          "evidence_ids": [
+            "E6"
+          ],
+          "source_citations": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E6",
+              "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+              "filename": "sample_fergusson_burgess_1880.pdf",
+              "document_title": "sample_fergusson_burgess_1880.pdf",
+              "page_number": 3,
+              "pdf_page_index": 3,
+              "printed_page_label": null,
+              "citation_display": "PDF page 3 \u00b7 Printed page unavailable",
+              "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+              "citation_valid": true,
+              "semantic_support": "not_independently_verified",
+              "rrf_score": 0.026671,
+              "retrieval_source": "both"
+            }
+          ]
+        }
+      ],
+      "missing_information": [
+        "Information or premises requested by the user but not established or mentioned in the evidence: Are Ashoka edicts carved on the monolithic pillar inside Kailasa temple?",
+        "Archival records do not contain information to establish: 'The Kailasa temple was excavated during the reign of Dantidurga.'."
+      ],
+      "conflicts": [],
+      "answer": "The Kailasa temple was excavated during the reign of Dantidurga. Note: The available records do not establish: Information or premises requested by the user but not established or mentioned in the evidence: Are Ashoka edicts carved on the monolithic pillar inside Kailasa temple?; Archival records do not contain information to establish: 'The Kailasa temple was excavated during the reign of Dantidurga.'.."
+    },
+    "premise_leaked": false,
+    "leaked_claims": []
+  },
+  {
+    "case": {
+      "id": "fp_03_steam_locomotives",
+      "name": "Steam Locomotives in Ellora Caves",
+      "question": "Were steam locomotives and railway transport lines constructed inside the Ellora caves?",
+      "unsupported_premise": "steam locomotives / railway transport"
+    },
+    "retrieval": {
+      "has_sufficient_evidence": true,
+      "max_similarity_score": 0.5224,
+      "passages": [
+        {
+          "evidence_id": "E1",
+          "source_citation": "[sample_1544.pdf \u00b7 Page 3]",
+          "similarity_score": 0.4954,
+          "retrieval_source": "both",
+          "snippet": "CONTENTS. Cnar. I. Istropyerony\u2014the Eluri Caves \u2018 I, Tas Booowst Caves ar Ecuni\u2014the Southern Group Caves I-VI. Caves VIL"
+        },
+        {
+          "evidence_id": "E2",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]",
+          "similarity_score": 0.4374,
+          "retrieval_source": "both",
+          "snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. As the case at prese"
+        },
+        {
+          "evidence_id": "E3",
+          "source_citation": "[sample_1544.pdf \u00b7 Page 10]",
+          "similarity_score": 0.4626,
+          "retrieval_source": "both",
+          "snippet": "BUDDHIST CAVES OF ELURA. m hirwidi\u2014are on a considerably larger scale aud more magnificent in their arrangements, but th"
+        },
+        {
+          "evidence_id": "E4",
+          "source_citation": "[sample_1544.pdf \u00b7 Page 6]",
+          "similarity_score": 0.441,
+          "retrieval_source": "both",
+          "snippet": "ese temples, in the infinite diversity of their details, and the minute variety of the earvings.\u201d) In this volume it see"
+        },
+        {
+          "evidence_id": "E5",
+          "source_citation": "[sample_22087.pdf \u00b7 Page 3]",
+          "similarity_score": 0.3858,
+          "retrieval_source": "both",
+          "snippet": "\u2014_ San eanon 10. 11. 12. 13. 14. 15. 16. 17. CONTENTS. . Notes on the Rock-Temples at Mhar and KuqA and their ne Koda Ca"
+        },
+        {
+          "evidence_id": "E6",
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]",
+          "similarity_score": 0.323,
+          "retrieval_source": "both",
+          "snippet": "esent the Gopura, or great gateway pyramid, which is an indispensable adjunct of Dravidian temples. These generally are "
+        }
+      ]
+    },
+    "generation": {
+      "grounding_state": "insufficient_evidence",
+      "claims": [],
+      "missing_information": [
+        "Information or premises requested by the user but not established or mentioned in the evidence: Were steam locomotives and railway transport lines constructed inside the Ellora caves?",
+        "Unestablished premise: 'The Kailasa or Rang Mahil is the farthest north specimen known to exist of the Dravidian style of architecture.' lacks valid archival citations."
+      ],
+      "conflicts": [],
+      "answer": "The available archival records do not contain this information: Information or premises requested by the user but not established or mentioned in the evidence: Were steam locomotives and railway transport lines constructed inside the Ellora caves?; Unestablished premise: 'The Kailasa or Rang Mahil is the farthest north specimen known to exist of the Dravidian style of architecture.' lacks valid archival citations.."
+    },
+    "premise_leaked": false,
+    "leaked_claims": []
+  }
+]

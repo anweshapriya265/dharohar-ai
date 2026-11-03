@@ -1,0 +1,59 @@
+{
+  "dataset_name": "DHAROHAR AI — Milestone 5.5 Archival Test Dataset",
+  "inspection_date": "2026-11-01",
+  "total_documents": 3,
+  "documents": [
+    {
+      "filename": "1544.pdf",
+      "title": "Report on the Elura Cave Temples and the Brahmanical and Jaina Caves in Western India (Archaeological Survey of Western India, Vol. V)",
+      "author": "James Burgess, LL.D., F.R.G.S.",
+      "publication_year": 1883,
+      "source": "Archaeological Survey of India (ASI) Central Archaeological Library, Accession No. 1544 / Internet Archive",
+      "file_size_bytes": 17193469,
+      "page_count": 208,
+      "sha256": "e8d695072bc0724cf13020008f45489a50a196d2bd8081f7affc5a5b02122fdf",
+      "valid_pdf_header": true,
+      "encrypted": false,
+      "digital_text_pages": 0,
+      "scanned_image_pages": 208,
+      "extraction_classification": "scanned_ocr_required",
+      "tesseract_ocr_verified": true,
+      "suitable_for_ingestion": true
+    },
+    {
+      "filename": "22087.pdf",
+      "title": "Inscriptions from the Cave-Temples of Western India, with Descriptive Notes, &c. (Archaeological Survey of Western India, No. 10)",
+      "author": "James Burgess, LL.D. and Bhagwanlal Indraji Pandit",
+      "publication_year": 1881,
+      "source": "Archaeological Survey of India (ASI) Central Archaeological Library, Accession No. 22087 / Internet Archive",
+      "file_size_bytes": 17614530,
+      "page_count": 216,
+      "sha256": "e8173c2b3f9f5e7cd9a074df6663d02c6b1dbf4d559260408b0b3b730ea11af9",
+      "valid_pdf_header": true,
+      "encrypted": false,
+      "digital_text_pages": 0,
+      "scanned_image_pages": 216,
+      "extraction_classification": "scanned_ocr_required",
+      "tesseract_ocr_verified": true,
+      "suitable_for_ingestion": true
+    },
+    {
+      "filename": "Fergusson Burgess 1880.pdf",
+      "title": "The Cave Temples of India",
+      "author": "James Fergusson, D.C.L., F.R.S. and James Burgess, F.R.G.S., M.R.A.S.",
+      "publication_year": 1880,
+      "source": "London: W.H. Allen & Co. / Internet Archive",
+      "file_size_bytes": 75392830,
+      "page_count": 764,
+      "sha256": "e0148eea0989382087e83c3638ed41f548f013fa254310ca5b7a1ab48f274108",
+      "valid_pdf_header": true,
+      "encrypted": false,
+      "digital_text_pages": 621,
+      "scanned_image_pages": 143,
+      "extraction_classification": "hybrid_digital_and_ocr",
+      "tesseract_ocr_verified": true,
+      "suitable_for_ingestion": true
+    }
+  ]
+}
+

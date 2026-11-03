@@ -1,0 +1,262 @@
+{
+  "test_3": {
+    "query": "What are the dimensions and excavation method of the Kailasa temple at Ellora?",
+    "evidence": [
+      {
+        "evidence_id": "E1",
+        "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+        "original_filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 4,
+        "text": "The court of the Kailasa temple is cut down at right angles to the front of the rock and more than 90 yards in depth. The rock-cut spire of the main temple rises to a height of 96 feet above the court floor.",
+        "similarity_score": 0.6582,
+        "token_count": 55,
+        "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+      },
+      {
+        "evidence_id": "E2",
+        "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+        "original_filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 5,
+        "text": "The entire monolithic temple was excavated by cutting deep vertical trenches into the living basaltic trap rock from above, isolating a central mass of stone which was then carved into the vimana, hall, and monolithic courtyards.",
+        "similarity_score": 0.6409,
+        "token_count": 52,
+        "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+      }
+    ],
+    "prompt": "USER INQUIRY:\nWhat are the dimensions and excavation method of the Kailasa temple at Ellora?\n\nARCHIVAL EVIDENCE PASSAGES (JSON Array of records):\n[\n  {\n    \"evidence_id\": \"E1\",\n    \"text\": \"The court of the Kailasa temple is cut down at right angles to the front of the rock and more than 90 yards in depth. The rock-cut spire of the main temple rises to a height of 96 feet above the court floor.\"\n  },\n  {\n    \"evidence_id\": \"E2\",\n    \"text\": \"The entire monolithic temple was excavated by cutting deep vertical trenches into the living basaltic trap rock from above, isolating a central mass of stone which was then carved into the vimana, hall, and monolithic courtyards.\"\n  }\n]\n\nCarefully evaluate the evidence passages above and generate the structured JSON response.",
+    "raw_output": "{\n  \"claims\": [\n    {\n      \"text\": \"The Kailasa temple at Ellora has a court that is more than 90 yards in depth and is cut down at right angles to the front of the rock.\",\n      \"evidence_ids\": [\"E1\"]\n    },\n    {\n      \"text\": \"The Kailasa temple at Ellora was excavated by cutting deep vertical trenches into the living basaltic trap rock from above.\",\n      \"evidence_ids\": [\"E2\"]\n    }\n  ],\n  \"missing_information\": [\n    \"The exact dimensions of the temple's main spire are not mentioned in the evidence.\"\n  ],\n  \"conflicts\": [\n    {\n      \"topic\": \"Excavation method\",\n      \"claim_a\": \"The court of the Kailasa temple is cut down at right angles to the front of the rock.\",\n      \"evidence_ids_a\": [\"E1\"],\n      \"claim_b\": \"The entire monolithic temple was excavated by cutting deep vertical trenches into the living basaltic trap rock from above.\",\n      \"evidence_ids_b\": [\"E2\"]\n    }\n  ]\n}",
+    "grounded_result": {
+      "query": "What are the dimensions and excavation method of the Kailasa temple at Ellora?",
+      "grounding_state": "conflicting_evidence",
+      "answer_text": "The Kailasa temple at Ellora has a court that is more than 90 yards in depth and is cut down at right angles to the front of the rock. The Kailasa temple at Ellora was excavated by cutting deep vertical trenches into the living basaltic trap rock from above.",
+      "claims": [
+        {
+          "text": "The Kailasa temple at Ellora has a court that is more than 90 yards in depth and is cut down at right angles to the front of the rock.",
+          "evidence_ids": [
+            "E1"
+          ],
+          "source_citations": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+          ],
+          "sources": [
+            {
+              "evidence_id": "E1",
+              "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+              "original_filename": "sample_fergusson_burgess_1880.pdf",
+              "page_number": 4,
+              "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+            }
+          ]
+        },
+        {
+          "text": "The Kailasa temple at Ellora was excavated by cutting deep vertical trenches into the living basaltic trap rock from above.",
+          "evidence_ids": [
+            "E2"
+          ],
+          "source_citations": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+          ],
+          "sources": [
+            {
+              "evidence_id": "E2",
+              "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+              "original_filename": "sample_fergusson_burgess_1880.pdf",
+              "page_number": 5,
+              "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+            }
+          ]
+        }
+      ],
+      "missing_information": [
+        "The exact dimensions of the temple's main spire are not mentioned in the evidence."
+      ],
+      "conflicts": [
+        {
+          "topic": "Excavation method",
+          "claim_a": "The court of the Kailasa temple is cut down at right angles to the front of the rock.",
+          "evidence_ids_a": [
+            "E1"
+          ],
+          "citations_a": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+          ],
+          "claim_b": "The entire monolithic temple was excavated by cutting deep vertical trenches into the living basaltic trap rock from above.",
+          "evidence_ids_b": [
+            "E2"
+          ],
+          "citations_b": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+          ]
+        }
+      ],
+      "verified_citations": [
+        "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]",
+        "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+      ],
+      "evidence_used": [
+        {
+          "evidence_id": "E1",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 4,
+          "text": "The court of the Kailasa temple is cut down at right angles to the front of the rock and more than 90 yards in depth. The rock-cut spire of the main temple rises to a height of 96 feet above the court floor.",
+          "similarity_score": 0.6582,
+          "token_count": 55,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+        },
+        {
+          "evidence_id": "E2",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 5,
+          "text": "The entire monolithic temple was excavated by cutting deep vertical trenches into the living basaltic trap rock from above, isolating a central mass of stone which was then carved into the vimana, hall, and monolithic courtyards.",
+          "similarity_score": 0.6409,
+          "token_count": 52,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+        }
+      ],
+      "provider_info": {
+        "provider": "ollama",
+        "model": "llama3.2:3b",
+        "base_url": "http://localhost:11434"
+      },
+      "has_sufficient_evidence": true
+    }
+  },
+  "test_10": {
+    "query": "What are the dimensions and depth of the Kailasa temple court at Ellora?",
+    "retrieval": {
+      "max_score": 0.679,
+      "total_candidates": 92,
+      "token_budget_used": 902,
+      "evidence": [
+        {
+          "evidence_id": "E1",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 5,
+          "chunk_ids": [
+            "sample_doc_03_sample_fergusson_burgess_1880_p5_c0"
+          ],
+          "text": "KAILASA\u2014ELURA.\n453\n/\nremains of the trisula of Siva on the top, making up the total height\nto 49 feet, as represented on Plate LXXX., fig.\n1.\nA little further back in this court stands\nthe temple\nitself (G. in\nplan), measuring 164 from east to west, and 109 across where widest,\nand rising to a height of 96 feet to the top of\nits dome.\nLike\nthe\nNandi shrine, its basement\nis\nsolid, and, as\nwill be\nseen from the\nplan (LXXXI.), very irregular in form, being a curious example of\nsymmetriphobia, which\nis\ncharacteristic\nof\nall the Hindu buildings\nof that\nage.",
+          "similarity_score": 0.679,
+          "token_count": 140,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 5]"
+        },
+        {
+          "evidence_id": "E2",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 3,
+          "chunk_ids": [
+            "sample_doc_03_sample_fergusson_burgess_1880_p3_c4"
+          ],
+          "text": "together\nso\nexceptional that\nit seems in vain to look for any repetition of\nit\nin\nthe cave regions.\nNotwithstanding\nthe\ndefects\narising from\nits\nsituation and\nits\nanomalous\ndesign,\nthe\nKailasa\nis by\nfar\nthe most extensive\nand\nelaborate rock-cut temple in India, and, in so\nfar as dimensions and\nthe amount of labour bestowed upon\nit are concerned, will stand a\ncomparison with those of Egypt or any other country.",
+          "similarity_score": 0.5879,
+          "token_count": 103,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+        },
+        {
+          "evidence_id": "E3",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 4,
+          "chunk_ids": [
+            "sample_doc_03_sample_fergusson_burgess_1880_p4_c4",
+            "sample_doc_03_sample_fergusson_burgess_1880_p4_c5",
+            "sample_doc_03_sample_fergusson_burgess_1880_p4_c6"
+          ],
+          "text": "n inscriptions in characters\nof the eighth century, but of these only a few letters remain legible.\nHere we enter right and left,\nthe front portion of the court, which\nis a few feet lower than the rest\n; and at the north and south ends of\nit stand two gigantic elephants,\u2014that on the south much mutilated.\nTurning again to\nthe east and ascending a few steps, we are in the\ngreat court of\nthe temple, which measures 276\nin\nlength, with an\naverage\nbreadth\nof\n154, and with\na scarp\n107\nfeet high\nat the\nback.\nIn the front part of the court stands a mandapa or shrine for\nthe Bull Nandi {B. in plan LXXXI.), 26 feet square and two storeys\nin height\n;\nthe\nlower one\nsolid, the upper one connected with\nthe\nGopura, and with the Temple itself, by bridges cut in the rock.\nOn\neach\nside of\nthis porch\nstands a\nsquare\npillar or dwajastambha or\nensign staff, 45 feet\nin\nheight. But\nto\nthis must\nbe added what\n1 In order that the plans of the Kailasa may be introduced\ninto\nthe work without\ntwice foUling, the scale on which they are engraved has been reduced to 35 feet to\n1 inch\ninstead of 25 feet to\n1 inch, which is ihat usually adopted for plans throughout.",
+          "similarity_score": 0.5422,
+          "token_count": 288,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+        },
+        {
+          "evidence_id": "E4",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 4,
+          "chunk_ids": [
+            "sample_doc_03_sample_fergusson_burgess_1880_p4_c1"
+          ],
+          "text": "esent\nthe Gopura, or great gateway pyramid, which\nis an\nindispensable\nadjunct of Dravidian\ntemples.\nThese\ngenerally are\nin\nstone only\nto height of one storey, above which the pyramidal part\nis in most\ninstances in brick\nand some lighter substance.\nHere it is\nin two\nstoreys, the lower one adorned on the outside with the forms of Siva,\nVishnu, and their congeners, and with rooms inside it.",
+          "similarity_score": 0.491,
+          "token_count": 98,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+        },
+        {
+          "evidence_id": "E5",
+          "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+          "original_filename": "sample_fergusson_burgess_1880.pdf",
+          "page_number": 3,
+          "chunk_ids": [
+            "sample_doc_03_sample_fergusson_burgess_1880_p3_c0"
+          ],
+          "text": "KAILASA\u2014ELUHA.\n451\nVikramaditya Chalukya in the year 733 a.d.,'^ and consequently during\nthe reign\nof\nDantidurga.\nThus\nconfirming\nthe\nprobability,\nin so\nfar\nas\narchitectural evidence can do\nso,\nthat\nthe\nKailasa\nwas\nexcavated during the reign of that monarch.\nAlthough\nit\nis extremely improbable\nthat the Pattadkal temple\nis the earliest example of a structural temple in the Dravidian\nstyle\nin India, it certainly is\nthe earliest\nto which an authentic date\ncan\nbe attached, and none with an older appearance have yet been found.",
+          "similarity_score": 0.4751,
+          "token_count": 132,
+          "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 3]"
+        },
+        {
+          "evidence_id": "E6",
+          "document_id": "sample_doc_01_sample_1544",
+          "original_filename": "sample_1544.pdf",
+          "page_number": 4,
+          "chunk_ids": [
+            "sample_doc_01_sample_1544_p4_c2"
+          ],
+          "text": "asta duaangos) F AL)\nMIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be\n\nAft the end \u2014\n\nXIU Encri Booouer Caves: Fig.l, Pindari Tiri in Cave IL; 2, Tari in Cave VL; 3, Pilaster in Cave\n\nV.; 4, Sculpture on the right side of the shrine in Cave VL; 5, Ditto on the left side ;\n6, Bodhisattva in Cave IX.\n\nXIV. Exora: Plan of Banddha Caves Nos. VII. and VIIL ; 2, Tin Thil, Plan of second storey.\nXV. Exvei: Plans of the three floors of the Din Thal Cave.\n\nXVL Exvei: Fig. 1, Transverse section of the Vigvakarma Cave; 2, Padmapdniin Cave [V.; 3, Sarasvati",
+          "similarity_score": 0.4651,
+          "token_count": 141,
+          "source_citation": "[sample_1544.pdf \u00b7 Page 4]"
+        }
+      ]
+    },
+    "prompt": "USER INQUIRY:\nWhat are the dimensions and depth of the Kailasa temple court at Ellora?\n\nARCHIVAL EVIDENCE PASSAGES (JSON Array of records):\n[\n  {\n    \"evidence_id\": \"E1\",\n    \"text\": \"KAILASA\u2014ELURA.\\n453\\n/\\nremains of the trisula of Siva on the top, making up the total height\\nto 49 feet, as represented on Plate LXXX., fig.\\n1.\\nA little further back in this court stands\\nthe temple\\nitself (G. in\\nplan), measuring 164 from east to west, and 109 across where widest,\\nand rising to a height of 96 feet to the top of\\nits dome.\\nLike\\nthe\\nNandi shrine, its basement\\nis\\nsolid, and, as\\nwill be\\nseen from the\\nplan (LXXXI.), very irregular in form, being a curious example of\\nsymmetriphobia, which\\nis\\ncharacteristic\\nof\\nall the Hindu buildings\\nof that\\nage.\"\n  },\n  {\n    \"evidence_id\": \"E2\",\n    \"text\": \"together\\nso\\nexceptional that\\nit seems in vain to look for any repetition of\\nit\\nin\\nthe cave regions.\\nNotwithstanding\\nthe\\ndefects\\narising from\\nits\\nsituation and\\nits\\nanomalous\\ndesign,\\nthe\\nKailasa\\nis by\\nfar\\nthe most extensive\\nand\\nelaborate rock-cut temple in India, and, in so\\nfar as dimensions and\\nthe amount of labour bestowed upon\\nit are concerned, will stand a\\ncomparison with those of Egypt or any other country.\"\n  },\n  {\n    \"evidence_id\": \"E3\",\n    \"text\": \"n inscriptions in characters\\nof the eighth century, but of these only a few letters remain legible.\\nHere we enter right and left,\\nthe front portion of the court, which\\nis a few feet lower than the rest\\n; and at the north and south ends of\\nit stand two gigantic elephants,\u2014that on the south much mutilated.\\nTurning again to\\nthe east and ascending a few steps, we are in the\\ngreat court of\\nthe temple, which measures 276\\nin\\nlength, with an\\naverage\\nbreadth\\nof\\n154, and with\\na scarp\\n107\\nfeet high\\nat the\\nback.\\nIn the front part of the court stands a mandapa or shrine for\\nthe Bull Nandi {B. in plan LXXXI.), 26 feet square and two storeys\\nin height\\n;\\nthe\\nlower one\\nsolid, the upper one connected with\\nthe\\nGopura, and with the Temple itself, by bridges cut in the rock.\\nOn\\neach\\nside of\\nthis porch\\nstands a\\nsquare\\npillar or dwajastambha or\\nensign staff, 45 feet\\nin\\nheight. But\\nto\\nthis must\\nbe added what\\n1 In order that the plans of the Kailasa may be introduced\\ninto\\nthe work without\\ntwice foUling, the scale on which they are engraved has been reduced to 35 feet to\\n1 inch\\ninstead of 25 feet to\\n1 inch, which is ihat usually adopted for plans throughout.\"\n  },\n  {\n    \"evidence_id\": \"E4\",\n    \"text\": \"esent\\nthe Gopura, or great gateway pyramid, which\\nis an\\nindispensable\\nadjunct of Dravidian\\ntemples.\\nThese\\ngenerally are\\nin\\nstone only\\nto height of one storey, above which the pyramidal part\\nis in most\\ninstances in brick\\nand some lighter substance.\\nHere it is\\nin two\\nstoreys, the lower one adorned on the outside with the forms of Siva,\\nVishnu, and their congeners, and with rooms inside it.\"\n  },\n  {\n    \"evidence_id\": \"E5\",\n    \"text\": \"KAILASA\u2014ELUHA.\\n451\\nVikramaditya Chalukya in the year 733 a.d.,'^ and consequently during\\nthe reign\\nof\\nDantidurga.\\nThus\\nconfirming\\nthe\\nprobability,\\nin so\\nfar\\nas\\narchitectural evidence can do\\nso,\\nthat\\nthe\\nKailasa\\nwas\\nexcavated during the reign of that monarch.\\nAlthough\\nit\\nis extremely improbable\\nthat the Pattadkal temple\\nis the earliest example of a structural temple in the Dravidian\\nstyle\\nin India, it certainly is\\nthe earliest\\nto which an authentic date\\ncan\\nbe attached, and none with an older appearance have yet been found.\"\n  },\n  {\n    \"evidence_id\": \"E6\",\n    \"text\": \"asta duaangos) F AL)\\nMIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be\\n\\nAft the end \u2014\\n\\nXIU Encri Booouer Caves: Fig.l, Pindari Tiri in Cave IL; 2, Tari in Cave VL; 3, Pilaster in Cave\\n\\nV.; 4, Sculpture on the right side of the shrine in Cave VL; 5, Ditto on the left side ;\\n6, Bodhisattva in Cave IX.\\n\\nXIV. Exora: Plan of Banddha Caves Nos. VII. and VIIL ; 2, Tin Thil, Plan of second storey.\\nXV. Exvei: Plans of the three floors of the Din Thal Cave.\\n\\nXVL Exvei: Fig. 1, Transverse section of the Vigvakarma Cave; 2, Padmapdniin Cave [V.; 3, Sarasvati\"\n  }\n]\n\nCarefully evaluate the evidence passages above and generate the structured JSON response.",
+    "raw_output": "{\n  \"claims\": [\n    {\n      \"text\": \"The Kailasa temple court at Ellora measures 276 feet in length, with an average breadth of 154 feet, and a scarp 107 feet high at the back.\",\n      \"evidence_ids\": [\"E3\"]\n    }\n  ],\n  \"missing_information\": [\n    \"The depth of the Kailasa temple court at Ellora is not mentioned in the evidence passages.\"\n  ],\n  \"conflicts\": [\n    {\n      \"topic\": \"Depth of the Kailasa temple court\",\n      \"claim_a\": \"Not mentioned in the evidence passages.\",\n      \"evidence_ids_a\": [\"E3\"],\n      \"claim_b\": \"None\",\n      \"evidence_ids_b\": []\n    }\n  ]\n}",
+    "assistant_response": {
+      "question": "What are the dimensions and depth of the Kailasa temple court at Ellora?",
+      "answer": "The Kailasa temple court at Ellora measures 276 feet in length, with an average breadth of 154 feet, and a scarp 107 feet high at the back. Note: The available records do not establish: The depth of the Kailasa temple court at Ellora is not mentioned in the evidence passages..",
+      "grounding_state": "partial",
+      "claims": [
+        {
+          "text": "The Kailasa temple court at Ellora measures 276 feet in length, with an average breadth of 154 feet, and a scarp 107 feet high at the back.",
+          "evidence_ids": [
+            "E3"
+          ],
+          "source_citations": [
+            "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+          ],
+          "evidence": [
+            {
+              "evidence_id": "E3",
+              "document_id": "sample_doc_03_sample_fergusson_burgess_1880",
+              "filename": "sample_fergusson_burgess_1880.pdf",
+              "page_number": 4,
+              "source_citation": "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]",
+              "citation_valid": true,
+              "semantic_support": "not_independently_verified"
+            }
+          ]
+        }
+      ],
+      "missing_information": [
+        "The depth of the Kailasa temple court at Ellora is not mentioned in the evidence passages."
+      ],
+      "conflicts": [],
+      "verified_citations": [
+        "[sample_fergusson_burgess_1880.pdf \u00b7 Page 4]"
+      ],
+      "has_sufficient_evidence": true,
+      "error": null,
+      "limitations": [
+        "Claims are attributed to cited archival passages; semantic entailment is not independently verified."
+      ],
+      "provider_info": {
+        "provider": "ollama",
+        "model": "llama3.2:3b",
+        "base_url": "http://localhost:11434"
+      }
+    }
+  }
+}

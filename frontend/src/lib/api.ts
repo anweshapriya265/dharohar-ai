@@ -52,6 +52,8 @@ export interface DocumentListResponse {
 
 export interface DocumentPage {
   page_number: number;
+  pdf_page_index?: number;
+  printed_page_label?: string | null;
   text: string;
   character_count: number;
   word_count: number;
@@ -69,13 +71,19 @@ export interface SearchResultItem {
   chunk_id: string;
   document_id: string;
   original_filename: string;
+  document_title?: string | null;
   page_number: number;
+  pdf_page_index?: number;
+  printed_page_label?: string | null;
+  citation_display?: string | null;
   chunk_index: number;
   text: string;
   character_count: number;
   word_count: number;
   similarity_score: number;
   source_citation: string;
+  rrf_score?: number | null;
+  retrieval_source?: string | null;
 }
 
 export interface SearchResponse {
@@ -90,6 +98,8 @@ export interface DocumentChunkItem {
   id: string;
   document_id: string;
   page_number: number;
+  pdf_page_index?: number;
+  printed_page_label?: string | null;
   chunk_index: number;
   text: string;
   character_count: number;
@@ -430,5 +440,151 @@ export async function fetchDocumentChunks(documentId: string): Promise<DocumentC
       throw err;
     }
     throw new Error('Failed to retrieve document chunks');
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Milestone 5.3 & 5.4: Evidence-Grounded Research Assistant Types & API
+// ---------------------------------------------------------------------------
+
+export interface ClaimEvidenceItem {
+  evidence_id: string;
+  document_id: string;
+  filename: string;
+  document_title?: string | null;
+  page_number: number;
+  pdf_page_index?: number;
+  printed_page_label?: string | null;
+  citation_display?: string | null;
+  source_citation: string;
+  citation_valid: boolean;
+  semantic_support: string;
+  rrf_score?: number | null;
+  retrieval_source?: string | null;
+}
+
+export interface AssistantClaim {
+  text: string;
+  evidence_ids: string[];
+  source_citations: string[];
+  evidence: ClaimEvidenceItem[];
+}
+
+export interface ConflictPerspective {
+  claim: string;
+  evidence_ids: string[];
+  citations: string[];
+}
+
+export interface AssistantConflict {
+  topic: string;
+  perspective_a: ConflictPerspective;
+  perspective_b: ConflictPerspective;
+}
+
+export type GroundingStateType =
+  | 'grounded'
+  | 'partial'
+  | 'conflicting_evidence'
+  | 'insufficient_evidence'
+  | 'provider_unavailable'
+  | 'malformed_output';
+
+export interface AssistantAskResponse {
+  question: string;
+  answer: string | null;
+  grounding_state: GroundingStateType;
+  claims: AssistantClaim[];
+  missing_information: string[];
+  conflicts: AssistantConflict[];
+  verified_citations: string[];
+  has_sufficient_evidence: boolean;
+  error?: string | null;
+  limitations: string[];
+  provider_info?: {
+    provider: string;
+    model: string;
+    base_url?: string;
+  } | null;
+}
+
+/**
+ * Submits a natural-language research question to POST /api/assistant/ask.
+ */
+export async function askAssistant(
+  question: string,
+  documentIds?: string[] | null
+): Promise<AssistantAskResponse> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/assistant/ask`;
+
+  const payload: { question: string; document_ids?: string[] } = {
+    question: question.trim(),
+  };
+  if (documentIds && documentIds.length > 0) {
+    payload.document_ids = documentIds;
+  }
+
+  const controller = new AbortController();
+  const timeoutMs = 65000; // 65 seconds
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+      cache: 'no-store',
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      let detail = `Assistant inquiry failed: HTTP ${response.status}`;
+      try {
+        const errorJson = await response.json();
+        if (errorJson) {
+          if (typeof errorJson.detail === 'string') {
+            detail = errorJson.detail;
+          } else if (Array.isArray(errorJson.detail)) {
+            detail = errorJson.detail
+              .map((d: { msg?: string }) => (typeof d === 'string' ? d : d.msg || JSON.stringify(d)))
+              .join('; ');
+          } else if (typeof errorJson.message === 'string') {
+            detail = errorJson.message;
+          }
+        }
+      } catch {
+        if (response.statusText) {
+          detail = `${detail}: ${response.statusText}`;
+        }
+      }
+      throw new Error(detail);
+    }
+
+    const data: AssistantAskResponse = await response.json();
+    return data;
+  } catch (err: unknown) {
+    clearTimeout(timeoutId);
+
+    if (err instanceof DOMException && (err.name === 'AbortError' || err.message.toLowerCase().includes('abort'))) {
+      throw new Error('Inquiry timed out. The local AI engine is taking longer than expected.');
+    }
+    if (
+      err instanceof TypeError &&
+      (err.message.toLowerCase().includes('fetch') ||
+        err.message.toLowerCase().includes('network') ||
+        err.message.toLowerCase().includes('failed'))
+    ) {
+      throw new Error(`Cannot reach backend at ${baseUrl}. Ensure the FastAPI server is running.`);
+    }
+    if (err instanceof Error) {
+      throw err;
+    }
+    throw new Error('An unexpected error occurred while communicating with the assistant.');
   }
 }

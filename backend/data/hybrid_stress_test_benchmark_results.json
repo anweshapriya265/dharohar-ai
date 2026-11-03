@@ -1,0 +1,1633 @@
+{
+  "timestamp": "2026-11-01T17:47:26Z",
+  "validation_db": "E:\\projects\\dharohar-ai\\backend\\data\\dharohar_sample_validation.db",
+  "total_queries": 35,
+  "modes": {
+    "dense": {
+      "mode": "dense",
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.9,
+      "recall_at_10": 0.9,
+      "precision_at_5": 0.2067,
+      "mrr": 0.8056,
+      "false_positive_count": 5,
+      "false_positive_rate": 1.0,
+      "multipage_coverage": 0.5,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.671,
+          "top_retrieval_source": "dense",
+          "latency_ms": 19851.1
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.6385,
+          "top_retrieval_source": "dense",
+          "latency_ms": 26.36
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.5864,
+          "top_retrieval_source": "dense",
+          "latency_ms": 24.62
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "query": "Vikramaditya Chalukya in the year 733 a.d.",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 9,
+          "top_similarity_score": 0.5814,
+          "top_retrieval_source": "dense",
+          "latency_ms": 27.19
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "query": "Elura cave temples Brahmanical and Jaina",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.7799,
+          "top_retrieval_source": "dense",
+          "latency_ms": 27.42
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "query": "Kailasa rock temple excavation from top to bottom",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.726,
+          "top_retrieval_source": "dense",
+          "latency_ms": 25.65
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "query": "Dwajastambha ensign staff square pillar",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.5758,
+          "top_retrieval_source": "dense",
+          "latency_ms": 26.26
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "query": "Digoba in rock cut cells at Mhar",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.5446,
+          "top_retrieval_source": "dense",
+          "latency_ms": 25.56
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.6284,
+          "top_retrieval_source": "dense",
+          "latency_ms": 29.27
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "query": "spire rises to a height of 96 feet from the court below",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.4355,
+          "top_retrieval_source": "dense",
+          "latency_ms": 25.22
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.7234,
+          "top_retrieval_source": "dense",
+          "latency_ms": 30.19
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.5914,
+          "top_retrieval_source": "dense",
+          "latency_ms": 27.01
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "query": "descriptive notes in this memorandum were prepared in February 1880",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.5639,
+          "top_retrieval_source": "dense",
+          "latency_ms": 23.01
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.7258,
+          "top_retrieval_source": "dense",
+          "latency_ms": 28.08
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.4963,
+          "top_retrieval_source": "dense",
+          "latency_ms": 26.15
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.6103,
+          "top_retrieval_source": "dense",
+          "latency_ms": 26.81
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.7581,
+          "top_retrieval_source": "dense",
+          "latency_ms": 24.82
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5237,
+          "top_retrieval_source": "dense",
+          "latency_ms": 26.07
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.7398,
+          "top_retrieval_source": "dense",
+          "latency_ms": 30.07
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "query": "Rock Temples at Mhar small village of Pal Savitri river",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.6225,
+          "top_retrieval_source": "dense",
+          "latency_ms": 30.16
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "query": "Kuda caves Kalwa khadi creek hill Mohola",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6591,
+          "top_retrieval_source": "dense",
+          "latency_ms": 32.08
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.7086,
+          "top_retrieval_source": "dense",
+          "latency_ms": 31.53
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6053,
+          "top_retrieval_source": "dense",
+          "latency_ms": 27.81
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.4896,
+          "top_retrieval_source": "dense",
+          "latency_ms": 26.78
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.4991,
+          "top_retrieval_source": "dense",
+          "latency_ms": 27.49
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.5513,
+          "top_retrieval_source": "dense",
+          "latency_ms": 30.84
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.5608,
+          "top_retrieval_source": "dense",
+          "latency_ms": 30.35
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.6727,
+          "top_retrieval_source": "dense",
+          "latency_ms": 29.29
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "query": "Barbosa 1514 account of Mandabad river",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.7044,
+          "top_retrieval_source": "dense",
+          "latency_ms": 25.65
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6431,
+          "top_retrieval_source": "dense",
+          "latency_ms": 29.48
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.529,
+          "top_retrieval_source": "dense",
+          "latency_ms": 27.82
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.3376,
+          "top_retrieval_source": "dense",
+          "latency_ms": 25.29
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.4679,
+          "top_retrieval_source": "dense",
+          "latency_ms": 28.89
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 10,
+          "top_similarity_score": 0.4522,
+          "top_retrieval_source": "dense",
+          "latency_ms": 28.25
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 10,
+          "top_similarity_score": 0.6308,
+          "top_retrieval_source": "dense",
+          "latency_ms": 44.37
+        }
+      ],
+      "category_breakdown": {
+        "1. Historical Proper Nouns": {
+          "total_queries": 4,
+          "recall_at_5": 1.0,
+          "mrr": 0.875,
+          "mean_latency_ms": 4982.32
+        },
+        "2. Alternative Spellings": {
+          "total_queries": 4,
+          "recall_at_5": 0.75,
+          "mrr": 0.75,
+          "mean_latency_ms": 26.22
+        },
+        "3. Numerical Dimensions": {
+          "total_queries": 4,
+          "recall_at_5": 1.0,
+          "mrr": 0.8333,
+          "mean_latency_ms": 27.92
+        },
+        "4. Dates & Periods": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 25.75
+        },
+        "5. Inscription Terminology": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 25.9
+        },
+        "6. Temple & Cave References": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 30.77
+        },
+        "7. Multi-Concept Questions": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 29.67
+        },
+        "8. Paraphrased Questions": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 0.4167,
+          "mean_latency_ms": 27.13
+        },
+        "9. Multi-Page Evidence": {
+          "total_queries": 2,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 30.59
+        },
+        "10. Exact Terms in Irrelevant Contexts": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 27.47
+        },
+        "11. Partially Supported": {
+          "total_queries": 1,
+          "recall_at_5": 1.0,
+          "mrr": 0.5,
+          "mean_latency_ms": 29.48
+        },
+        "12. Absent Information": {
+          "total_queries": 3,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 27.33
+        },
+        "13. False Historical Premises": {
+          "total_queries": 2,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 36.31
+        }
+      },
+      "latency_ms_stats": {
+        "mean": 594.48,
+        "median": 27.49,
+        "p95": 44.37
+      }
+    },
+    "lexical": {
+      "mode": "lexical",
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.8667,
+      "recall_at_10": 0.8667,
+      "precision_at_5": 0.2,
+      "mrr": 0.7861,
+      "false_positive_count": 4,
+      "false_positive_rate": 0.8,
+      "multipage_coverage": 0.5,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.671,
+          "top_retrieval_source": "dense",
+          "latency_ms": 41.59
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.6385,
+          "top_retrieval_source": "dense",
+          "latency_ms": 39.66
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.5864,
+          "top_retrieval_source": "dense",
+          "latency_ms": 40.76
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "query": "Vikramaditya Chalukya in the year 733 a.d.",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 2,
+          "top_similarity_score": 0.5814,
+          "top_retrieval_source": "dense",
+          "latency_ms": 35.93
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "query": "Elura cave temples Brahmanical and Jaina",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 9,
+          "top_similarity_score": 0.7799,
+          "top_retrieval_source": "dense",
+          "latency_ms": 39.2
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "query": "Kailasa rock temple excavation from top to bottom",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.726,
+          "top_retrieval_source": "dense",
+          "latency_ms": 43.11
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "query": "Dwajastambha ensign staff square pillar",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5758,
+          "top_retrieval_source": "dense",
+          "latency_ms": 36.11
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "query": "Digoba in rock cut cells at Mhar",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5446,
+          "top_retrieval_source": "dense",
+          "latency_ms": 66.34
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.6284,
+          "top_retrieval_source": "dense",
+          "latency_ms": 41.84
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "query": "spire rises to a height of 96 feet from the court below",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.4355,
+          "top_retrieval_source": "dense",
+          "latency_ms": 37.35
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.7234,
+          "top_retrieval_source": "dense",
+          "latency_ms": 40.17
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.5914,
+          "top_retrieval_source": "dense",
+          "latency_ms": 40.46
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "query": "descriptive notes in this memorandum were prepared in February 1880",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.5639,
+          "top_retrieval_source": "dense",
+          "latency_ms": 49.49
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 10,
+          "top_similarity_score": 0.7258,
+          "top_retrieval_source": "dense",
+          "latency_ms": 45.77
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.4963,
+          "top_retrieval_source": "dense",
+          "latency_ms": 39.65
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 2,
+          "top_similarity_score": 0.6103,
+          "top_retrieval_source": "dense",
+          "latency_ms": 33.0
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.7581,
+          "top_retrieval_source": "dense",
+          "latency_ms": 38.84
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5237,
+          "top_retrieval_source": "dense",
+          "latency_ms": 35.89
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 3,
+          "top_similarity_score": 0.7398,
+          "top_retrieval_source": "dense",
+          "latency_ms": 41.67
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "query": "Rock Temples at Mhar small village of Pal Savitri river",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 10,
+          "top_similarity_score": 0.6225,
+          "top_retrieval_source": "dense",
+          "latency_ms": 44.22
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "query": "Kuda caves Kalwa khadi creek hill Mohola",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6591,
+          "top_retrieval_source": "dense",
+          "latency_ms": 47.01
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.7086,
+          "top_retrieval_source": "dense",
+          "latency_ms": 53.63
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.6053,
+          "top_retrieval_source": "dense",
+          "latency_ms": 48.39
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.4896,
+          "top_retrieval_source": "dense",
+          "latency_ms": 45.65
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.4991,
+          "top_retrieval_source": "dense",
+          "latency_ms": 43.59
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+          "status": "HIT @ Rank 4",
+          "rank": 4,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.5513,
+          "top_retrieval_source": "dense",
+          "latency_ms": 41.06
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.5608,
+          "top_retrieval_source": "dense",
+          "latency_ms": 41.67
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.6727,
+          "top_retrieval_source": "dense",
+          "latency_ms": 31.4
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "query": "Barbosa 1514 account of Mandabad river",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.7044,
+          "top_retrieval_source": "dense",
+          "latency_ms": 28.68
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.6431,
+          "top_retrieval_source": "dense",
+          "latency_ms": 34.01
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.529,
+          "top_retrieval_source": "dense",
+          "latency_ms": 37.84
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+          "status": "CORRECT REJECTION",
+          "rank": null,
+          "has_sufficient_evidence": false,
+          "items_count": 0,
+          "top_similarity_score": 0.3376,
+          "top_retrieval_source": null,
+          "latency_ms": 33.02
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.4679,
+          "top_retrieval_source": "dense",
+          "latency_ms": 33.74
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.4522,
+          "top_retrieval_source": "dense",
+          "latency_ms": 36.39
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.6308,
+          "top_retrieval_source": "dense",
+          "latency_ms": 33.76
+        }
+      ],
+      "category_breakdown": {
+        "1. Historical Proper Nouns": {
+          "total_queries": 4,
+          "recall_at_5": 1.0,
+          "mrr": 0.875,
+          "mean_latency_ms": 39.48
+        },
+        "2. Alternative Spellings": {
+          "total_queries": 4,
+          "recall_at_5": 0.75,
+          "mrr": 0.75,
+          "mean_latency_ms": 46.19
+        },
+        "3. Numerical Dimensions": {
+          "total_queries": 4,
+          "recall_at_5": 1.0,
+          "mrr": 0.8333,
+          "mean_latency_ms": 39.95
+        },
+        "4. Dates & Periods": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 44.97
+        },
+        "5. Inscription Terminology": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 35.91
+        },
+        "6. Temple & Cave References": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 44.3
+        },
+        "7. Multi-Concept Questions": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 51.01
+        },
+        "8. Paraphrased Questions": {
+          "total_queries": 2,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 44.62
+        },
+        "9. Multi-Page Evidence": {
+          "total_queries": 2,
+          "recall_at_5": 0.5,
+          "mrr": 0.125,
+          "mean_latency_ms": 41.37
+        },
+        "10. Exact Terms in Irrelevant Contexts": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 30.04
+        },
+        "11. Partially Supported": {
+          "total_queries": 1,
+          "recall_at_5": 1.0,
+          "mrr": 0.5,
+          "mean_latency_ms": 34.01
+        },
+        "12. Absent Information": {
+          "total_queries": 3,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 34.87
+        },
+        "13. False Historical Premises": {
+          "total_queries": 2,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 35.08
+        }
+      },
+      "latency_ms_stats": {
+        "mean": 40.6,
+        "median": 40.17,
+        "p95": 53.63
+      }
+    },
+    "hybrid": {
+      "mode": "hybrid",
+      "queries_evaluated": 35,
+      "positive_queries": 30,
+      "negative_queries": 5,
+      "recall_at_5": 0.9,
+      "recall_at_10": 0.9,
+      "precision_at_5": 0.2133,
+      "mrr": 0.8222,
+      "false_positive_count": 5,
+      "false_positive_rate": 1.0,
+      "multipage_coverage": 0.6667,
+      "query_details": [
+        {
+          "id": "q01_west_pahlavi",
+          "category": "1. Historical Proper Nouns",
+          "query": "Dr. E. W. West translations of Pahlavi inscriptions",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.671,
+          "top_retrieval_source": "dense",
+          "latency_ms": 33.01
+        },
+        {
+          "id": "q02_dantidurga_reign",
+          "category": "1. Historical Proper Nouns",
+          "query": "Dantidurga conquest of the Dekhan and reign 725-755",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.6385,
+          "top_retrieval_source": "both",
+          "latency_ms": 35.83
+        },
+        {
+          "id": "q03_jacobi_kuda",
+          "category": "1. Historical Proper Nouns",
+          "query": "Prof. H. Jacobi transliteration of Kuda inscription",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.5864,
+          "top_retrieval_source": "both",
+          "latency_ms": 34.78
+        },
+        {
+          "id": "q04_vikramaditya_733",
+          "category": "1. Historical Proper Nouns",
+          "query": "Vikramaditya Chalukya in the year 733 a.d.",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 9,
+          "top_similarity_score": 0.5814,
+          "top_retrieval_source": "both",
+          "latency_ms": 32.48
+        },
+        {
+          "id": "q05_elura_brahmanical",
+          "category": "2. Alternative Spellings",
+          "query": "Elura cave temples Brahmanical and Jaina",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 9,
+          "top_similarity_score": 0.7799,
+          "top_retrieval_source": "both",
+          "latency_ms": 39.75
+        },
+        {
+          "id": "q06_kailasa_rock_temple",
+          "category": "2. Alternative Spellings",
+          "query": "Kailasa rock temple excavation from top to bottom",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.726,
+          "top_retrieval_source": "both",
+          "latency_ms": 39.1
+        },
+        {
+          "id": "q07_dwajastambha_pillars",
+          "category": "2. Alternative Spellings",
+          "query": "Dwajastambha ensign staff square pillar",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5758,
+          "top_retrieval_source": "both",
+          "latency_ms": 32.01
+        },
+        {
+          "id": "q08_digoba_cells_mhar",
+          "category": "2. Alternative Spellings",
+          "query": "Digoba in rock cut cells at Mhar",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.5446,
+          "top_retrieval_source": "both",
+          "latency_ms": 36.57
+        },
+        {
+          "id": "q09_court_276_154_107",
+          "category": "3. Numerical Dimensions",
+          "query": "court of the temple measures 276 in length breadth 154 scarp 107 feet",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6284,
+          "top_retrieval_source": "both",
+          "latency_ms": 39.33
+        },
+        {
+          "id": "q10_spire_96_feet",
+          "category": "3. Numerical Dimensions",
+          "query": "spire rises to a height of 96 feet from the court below",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.4355,
+          "top_retrieval_source": "both",
+          "latency_ms": 34.3
+        },
+        {
+          "id": "q11_nandi_26_square",
+          "category": "3. Numerical Dimensions",
+          "query": "mandapa or shrine for the Bull Nandi 26 feet square",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.7234,
+          "top_retrieval_source": "both",
+          "latency_ms": 37.28
+        },
+        {
+          "id": "q12_verandah_61_by_22",
+          "category": "3. Numerical Dimensions",
+          "query": "verandah is 61 feet by 22 inclusive of the two pillars",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.5914,
+          "top_retrieval_source": "both",
+          "latency_ms": 33.47
+        },
+        {
+          "id": "q13_february_1880",
+          "category": "4. Dates & Periods",
+          "query": "descriptive notes in this memorandum were prepared in February 1880",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.5639,
+          "top_retrieval_source": "both",
+          "latency_ms": 30.77
+        },
+        {
+          "id": "q14_maurya_period",
+          "category": "4. Dates & Periods",
+          "query": "Indian paleography from the later Maurya period about 200 BC to 7th century AD",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.7258,
+          "top_retrieval_source": "dense",
+          "latency_ms": 37.29
+        },
+        {
+          "id": "q15_successors_govinda_amoghavarsha",
+          "category": "4. Dates & Periods",
+          "query": "successors Govinda III AD 785-810 and Amoghavarsha 810",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.4963,
+          "top_retrieval_source": "both",
+          "latency_ms": 33.8
+        },
+        {
+          "id": "q16_sagharakhita_deyadhama",
+          "category": "5. Inscription Terminology",
+          "query": "Gahapatiputasa sethisa agharakhitasa deyadhama lena",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.6103,
+          "top_retrieval_source": "both",
+          "latency_ms": 31.37
+        },
+        {
+          "id": "q17_podhio_be_2_cisterns",
+          "category": "5. Inscription Terminology",
+          "query": "podhio be 2 deya dhamam charitable gift of two cisterns",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.7581,
+          "top_retrieval_source": "both",
+          "latency_ms": 35.45
+        },
+        {
+          "id": "q18_vishnu_prakrit_vhenu",
+          "category": "5. Inscription Terminology",
+          "query": "Sanskrit Vishnu changed to Prakrit Vhenu",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5237,
+          "top_retrieval_source": "both",
+          "latency_ms": 29.41
+        },
+        {
+          "id": "q19_dumar_lena_caves",
+          "category": "6. Temple & Cave References",
+          "query": "Caves North of Kailasa Cave XXIX Dumar Lena",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.7398,
+          "top_retrieval_source": "both",
+          "latency_ms": 33.63
+        },
+        {
+          "id": "q20_mhar_caves_pal",
+          "category": "6. Temple & Cave References",
+          "query": "Rock Temples at Mhar small village of Pal Savitri river",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.6225,
+          "top_retrieval_source": "both",
+          "latency_ms": 36.58
+        },
+        {
+          "id": "q21_kuda_caves_kalwa_mohola",
+          "category": "6. Temple & Cave References",
+          "query": "Kuda caves Kalwa khadi creek hill Mohola",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6591,
+          "top_retrieval_source": "both",
+          "latency_ms": 33.86
+        },
+        {
+          "id": "q22_multiconcept_dantidurga_dravidian",
+          "category": "7. Multi-Concept Questions",
+          "query": "Dantidurga reign, Dravidian rock-cut temple, and Pattadkal structural style",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 4,
+          "top_similarity_score": 0.7086,
+          "top_retrieval_source": "both",
+          "latency_ms": 40.56
+        },
+        {
+          "id": "q23_multiconcept_gopura_nandi_bridge",
+          "category": "7. Multi-Concept Questions",
+          "query": "Gopura gateway pyramid two storeys connected by bridges to Nandi mandapa",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6053,
+          "top_retrieval_source": "both",
+          "latency_ms": 33.56
+        },
+        {
+          "id": "q24_paraphrase_memorandum",
+          "category": "8. Paraphrased Questions",
+          "query": "Colonial archaeological survey memorandum compiled in early 1880 on western rock sanctuaries",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "has_sufficient_evidence": true,
+          "items_count": 8,
+          "top_similarity_score": 0.4896,
+          "top_retrieval_source": "both",
+          "latency_ms": 30.91
+        },
+        {
+          "id": "q25_paraphrase_monolithic_height",
+          "category": "8. Paraphrased Questions",
+          "query": "Total elevation from bottom of courtyard to top of main temple sanctuary roof",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.4991,
+          "top_retrieval_source": "both",
+          "latency_ms": 32.45
+        },
+        {
+          "id": "q26_multipage_kailasa_gopura_to_spire",
+          "category": "9. Multi-Page Evidence",
+          "query": "Architectural description of Kailasa gateway entrance on page 4 and main spire height on page 8",
+          "status": "HIT @ Rank 3",
+          "rank": 3,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5513,
+          "top_retrieval_source": "both",
+          "latency_ms": 34.65
+        },
+        {
+          "id": "q27_multipage_mhar_and_kuda_epigraphy",
+          "category": "9. Multi-Page Evidence",
+          "query": "Epigraphical survey comparing Mhar donation cave on page 6 with Kuda cistern donation on page 10",
+          "status": "MISS",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.5608,
+          "top_retrieval_source": "both",
+          "latency_ms": 34.29
+        },
+        {
+          "id": "q28_distractor_bagh_caves",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "query": "Buddha and attendants sculpture from the Bagh Caves plate illustration",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.6727,
+          "top_retrieval_source": "both",
+          "latency_ms": 35.65
+        },
+        {
+          "id": "q29_distractor_barbosa_mandabad",
+          "category": "10. Exact Terms in Irrelevant Contexts",
+          "query": "Barbosa 1514 account of Mandabad river",
+          "status": "HIT @ Rank 1",
+          "rank": 1,
+          "has_sufficient_evidence": true,
+          "items_count": 7,
+          "top_similarity_score": 0.7044,
+          "top_retrieval_source": "dense",
+          "latency_ms": 32.53
+        },
+        {
+          "id": "q30_partial_support_krishna_dantidurga",
+          "category": "11. Partially Supported",
+          "query": "Did King Krishna I construct the Kailasa court measuring 276 feet in length?",
+          "status": "HIT @ Rank 2",
+          "rank": 2,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6431,
+          "top_retrieval_source": "both",
+          "latency_ms": 39.17
+        },
+        {
+          "id": "q31_absent_locomotives",
+          "category": "12. Absent Information",
+          "query": "steam locomotives and railway transport lines constructed inside Ellora caves",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 5,
+          "top_similarity_score": 0.529,
+          "top_retrieval_source": "both",
+          "latency_ms": 37.84
+        },
+        {
+          "id": "q32_absent_napoleon",
+          "category": "12. Absent Information",
+          "query": "Napoleon Bonaparte invasion of Deccan plateau and demolition artillery orders",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 1,
+          "top_similarity_score": 0.3376,
+          "top_retrieval_source": "dense",
+          "latency_ms": 32.74
+        },
+        {
+          "id": "q33_absent_dutch_voc",
+          "category": "12. Absent Information",
+          "query": "Dutch East India Company VOC spice trading warehouse inside Kuda rock caves",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 10,
+          "top_similarity_score": 0.4679,
+          "top_retrieval_source": "both",
+          "latency_ms": 34.84
+        },
+        {
+          "id": "q34_false_premise_shivaji_coins",
+          "category": "13. False Historical Premises",
+          "query": "Shivaji gold coins embedded in the Kailasa mandapa floor",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 10,
+          "top_similarity_score": 0.4522,
+          "top_retrieval_source": "both",
+          "latency_ms": 31.57
+        },
+        {
+          "id": "q35_false_premise_ashoka_edicts",
+          "category": "13. False Historical Premises",
+          "query": "Ashoka edicts carved on a monolithic pillar inside Kailasa Temple Cave 16",
+          "status": "FALSE POSITIVE",
+          "rank": null,
+          "has_sufficient_evidence": true,
+          "items_count": 6,
+          "top_similarity_score": 0.6308,
+          "top_retrieval_source": "both",
+          "latency_ms": 34.72
+        }
+      ],
+      "category_breakdown": {
+        "1. Historical Proper Nouns": {
+          "total_queries": 4,
+          "recall_at_5": 1.0,
+          "mrr": 0.875,
+          "mean_latency_ms": 34.02
+        },
+        "2. Alternative Spellings": {
+          "total_queries": 4,
+          "recall_at_5": 0.75,
+          "mrr": 0.75,
+          "mean_latency_ms": 36.86
+        },
+        "3. Numerical Dimensions": {
+          "total_queries": 4,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 36.09
+        },
+        "4. Dates & Periods": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 33.95
+        },
+        "5. Inscription Terminology": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 32.08
+        },
+        "6. Temple & Cave References": {
+          "total_queries": 3,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 34.69
+        },
+        "7. Multi-Concept Questions": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 37.06
+        },
+        "8. Paraphrased Questions": {
+          "total_queries": 2,
+          "recall_at_5": 0.5,
+          "mrr": 0.1667,
+          "mean_latency_ms": 31.68
+        },
+        "9. Multi-Page Evidence": {
+          "total_queries": 2,
+          "recall_at_5": 0.5,
+          "mrr": 0.1667,
+          "mean_latency_ms": 34.47
+        },
+        "10. Exact Terms in Irrelevant Contexts": {
+          "total_queries": 2,
+          "recall_at_5": 1.0,
+          "mrr": 1.0,
+          "mean_latency_ms": 34.09
+        },
+        "11. Partially Supported": {
+          "total_queries": 1,
+          "recall_at_5": 1.0,
+          "mrr": 0.5,
+          "mean_latency_ms": 39.17
+        },
+        "12. Absent Information": {
+          "total_queries": 3,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 35.14
+        },
+        "13. False Historical Premises": {
+          "total_queries": 2,
+          "recall_at_5": 0.0,
+          "mrr": 0.0,
+          "mean_latency_ms": 33.14
+        }
+      },
+      "latency_ms_stats": {
+        "mean": 34.73,
+        "median": 34.3,
+        "p95": 39.75
+      }
+    }
+  },
+  "parameter_sweep": {
+    "pool_15_k_30": {
+      "pool_size": 15,
+      "rrf_k": 30,
+      "recall_at_5": 0.9,
+      "mrr": 0.8178,
+      "mean_latency_ms": 38.32
+    },
+    "pool_15_k_60": {
+      "pool_size": 15,
+      "rrf_k": 60,
+      "recall_at_5": 0.9,
+      "mrr": 0.8178,
+      "mean_latency_ms": 33.56
+    },
+    "pool_15_k_100": {
+      "pool_size": 15,
+      "rrf_k": 100,
+      "recall_at_5": 0.9,
+      "mrr": 0.8178,
+      "mean_latency_ms": 31.81
+    },
+    "pool_30_k_30": {
+      "pool_size": 30,
+      "rrf_k": 30,
+      "recall_at_5": 0.9,
+      "mrr": 0.8222,
+      "mean_latency_ms": 34.36
+    },
+    "pool_30_k_60": {
+      "pool_size": 30,
+      "rrf_k": 60,
+      "recall_at_5": 0.9,
+      "mrr": 0.8222,
+      "mean_latency_ms": 33.62
+    },
+    "pool_30_k_100": {
+      "pool_size": 30,
+      "rrf_k": 100,
+      "recall_at_5": 0.9,
+      "mrr": 0.8222,
+      "mean_latency_ms": 34.41
+    },
+    "pool_50_k_30": {
+      "pool_size": 50,
+      "rrf_k": 30,
+      "recall_at_5": 0.9,
+      "mrr": 0.8222,
+      "mean_latency_ms": 34.71
+    },
+    "pool_50_k_60": {
+      "pool_size": 50,
+      "rrf_k": 60,
+      "recall_at_5": 0.9,
+      "mrr": 0.8222,
+      "mean_latency_ms": 34.9
+    },
+    "pool_50_k_100": {
+      "pool_size": 50,
+      "rrf_k": 100,
+      "recall_at_5": 0.9,
+      "mrr": 0.8222,
+      "mean_latency_ms": 35.82
+    }
+  },
+  "category_breakdown": {}
+}

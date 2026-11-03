@@ -33,6 +33,144 @@ def get_db_context(db_path: Path | None = None) -> Generator[sqlite3.Connection,
         conn.close()
 
 
+def migrate_schema_add_dual_pagination(conn: sqlite3.Connection) -> None:
+    """
+    Non-destructive, idempotent migration to add dual pagination columns (pdf_page_index, printed_page_label)
+    to existing SQLite databases, populating pdf_page_index with existing page_number.
+    """
+    tables = {row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
+
+    # 1. Documents table: indexing_status
+    if "documents" in tables:
+        doc_cols = {row["name"] for row in conn.execute("PRAGMA table_info(documents)").fetchall()}
+        if "indexing_status" not in doc_cols:
+            conn.execute(
+                "ALTER TABLE documents ADD COLUMN indexing_status TEXT DEFAULT 'unindexed';"
+            )
+
+    # 2. Document_pages table: pdf_page_index and printed_page_label
+    if "document_pages" in tables:
+        page_cols = {row["name"] for row in conn.execute("PRAGMA table_info(document_pages)").fetchall()}
+        if "pdf_page_index" not in page_cols:
+            conn.execute("ALTER TABLE document_pages ADD COLUMN pdf_page_index INTEGER;")
+            conn.execute("UPDATE document_pages SET pdf_page_index = page_number WHERE pdf_page_index IS NULL;")
+        if "printed_page_label" not in page_cols:
+            conn.execute("ALTER TABLE document_pages ADD COLUMN printed_page_label TEXT;")
+
+    # 3. Document_chunks table: pdf_page_index and printed_page_label
+    if "document_chunks" in tables:
+        chunk_cols = {row["name"] for row in conn.execute("PRAGMA table_info(document_chunks)").fetchall()}
+        if "pdf_page_index" not in chunk_cols:
+            conn.execute("ALTER TABLE document_chunks ADD COLUMN pdf_page_index INTEGER;")
+            conn.execute("UPDATE document_chunks SET pdf_page_index = page_number WHERE pdf_page_index IS NULL;")
+        if "printed_page_label" not in chunk_cols:
+            conn.execute("ALTER TABLE document_chunks ADD COLUMN printed_page_label TEXT;")
+
+
+def is_fts5_available(conn: sqlite3.Connection) -> bool:
+    """Checks whether SQLite FTS5 extension is enabled and usable in current build."""
+    try:
+        conn.execute("CREATE VIRTUAL TABLE IF NOT EXISTS _fts5_test USING fts5(x);")
+        conn.execute("DROP TABLE IF EXISTS _fts5_test;")
+        return True
+    except Exception:
+        return False
+
+
+def migrate_schema_add_normalized_text(conn: sqlite3.Connection) -> None:
+    """
+    Non-destructive, idempotent migration to add normalized_text column to document_chunks
+    and synchronize SQLite FTS5 index across (text, normalized_text).
+    Preserves original archival text in `text` untouched.
+    """
+    from app.services.text_normalization_service import normalize_archival_text
+
+    tables = {row[0] for row in conn.execute("SELECT name FROM sqlite_master WHERE type='table'").fetchall()}
+    if "document_chunks" not in tables:
+        return
+
+    # 1. Add normalized_text column to document_chunks if missing
+    chunk_cols = {row["name"] for row in conn.execute("PRAGMA table_info(document_chunks)").fetchall()}
+    if "normalized_text" not in chunk_cols:
+        conn.execute("ALTER TABLE document_chunks ADD COLUMN normalized_text TEXT;")
+
+    # 2. Backfill unnormalized chunks
+    unnorm_rows = conn.execute("SELECT id, text FROM document_chunks WHERE normalized_text IS NULL").fetchall()
+    if unnorm_rows:
+        updates = [(normalize_archival_text(r[1]), r[0]) for r in unnorm_rows]
+        conn.executemany("UPDATE document_chunks SET normalized_text = ? WHERE id = ?", updates)
+
+    # 3. Upgrade document_chunks_fts to index normalized_text if not already present
+    if not is_fts5_available(conn):
+        return
+
+    fts_cols = {row[1] for row in conn.execute("PRAGMA table_info(document_chunks_fts)").fetchall()} if "document_chunks_fts" in tables else set()
+    needs_fts_upgrade = ("document_chunks_fts" not in tables) or ("normalized_text" not in fts_cols)
+
+    if needs_fts_upgrade:
+        conn.executescript(
+            """
+            DROP TRIGGER IF EXISTS trg_document_chunks_insert;
+            DROP TRIGGER IF EXISTS trg_document_chunks_delete;
+            DROP TRIGGER IF EXISTS trg_document_chunks_update;
+            DROP TABLE IF EXISTS document_chunks_fts;
+
+            CREATE VIRTUAL TABLE document_chunks_fts USING fts5(
+                chunk_id UNINDEXED,
+                document_id UNINDEXED,
+                text,
+                normalized_text,
+                tokenize = 'unicode61 remove_diacritics 2'
+            );
+
+            CREATE TRIGGER trg_document_chunks_insert AFTER INSERT ON document_chunks
+            BEGIN
+                INSERT INTO document_chunks_fts (chunk_id, document_id, text, normalized_text)
+                VALUES (new.id, new.document_id, new.text, new.normalized_text);
+            END;
+
+            CREATE TRIGGER trg_document_chunks_delete AFTER DELETE ON document_chunks
+            BEGIN
+                DELETE FROM document_chunks_fts WHERE chunk_id = old.id;
+            END;
+
+            CREATE TRIGGER trg_document_chunks_update AFTER UPDATE ON document_chunks
+            BEGIN
+                DELETE FROM document_chunks_fts WHERE chunk_id = old.id;
+                INSERT INTO document_chunks_fts (chunk_id, document_id, text, normalized_text)
+                VALUES (
+                    new.id,
+                    new.document_id,
+                    new.text,
+                    CASE WHEN new.text != old.text AND (new.normalized_text IS NULL OR new.normalized_text = old.normalized_text)
+                         THEN new.text
+                         ELSE COALESCE(new.normalized_text, new.text)
+                    END
+                );
+            END;
+            """
+        )
+
+    # 4. Backfill any chunks present in document_chunks but missing from document_chunks_fts
+    conn.execute(
+        """
+        INSERT INTO document_chunks_fts (chunk_id, document_id, text, normalized_text)
+        SELECT id, document_id, text, COALESCE(normalized_text, text) FROM document_chunks
+        WHERE id NOT IN (SELECT chunk_id FROM document_chunks_fts);
+        """
+    )
+
+
+def migrate_schema_add_fts5(conn: sqlite3.Connection) -> None:
+    """
+    Non-destructive, idempotent migration to create and synchronize SQLite FTS5 index
+    for document_chunks. Creates automatic synchronization triggers on insert, update,
+    and delete, and backfills any unindexed chunks.
+    Now delegates to migrate_schema_add_normalized_text to index both original and normalized representations.
+    """
+    migrate_schema_add_normalized_text(conn)
+
+
 def init_db(db_path: Path | None = None) -> None:
     with get_db_context(db_path) as conn:
         conn.executescript(
@@ -55,6 +193,8 @@ def init_db(db_path: Path | None = None) -> None:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 document_id TEXT NOT NULL,
                 page_number INTEGER NOT NULL,
+                pdf_page_index INTEGER NOT NULL DEFAULT 1,
+                printed_page_label TEXT,
                 text TEXT NOT NULL,
                 character_count INTEGER NOT NULL,
                 word_count INTEGER NOT NULL,
@@ -68,8 +208,11 @@ def init_db(db_path: Path | None = None) -> None:
                 id TEXT PRIMARY KEY,
                 document_id TEXT NOT NULL,
                 page_number INTEGER NOT NULL,
+                pdf_page_index INTEGER NOT NULL DEFAULT 1,
+                printed_page_label TEXT,
                 chunk_index INTEGER NOT NULL,
                 text TEXT NOT NULL,
+                normalized_text TEXT,
                 character_count INTEGER NOT NULL,
                 word_count INTEGER NOT NULL,
                 embedding BLOB,
@@ -85,11 +228,13 @@ def init_db(db_path: Path | None = None) -> None:
             """
         )
 
-        # Non-destructive migration for existing documents table:
-        # Check if indexing_status column exists in documents
-        columns_cursor = conn.execute("PRAGMA table_info(documents)")
-        existing_cols = {row["name"] for row in columns_cursor.fetchall()}
-        if "indexing_status" not in existing_cols:
-            conn.execute(
-                "ALTER TABLE documents ADD COLUMN indexing_status TEXT DEFAULT 'unindexed';"
-            )
+        migrate_schema_add_dual_pagination(conn)
+
+        conn.executescript(
+            """
+            CREATE INDEX IF NOT EXISTS idx_doc_pages_pdf_index ON document_pages(document_id, pdf_page_index);
+            CREATE INDEX IF NOT EXISTS idx_chunks_pdf_index ON document_chunks(document_id, pdf_page_index);
+            """
+        )
+
+        migrate_schema_add_fts5(conn)

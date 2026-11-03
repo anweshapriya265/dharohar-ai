@@ -1,0 +1,69 @@
+{
+  "milestone": "5.6.4",
+  "timestamp": "2026-11-03T14:36:55Z",
+  "total_elapsed_seconds": 426.35,
+  "database_path": "E:\\projects\\dharohar-ai\\backend\\data\\dharohar.db",
+  "database_size_bytes": 32464896,
+  "integrity_check": "ok",
+  "counts": {
+    "documents": 3,
+    "pages": 1188,
+    "page_breakdown": {
+      "extracted": 634,
+      "needs_ocr": 210,
+      "ocr_extracted": 344
+    },
+    "chunks": 4901,
+    "fts_entries": 4901
+  },
+  "documents": [
+    {
+      "document_id": "doc_fergusson_burgess_1880_pdf",
+      "original_filename": "Fergusson Burgess 1880.pdf",
+      "file_size_bytes": 75392830,
+      "page_count": 764,
+      "digital_pages_count": 634,
+      "ocr_pages_count": 19,
+      "insufficient_pages_count": 111,
+      "chunks_count": 3334,
+      "extraction_status": "hybrid",
+      "indexing_status": "indexed",
+      "total_elapsed_seconds": 195.46,
+      "title": "The Cave Temples of India",
+      "author": "James Fergusson, D.C.L., F.R.S. and James Burgess, F.R.G.S., M.R.A.S.",
+      "publication_year": 1880
+    },
+    {
+      "document_id": "doc_1544_pdf",
+      "original_filename": "1544.pdf",
+      "file_size_bytes": 17193469,
+      "page_count": 208,
+      "digital_pages_count": 0,
+      "ocr_pages_count": 152,
+      "insufficient_pages_count": 56,
+      "chunks_count": 882,
+      "extraction_status": "ocr",
+      "indexing_status": "indexed",
+      "total_elapsed_seconds": 121.66,
+      "title": "Report on the Elura Cave Temples and the Brahmanical and Jaina Caves in Western India (Archaeological Survey of Western India, Vol. V)",
+      "author": "James Burgess, LL.D., F.R.G.S.",
+      "publication_year": 1883
+    },
+    {
+      "document_id": "doc_22087_pdf",
+      "original_filename": "22087.pdf",
+      "file_size_bytes": 17614530,
+      "page_count": 216,
+      "digital_pages_count": 0,
+      "ocr_pages_count": 173,
+      "insufficient_pages_count": 43,
+      "chunks_count": 685,
+      "extraction_status": "ocr",
+      "indexing_status": "indexed",
+      "total_elapsed_seconds": 109.22,
+      "title": "Inscriptions from the Cave-Temples of Western India, with Descriptive Notes, &c. (Archaeological Survey of Western India, No. 10)",
+      "author": "James Burgess, LL.D. and Bhagwanlal Indraji Pandit",
+      "publication_year": 1881
+    }
+  ]
+}

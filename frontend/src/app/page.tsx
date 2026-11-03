@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
-import WelcomeHero from '@/components/WelcomeHero';
 import HealthStatusCard from '@/components/HealthStatusCard';
 import DocumentProcessingSection from '@/components/DocumentProcessingSection';
 import ArchiveSummaryArea from '@/components/ArchiveSummaryArea';
 import SearchSection from '@/components/SearchSection';
 import RecentDocumentsSection from '@/components/RecentDocumentsSection';
+import ResearchAssistantSection from '@/components/ResearchAssistantSection';
+import DigitalArchiveExplorer from '@/components/DigitalArchiveExplorer';
 import UploadModal from '@/components/UploadModal';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
 import {
@@ -25,11 +27,43 @@ import {
   Activity,
   Server,
   ShieldCheck,
+  Compass,
 } from 'lucide-react';
+
+const HeroHeritageCanvas = dynamic(() => import('@/components/HeroHeritageCanvas'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[520px] rounded-2xl bg-[#0c0a09] border border-[#2e2923] flex items-center justify-center text-[#eed27c]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-[#d4af37] border-t-transparent animate-spin" />
+        <span className="font-serif text-xs tracking-wider text-[#ded6c5]">Loading Basalt 3D Heritage Scene...</span>
+      </div>
+    </div>
+  ),
+});
+
+const Heritage3DExplorer = dynamic(() => import('@/components/Heritage3DExplorer'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-[620px] rounded-2xl bg-[#0c0a09] border border-[#2e2923] flex items-center justify-center text-[#eed27c]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 rounded-full border-2 border-[#d4af37] border-t-transparent animate-spin" />
+        <span className="font-serif text-xs tracking-wider text-[#ded6c5]">Initializing Heritage 3D Explorer Studio...</span>
+      </div>
+    </div>
+  ),
+});
 
 export default function Home() {
   // Navigation & UI state
-  const [currentTab, setCurrentTab] = useState<string>('dashboard');
+  const [currentTab, setCurrentTab] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab) return tab;
+    }
+    return 'dashboard';
+  });
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
   const [selectedViewerDoc, setSelectedViewerDoc] = useState<DocumentItem | null>(null);
@@ -241,12 +275,6 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const handleScrollToSearch = () => {
-    searchRef.current?.scrollIntoView({ behavior: 'smooth' });
-    const input = searchRef.current?.querySelector('input');
-    input?.focus();
-  };
-
   const handleUploadSuccess = (newDoc: DocumentItem) => {
     setDocuments((prev) => [newDoc, ...prev]);
   };
@@ -256,7 +284,7 @@ export default function Home() {
   const needsOcrCount = documents.filter((doc) => doc.extraction_status === 'needs_ocr').length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#faf8f5] dark:bg-[#12100e] text-[#1c1917] dark:text-[#f5f0eb]">
+    <div className="min-h-screen flex flex-col bg-[#080706] text-[#ded6c5] selection:bg-[#d4af37]/30 selection:text-[#fcf9f2]">
       {/* Top Navigation */}
       <Header
         healthState={healthState}
@@ -276,16 +304,72 @@ export default function Home() {
         />
 
         {/* Content Area */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-x-hidden">
-          {/* Diagnostics View */}
-          {currentTab === 'diagnostics' ? (
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 overflow-x-hidden">
+          {/* Research Assistant View */}
+          {currentTab === 'assistant' ? (
+            <ResearchAssistantSection
+              availableDocuments={documents}
+              onInspectSource={handleInspectSource}
+              onOpenUpload={() => setIsUploadOpen(true)}
+              backendConnected={healthState.status === 'connected'}
+            />
+          ) : currentTab === 'archive' ? (
+            <DigitalArchiveExplorer
+              documents={documents}
+              isLoading={isLoadingDocs}
+              error={docsError}
+              onOpenUpload={() => setIsUploadOpen(true)}
+              onViewDocument={(doc) => {
+                setSelectedViewerDoc(doc);
+                setSelectedViewerPage(undefined);
+              }}
+              onOpen3DExplorer={() => setCurrentTab('heritage-3d')}
+            />
+          ) : currentTab === 'heritage-3d' ? (
+            <Heritage3DExplorer
+              onInspectSource={handleInspectSource}
+              availableDocuments={documents}
+            />
+          ) : currentTab === 'search' ? (
+            <div className="space-y-6">
+              <div className="p-6 sm:p-8 rounded-2xl border border-[#2e2923] bg-gradient-to-br from-[#141210] via-[#110f0d] to-[#0a0908] shadow-2xl relative overflow-hidden">
+                <div className="relative z-10 max-w-2xl space-y-3">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-serif bg-[#1d1914] border border-[#d4af37]/40 text-[#eed27c]">
+                    <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+                    <span>Hybrid Retrieval Engine · Milestone 5.6.3.2</span>
+                  </div>
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+                    Deep Archival Search
+                  </h1>
+                  <p className="text-sm text-[#ded6c5] leading-relaxed">
+                    Dense Semantic (all-MiniLM-L6-v2) + SQLite FTS5 BM25 Lexical Retrieval fused via Reciprocal Rank Fusion (RRF k=60) with dual pagination citation guarantees.
+                  </p>
+                </div>
+              </div>
+              <div ref={searchRef}>
+                <SearchSection
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  onSearchSubmit={handleSearchSubmit}
+                  isSearching={isSearching}
+                  searchResults={searchResults}
+                  searchResponse={searchResponse}
+                  searchError={searchError}
+                  hasSearched={hasSearched}
+                  totalIndexedDocs={documents.length}
+                  onInspectSource={handleInspectSource}
+                  onClearSearch={handleClearSearch}
+                />
+              </div>
+            </div>
+          ) : currentTab === 'diagnostics' ? (
             <div className="space-y-6">
               <div>
-                <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-amber-700 dark:text-amber-400" />
+                <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
+                  <Activity className="w-5 h-5 text-[#d4af37]" />
                   System Diagnostics &amp; Health Telemetry
                 </h1>
-                <p className="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-1">
+                <p className="text-xs sm:text-sm text-[#a89f91] mt-1 font-serif">
                   Real-time status of FastAPI service, all-MiniLM-L6-v2 embeddings, and SQLite database
                 </p>
               </div>
@@ -295,66 +379,67 @@ export default function Home() {
 
               {/* Technical Specifications */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-3">
-                  <h2 className="text-xs font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                    <Server className="w-4 h-4 text-amber-700" />
+                <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] space-y-3 shadow-xl">
+                  <h2 className="text-xs font-semibold text-[#fcf9f2] font-serif flex items-center gap-2">
+                    <Server className="w-4 h-4 text-[#d4af37]" />
                     Frontend &amp; API Configuration
                   </h2>
-                  <div className="space-y-2 text-xs text-stone-600 dark:text-stone-300">
-                    <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                      <span className="text-stone-400">NEXT_PUBLIC_API_BASE_URL:</span>
-                      <span className="font-mono text-stone-800 dark:text-stone-200">
+                  <div className="space-y-2 text-xs text-[#ded6c5]">
+                    <div className="flex justify-between py-1 border-b border-[#24201a]">
+                      <span className="text-[#a89f91]">NEXT_PUBLIC_API_BASE_URL:</span>
+                      <span className="font-mono text-[#eed27c]">
                         {getApiBaseUrl()}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                      <span className="text-stone-400">Semantic Search:</span>
-                      <span className="font-mono text-emerald-600 dark:text-emerald-400">
+                    <div className="flex justify-between py-1 border-b border-[#24201a]">
+                      <span className="text-[#a89f91]">Semantic Search:</span>
+                      <span className="font-mono text-emerald-400">
                         POST /api/search (Sentence Transformers)
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-stone-100 dark:border-stone-800">
-                      <span className="text-stone-400">Embedding Model:</span>
-                      <span className="font-mono text-stone-800 dark:text-stone-200">
+                    <div className="flex justify-between py-1 border-b border-[#24201a]">
+                      <span className="text-[#a89f91]">Embedding Model:</span>
+                      <span className="font-mono text-[#ded6c5]">
                         all-MiniLM-L6-v2 (384-dim)
                       </span>
                     </div>
                     <div className="flex justify-between py-1">
-                      <span className="text-stone-400">Persistence Store:</span>
-                      <span className="font-mono text-stone-800 dark:text-stone-200">
+                      <span className="text-[#a89f91]">Persistence Store:</span>
+                      <span className="font-mono text-[#ded6c5]">
                         SQLite (document_chunks &amp; documents)
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 space-y-3">
-                  <h2 className="text-xs font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    Zero-Hallucination Integrity Check
+                <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] space-y-3 shadow-xl">
+                  <h2 className="text-xs font-semibold text-[#fcf9f2] font-serif flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                    Archival Citation Integrity Check
                   </h2>
-                  <p className="text-xs text-stone-600 dark:text-stone-300 leading-relaxed">
+                  <p className="text-xs text-[#ded6c5] leading-relaxed font-serif">
                     DHAROHAR AI enforces an evidence retrieval protocol. Every retrieved passage
                     strictly attributes the source document ID, filename, and exact one-based page number.
                   </p>
-                  <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950 text-[11px] font-mono text-stone-600 dark:text-stone-400 border border-stone-200 dark:border-stone-800">
-                    Policy: Strict Source Grounding [ENFORCED]
+                  <div className="p-2.5 rounded-lg bg-[#0c0a09] text-[11px] font-mono text-[#eed27c] border border-[#d4af37]/30">
+                    Policy: Strict Source Grounding &amp; Dual Pagination [ENFORCED]
                   </div>
                 </div>
               </div>
             </div>
           ) : (
             /* Main Dashboard View */
-            <div className="space-y-6">
+            <div className="space-y-8">
               {/* If connection is failing, display the health notice upfront */}
               {healthState.status === 'error' && (
                 <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
               )}
 
-              {/* Welcome Hero */}
-              <WelcomeHero
-                onOpenUpload={() => setIsUploadOpen(true)}
-                onExploreClick={handleScrollToSearch}
+              {/* Interactive 3D Hero Heritage Experience */}
+              <HeroHeritageCanvas
+                onExploreArchive={() => setCurrentTab('archive')}
+                onOpenAssistant={() => setCurrentTab('assistant')}
+                onInspect3DStudio={() => setCurrentTab('heritage-3d')}
               />
 
               {/* Document Processing Pipeline Status */}
@@ -370,7 +455,7 @@ export default function Home() {
                 storageStatus={healthState.data?.services?.storage || 'initialized'}
               />
 
-              {/* Milestone 3: Semantic Knowledge Search Section */}
+              {/* Semantic Knowledge Search Section */}
               <div ref={searchRef}>
                 <SearchSection
                   searchQuery={searchQuery}
@@ -420,6 +505,7 @@ export default function Home() {
 
       {/* Document Text Viewer Modal */}
       <DocumentViewerModal
+        key={selectedViewerDoc?.id || 'viewer-closed'}
         document={selectedViewerDoc}
         initialPageNumber={selectedViewerPage}
         onClose={() => {

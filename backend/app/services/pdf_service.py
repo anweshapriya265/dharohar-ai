@@ -173,6 +173,16 @@ def extract_pdf_content(
             page_num = page_idx + 1  # 1-based indexing
             page = doc[page_idx]
             
+            # Milestone 5.6.2: Extract original printed page label if present in PDF PageLabels catalog
+            raw_label = None
+            try:
+                lbl = page.get_label()
+                if lbl and lbl.strip():
+                    raw_label = lbl.strip()
+            except Exception:
+                raw_label = None
+            printed_page_label = raw_label
+            
             # Step 1: Attempt digital extraction
             raw_text = page.get_text("text")
             cleaned_text = raw_text.strip()
@@ -221,6 +231,8 @@ def extract_pdf_content(
                 {
                     "document_id": doc_id,
                     "page_number": page_num,
+                    "pdf_page_index": page_num,
+                    "printed_page_label": printed_page_label,
                     "text": cleaned_text,
                     "character_count": char_count,
                     "word_count": word_count,

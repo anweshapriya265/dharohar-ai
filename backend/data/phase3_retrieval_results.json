@@ -1,0 +1,771 @@
+[
+  {
+    "id": "Q01",
+    "category": "Architectural Dimensions & Plan",
+    "question": "What are the dimensions and excavation depth of the Kailasa temple court at Ellora?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.6582,
+    "candidates_found": 95,
+    "evidence_blocks_count": 7,
+    "tokens_used": 900,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 5,
+        "score": 0.6582,
+        "snippet": "KAILASA\u2014ELURA. 453 / remains of the trisula of Siva on the top, making up the total height to 49 fee"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.6319,
+        "snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 1,
+        "score": 0.546,
+        "snippet": "one much in this direction their progress was stopped by a revolution of rather a startling nature. "
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.5257,
+        "snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_1544.pdf",
+        "page_number": 8,
+        "score": 0.5248,
+        "snippet": "GENERAL PLAN  OF THE  ELURA CAVES.  \u2014\u2014\u2014_\u2014= SS"
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 6,
+        "score": 0.5128,
+        "snippet": "ese temples, in the infinite diversity of their details, and the minute variety of the earvings.\u201d)  "
+      },
+      {
+        "evidence_id": "E7",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.4995,
+        "snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign o"
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q02",
+    "category": "Historical Patronage & Royal Dynasty",
+    "question": "Which Rashtrakuta or Chalukya kings are associated with the date and patronage of Kailasa Cave 16?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.5583,
+    "candidates_found": 64,
+    "evidence_blocks_count": 7,
+    "tokens_used": 1419,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 2,
+        "score": 0.5583,
+        "snippet": "hists themselves, they at least tolerated it, and apparently favoured it more than the rival faith. "
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.5515,
+        "snippet": "KAILASA\u2014ELUHA. 451 Vikramaditya Chalukya in the year 733 a.d.,'^ and consequently during the reign o"
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 1,
+        "score": 0.5312,
+        "snippet": "KAILASA\u2014ELURA. 449 by whicli they are replaced, it would be difl&cult to feel sure to which religion"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 3,
+        "score": 0.5257,
+        "snippet": "CONTENTS.  Cnar. I. Istropyerony\u2014the Eluri Caves \u2018 I, Tas Booowst Caves ar Ecuni\u2014the Southern Group "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.5201,
+        "snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.479,
+        "snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+      },
+      {
+        "evidence_id": "E7",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.475,
+        "snippet": "attvas on the right side of the shrine in the Tin Thal; 2 and 3, Bodhisattvas from the Bagh Caves.  "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q03",
+    "category": "Specific Architectural Structure",
+    "question": "What is the Ranga Mahal or Painted Palace in the Kailasa rock-cut complex?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.7285,
+    "candidates_found": 110,
+    "evidence_blocks_count": 7,
+    "tokens_used": 1349,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 6,
+        "score": 0.7285,
+        "snippet": "454 BllAHMAJflCAL CAVE-TEMPLES. the name Ranga Mahal, or Painted Palace, by which it is generally- k"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 7,
+        "score": 0.6566,
+        "snippet": "square inside, with a large rosette on the roof. The present altar or sdluhhhd is a modern affair. W"
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.6481,
+        "snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 7,
+        "score": 0.5845,
+        "snippet": "KAILASA\u2014ELURA. 455 not crowd it to the same extent. Perhaps it was the failure that followed from th"
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.5621,
+        "snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_22087.pdf",
+        "page_number": 3,
+        "score": 0.5316,
+        "snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+      },
+      {
+        "evidence_id": "E7",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 6,
+        "score": 0.5123,
+        "snippet": "ct of solidity and grandeur unlike anything else even in cave architecture known to exist in India. "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q04",
+    "category": "Rock-Cut Quarrying Technique",
+    "question": "How was the rock cut away to form the central vimana and court of Kailasa temple?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.6816,
+    "candidates_found": 94,
+    "evidence_blocks_count": 6,
+    "tokens_used": 975,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.6816,
+        "snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 1,
+        "score": 0.6781,
+        "snippet": "one much in this direction their progress was stopped by a revolution of rather a startling nature. "
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_1544.pdf",
+        "page_number": 6,
+        "score": 0.5961,
+        "snippet": "e mythology of India during the period of its greatest vigour, such as is nowhere else to be found. "
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.5852,
+        "snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 5,
+        "score": 0.5794,
+        "snippet": "KAILASA\u2014ELURA. 453 / remains of the trisula of Siva on the top, making up the total height to 49 fee"
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.4953,
+        "snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q05",
+    "category": "Religious Cave Classification",
+    "question": "What are the three main religious divisions of caves at Ellora?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.6561,
+    "candidates_found": 95,
+    "evidence_blocks_count": 5,
+    "tokens_used": 472,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_1544.pdf",
+        "page_number": 6,
+        "score": 0.6561,
+        "snippet": "ese temples, in the infinite diversity of their details, and the minute variety of the earvings.\u201d)  "
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_1544.pdf",
+        "page_number": 7,
+        "score": 0.6338,
+        "snippet": "ELURA CAVES. 3  the quarter of a royal city containing the palaces of the king and-his nobles does f"
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_1544.pdf",
+        "page_number": 8,
+        "score": 0.6254,
+        "snippet": "GENERAL PLAN  OF THE  ELURA CAVES.  \u2014\u2014\u2014_\u2014= SS"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 6,
+        "score": 0.57,
+        "snippet": "f the school of the Greater Vehicle, but there is no such marked advance im decorative seulpture as "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 2,
+        "score": 0.5439,
+        "snippet": "450 BRAHMANICAL CAVE-TEMPLES. Kalyan, and in the country where all the principal caves are situated."
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q06",
+    "category": "Archaeological Survey Methodology",
+    "question": "Who wrote the preface and conducted the archaeological survey of the Elura cave temples in ASWI Volume V?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.7465,
+    "candidates_found": 94,
+    "evidence_blocks_count": 4,
+    "tokens_used": 640,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_1544.pdf",
+        "page_number": 1,
+        "score": 0.7465,
+        "snippet": "REPORT,  A ON THE \u2018:  ELURA CAVE TEMPLES THE BRAHMANICAL AND JAINA CAVES IN WESTERN INDIA  COMPLETIN"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_1544.pdf",
+        "page_number": 5,
+        "score": 0.6994,
+        "snippet": "cl  OF THE  ARCHAOLOGICAL SURVEY OF WESTERN INDIA.  THE ELURA CAVES  AND  OTHER BRAHMANICAL AND JAIN"
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_1544.pdf",
+        "page_number": 2,
+        "score": 0.6655,
+        "snippet": "= s{Lismany & PL  Ce 0 \" AURANE  PREFACE.  \u2014\u2014e  As the object of the present volume is sufliciently "
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_22087.pdf",
+        "page_number": 3,
+        "score": 0.5596,
+        "snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q07",
+    "category": "Epigraphical Authorship & Methodology",
+    "question": "What notes did Pandit Bhagwanlal Indraji prepare regarding the cave inscriptions of Western India?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.7377,
+    "candidates_found": 110,
+    "evidence_blocks_count": 6,
+    "tokens_used": 1176,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_22087.pdf",
+        "page_number": 2,
+        "score": 0.7377,
+        "snippet": "In several cases their object is chiefly to indicate distinetly the position of each inscription.  T"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_22087.pdf",
+        "page_number": 1,
+        "score": 0.7039,
+        "snippet": "i |  Archeological Survey of Western Buiia. yo  INSCRIPTIONS  FROM  THE CAVE-TEMPLES OF WESTERN INDI"
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_22087.pdf",
+        "page_number": 3,
+        "score": 0.6787,
+        "snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 2,
+        "score": 0.6315,
+        "snippet": "= s{Lismany & PL  Ce 0 \" AURANE  PREFACE.  \u2014\u2014e  As the object of the present volume is sufliciently "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_1544.pdf",
+        "page_number": 1,
+        "score": 0.5956,
+        "snippet": "REPORT,  A ON THE \u2018:  ELURA CAVE TEMPLES THE BRAHMANICAL AND JAINA CAVES IN WESTERN INDIA  COMPLETIN"
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 3,
+        "score": 0.5811,
+        "snippet": "Norrn or Kaisa :\u2014 Caves XVIT. to XX. Cave XXL: Ram\u00e9svam Caves XXII to XXVIL Cave XXIX.: Dumar Lena. "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q08",
+    "category": "Cave Inscription Provenance",
+    "question": "What caves and inscriptions are documented at Kuda in Western India?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.7073,
+    "candidates_found": 119,
+    "evidence_blocks_count": 8,
+    "tokens_used": 988,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_22087.pdf",
+        "page_number": 3,
+        "score": 0.7073,
+        "snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_22087.pdf",
+        "page_number": 7,
+        "score": 0.7029,
+        "snippet": "4 KUDA CAVES  Cave No. I. Debris in front 2 feet higher than the floor of cave; little or no court. "
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_22087.pdf",
+        "page_number": 1,
+        "score": 0.696,
+        "snippet": "i |  Archeological Survey of Western Buiia. yo  INSCRIPTIONS  FROM  THE CAVE-TEMPLES OF WESTERN INDI"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 2,
+        "score": 0.6683,
+        "snippet": "in this work on the Elura Caves, and on the Brahmanical and Jaina Caves elsewhere in Western India. "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_1544.pdf",
+        "page_number": 5,
+        "score": 0.631,
+        "snippet": "cl  OF THE  ARCHAOLOGICAL SURVEY OF WESTERN INDIA.  THE ELURA CAVES  AND  OTHER BRAHMANICAL AND JAIN"
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 10,
+        "score": 0.6239,
+        "snippet": "be considered as marking the expiring efforts of the Buddhists in Western India.  Caves Nos. L-VI.  "
+      },
+      {
+        "evidence_id": "E7",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 2,
+        "score": 0.6026,
+        "snippet": "450 BRAHMANICAL CAVE-TEMPLES. Kalyan, and in the country where all the principal caves are situated."
+      },
+      {
+        "evidence_id": "E8",
+        "filename": "sample_1544.pdf",
+        "page_number": 5,
+        "score": 0.6024,
+        "snippet": "me is to apply the same process to the illustration of the remaining Rock Temples of Western India. "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q09",
+    "category": "Cave Inscription Provenance",
+    "question": "What rock temples and inscriptions are located at Mhar?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.6503,
+    "candidates_found": 119,
+    "evidence_blocks_count": 9,
+    "tokens_used": 1346,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_1544.pdf",
+        "page_number": 5,
+        "score": 0.6503,
+        "snippet": "me is to apply the same process to the illustration of the remaining Rock Temples of Western India. "
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_22087.pdf",
+        "page_number": 4,
+        "score": 0.6377,
+        "snippet": "\u00a3  L\u2014NOTES ON THE ROCK-TEMPLES AT\u2019 MHAR AND KUDA AND THEIR INSCRIPTIONS: |  Tes gmall village of Pal"
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_22087.pdf",
+        "page_number": 3,
+        "score": 0.6347,
+        "snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 4,
+        "score": 0.5621,
+        "snippet": "452 BRAHMANIOAL CAVE-TEMPLES. at right angles to the front of the rock and more than 90 yards in len"
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.5398,
+        "snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. "
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 5,
+        "score": 0.5299,
+        "snippet": "cl  OF THE  ARCHAOLOGICAL SURVEY OF WESTERN INDIA.  THE ELURA CAVES  AND  OTHER BRAHMANICAL AND JAIN"
+      },
+      {
+        "evidence_id": "E7",
+        "filename": "sample_22087.pdf",
+        "page_number": 2,
+        "score": 0.5279,
+        "snippet": "In several cases their object is chiefly to indicate distinetly the position of each inscription.  T"
+      },
+      {
+        "evidence_id": "E8",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 2,
+        "score": 0.5219,
+        "snippet": "450 BRAHMANICAL CAVE-TEMPLES. Kalyan, and in the country where all the principal caves are situated."
+      },
+      {
+        "evidence_id": "E9",
+        "filename": "sample_1544.pdf",
+        "page_number": 2,
+        "score": 0.5049,
+        "snippet": "in this work on the Elura Caves, and on the Brahmanical and Jaina Caves elsewhere in Western India. "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q10",
+    "category": "Sculptural Iconography",
+    "question": "What architectural features such as pillars and the trisula of Siva are found at Kailasa?",
+    "expected_positive": true,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.6873,
+    "candidates_found": 100,
+    "evidence_blocks_count": 6,
+    "tokens_used": 1087,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 5,
+        "score": 0.6873,
+        "snippet": "KAILASA\u2014ELURA. 453 / remains of the trisula of Siva on the top, making up the total height to 49 fee"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 6,
+        "score": 0.6589,
+        "snippet": "ct of solidity and grandeur unlike anything else even in cave architecture known to exist in India. "
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 7,
+        "score": 0.6355,
+        "snippet": "KAILASA\u2014ELURA. 455 not crowd it to the same extent. Perhaps it was the failure that followed from th"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 7,
+        "score": 0.5596,
+        "snippet": "square inside, with a large rosette on the roof. The present altar or sdluhhhd is a modern affair. W"
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.5477,
+        "snippet": "attvas on the right side of the shrine in the Tin Thal; 2 and 3, Bodhisattvas from the Bagh Caves.  "
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.5177,
+        "snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+      }
+    ],
+    "passed": true,
+    "status_str": "PASS (Evidence Grounded)"
+  },
+  {
+    "id": "Q11",
+    "category": "Negative / Unsupported Historical Data",
+    "question": "What were the agricultural tax rates levied on wheat farmers near Ellora in 760 CE?",
+    "expected_positive": false,
+    "has_sufficient_evidence": false,
+    "max_similarity_score": 0.2354,
+    "candidates_found": 0,
+    "evidence_blocks_count": 0,
+    "tokens_used": 0,
+    "citations": [],
+    "passed": true,
+    "status_str": "PASS (Correctly Rejected Insufficient Evidence)"
+  },
+  {
+    "id": "Q12",
+    "category": "Negative / Unsupported Inscription",
+    "question": "What edicts did Emperor Ashoka carve on the pillar inside Kailasa Cave 16?",
+    "expected_positive": false,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.5639,
+    "candidates_found": 111,
+    "evidence_blocks_count": 8,
+    "tokens_used": 1489,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 1,
+        "score": 0.5639,
+        "snippet": "KAILASA\u2014ELURA. 449 by whicli they are replaced, it would be difl&cult to feel sure to which religion"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.5322,
+        "snippet": "together so exceptional that it seems in vain to look for any repetition of it in the cave regions. "
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 7,
+        "score": 0.5251,
+        "snippet": "KAILASA\u2014ELURA. 455 not crowd it to the same extent. Perhaps it was the failure that followed from th"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 4,
+        "score": 0.5211,
+        "snippet": "asta duaangos) F AL) MIL Awkds Jarva Caves Nos. Lo axp IL (Autotype) . . . . : . be  Aft the end \u2014  "
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_22087.pdf",
+        "page_number": 3,
+        "score": 0.521,
+        "snippet": "\u2014_  San eanon  10. 11.  12. 13.  14. 15. 16. 17.  CONTENTS.  . Notes on the Rock-Temples at Mhar and"
+      },
+      {
+        "evidence_id": "E6",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 3,
+        "score": 0.4956,
+        "snippet": "c temple architecture is so complete that their intermediate forms must have pre-existed somewhere. "
+      },
+      {
+        "evidence_id": "E7",
+        "filename": "sample_1544.pdf",
+        "page_number": 5,
+        "score": 0.4951,
+        "snippet": "cl  OF THE  ARCHAOLOGICAL SURVEY OF WESTERN INDIA.  THE ELURA CAVES  AND  OTHER BRAHMANICAL AND JAIN"
+      },
+      {
+        "evidence_id": "E8",
+        "filename": "sample_1544.pdf",
+        "page_number": 6,
+        "score": 0.4911,
+        "snippet": "f the school of the Greater Vehicle, but there is no such marked advance im decorative seulpture as "
+      }
+    ],
+    "passed": false,
+    "status_str": "WARNING: Negative question retrieved evidence (score=0.5639)"
+  },
+  {
+    "id": "Q13",
+    "category": "Negative / Anachronistic Military Hardware",
+    "question": "Where did the Mughal army install modern gunpowder cannons and artillery fortifications at Ellora?",
+    "expected_positive": false,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.3634,
+    "candidates_found": 3,
+    "evidence_blocks_count": 2,
+    "tokens_used": 352,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 7,
+        "score": 0.3634,
+        "snippet": "eads quite round the outside of the shrine, which forms the base of the vimdna, sikJiara, or spire. "
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 6,
+        "score": 0.3392,
+        "snippet": "454 BllAHMAJflCAL CAVE-TEMPLES. the name Ranga Mahal, or Painted Palace, by which it is generally- k"
+      }
+    ],
+    "passed": false,
+    "status_str": "WARNING: Negative question retrieved evidence (score=0.3634)"
+  },
+  {
+    "id": "Q14",
+    "category": "Negative / Modern Infrastructure",
+    "question": "What is the subway transit route from Aurangabad airport to the Ellora caves?",
+    "expected_positive": false,
+    "has_sufficient_evidence": true,
+    "max_similarity_score": 0.4639,
+    "candidates_found": 35,
+    "evidence_blocks_count": 5,
+    "tokens_used": 846,
+    "citations": [
+      {
+        "evidence_id": "E1",
+        "filename": "sample_1544.pdf",
+        "page_number": 8,
+        "score": 0.4639,
+        "snippet": "GENERAL PLAN  OF THE  ELURA CAVES.  \u2014\u2014\u2014_\u2014= SS"
+      },
+      {
+        "evidence_id": "E2",
+        "filename": "sample_1544.pdf",
+        "page_number": 6,
+        "score": 0.4241,
+        "snippet": "f the school of the Greater Vehicle, but there is no such marked advance im decorative seulpture as "
+      },
+      {
+        "evidence_id": "E3",
+        "filename": "sample_22087.pdf",
+        "page_number": 6,
+        "score": 0.4208,
+        "snippet": "thus :\u2014  Transcript.\u201d  Gahapatiputasa sethisa. agharakhitasa deyadhamars lena(th ).  Translation.  \u2018"
+      },
+      {
+        "evidence_id": "E4",
+        "filename": "sample_1544.pdf",
+        "page_number": 10,
+        "score": 0.4194,
+        "snippet": "BUDDHIST CAVES OF ELURA. m  hirwidi\u2014are on a considerably larger scale aud more magnificent in their"
+      },
+      {
+        "evidence_id": "E5",
+        "filename": "sample_fergusson_burgess_1880.pdf",
+        "page_number": 10,
+        "score": 0.3749,
+        "snippet": "s of prosperity, with a lotus in each hand, and four attendant elephants^ (Plate LXXXIII,, fig. 1). "
+      }
+    ],
+    "passed": false,
+    "status_str": "WARNING: Negative question retrieved evidence (score=0.4639)"
+  }
+]
