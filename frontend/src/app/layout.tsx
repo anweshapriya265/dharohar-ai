@@ -2,19 +2,29 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DHAROHAR AI (धरोहर) | Immersive Digital Heritage Intelligence",
+  title: "DHAROHAR AI (धरोहर) | Digital Cultural Heritage & Architectural Intelligence",
   description:
-    "World-class digital heritage research platform uniting 3D architectural exploration with citation-grounded archival intelligence across historical gazetteers, blue-prints, and epigraphical records.",
+    "IIT Gandhinagar Explorer Fellowship Archive: Transforming unstructured field reports, epigraphical folios, and monument photography into interactive 3D digital twins, geospatial trails, and evidence-grounded research intelligence.",
   keywords: [
     "Dharohar AI",
     "Cultural Heritage",
     "3D Heritage Visualization",
     "Architectural Archive",
+    "IIT Gandhinagar",
+    "Explorer Fellowship",
     "Epigraphy",
     "Digital Gazetteer",
     "Kailasa Temple",
     "Evidence Grounded AI",
+    "Stepwell 3D Twin",
+    "Adalaj",
+    "Rani ki Vav",
   ],
+  icons: {
+    icon: '/dharohar-logo.svg',
+    shortcut: '/dharohar-logo.svg',
+    apple: '/dharohar-logo.svg',
+  },
 };
 
 export default function RootLayout({
@@ -27,6 +37,10 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body className="min-h-full flex flex-col bg-[#080706] text-[#fcf9f2] selection:bg-[#d4af37]/30 selection:text-[#fcf9f2] antialiased">
         {children}

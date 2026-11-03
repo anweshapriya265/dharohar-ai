@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
+import WelcomeHero from '@/components/WelcomeHero';
 import HealthStatusCard from '@/components/HealthStatusCard';
 import DocumentProcessingSection from '@/components/DocumentProcessingSection';
 import ArchiveSummaryArea from '@/components/ArchiveSummaryArea';
@@ -13,6 +14,11 @@ import ResearchAssistantSection from '@/components/ResearchAssistantSection';
 import DigitalArchiveExplorer from '@/components/DigitalArchiveExplorer';
 import UploadModal from '@/components/UploadModal';
 import DocumentViewerModal from '@/components/DocumentViewerModal';
+import GeospatialMapSection from '@/components/GeospatialMapSection';
+import Monument3DViewer from '@/components/Monument3DViewer';
+import ReviewQueueSection from '@/components/ReviewQueueSection';
+import AdminDashboardSection from '@/components/AdminDashboardSection';
+import HeritageRecordsSection from '@/components/HeritageRecordsSection';
 import {
   fetchBackendHealth,
   fetchDocuments,
@@ -55,15 +61,16 @@ const Heritage3DExplorer = dynamic(() => import('@/components/Heritage3DExplorer
 });
 
 export default function Home() {
-  // Navigation & UI state
+  // Navigation & Role state
   const [currentTab, setCurrentTab] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const tab = params.get('tab');
       if (tab) return tab;
     }
-    return 'dashboard';
+    return 'assistant';
   });
+  const [currentRole, setCurrentRole] = useState<string>('archivist');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
   const [selectedViewerDoc, setSelectedViewerDoc] = useState<DocumentItem | null>(null);
@@ -119,7 +126,6 @@ export default function Home() {
     }
   }, []);
 
-  // Manual refresh that sets 'connecting' status upfront
   const handleManualRefresh = useCallback(async () => {
     setHealthState((prev) => ({
       ...prev,
@@ -129,88 +135,86 @@ export default function Home() {
     await checkHealth();
   }, [checkHealth]);
 
-  // Load documents from backend
+  // Documents loader
   const loadDocuments = useCallback(async () => {
+    setIsLoadingDocs(true);
+    setDocsError(null);
     try {
       const res = await fetchDocuments();
       setDocuments(res.documents);
-      setDocsError(null);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to load documents';
+      const msg = err instanceof Error ? err.message : 'Failed to retrieve documents';
       setDocsError(msg);
     } finally {
       setIsLoadingDocs(false);
     }
   }, []);
 
-  // Search submission handler
-  const handleSearchSubmit = useCallback(async (query: string) => {
-    const trimmed = query.trim();
-    if (!trimmed) return;
+  // Search handler
+  const handleSearchSubmit = async (queryToSearch: string) => {
+    const q = queryToSearch.trim();
+    if (!q) return;
 
     setIsSearching(true);
     setSearchError(null);
     setHasSearched(true);
 
     try {
-      const res = await searchArchive(trimmed, 8, -0.5);
-      setSearchResponse(res);
-      setSearchResults(res.results || []);
+      const response = await searchArchive(q, 8);
+      setSearchResponse(response);
+      setSearchResults(response.results);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'An error occurred during search';
-      setSearchError(msg);
+      const errorMsg =
+        err instanceof Error ? err.message : 'An unexpected error occurred while searching';
+      setSearchError(errorMsg);
       setSearchResults([]);
+      setSearchResponse(null);
     } finally {
       setIsSearching(false);
     }
-  }, []);
+  };
 
-  // Clear search handler
-  const handleClearSearch = useCallback(() => {
+  const handleClearSearch = () => {
     setSearchQuery('');
     setSearchResults([]);
     setSearchResponse(null);
     setSearchError(null);
     setHasSearched(false);
-  }, []);
+  };
 
-  // Source inspection handler: opens viewer directly to the cited page
-  const handleInspectSource = useCallback(
-    (documentId: string, pageNumber: number) => {
-      const doc = documents.find((d) => d.id === documentId);
-      if (doc) {
-        setSelectedViewerDoc(doc);
-        setSelectedViewerPage(pageNumber);
-      } else {
-        // Fallback document item
-        setSelectedViewerDoc({
-          id: documentId,
-          original_filename: documentId,
-          file_size: 0,
-          content_type: 'application/pdf',
-          upload_timestamp: new Date().toISOString(),
-          processing_status: 'completed',
-          extraction_status: 'extracted',
-          page_count: pageNumber,
-          storage_reference: `${documentId}.pdf`,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
-        setSelectedViewerPage(pageNumber);
-      }
-    },
-    [documents]
-  );
+  const handleInspectSource = (documentId: string, pageNumber: number) => {
+    const matchedDoc = documents.find((d) => d.id === documentId);
+    if (matchedDoc) {
+      setSelectedViewerDoc(matchedDoc);
+      setSelectedViewerPage(pageNumber);
+    } else {
+      const stubDoc: DocumentItem = {
+        id: documentId,
+        original_filename: documentId,
+        file_size: 0,
+        content_type: 'application/pdf',
+        upload_timestamp: new Date().toISOString(),
+        processing_status: 'completed',
+        extraction_status: 'extracted',
+        page_count: pageNumber,
+        storage_reference: documentId,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      };
+      setSelectedViewerDoc(stubDoc);
+      setSelectedViewerPage(pageNumber);
+    }
+  };
 
-  // Initial data loading + periodic refresh every 30s
+  // Initial load effect
   useEffect(() => {
     let isMounted = true;
 
     const initData = async () => {
-      const healthPromise = fetchBackendHealth();
-      const docsPromise = fetchDocuments();
-
-      const [healthRes, docsRes] = await Promise.allSettled([healthPromise, docsPromise]);
+      const [healthRes, docsRes] = await Promise.allSettled([
+        fetchBackendHealth(),
+        fetchDocuments(),
+      ]);
 
       if (!isMounted) return;
 
@@ -223,14 +227,14 @@ export default function Home() {
           lastChecked: new Date().toISOString(),
         });
       } else {
-        const msg =
+        const errorMsg =
           healthRes.reason instanceof Error
             ? healthRes.reason.message
-            : 'Unknown network failure while connecting to backend';
+            : 'Initial connection failed';
         setHealthState({
           status: 'error',
           data: null,
-          error: msg,
+          error: errorMsg,
           latencyMs: null,
           lastChecked: new Date().toISOString(),
         });
@@ -262,38 +266,54 @@ export default function Home() {
     };
   }, [checkHealth]);
 
-  // Keyboard shortcut '/' to focus search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
         e.preventDefault();
-        const input = searchRef.current?.querySelector('input');
-        input?.focus();
+        setCurrentTab('dashboard');
+        setTimeout(() => {
+          const input = searchRef.current?.querySelector('input');
+          input?.focus();
+        }, 100);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
+  const handleScrollToSearch = () => {
+    if (currentTab !== 'dashboard') {
+      setCurrentTab('dashboard');
+    }
+    setTimeout(() => {
+      searchRef.current?.scrollIntoView({ behavior: 'smooth' });
+      const input = searchRef.current?.querySelector('input');
+      input?.focus();
+    }, 100);
+  };
+
   const handleUploadSuccess = (newDoc: DocumentItem) => {
     setDocuments((prev) => [newDoc, ...prev]);
   };
 
-  // Metrics calculation
   const totalPagesCount = documents.reduce((acc, doc) => acc + (doc.page_count || 0), 0);
   const needsOcrCount = documents.filter((doc) => doc.extraction_status === 'needs_ocr').length;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#080706] text-[#ded6c5] selection:bg-[#d4af37]/30 selection:text-[#fcf9f2]">
-      {/* Top Navigation */}
+      {/* Top Header with Unified Navigation Tabs */}
       <Header
         healthState={healthState}
         onRefreshHealth={handleManualRefresh}
         onOpenUpload={() => setIsUploadOpen(true)}
-        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+        currentRole={currentRole}
+        onSelectRole={setCurrentRole}
+        currentTab={currentTab}
+        onSelectTab={setCurrentTab}
       />
 
-      {/* Main Container: Sidebar + Content */}
+      {/* Main Container */}
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
         <Sidebar
           currentTab={currentTab}
@@ -303,17 +323,57 @@ export default function Home() {
           backendConnected={healthState.status === 'connected'}
         />
 
-        {/* Content Area */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 overflow-x-hidden">
-          {/* Research Assistant View */}
-          {currentTab === 'assistant' ? (
+        {/* Dynamic Content Views */}
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-x-hidden">
+          {/* TAB 1: RESEARCH ASSISTANT (Milestone 5.3-5.6) */}
+          {currentTab === 'assistant' && (
             <ResearchAssistantSection
               availableDocuments={documents}
               onInspectSource={handleInspectSource}
               onOpenUpload={() => setIsUploadOpen(true)}
               backendConnected={healthState.status === 'connected'}
             />
-          ) : currentTab === 'archive' ? (
+          )}
+
+          {/* TAB 2: 3D MONUMENT DIGITAL TWIN (Stepwell WebGL) */}
+          {currentTab === '3d-viewer' && <Monument3DViewer />}
+
+          {/* TAB 3: 3D MONOLITH EXPLORER (Kailasa Temple Studio) */}
+          {currentTab === 'heritage-3d' && (
+            <Heritage3DExplorer
+              onInspectSource={handleInspectSource}
+              availableDocuments={documents}
+            />
+          )}
+
+          {/* TAB 4: GEOSPATIAL HERITAGE MAP (Leaflet Cartography) */}
+          {currentTab === 'cartography' && (
+            <GeospatialMapSection
+              onSelectRecord={(_recId) => {
+                setCurrentTab('records');
+              }}
+            />
+          )}
+
+          {/* TAB 5: HERITAGE CORPUS & FIELD RECORDS */}
+          {currentTab === 'records' && (
+            <HeritageRecordsSection
+              onOpenUpload={() => setIsUploadOpen(true)}
+              onInspectRecord={(_recId) => {
+                setCurrentTab('dashboard');
+                handleScrollToSearch();
+              }}
+            />
+          )}
+
+          {/* TAB 6: CURATOR REVIEW QUEUE (Human-in-the-Loop) */}
+          {currentTab === 'review-queue' && <ReviewQueueSection />}
+
+          {/* TAB 7: ADMIN & AUDIT TRAIL */}
+          {currentTab === 'admin' && <AdminDashboardSection />}
+
+          {/* TAB 8: DIGITAL ARCHIVE EXPLORER */}
+          {currentTab === 'archive' && (
             <DigitalArchiveExplorer
               documents={documents}
               isLoading={isLoadingDocs}
@@ -325,59 +385,26 @@ export default function Home() {
               }}
               onOpen3DExplorer={() => setCurrentTab('heritage-3d')}
             />
-          ) : currentTab === 'heritage-3d' ? (
-            <Heritage3DExplorer
-              onInspectSource={handleInspectSource}
-              availableDocuments={documents}
-            />
-          ) : currentTab === 'search' ? (
+          )}
+
+          {/* TAB 9: SYSTEM HEALTH & TELEMETRY */}
+          {currentTab === 'diagnostics' && (
             <div className="space-y-6">
-              <div className="p-6 sm:p-8 rounded-2xl border border-[#2e2923] bg-gradient-to-br from-[#141210] via-[#110f0d] to-[#0a0908] shadow-2xl relative overflow-hidden">
-                <div className="relative z-10 max-w-2xl space-y-3">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-serif bg-[#1d1914] border border-[#d4af37]/40 text-[#eed27c]">
-                    <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
-                    <span>Hybrid Retrieval Engine · Milestone 5.6.3.2</span>
-                  </div>
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
-                    Deep Archival Search
-                  </h1>
-                  <p className="text-sm text-[#ded6c5] leading-relaxed">
-                    Dense Semantic (all-MiniLM-L6-v2) + SQLite FTS5 BM25 Lexical Retrieval fused via Reciprocal Rank Fusion (RRF k=60) with dual pagination citation guarantees.
-                  </p>
+              <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] shadow-xl">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#181613] text-[#eed27c] border border-[#d4af37]/40 mb-1">
+                  <Activity className="w-3.5 h-3.5 text-[#d4af37]" />
+                  <span>Telemetry &amp; Service Health</span>
                 </div>
-              </div>
-              <div ref={searchRef}>
-                <SearchSection
-                  searchQuery={searchQuery}
-                  onSearchChange={setSearchQuery}
-                  onSearchSubmit={handleSearchSubmit}
-                  isSearching={isSearching}
-                  searchResults={searchResults}
-                  searchResponse={searchResponse}
-                  searchError={searchError}
-                  hasSearched={hasSearched}
-                  totalIndexedDocs={documents.length}
-                  onInspectSource={handleInspectSource}
-                  onClearSearch={handleClearSearch}
-                />
-              </div>
-            </div>
-          ) : currentTab === 'diagnostics' ? (
-            <div className="space-y-6">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-[#d4af37]" />
+                <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
                   System Diagnostics &amp; Health Telemetry
                 </h1>
-                <p className="text-xs sm:text-sm text-[#a89f91] mt-1 font-serif">
+                <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5 font-serif">
                   Real-time status of FastAPI service, all-MiniLM-L6-v2 embeddings, and SQLite database
                 </p>
               </div>
 
-              {/* Health status card */}
               <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
 
-              {/* Technical Specifications */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] space-y-3 shadow-xl">
                   <h2 className="text-xs font-semibold text-[#fcf9f2] font-serif flex items-center gap-2">
@@ -403,10 +430,14 @@ export default function Home() {
                         all-MiniLM-L6-v2 (384-dim)
                       </span>
                     </div>
+                    <div className="flex justify-between py-1 border-b border-[#24201a]">
+                      <span className="text-[#a89f91]">Geospatial Trail Endpoint:</span>
+                      <span className="font-mono text-[#ded6c5]">GET /api/map/records</span>
+                    </div>
                     <div className="flex justify-between py-1">
                       <span className="text-[#a89f91]">Persistence Store:</span>
                       <span className="font-mono text-[#ded6c5]">
-                        SQLite (document_chunks &amp; documents)
+                        SQLite (WAL Mode, document_chunks &amp; heritage_records)
                       </span>
                     </div>
                   </div>
@@ -427,32 +458,20 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          ) : (
-            /* Main Dashboard View */
-            <div className="space-y-8">
-              {/* If connection is failing, display the health notice upfront */}
+          )}
+
+          {/* TAB 10: HYBRID SEARCH & EXPLORATION HUB */}
+          {currentTab === 'dashboard' && (
+            <div className="space-y-6">
               {healthState.status === 'error' && (
                 <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
               )}
 
-              {/* Interactive 3D Hero Heritage Experience */}
-              <HeroHeritageCanvas
-                onExploreArchive={() => setCurrentTab('archive')}
-                onOpenAssistant={() => setCurrentTab('assistant')}
-                onInspect3DStudio={() => setCurrentTab('heritage-3d')}
-              />
-
-              {/* Document Processing Pipeline Status */}
-              <DocumentProcessingSection />
-
-              {/* Archive Summary Area */}
-              <ArchiveSummaryArea
-                documentCount={documents.length}
-                pageCount={totalPagesCount}
-                needsOcrCount={needsOcrCount}
-                showSampleData={showSampleData}
-                onToggleSampleData={setShowSampleData}
-                storageStatus={healthState.data?.services?.storage || 'initialized'}
+              {/* Welcome Hero */}
+              <WelcomeHero
+                onOpenUpload={() => setIsUploadOpen(true)}
+                onNavigateTab={setCurrentTab}
+                totalRecordsCount={documents.length + 8}
               />
 
               {/* Semantic Knowledge Search Section */}
@@ -466,11 +485,24 @@ export default function Home() {
                   searchResponse={searchResponse}
                   searchError={searchError}
                   hasSearched={hasSearched}
-                  totalIndexedDocs={documents.length}
+                  totalIndexedDocs={documents.length + 8}
                   onInspectSource={handleInspectSource}
                   onClearSearch={handleClearSearch}
                 />
               </div>
+
+              {/* Document Processing Pipeline Status */}
+              <DocumentProcessingSection />
+
+              {/* Archive Summary Area */}
+              <ArchiveSummaryArea
+                documentCount={documents.length}
+                pageCount={totalPagesCount}
+                needsOcrCount={needsOcrCount}
+                showSampleData={showSampleData}
+                onToggleSampleData={setShowSampleData}
+                storageStatus={healthState.data?.services?.storage || 'initialized'}
+              />
 
               {/* Recent Documents Section */}
               <RecentDocumentsSection

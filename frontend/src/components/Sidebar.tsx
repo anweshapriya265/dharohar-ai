@@ -5,19 +5,20 @@ import {
   LayoutDashboard,
   Sparkles,
   BookOpen,
-  Search,
+  MapPin,
   Box,
-  Activity,
   ShieldCheck,
+  Activity,
   X,
 } from 'lucide-react';
+import DharoharLogo from '@/components/DharoharLogo';
 
 interface SidebarProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
   isOpen: boolean;
   onClose: () => void;
-  backendConnected: boolean;
+  backendConnected?: boolean;
 }
 
 export default function Sidebar({
@@ -25,50 +26,64 @@ export default function Sidebar({
   onSelectTab,
   isOpen,
   onClose,
-  backendConnected,
+  backendConnected = true,
 }: SidebarProps) {
   const navItems = [
     {
-      id: 'dashboard',
-      label: 'Intelligence Dashboard',
-      subtitle: '3D Hero & Corpus Overview',
-      icon: LayoutDashboard,
-      badge: 'Live',
-    },
-    {
       id: 'assistant',
-      label: 'Research Studio',
-      subtitle: 'Evidence-Grounded AI',
+      label: 'Research Assistant',
+      subtitle: 'Evidence-Grounded AI Studio',
       icon: Sparkles,
       badge: 'AI Core',
     },
     {
-      id: 'archive',
-      label: 'Archive Explorer',
-      subtitle: 'Corpus & OCR Records',
+      id: '3d-viewer',
+      label: '3D Stepwell Twin',
+      subtitle: 'Interactive subterranean twin',
+      icon: Box,
+      badge: 'WebGL',
+    },
+    {
+      id: 'heritage-3d',
+      label: '3D Monolith Explorer',
+      subtitle: 'Kailasa Temple monolithic viewer',
+      icon: Box,
+      badge: 'Rock-Cut',
+    },
+    {
+      id: 'cartography',
+      label: 'Expedition Heritage Map',
+      subtitle: 'Stepwells & expedition trails',
+      icon: MapPin,
+      badge: 'Geospatial',
+    },
+    {
+      id: 'dashboard',
+      label: 'Hybrid Semantic Search',
+      subtitle: 'Dense MiniLM + SQLite FTS5 RRF',
+      icon: LayoutDashboard,
+      badge: 'Hybrid',
+    },
+    {
+      id: 'records',
+      label: 'Corpus & Field Records',
+      subtitle: 'IITGN Explorer & ASI Monographs',
       icon: BookOpen,
       badge: 'Corpus',
     },
     {
-      id: 'heritage-3d',
-      label: '3D Heritage Explorer',
-      subtitle: 'Interactive Volumetric Lab',
-      icon: Box,
-      badge: '3D WebGL',
-    },
-    {
-      id: 'search',
-      label: 'Semantic Search',
-      subtitle: 'Hybrid Dense + BM25',
-      icon: Search,
-      badge: 'Hybrid',
+      id: 'review-queue',
+      label: 'Curator Review Queue',
+      subtitle: 'Verification of AI suggestions',
+      icon: ShieldCheck,
+      badge: 'Human-in-Loop',
     },
     {
       id: 'diagnostics',
-      label: 'Archive Analytics',
-      subtitle: 'Telemetry & Integrity',
+      label: 'System Analytics & Audit',
+      subtitle: 'Telemetry & database integrity',
       icon: Activity,
-      badge: 'Metrics',
+      badge: 'Admin',
     },
   ];
 
@@ -77,24 +92,27 @@ export default function Sidebar({
       {/* Mobile Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-[#080706]/80 backdrop-blur-sm lg:hidden animate-in fade-in"
           onClick={onClose}
+          className="fixed inset-0 z-30 bg-black/70 backdrop-blur-xs lg:hidden"
           aria-hidden="true"
         />
       )}
 
       {/* Sidebar Container */}
       <aside
-        className={`fixed lg:sticky top-0 lg:top-16 z-40 h-full lg:h-[calc(100vh-4rem)] w-68 sm:w-72 shrink-0 bg-[#0c0a08] border-r border-[#2e2923] p-4 flex flex-col justify-between transition-transform duration-200 ease-in-out ${
+        className={`fixed lg:sticky top-0 lg:top-28 z-40 lg:z-10 h-full lg:h-[calc(100vh-7rem)] w-68 sm:w-72 shrink-0 bg-[#0c0a08] border-r border-[#2e2923] p-4 flex flex-col justify-between transition-transform duration-200 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Mobile Header Close */}
           <div className="flex items-center justify-between pb-3 border-b border-[#2e2923] lg:hidden">
-            <span className="font-serif font-bold text-sm text-[#fcf9f2] font-heritage">
-              Research Navigation
-            </span>
+            <div className="flex items-center gap-2">
+              <DharoharLogo size={28} />
+              <span className="font-serif font-bold text-sm text-[#fcf9f2] font-heritage">
+                DHAROHAR AI
+              </span>
+            </div>
             <button
               type="button"
               onClick={onClose}
@@ -106,9 +124,9 @@ export default function Sidebar({
           </div>
 
           {/* Navigation Items */}
-          <div className="space-y-1">
+          <div className="space-y-1 overflow-y-auto max-h-[calc(100vh-18rem)] pr-1">
             <div className="px-3 pb-2 text-[10px] font-mono uppercase tracking-wider text-[#9c9282]">
-              Archival Workspace
+              Archival Pathways
             </div>
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -121,37 +139,34 @@ export default function Sidebar({
                     onSelectTab(item.id);
                     onClose();
                   }}
-                  className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all group ${
+                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left transition-all group ${
                     isActive
-                      ? 'bg-[#1a1714] border border-[#d4af37]/60 shadow-lg text-[#fcf9f2]'
-                      : 'text-[#ded6c5] hover:bg-[#141210] hover:text-[#fcf9f2] border border-transparent'
+                      ? 'bg-[#d4af37] text-[#080706] shadow-sm font-semibold'
+                      : 'text-[#ded6c5] hover:text-[#fcf9f2] hover:bg-[#181613]'
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div
-                      className={`p-2 rounded-lg transition-colors ${
-                        isActive
-                          ? 'bg-[#d4af37] text-[#080706]'
-                          : 'bg-[#181613] text-[#ded6c5] group-hover:text-[#eed27c]'
+                  <div className="flex items-center gap-3 min-w-0">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 transition-colors ${
+                        isActive ? 'text-[#080706]' : 'text-[#d4af37] group-hover:text-[#eed27c]'
                       }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-serif font-semibold font-heritage line-clamp-1">
-                        {item.label}
-                      </div>
-                      <div className="text-[10px] font-mono text-[#6e6659] line-clamp-1">
+                    />
+                    <div className="truncate">
+                      <div className="text-xs font-serif leading-tight">{item.label}</div>
+                      <div
+                        className={`text-[10px] truncate ${
+                          isActive ? 'text-[#382b09]' : 'text-[#9c9282]'
+                        }`}
+                      >
                         {item.subtitle}
                       </div>
                     </div>
                   </div>
-
                   <span
-                    className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
+                    className={`ml-2 text-[9px] font-mono px-1.5 py-0.5 rounded shrink-0 ${
                       isActive
-                        ? 'bg-[#1f1910] text-[#eed27c] border-[#d4af37]/40'
-                        : 'bg-[#141210] text-[#6e6659] border-[#2e2923]'
+                        ? 'bg-black/20 text-[#080706]'
+                        : 'bg-[#1a1714] text-[#9c9282] border border-[#2e2923]'
                     }`}
                   >
                     {item.badge}
@@ -162,8 +177,8 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* Footer Grounding Protocol Status */}
-        <div className="pt-4 border-t border-[#2e2923] space-y-2">
+        {/* Footer Grounding Protocol Status & Institution */}
+        <div className="pt-3 border-t border-[#2e2923] space-y-2">
           <div className="p-3 rounded-xl bg-[#12100e] border border-[#2e2923] text-xs space-y-1">
             <div className="flex items-center justify-between text-[10px] font-mono uppercase">
               <span className="flex items-center gap-1.5 text-[#eed27c]">
@@ -176,14 +191,17 @@ export default function Sidebar({
               />
             </div>
             <p className="text-[11px] text-[#9c9282] leading-tight">
-              Dual-pagination verified citations across 19th-century colonial gazetteers.
+              Dual-pagination verified citations across 19th-century colonial gazetteers &amp; field records.
             </p>
           </div>
 
-          <div className="text-center">
-            <span className="text-[10px] font-mono text-[#6e6659]">
-              DHAROHAR AI v5.7 · Indian Heritage
-            </span>
+          <div className="p-2 rounded-xl border border-[#2e2923]/60 bg-[#0e0c0a] text-[10px] text-center space-y-0.5">
+            <div className="font-serif font-bold text-[#ded6c5] font-heritage">
+              IIT Gandhinagar · Explorer Fellowship
+            </div>
+            <div className="text-[#6e6659] font-mono text-[9px]">
+              DHAROHAR AI · Cultural Heritage Archive
+            </div>
           </div>
         </div>
       </aside>

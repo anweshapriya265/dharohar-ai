@@ -34,6 +34,16 @@
   --accent-verdigris: #3ba87e;
   --accent-crimson: #c53838;
 
+  /* Terracotta, Ochre & Patina Palette */
+  --terracotta: #9c381e;
+  --terracotta-hover: #832e17;
+  --terracotta-light: #fbeee9;
+  --brass-ochre: #b67322;
+  --brass-light: #fbf5eb;
+  --patina-green: #2d5e4a;
+  --patina-light: #edf5f1;
+  --card-border: #2e2923;
+
   /* Theme Tokens */
   --background: var(--bg-obsidian-deep);
   --foreground: var(--text-ivory-primary);
@@ -58,27 +68,32 @@
   --text-stone-muted: #6e6454;
   --text-stone-dim: #998d78;
   --accent-gold: #b89124;
+  --card-border: #e5dfd5;
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* Classical Museum / Heritage Title Accent */
+/* Authentic Cultural Heritage Typography */
 .font-heritage {
-  font-family: "Cinzel", "Palatino Linotype", "Book Antiqua", Palatino, "Georgia", serif;
+  font-family: "Cinzel", "Playfair Display", "Palatino Linotype", "Book Antiqua", Palatino, "Georgia", serif;
   letter-spacing: 0.025em;
 }
 
 .font-editorial {
   font-family: "Playfair Display", "Cormorant Garamond", "Georgia", serif;
   letter-spacing: -0.01em;
+}
+
+.font-mono-heritage {
+  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
 }
 
 /* Architectural Stone Card Surfaces */
@@ -104,6 +119,15 @@ body {
 .gold-border-glow:hover {
   border-color: var(--border-gold-glow);
   box-shadow: 0 0 30px -4px rgba(212, 175, 55, 0.22);
+}
+
+/* Subtle, authentic warm shadow */
+.shadow-heritage {
+  box-shadow: 0 1px 3px rgba(28, 25, 23, 0.04), 0 4px 12px -2px rgba(28, 25, 23, 0.05);
+}
+
+.shadow-heritage-md {
+  box-shadow: 0 4px 6px -1px rgba(28, 25, 23, 0.05), 0 10px 24px -4px rgba(28, 25, 23, 0.07);
 }
 
 /* Architectural Grid Background (Subtle excavation blueprint grid) */

@@ -6,12 +6,13 @@ import {
   Upload,
   FileText,
   AlertCircle,
-  ShieldCheck,
   CheckCircle2,
   Loader2,
+  Sparkles,
+  ShieldCheck,
   Eye,
 } from 'lucide-react';
-import { DocumentItem, uploadDocument } from '@/lib/api';
+import { DocumentItem, uploadDocument, uploadUnifiedAsset } from '@/lib/api';
 
 interface UploadModalProps {
   isOpen: boolean;
@@ -32,18 +33,22 @@ export default function UploadModal({
   const [error, setError] = useState<string | null>(null);
   const [uploadedDoc, setUploadedDoc] = useState<DocumentItem | null>(null);
 
+  // Metadata context
+  const [title, setTitle] = useState<string>('');
+  const [region, setRegion] = useState<string>('Gujarat');
+  const [heritageType, setHeritageType] = useState<string>('Stepwell / Baoli');
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Reset modal state when opened/closed
   const handleClose = useCallback(() => {
     if (isUploading) return;
     setSelectedFile(null);
     setError(null);
     setUploadedDoc(null);
+    setTitle('');
     onClose();
   }, [isUploading, onClose]);
 
-  // Handle ESC key to dismiss modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && !isUploading) {
@@ -60,8 +65,10 @@ export default function UploadModal({
     setError(null);
     setUploadedDoc(null);
 
-    if (!file.name.toLowerCase().endsWith('.pdf')) {
-      setError(`Unsupported format: '${file.name}'. Only PDF (.pdf) files are supported.`);
+    const allowed = ['.pdf', '.jpg', '.jpeg', '.png', '.webp', '.txt'];
+    const ext = '.' + file.name.split('.').pop()?.toLowerCase();
+    if (!allowed.includes(ext)) {
+      setError(`Unsupported format: '${file.name}'. Supported: PDF, JPG, PNG, WEBP, TXT.`);
       return;
     }
 
@@ -78,6 +85,10 @@ export default function UploadModal({
     }
 
     setSelectedFile(file);
+    if (!title) {
+      const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/_/g, ' ');
+      setTitle(cleanName.charAt(0).toUpperCase() + cleanName.slice(1));
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +115,23 @@ export default function UploadModal({
     }
   };
 
+  // Quick helper to test with a pre-created text note
+  const handleLoadSampleNote = () => {
+    const content = `IIT Gandhinagar Explorer Fellowship - Adalaj Stepwell (Rudabai Vav) Field Journal
+Coordinates: 23.1667° N, 72.5833° E (Gandhinagar District, Gujarat)
+Dynasty: Vaghela / Solanki Transition under Queen Rudabai, completed 1498 CE.
+Architectural Observation:
+The stepwell extends downwards across five descending storeys. Each subterranean pavilion level exhibits square mandapas with intricately carved Solanki pillars, rosette ceilings, and friezes of musicians, dancers, and royal processions.
+The octagonal well shaft provides direct downward solar illumination while keeping subterranean temperatures approximately 5 degrees cooler than the ambient surface ground.`;
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const file = new File([blob], 'iitgn_adalaj_field_notes.txt', { type: 'text/plain' });
+    setTitle('Adalaj Stepwell Field Expedition Notes');
+    setRegion('Gujarat');
+    setHeritageType('Stepwell / Baoli');
+    validateAndSetFile(file);
+  };
+
   const handleSubmitUpload = async () => {
     if (!selectedFile || isUploading) return;
 
@@ -111,9 +139,35 @@ export default function UploadModal({
     setError(null);
 
     try {
-      const doc = await uploadDocument(selectedFile);
-      setUploadedDoc(doc);
-      onUploadSuccess(doc);
+      if (selectedFile.name.toLowerCase().endsWith('.pdf')) {
+        const doc = await uploadDocument(selectedFile);
+        setUploadedDoc(doc);
+        onUploadSuccess(doc);
+      } else {
+        const res = await uploadUnifiedAsset(selectedFile, {
+          title: title || selectedFile.name,
+          region,
+          heritage_type: heritageType,
+          source_attribution: 'IITGN Explorer Fellowship Fieldwork',
+        });
+
+        const docAdapter: DocumentItem = {
+          id: res.record.id,
+          original_filename: res.record.original_filename || selectedFile.name,
+          file_size: res.record.file_size || selectedFile.size,
+          content_type: selectedFile.type || 'text/plain',
+          upload_timestamp: res.record.created_at,
+          processing_status: 'completed',
+          extraction_status: 'extracted',
+          page_count: 1,
+          storage_reference: res.record.storage_path || `${res.record.id}`,
+          created_at: res.record.created_at,
+          updated_at: res.record.updated_at,
+        };
+
+        setUploadedDoc(docAdapter);
+        onUploadSuccess(docAdapter);
+      }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'An error occurred during upload';
       setError(msg);
@@ -143,10 +197,10 @@ export default function UploadModal({
                 id="upload-modal-title"
                 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage"
               >
-                Ingest Heritage PDF Document
+                Contribute Cultural Heritage Asset
               </h2>
               <p className="text-xs text-[#a89f91]">
-                Archival Document Ingestion &amp; PyMuPDF Text Extraction
+                PDF Monographs, Scanned Plates, Field Notes &amp; Photographs
               </p>
             </div>
           </div>
@@ -168,10 +222,10 @@ export default function UploadModal({
             <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-800/80 space-y-2">
               <div className="flex items-center gap-2 text-emerald-300 font-semibold text-sm">
                 <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                <span>Document Ingestion Successful!</span>
+                <span>Asset Successfully Ingested &amp; Indexed!</span>
               </div>
               <p className="text-xs text-emerald-300/80 leading-relaxed font-serif">
-                The document has been securely stored and text extracted page-by-page into the SQLite archive database.
+                Text extracted and indexed into the SQLite archive repository. Grounded retrieval and dual pagination ready.
               </p>
             </div>
 
@@ -204,7 +258,7 @@ export default function UploadModal({
                   }`}
                 >
                   {uploadedDoc.extraction_status === 'extracted'
-                    ? 'Extracted (PyMuPDF)'
+                    ? 'Extracted (PyMuPDF / Text)'
                     : 'Requires OCR (Sparse / Scanned)'}
                 </span>
               </div>
@@ -239,22 +293,45 @@ export default function UploadModal({
         ) : (
           /* Upload Form */
           <div className="space-y-4">
-            {/* Hidden native input */}
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".pdf,application/pdf"
-              onChange={handleFileChange}
-              className="hidden"
-            />
+            {/* Metadata Context Inputs */}
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="space-y-1">
+                <label className="text-[#ded6c5] font-semibold block">Region</label>
+                <select
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value)}
+                  className="w-full p-2 rounded-lg border border-[#2e2923] bg-[#141210] text-[#fcf9f2] font-medium focus:outline-hidden"
+                >
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
+                </select>
+              </div>
 
-            {/* Dropzone */}
+              <div className="space-y-1">
+                <label className="text-[#ded6c5] font-semibold block">Typology</label>
+                <select
+                  value={heritageType}
+                  onChange={(e) => setHeritageType(e.target.value)}
+                  className="w-full p-2 rounded-lg border border-[#2e2923] bg-[#141210] text-[#fcf9f2] font-medium focus:outline-hidden"
+                >
+                  <option value="Stepwell / Baoli">Stepwell (Baoli)</option>
+                  <option value="Temple">Temple</option>
+                  <option value="Monolithic Rock-Cut Temple">Monolithic Rock-Cut Temple</option>
+                  <option value="Fortified Medieval City">Medieval Fort / City</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Drag & Drop Target */}
             <div
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
               onClick={() => fileInputRef.current?.click()}
-              className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
+              className={`p-6 rounded-2xl border-2 border-dashed text-center cursor-pointer transition-all ${
                 isDragging
                   ? 'border-[#d4af37] bg-[#1d1914]'
                   : selectedFile
@@ -262,6 +339,14 @@ export default function UploadModal({
                   : 'border-[#2e2923] bg-[#12100e] hover:border-[#d4af37]/60'
               }`}
             >
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf,.jpg,.jpeg,.png,.webp,.txt"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+
               <div className="w-12 h-12 mx-auto rounded-xl bg-[#1d1914] border border-[#d4af37]/30 text-[#eed27c] flex items-center justify-center mb-3">
                 <FileText className="w-6 h-6 text-[#d4af37]" />
               </div>
@@ -281,13 +366,26 @@ export default function UploadModal({
               ) : (
                 <div className="space-y-1">
                   <p className="text-xs font-semibold text-[#fcf9f2] font-serif">
-                    Click to browse or drop historical PDF here
+                    Click to browse or drop historical PDF / field notes here
                   </p>
                   <p className="text-[11px] text-[#a89f91]">
-                    Maximum upload size: 15 MB • PDF files with signature validation
+                    Maximum upload size: 15 MB • PDF monographs, JPG/PNG plates, TXT notes
                   </p>
                 </div>
               )}
+            </div>
+
+            {/* Quick Sample Note Seeder for fast test */}
+            <div className="flex items-center justify-between text-xs pt-1">
+              <span className="text-[#9c9282] font-medium">Testing quickly?</span>
+              <button
+                type="button"
+                onClick={handleLoadSampleNote}
+                className="inline-flex items-center gap-1.5 text-[#eed27c] hover:underline font-semibold text-[11px]"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+                <span>Load Sample IITGN Adalaj Field Notes</span>
+              </button>
             </div>
 
             {/* Error Message */}
@@ -324,12 +422,12 @@ export default function UploadModal({
                 {isUploading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin" />
-                    <span>Extracting Text...</span>
+                    <span>Processing &amp; Vectorizing...</span>
                   </>
                 ) : (
                   <>
                     <Upload className="w-4 h-4" />
-                    <span>Ingest &amp; Extract PDF</span>
+                    <span>Upload &amp; Revitalize</span>
                   </>
                 )}
               </button>

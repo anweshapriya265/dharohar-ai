@@ -1,90 +1,140 @@
 'use client';
 
 import React from 'react';
-import { Landmark, Upload, BookOpen, Compass, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import {
+  Landmark,
+  Upload,
+  Sparkles,
+  ShieldCheck,
+  Compass,
+  Box,
+  Search,
+} from 'lucide-react';
+import DharoharLogo from '@/components/DharoharLogo';
 
 interface WelcomeHeroProps {
   onOpenUpload: () => void;
-  onExploreClick: () => void;
+  onExploreClick?: () => void;
   onOpenAssistant?: () => void;
+  onNavigateTab?: (tab: string) => void;
+  totalRecordsCount?: number;
 }
 
-export default function WelcomeHero({ onOpenUpload, onExploreClick, onOpenAssistant }: WelcomeHeroProps) {
+export default function WelcomeHero({
+  onOpenUpload,
+  onExploreClick,
+  onOpenAssistant,
+  onNavigateTab,
+  totalRecordsCount,
+}: WelcomeHeroProps) {
+  const handleNav = (tab: string) => {
+    if (onNavigateTab) {
+      onNavigateTab(tab);
+    } else if (tab === 'assistant' && onOpenAssistant) {
+      onOpenAssistant();
+    } else if (onExploreClick) {
+      onExploreClick();
+    }
+  };
+
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-stone-200/90 dark:border-stone-800 bg-gradient-to-br from-amber-50/70 via-stone-50 to-stone-100/90 dark:from-stone-900/80 dark:via-stone-950 dark:to-stone-900/60 p-6 sm:p-8 shadow-xs">
-      {/* Decorative subtle heritage watermark */}
-      <div className="absolute right-0 top-0 -mt-6 -mr-6 opacity-[0.04] dark:opacity-[0.03] pointer-events-none select-none">
-        <Landmark className="w-96 h-96" />
+    <div className="relative overflow-hidden rounded-2xl border border-[#2e2923] bg-[#12100e] p-6 sm:p-8 shadow-xl text-[#ded6c5]">
+      {/* Architectural decorative watermark */}
+      <div className="absolute right-0 top-0 -mt-8 -mr-8 text-[#d4af37]/5 pointer-events-none select-none">
+        <Landmark className="w-80 h-80 stroke-[0.7]" />
       </div>
 
       <div className="relative z-10 max-w-3xl space-y-4">
-        {/* Sub-badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-amber-100/80 dark:bg-amber-950/70 border border-amber-300/50 dark:border-amber-800 text-amber-900 dark:text-amber-200">
-          <Sparkles className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-          <span>HackCult &apos;26 — Cultural & Architectural Heritage Revitalisation</span>
+        {/* Institutional Pill */}
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#181613] border border-[#2e2923] text-xs font-mono text-[#eed27c]">
+          <span className="w-2 h-2 rounded-full bg-[#3ba87e] animate-pulse" />
+          <span>IIT Gandhinagar · Explorer Fellowship Cultural Heritage Archive</span>
         </div>
 
         {/* Headline */}
-        <div className="space-y-2">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-stone-900 dark:text-stone-100 tracking-tight font-heritage leading-snug">
-            Intelligent Preservation of Cultural & Architectural Memory
-          </h1>
-          <p className="text-sm sm:text-base text-stone-600 dark:text-stone-300 leading-relaxed">
-            DHAROHAR AI ingests colonial-era gazetteers, architectural blueprints, epigraphical
-            survey reports, and excavation notes into an evidence-linked, citation-grounded digital
-            knowledge repository.
-          </p>
+        <div className="flex items-start gap-4">
+          <DharoharLogo size={56} className="mt-1 hidden sm:block drop-shadow-sm shrink-0" />
+          <div className="space-y-2">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#fcf9f2] tracking-tight font-heritage leading-tight">
+              Intelligent Revitalisation of Cultural &amp; Architectural Archives
+            </h1>
+            <p className="text-sm sm:text-base text-[#ded6c5] leading-relaxed font-serif">
+              Transforming thousands of subterranean stepwell photographs, colonial gazetteers,
+              regional epigraphs, and expedition journals into interactive 3D digital twins,
+              geospatial trails, and dual-pagination citation-grounded semantic intelligence.
+            </p>
+          </div>
         </div>
 
         {/* Feature Badges */}
-        <div className="flex flex-wrap items-center gap-2 pt-1 text-xs text-stone-600 dark:text-stone-400">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-stone-200/60 dark:bg-stone-800/80 font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-            Direct Page-Level Citations
+        <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#181613] text-[#ded6c5] border border-[#2e2923]">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
+            <span>Dual-Pagination Provenance Grounding</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-stone-200/60 dark:bg-stone-800/80 font-medium">
-            <BookOpen className="w-3.5 h-3.5 text-amber-700 dark:text-amber-400" />
-            Gazetteers &amp; Epigraphy
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#181613] text-[#ded6c5] border border-[#2e2923]">
+            <Sparkles className="w-3.5 h-3.5 text-[#eed27c]" />
+            <span>Hybrid Dense MiniLM + SQLite FTS5 RRF</span>
           </span>
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-stone-200/60 dark:bg-stone-800/80 font-medium">
-            <Compass className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-            Geospatial &amp; 3D Linkage
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#181613] text-[#ded6c5] border border-[#2e2923]">
+            <Box className="w-3.5 h-3.5 text-[#d4af37]" />
+            <span>Interactive 3D Volumetric Digital Twins</span>
           </span>
+          {typeof totalRecordsCount === 'number' && totalRecordsCount > 0 && (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 font-mono text-[11px]">
+              {totalRecordsCount} Heritage Assets Ingested
+            </span>
+          )}
         </div>
 
-        {/* Primary Call to Actions */}
-        <div className="flex flex-wrap items-center gap-3 pt-3">
+        {/* Pathway Quick Navigation Buttons */}
+        <div className="flex flex-wrap items-center gap-2.5 pt-3">
+          <button
+            type="button"
+            onClick={() => handleNav('assistant')}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d4af37] hover:bg-[#b89124] text-[#080706] text-xs font-serif font-bold shadow-md transition-all"
+          >
+            <Sparkles className="w-4 h-4 text-[#080706]" />
+            <span>Ask Research Assistant</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNav('3d-viewer')}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#2e2923] bg-[#181613] hover:bg-[#201d18] text-[#fcf9f2] text-xs font-serif font-medium transition-colors"
+          >
+            <Box className="w-4 h-4 text-[#eed27c]" />
+            <span>Inspect 3D Stepwell Twin</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNav('cartography')}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#2e2923] bg-[#181613] hover:bg-[#201d18] text-[#fcf9f2] text-xs font-serif font-medium transition-colors"
+          >
+            <Compass className="w-4 h-4 text-[#3ba87e]" />
+            <span>Launch Geospatial Map</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNav('dashboard')}
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#2e2923] bg-[#181613] hover:bg-[#201d18] text-[#fcf9f2] text-xs font-serif font-medium transition-colors"
+          >
+            <Search className="w-4 h-4 text-[#eed27c]" />
+            <span>Hybrid Search</span>
+          </button>
+
           <button
             type="button"
             onClick={onOpenUpload}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-800 hover:bg-amber-900 dark:bg-amber-700 dark:hover:bg-amber-600 text-white text-sm font-semibold shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-dashed border-[#d4af37]/40 hover:border-[#d4af37] bg-[#1a1714] hover:bg-[#221f1a] text-[#eed27c] text-xs font-serif font-medium transition-colors"
           >
-            <Upload className="w-4 h-4" />
-            <span>Upload Archive Document</span>
-          </button>
-
-          {onOpenAssistant && (
-            <button
-              type="button"
-              onClick={onOpenAssistant}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 dark:bg-amber-950/60 dark:hover:bg-amber-900/80 text-amber-900 dark:text-amber-200 text-sm font-semibold border border-amber-300 dark:border-amber-800 transition-colors"
-            >
-              <Sparkles className="w-4 h-4 text-amber-700 dark:text-amber-400" />
-              <span>Ask Research Assistant</span>
-            </button>
-          )}
-
-          <button
-            type="button"
-            onClick={onExploreClick}
-            className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-stone-300 dark:border-stone-700 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-800 dark:text-stone-200 text-sm font-medium transition-colors"
-          >
-            <span>Explore Corpus Schema</span>
-            <ArrowRight className="w-4 h-4 text-stone-400" />
+            <Upload className="w-3.5 h-3.5" />
+            <span>+ Ingest Field Note / PDF</span>
           </button>
         </div>
       </div>
     </div>
   );
 }
-

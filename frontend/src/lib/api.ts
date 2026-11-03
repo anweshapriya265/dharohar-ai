@@ -588,3 +588,269 @@ export async function askAssistant(
     throw new Error('An unexpected error occurred while communicating with the assistant.');
   }
 }
+
+
+// --- SRS Heritage Archive Intelligence Platform Entities ---
+
+export interface HeritageRecordItem {
+  id: string;
+  title: string;
+  description: string;
+  heritage_type: string;
+  region: string;
+  language: string;
+  period?: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  location_name?: string;
+  location_source?: string;
+  visibility: string;
+  status: 'draft' | 'processing' | 'pending_review' | 'changes_requested' | 'approved' | 'rejected' | string;
+  created_by: string;
+  original_filename?: string;
+  file_type?: string;
+  file_size?: number;
+  storage_path?: string;
+  thumbnail_url?: string;
+  tags?: string;
+  source_attribution?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AiSuggestionItem {
+  id: string;
+  record_id: string;
+  field_name: string;
+  suggested_value: string;
+  confidence: number;
+  model_name: string;
+  evidence?: string;
+  review_status: 'pending' | 'approved' | 'modified' | 'rejected' | string;
+  created_at: string;
+}
+
+export interface ReviewEventItem {
+  id: string;
+  record_id: string;
+  reviewer_name: string;
+  reviewer_role: string;
+  action: string;
+  comment?: string;
+  created_at: string;
+}
+
+export interface HeritageRecordDetailResponse {
+  record: HeritageRecordItem;
+  ai_suggestions: AiSuggestionItem[];
+  review_events: ReviewEventItem[];
+}
+
+export interface MapRecordItem {
+  id: string;
+  title: string;
+  description: string;
+  heritage_type: string;
+  region: string;
+  period?: string;
+  latitude: number;
+  longitude: number;
+  location_name?: string;
+  status: string;
+  thumbnail_url?: string;
+  tags?: string;
+}
+
+export interface MapRecordsResponse {
+  total_sites: number;
+  sites: MapRecordItem[];
+}
+
+export interface AuditLogItem {
+  id: string;
+  actor_name: string;
+  actor_role: string;
+  action: string;
+  entity_type: string;
+  entity_id: string;
+  details?: string;
+  created_at: string;
+}
+
+export interface AdminDashboardResponse {
+  total_records: number;
+  pending_review: number;
+  approved_records: number;
+  geotagged_sites: number;
+  recent_audit_logs: AuditLogItem[];
+}
+
+/**
+ * Fetches heritage records with optional filters.
+ */
+export async function fetchHeritageRecords(
+  type: string = 'all',
+  region: string = 'all',
+  status: string = 'all',
+  search: string = '',
+  limit: number = 50,
+  offset: number = 0
+): Promise<{ records: HeritageRecordItem[]; total: number }> {
+  const baseUrl = getApiBaseUrl();
+  const params = new URLSearchParams({
+    heritage_type: type,
+    region,
+    status,
+    search,
+    limit: limit.toString(),
+    offset: offset.toString(),
+  });
+  const endpoint = `${baseUrl}/api/records?${params.toString()}`;
+
+  const response = await fetch(endpoint, { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error(`Failed to load heritage records: HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Fetches single record detail with suggestions and review history.
+ */
+export async function fetchHeritageRecordDetail(recordId: string): Promise<HeritageRecordDetailResponse> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/records/${encodeURIComponent(recordId)}`;
+
+  const response = await fetch(endpoint, { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error(`Failed to load record: HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Updates heritage record metadata.
+ */
+export async function updateHeritageRecord(
+  recordId: string,
+  updates: Partial<HeritageRecordItem>
+): Promise<HeritageRecordItem> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/records/${encodeURIComponent(recordId)}`;
+
+  const response = await fetch(endpoint, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updates),
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to update record: HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Submits a human review decision (approved/rejected/changes_requested).
+ */
+export async function reviewHeritageRecord(
+  recordId: string,
+  action: 'approved' | 'rejected' | 'changes_requested',
+  reviewerName: string,
+  reviewerRole: string,
+  comment: string = '',
+  updatedFields?: Record<string, unknown>
+): Promise<{ status: string; decision: string; record: HeritageRecordItem }> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/records/${encodeURIComponent(recordId)}/review`;
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action,
+      reviewer_name: reviewerName,
+      reviewer_role: reviewerRole,
+      comment,
+      updated_fields: updatedFields,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error(`Review submission failed: HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Retrieves geotagged heritage records for interactive cartography.
+ */
+export async function fetchMapRecords(): Promise<MapRecordsResponse> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/map/records`;
+
+  const response = await fetch(endpoint, { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error(`Failed to load map coordinates: HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Retrieves admin dashboard metrics and audit logs.
+ */
+export async function fetchAdminDashboard(): Promise<AdminDashboardResponse> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/admin/dashboard`;
+
+  const response = await fetch(endpoint, { cache: 'no-store' });
+  if (!response.ok) {
+    throw new Error(`Failed to load admin dashboard: HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Uploads unified multimodal asset (PDF, image, text notes) with known context.
+ */
+export async function uploadUnifiedAsset(
+  file: File,
+  metadata?: {
+    title?: string;
+    region?: string;
+    heritage_type?: string;
+    source_attribution?: string;
+  }
+): Promise<{ status: string; record: HeritageRecordItem; ai_suggestions: AiSuggestionItem[] }> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/records/upload`;
+
+  const formData = new FormData();
+  formData.append('file', file);
+  if (metadata?.title) formData.append('title', metadata.title);
+  if (metadata?.region) formData.append('region', metadata.region);
+  if (metadata?.heritage_type) formData.append('heritage_type', metadata.heritage_type);
+  if (metadata?.source_attribution) formData.append('source_attribution', metadata.source_attribution);
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    body: formData,
+  });
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || `Upload failed with HTTP ${response.status}`);
+  }
+  return response.json();
+}
+
+/**
+ * Triggers database seeding of authentic IITGN Explorer records.
+ */
+export async function seedHeritageRecords(): Promise<{ status: string; records?: HeritageRecordItem[] }> {
+  const baseUrl = getApiBaseUrl();
+  const endpoint = `${baseUrl}/api/records/seed`;
+
+  const response = await fetch(endpoint, { method: 'POST' });
+  if (!response.ok) {
+    throw new Error(`Seeding failed: HTTP ${response.status}`);
+  }
+  return response.json();
+}

@@ -15,9 +15,9 @@ from app.services.ocr_service import (
     preprocess_image_for_ocr,
 )
 try:
-    from backend.tests.test_search import ControlledMockEmbeddingService
-except ModuleNotFoundError:
     from tests.test_search import ControlledMockEmbeddingService
+except (ImportError, ModuleNotFoundError):
+    from backend.tests.test_search import ControlledMockEmbeddingService
 
 
 def create_digital_pdf(pages_text: list[str]) -> bytes:
