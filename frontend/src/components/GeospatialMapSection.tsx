@@ -104,8 +104,8 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
 
       if (!mapInstanceRef.current && mapContainerRef.current) {
         const map = L.map(mapContainerRef.current, {
-          center: [20.5937, 74.9629],
-          zoom: 5.5,
+          center: [20.5937, 78.9629],
+          zoom: 5,
           zoomControl: false,
         });
 
@@ -122,33 +122,39 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         markersGroupRef.current = L.layerGroup().addTo(map);
         mapInstanceRef.current = map;
 
+        // Invalidate size in multiple passes to handle container transitions / tab switching
+        setTimeout(() => { map.invalidateSize(); }, 100);
         setTimeout(() => {
           map.invalidateSize();
-        }, 150);
+          map.setView([20.5937, 78.9629], 5, { animate: false });
+        }, 400);
       }
 
       const map = mapInstanceRef.current;
       const markersGroup = markersGroupRef.current;
       if (!map || !markersGroup) return;
 
-      // Update tile layer if baseLayer switched
-      if (tileLayerRef.current) {
-        map.removeLayer(tileLayerRef.current);
-        const tileUrl =
-          baseLayer === 'topo'
-            ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
-            : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        const tileAttribution =
-          baseLayer === 'topo'
-            ? 'Tiles &copy; Esri &mdash; Sources: GEBCO, USGS, NOAA, National Geographic'
-            : '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors';
+      // Update tile layer only when baseLayer changed (tracked by tileLayerRef)
+      const currentTileUrl = baseLayer === 'topo'
+        ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+        : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
-        const newTile = L.tileLayer(tileUrl, {
-          attribution: tileAttribution,
-          maxZoom: baseLayer === 'topo' ? 18 : 19,
-          subdomains: ['a', 'b', 'c'],
-        }).addTo(map);
-        tileLayerRef.current = newTile;
+      if (tileLayerRef.current) {
+        const existingUrl = (tileLayerRef.current as any)._url as string;
+        if (existingUrl !== currentTileUrl) {
+          map.removeLayer(tileLayerRef.current);
+          const tileAttribution =
+            baseLayer === 'topo'
+              ? 'Tiles &copy; Esri &mdash; Sources: GEBCO, USGS, NOAA, National Geographic'
+              : '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors';
+
+          const newTile = L.tileLayer(currentTileUrl, {
+            attribution: tileAttribution,
+            maxZoom: baseLayer === 'topo' ? 18 : 19,
+            subdomains: ['a', 'b', 'c'],
+          }).addTo(map);
+          tileLayerRef.current = newTile;
+        }
       }
 
       markersGroup.clearLayers();

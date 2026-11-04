@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     OCR_DPI: int = int(os.getenv("DHAROHAR_OCR_DPI", "300"))
     OCR_CHAR_THRESHOLD: int = int(os.getenv("DHAROHAR_OCR_CHAR_THRESHOLD", "15"))
     OCR_DEFAULT_LANGUAGE: str = os.getenv("DHAROHAR_OCR_DEFAULT_LANGUAGE", "eng")
+    OCR_MAX_SYNC_PAGES: int = int(os.getenv("DHAROHAR_OCR_MAX_SYNC_PAGES", "15"))
 
     # Milestone 5.1 & 5.6.3: Retrieval Optimization & Hybrid Retrieval Engine
     RAG_SIMILARITY_THRESHOLD: float = float(

@@ -172,15 +172,15 @@ export default function Sidebar({
       <aside
         className={`fixed lg:sticky top-0 lg:top-16 z-50 lg:z-20 h-full lg:h-[calc(100vh-4rem)] border-r border-[#DED3C2] bg-[#FFFCF5] flex flex-col justify-between transition-all duration-200 ease-in-out shrink-0 select-none ${
           /* Mobile Drawer Position */
-          isOpen ? 'translate-x-0 w-64 shadow-xl' : '-translate-x-full lg:translate-x-0'
+          isOpen ? 'translate-x-0 w-56 shadow-xl' : '-translate-x-full lg:translate-x-0'
         } ${
-          /* Desktop Width (240px expanded, 64px collapsed) */
-          isCollapsed ? 'lg:w-16' : 'lg:w-60'
+          /* Desktop Width (208px expanded, 56px collapsed) */
+          isCollapsed ? 'lg:w-14' : 'lg:w-52'
         }`}
         aria-label="Application Navigation"
       >
         {/* Navigation Content Area (Independently scrollable) */}
-        <div className="flex-1 overflow-y-auto py-3.5 px-2.5 sm:px-3 space-y-4">
+        <div className="flex-1 overflow-y-auto py-3 px-2 space-y-3">
           {/* Mobile Header with Brand & Close Button */}
           <div className="flex items-center justify-between pb-3 mb-1 border-b border-[#DED3C2] lg:hidden">
             <div className="flex items-center gap-2">
@@ -232,8 +232,8 @@ export default function Sidebar({
                     title={isCollapsed ? `${item.label} (${group.groupTitle})` : item.tooltip}
                     className={`w-full flex items-center rounded-lg text-left transition-colors group relative cursor-pointer ${
                       isCollapsed
-                        ? 'lg:justify-center lg:px-2 lg:py-2.5 px-3 py-2'
-                        : 'justify-between px-3 py-2'
+                        ? 'lg:justify-center lg:px-1.5 lg:py-2.5 px-3 py-2'
+                        : 'justify-between px-2.5 py-2'
                     } ${
                       isActive
                         ? 'bg-[#642F38] text-[#FFFCF5] font-medium shadow-xs'

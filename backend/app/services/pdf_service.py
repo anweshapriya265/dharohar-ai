@@ -196,35 +196,42 @@ def extract_pdf_content(
                 word_count = len(cleaned_text.split())
             else:
                 # Page contains sparse or no extractable digital text (scanned page)
-                # Step 3: Trigger OCR on this individual page
-                ocr_text, ocr_success = ocr_pdf_page(
-                    page,
-                    dpi=settings.OCR_DPI,
-                    lang=settings.OCR_DEFAULT_LANGUAGE,
-                )
+                # Check if we have reached the synchronous OCR limit for large volumes
+                if ocr_pages_count < settings.OCR_MAX_SYNC_PAGES:
+                    # Step 3: Trigger OCR on this individual page
+                    ocr_text, ocr_success = ocr_pdf_page(
+                        page,
+                        dpi=settings.OCR_DPI,
+                        lang=settings.OCR_DEFAULT_LANGUAGE,
+                    )
 
-                if ocr_success and len(ocr_text) >= settings.OCR_CHAR_THRESHOLD:
-                    # OCR succeeded and extracted meaningful text
-                    cleaned_text = ocr_text
-                    char_count = len(cleaned_text)
-                    word_count = len(cleaned_text.split())
-                    page_status = "ocr_extracted"
-                    ocr_pages_count += 1
-                elif ocr_success:
-                    # OCR completed, but page yielded little or no text (< threshold, e.g. blank page or illustration)
-                    if len(ocr_text) > len(cleaned_text):
+                    if ocr_success and len(ocr_text) >= settings.OCR_CHAR_THRESHOLD:
+                        # OCR succeeded and extracted meaningful text
                         cleaned_text = ocr_text
                         char_count = len(cleaned_text)
+                        word_count = len(cleaned_text.split())
+                        page_status = "ocr_extracted"
+                        ocr_pages_count += 1
+                    elif ocr_success:
+                        # OCR completed, but page yielded little or no text (< threshold, e.g. blank page or illustration)
+                        if len(ocr_text) > len(cleaned_text):
+                            cleaned_text = ocr_text
+                            char_count = len(cleaned_text)
+                        word_count = len(cleaned_text.split()) if cleaned_text else 0
+                        page_status = "needs_ocr"
+                        insufficient_pages_count += 1
+                    else:
+                        # OCR failed or Tesseract is unavailable
+                        word_count = len(cleaned_text.split()) if cleaned_text else 0
+                        if is_tesseract_available():
+                            page_status = "ocr_failed"
+                        else:
+                            page_status = "needs_ocr"
+                        insufficient_pages_count += 1
+                else:
+                    # Defer remaining scanned pages in large archival volumes (> OCR_MAX_SYNC_PAGES)
                     word_count = len(cleaned_text.split()) if cleaned_text else 0
                     page_status = "needs_ocr"
-                    insufficient_pages_count += 1
-                else:
-                    # OCR failed or Tesseract is unavailable
-                    word_count = len(cleaned_text.split()) if cleaned_text else 0
-                    if is_tesseract_available():
-                        page_status = "ocr_failed"
-                    else:
-                        page_status = "needs_ocr"
                     insufficient_pages_count += 1
 
             pages.append(

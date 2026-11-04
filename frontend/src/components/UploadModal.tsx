@@ -371,6 +371,9 @@ The octagonal well shaft provides direct downward solar illumination while keepi
                   <p className="text-[11px] text-[#756D66]">
                     Maximum upload size: 15 MB • PDF monographs, JPG/PNG plates, TXT notes
                   </p>
+                  <p className="text-[10px] text-[#A77C54] italic">
+                    Tip: For rapid testing, use the 10-page monographs in test_dataset/samples/ or sample data
+                  </p>
                 </div>
               )}
             </div>

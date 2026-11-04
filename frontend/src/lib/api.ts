@@ -209,7 +209,7 @@ export async function uploadDocument(file: File): Promise<DocumentItem> {
   formData.append('file', file);
 
   const controller = new AbortController();
-  const timeoutMs = 60000; // 60s for larger PDF extraction
+  const timeoutMs = 180000; // 180s for large archival documents & OCR extraction
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
