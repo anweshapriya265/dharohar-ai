@@ -37,25 +37,13 @@ import {
   Sparkles,
 } from 'lucide-react';
 
-const HeroHeritageCanvas = dynamic(() => import('@/components/HeroHeritageCanvas'), {
-  ssr: false,
-  loading: () => (
-    <div className="w-full h-[520px] rounded-2xl bg-[#0c0a09] border border-[#2e2923] flex items-center justify-center text-[#eed27c]">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 rounded-full border-2 border-[#d4af37] border-t-transparent animate-spin" />
-        <span className="font-serif text-xs tracking-wider text-[#ded6c5]">Loading Basalt 3D Heritage Scene...</span>
-      </div>
-    </div>
-  ),
-});
-
 const Heritage3DExplorer = dynamic(() => import('@/components/Heritage3DExplorer'), {
   ssr: false,
   loading: () => (
-    <div className="w-full h-[620px] rounded-2xl bg-[#0c0a09] border border-[#2e2923] flex items-center justify-center text-[#eed27c]">
+    <div className="w-full h-[620px] rounded-xl bg-[#F0EAE1] border border-[#DED3C2] flex items-center justify-center text-[#642F38]">
       <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 rounded-full border-2 border-[#d4af37] border-t-transparent animate-spin" />
-        <span className="font-serif text-xs tracking-wider text-[#ded6c5]">Initializing Heritage 3D Explorer Studio...</span>
+        <div className="w-8 h-8 rounded-full border-2 border-[#642F38] border-t-transparent animate-spin" />
+        <span className="font-serif text-xs tracking-wider text-[#756D66]">Initializing Heritage 3D Explorer Studio...</span>
       </div>
     </div>
   ),
@@ -302,7 +290,7 @@ export default function Home() {
   const needsOcrCount = documents.filter((doc) => doc.extraction_status === 'needs_ocr').length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#080706] text-[#ded6c5] selection:bg-[#d4af37]/30 selection:text-[#fcf9f2]">
+    <div className="min-h-screen flex flex-col bg-[#F6F1E7] text-[#393331] selection:bg-[#642F38]/15 selection:text-[#393331]">
       {/* Top Header with Unified Navigation Tabs */}
       <Header
         healthState={healthState}
@@ -363,28 +351,28 @@ export default function Home() {
               </div>
 
               {/* Technical Architecture & Algorithm Explanation Card */}
-              <div className="p-6 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl space-y-4">
-                <div className="flex items-center gap-2 text-xs font-serif font-bold text-[#fcf9f2]">
-                  <Sparkles className="w-4 h-4 text-[#d4af37]" />
+              <div className="p-6 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-4">
+                <div className="flex items-center gap-2 text-xs font-serif font-bold text-[#642F38]">
+                  <Sparkles className="w-4 h-4 text-[#A77C54]" />
                   <span>Hybrid Retrieval Architecture &amp; Calibration (Milestone 5.6.3.3)</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                  <div className="p-4 rounded-xl border border-[#26221d] bg-[#161411] space-y-2">
-                    <span className="font-mono text-[11px] text-[#eed27c] uppercase tracking-wider font-semibold">1. Dense Semantic</span>
-                    <p className="text-[#9c9282] leading-relaxed font-serif">
-                      Encodes queries and chunks into 384-dimensional dense vectors via <span className="text-[#ded6c5] font-mono">all-MiniLM-L6-v2</span>. Cosine similarity threshold calibrated at <span className="text-[#ded6c5] font-mono">0.32</span>.
+                  <div className="p-4 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] space-y-2">
+                    <span className="font-mono text-[11px] text-[#642F38] uppercase tracking-wider font-semibold">1. Dense Semantic</span>
+                    <p className="text-[#756D66] leading-relaxed font-serif">
+                      Encodes queries and chunks into 384-dimensional dense vectors via <span className="text-[#393331] font-mono font-medium">all-MiniLM-L6-v2</span>. Cosine similarity threshold calibrated at <span className="text-[#393331] font-mono font-medium">0.32</span>.
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl border border-[#26221d] bg-[#161411] space-y-2">
-                    <span className="font-mono text-[11px] text-[#eed27c] uppercase tracking-wider font-semibold">2. SQLite FTS5 BM25</span>
-                    <p className="text-[#9c9282] leading-relaxed font-serif">
+                  <div className="p-4 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] space-y-2">
+                    <span className="font-mono text-[11px] text-[#642F38] uppercase tracking-wider font-semibold">2. SQLite FTS5 BM25</span>
+                    <p className="text-[#756D66] leading-relaxed font-serif">
                       Indexes exact historical terminology, dates, Sanskrit transliterations, and dimension measurements with Porter stemming and OCR-aware token normalization.
                     </p>
                   </div>
-                  <div className="p-4 rounded-xl border border-[#26221d] bg-[#161411] space-y-2">
-                    <span className="font-mono text-[11px] text-[#eed27c] uppercase tracking-wider font-semibold">3. Reciprocal Rank Fusion</span>
-                    <p className="text-[#9c9282] leading-relaxed font-serif">
-                      Fuses ranks via <span className="text-[#ded6c5] font-mono">RRF(d) = &sum; 1 / (60 + r_i)</span>. Lexical candidate recovery floor at <span className="text-[#ded6c5] font-mono">0.10</span> prevents false dropouts while blocking out-of-domain noise.
+                  <div className="p-4 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] space-y-2">
+                    <span className="font-mono text-[11px] text-[#642F38] uppercase tracking-wider font-semibold">3. Reciprocal Rank Fusion</span>
+                    <p className="text-[#756D66] leading-relaxed font-serif">
+                      Fuses ranks via <span className="text-[#393331] font-mono font-medium">RRF(d) = &sum; 1 / (60 + r_i)</span>. Lexical candidate recovery floor at <span className="text-[#393331] font-mono font-medium">0.10</span> prevents false dropouts while blocking out-of-domain noise.
                     </p>
                   </div>
                 </div>
@@ -447,15 +435,15 @@ export default function Home() {
           {/* TAB 9: SYSTEM HEALTH & TELEMETRY */}
           {currentTab === 'diagnostics' && (
             <div className="space-y-6">
-              <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] shadow-xl">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#181613] text-[#eed27c] border border-[#d4af37]/40 mb-1">
-                  <Activity className="w-3.5 h-3.5 text-[#d4af37]" />
+              <div className="p-6 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#F6F1E7] text-[#642F38] border border-[#DED3C2] mb-1">
+                  <Activity className="w-3.5 h-3.5 text-[#A77C54]" />
                   <span>Telemetry &amp; Service Health</span>
                 </div>
-                <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#642F38] font-heritage tracking-tight">
                   System Diagnostics &amp; Health Telemetry
                 </h1>
-                <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5 font-serif">
+                <p className="text-xs sm:text-sm text-[#756D66] mt-0.5 font-serif">
                   Real-time status of FastAPI service, all-MiniLM-L6-v2 embeddings, and SQLite database
                 </p>
               </div>
@@ -463,53 +451,53 @@ export default function Home() {
               <HealthStatusCard healthState={healthState} onRefresh={handleManualRefresh} />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] space-y-3 shadow-xl">
-                  <h2 className="text-xs font-semibold text-[#fcf9f2] font-serif flex items-center gap-2">
-                    <Server className="w-4 h-4 text-[#d4af37]" />
+                <div className="p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] space-y-3 shadow-xs">
+                  <h2 className="text-xs font-semibold text-[#642F38] font-serif flex items-center gap-2">
+                    <Server className="w-4 h-4 text-[#A77C54]" />
                     Frontend &amp; API Configuration
                   </h2>
-                  <div className="space-y-2 text-xs text-[#ded6c5]">
-                    <div className="flex justify-between py-1 border-b border-[#24201a]">
-                      <span className="text-[#a89f91]">NEXT_PUBLIC_API_BASE_URL:</span>
-                      <span className="font-mono text-[#eed27c]">
+                  <div className="space-y-2 text-xs text-[#393331]">
+                    <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                      <span className="text-[#756D66]">NEXT_PUBLIC_API_BASE_URL:</span>
+                      <span className="font-mono text-[#642F38] font-medium">
                         {getApiBaseUrl()}
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[#24201a]">
-                      <span className="text-[#a89f91]">Semantic Search:</span>
-                      <span className="font-mono text-emerald-400">
+                    <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                      <span className="text-[#756D66]">Semantic Search:</span>
+                      <span className="font-mono text-[#52745E] font-medium">
                         POST /api/search (Sentence Transformers)
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[#24201a]">
-                      <span className="text-[#a89f91]">Embedding Model:</span>
-                      <span className="font-mono text-[#ded6c5]">
+                    <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                      <span className="text-[#756D66]">Embedding Model:</span>
+                      <span className="font-mono text-[#393331]">
                         all-MiniLM-L6-v2 (384-dim)
                       </span>
                     </div>
-                    <div className="flex justify-between py-1 border-b border-[#24201a]">
-                      <span className="text-[#a89f91]">Geospatial Trail Endpoint:</span>
-                      <span className="font-mono text-[#ded6c5]">GET /api/map/records</span>
+                    <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                      <span className="text-[#756D66]">Geospatial Trail Endpoint:</span>
+                      <span className="font-mono text-[#393331]">GET /api/map/records</span>
                     </div>
                     <div className="flex justify-between py-1">
-                      <span className="text-[#a89f91]">Persistence Store:</span>
-                      <span className="font-mono text-[#ded6c5]">
+                      <span className="text-[#756D66]">Persistence Store:</span>
+                      <span className="font-mono text-[#393331]">
                         SQLite (WAL Mode, document_chunks &amp; heritage_records)
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-5 rounded-2xl border border-[#2e2923] bg-[#12100e] space-y-3 shadow-xl">
-                  <h2 className="text-xs font-semibold text-[#fcf9f2] font-serif flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <div className="p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] space-y-3 shadow-xs">
+                  <h2 className="text-xs font-semibold text-[#642F38] font-serif flex items-center gap-2">
+                    <ShieldCheck className="w-4 h-4 text-[#52745E]" />
                     Archival Citation Integrity Check
                   </h2>
-                  <p className="text-xs text-[#ded6c5] leading-relaxed font-serif">
+                  <p className="text-xs text-[#756D66] leading-relaxed font-serif">
                     DHAROHAR AI enforces an evidence retrieval protocol. Every retrieved passage
                     strictly attributes the source document ID, filename, and exact one-based page number.
                   </p>
-                  <div className="p-2.5 rounded-lg bg-[#0c0a09] text-[11px] font-mono text-[#eed27c] border border-[#d4af37]/30">
+                  <div className="p-2.5 rounded-lg bg-[#F6F1E7] text-[11px] font-mono text-[#52745E] border border-[#52745E]/30 font-medium">
                     Policy: Strict Source Grounding &amp; Dual Pagination [ENFORCED]
                   </div>
                 </div>

@@ -5,15 +5,10 @@ import {
   BookOpen,
   MapPin,
   Calendar,
-  CheckCircle2,
-  Clock,
   Search,
-  Eye,
   RefreshCw,
   Plus,
-  Compass,
   ArrowRight,
-  ShieldCheck,
 } from 'lucide-react';
 import { fetchHeritageRecords, HeritageRecordItem } from '@/lib/api';
 
@@ -84,16 +79,15 @@ export default function HeritageRecordsSection({
   return (
     <div className="space-y-4">
       {/* Top Header Card */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
-            <BookOpen className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>Documented Field Corpus</span>
+          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-0.5">
+            Documented Field Corpus
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
             Heritage Archive &amp; Field Records Catalog
           </h1>
-          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5">
             Archival records, photogrammetry notes, and historical gazetteer entries in the SQLite database
           </p>
         </div>
@@ -103,17 +97,17 @@ export default function HeritageRecordsSection({
             <button
               type="button"
               onClick={onOpenUpload}
-              className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#d4af37] hover:bg-[#e5c158] text-[#080706] text-xs font-semibold shadow-sm transition-all focus:outline-hidden"
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium shadow-xs transition-colors cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>Contribute New Record</span>
+              <span>Contribute Record</span>
             </button>
           )}
 
           <button
             type="button"
             onClick={loadRecords}
-            className="p-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] transition-colors"
+            className="p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-[#393331] transition-colors cursor-pointer"
             title="Refresh records"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -122,27 +116,27 @@ export default function HeritageRecordsSection({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-xl border border-[#26221d] bg-[#110f0d] shadow-md space-y-3 text-xs">
+      <div className="p-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-3 text-xs">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Keyword search input */}
           <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#9c9282]" />
+            <Search className="w-4 h-4 absolute left-3 top-2.5 text-[#756D66]" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Filter by monument name, architecture keywords, or historical period..."
-              className="w-full pl-9 pr-4 py-2 rounded-lg border border-[#26221d] bg-[#171512] text-[#fcf9f2] placeholder-[#6e6659] text-xs focus:outline-hidden focus:border-[#d4af37] transition-colors"
+              className="w-full pl-9 pr-4 py-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] placeholder:text-[#9E958D] text-xs font-serif focus:outline-none focus:border-[#642F38] transition-colors"
             />
           </div>
 
           {/* Region selector */}
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className="text-[#9c9282] font-mono">Region:</span>
+            <span className="text-[#756D66] font-mono">Region:</span>
             <select
               value={activeRegion}
               onChange={(e) => setActiveRegion(e.target.value)}
-              className="px-2.5 py-2 rounded-lg border border-[#26221d] bg-[#171512] text-[#fcf9f2] font-medium text-xs focus:outline-hidden"
+              className="px-2.5 py-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] font-serif text-xs focus:outline-none cursor-pointer"
             >
               {regions.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -154,17 +148,17 @@ export default function HeritageRecordsSection({
         </div>
 
         {/* Typology Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-[#201d19]">
-          <span className="text-[#9c9282] font-mono mr-1">Typology:</span>
+        <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-[#EBE4D8]">
+          <span className="text-[#756D66] font-mono mr-1">Typology:</span>
           {typologies.map((t) => (
             <button
               key={t.id}
               type="button"
               onClick={() => setActiveType(t.id)}
-              className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition-colors ${
+              className={`px-2.5 py-1 rounded-md font-mono text-[11px] transition-colors cursor-pointer ${
                 activeType === t.id
-                  ? 'bg-[#d4af37] text-[#080706] font-bold'
-                  : 'bg-[#171512] text-[#ded6c5] border border-[#26221d] hover:bg-[#201d19]'
+                  ? 'bg-[#642F38] text-[#FFFCF5] font-semibold shadow-xs'
+                  : 'bg-[#EFE8DC] text-[#393331] border border-[#DED3C2] hover:bg-[#E8E0D2]'
               }`}
             >
               {t.label}
@@ -175,50 +169,50 @@ export default function HeritageRecordsSection({
 
       {/* Records Grid */}
       {loading ? (
-        <div className="p-12 text-center text-[#9c9282] bg-[#110f0d] rounded-2xl border border-[#26221d]">
-          <RefreshCw className="w-6 h-6 animate-spin mx-auto text-[#d4af37] mb-2" />
-          <p className="text-xs font-mono">Loading documented heritage records...</p>
+        <div className="p-12 text-center text-[#756D66] bg-[#FFFCF5] rounded-xl border border-[#DED3C2]">
+          <RefreshCw className="w-5 h-5 animate-spin mx-auto text-[#642F38] mb-2" />
+          <p className="text-xs font-serif">Loading documented heritage records...</p>
         </div>
       ) : records.length === 0 ? (
-        <div className="p-12 text-center text-[#9c9282] bg-[#110f0d] rounded-2xl border border-[#26221d] space-y-2">
-          <BookOpen className="w-8 h-8 mx-auto text-[#d4af37]/60" />
-          <p className="text-xs font-serif text-[#ded6c5]">No heritage records match the current filter criteria.</p>
+        <div className="p-12 text-center text-[#756D66] bg-[#FFFCF5] rounded-xl border border-[#DED3C2] space-y-2">
+          <BookOpen className="w-8 h-8 mx-auto text-[#A77C54]" />
+          <p className="text-xs font-serif text-[#393331]">No heritage records match the current filter criteria.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {records.map((record) => (
             <div
               key={record.id}
-              className="p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] hover:bg-[#171512] hover:border-[#363028] shadow-md flex flex-col justify-between space-y-3 transition-all"
+              className="p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] hover:border-[#642F38]/50 shadow-xs flex flex-col justify-between space-y-3 transition-colors"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="px-2 py-0.5 rounded-full bg-[#1c1813] text-[#eed27c] font-mono text-[10px] border border-[#d4af37]/35">
+                  <span className="px-2 py-0.5 rounded bg-[#FAF2F3] text-[#642F38] font-mono text-[10px] border border-[#642F38]/30">
                     {record.heritage_type}
                   </span>
-                  <span className="text-[#9c9282] font-mono text-[11px]">
+                  <span className="text-[#756D66] font-mono text-[11px]">
                     {record.region}
                   </span>
                 </div>
 
-                <h3 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage leading-snug">
+                <h3 className="text-base font-heritage font-bold text-[#393331] leading-snug">
                   {record.title}
                 </h3>
 
-                <p className="text-xs text-[#ded6c5] line-clamp-3 leading-relaxed font-serif">
+                <p className="text-xs text-[#59524E] line-clamp-3 leading-relaxed font-serif">
                   {record.description}
                 </p>
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-[#201d19] text-xs">
-                <div className="flex items-center justify-between text-[#9c9282] text-[11px] font-mono">
+              <div className="space-y-2 pt-2 border-t border-[#EBE4D8] text-xs">
+                <div className="flex items-center justify-between text-[#756D66] text-[11px] font-mono">
                   <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3 text-[#d4af37]" />
+                    <Calendar className="w-3 h-3 text-[#A77C54]" />
                     <span>{record.period || 'Medieval Era'}</span>
                   </div>
                   {record.latitude && record.longitude && (
                     <div className="flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-[#3ba87e]" />
+                      <MapPin className="w-3 h-3 text-[#52745E]" />
                       <span>{record.latitude.toFixed(2)}°, {record.longitude.toFixed(2)}°</span>
                     </div>
                   )}
@@ -228,7 +222,7 @@ export default function HeritageRecordsSection({
                   <button
                     type="button"
                     onClick={() => onInspectRecord(record.id)}
-                    className="w-full flex items-center justify-between px-3 py-1.5 rounded-lg bg-[#171512] hover:bg-[#201d19] text-[#eed27c] hover:text-[#fcf9f2] border border-[#26221d] text-xs transition-colors"
+                    className="w-full flex items-center justify-between px-3 py-1.5 rounded-md bg-[#EFE8DC] hover:bg-[#642F38] text-[#393331] hover:text-[#FFFCF5] border border-[#DED3C2] text-xs transition-colors font-serif cursor-pointer"
                   >
                     <span>Search Supporting Evidence</span>
                     <ArrowRight className="w-3.5 h-3.5" />

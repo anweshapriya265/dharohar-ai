@@ -7,11 +7,8 @@ import {
   AlertTriangle,
   Sparkles,
   ShieldCheck,
-  FileText,
-  MessageSquare,
   RefreshCw,
   Clock,
-  ArrowRight,
 } from 'lucide-react';
 import {
   fetchHeritageRecords,
@@ -103,16 +100,15 @@ export default function ReviewQueueSection() {
   return (
     <div className="space-y-4">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
-            <span>Human-in-the-Loop Curator Workspace</span>
+          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-0.5">
+            Curatorial Human-in-the-Loop
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
             Archival Verification &amp; Review Queue
           </h1>
-          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5">
             Peer review and provenance sign-off for newly ingested heritage assets and AI field suggestions
           </p>
         </div>
@@ -120,7 +116,7 @@ export default function ReviewQueueSection() {
         <button
           type="button"
           onClick={loadPendingRecords}
-          className="p-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] transition-colors self-start sm:self-auto"
+          className="p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-[#393331] transition-colors self-start sm:self-auto cursor-pointer"
           title="Refresh queue"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -130,21 +126,21 @@ export default function ReviewQueueSection() {
       {/* Main Split Layout: Records List (4 cols) + Inspection Panel (8 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
         {/* Left: Queue List */}
-        <div className="lg:col-span-4 rounded-2xl border border-[#26221d] bg-[#110f0d] p-4 shadow-xl space-y-3 overflow-y-auto max-h-[680px]">
-          <div className="flex items-center justify-between pb-2 border-b border-[#201d19] text-xs">
-            <span className="font-semibold text-[#fcf9f2] font-serif">Queue Entries</span>
-            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#171512] text-[#eed27c] border border-[#26221d]">
+        <div className="lg:col-span-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-4 shadow-xs space-y-3 overflow-y-auto max-h-[680px]">
+          <div className="flex items-center justify-between pb-2 border-b border-[#EBE4D8] text-xs">
+            <span className="font-semibold text-[#393331] font-heritage">Queue Entries</span>
+            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#EFE8DC] text-[#642F38] border border-[#DED3C2]">
               {records.length} records
             </span>
           </div>
 
           {loading ? (
-            <div className="p-8 text-center text-[#9c9282] text-xs font-mono">
-              <RefreshCw className="w-5 h-5 animate-spin mx-auto text-[#d4af37] mb-2" />
+            <div className="p-8 text-center text-[#756D66] text-xs font-serif">
+              <RefreshCw className="w-5 h-5 animate-spin mx-auto text-[#642F38] mb-2" />
               Loading review queue...
             </div>
           ) : records.length === 0 ? (
-            <div className="p-8 text-center text-[#9c9282] text-xs font-serif">
+            <div className="p-8 text-center text-[#756D66] text-xs font-serif">
               Queue is clear. No records currently pending review.
             </div>
           ) : (
@@ -156,28 +152,28 @@ export default function ReviewQueueSection() {
                     key={r.id}
                     type="button"
                     onClick={() => loadRecordDetails(r.id)}
-                    className={`w-full text-left p-3 rounded-xl border text-xs transition-all ${
+                    className={`w-full text-left p-3 rounded-lg border text-xs transition-colors cursor-pointer ${
                       isSelected
-                        ? 'border-[#d4af37] bg-[#1c1813] shadow-xs'
-                        : 'border-[#26221d] bg-[#141210] hover:bg-[#171512]'
+                        ? 'border-[#642F38] bg-[#FAF2F3] shadow-xs'
+                        : 'border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#E8E0D2]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-[#9c9282] uppercase">{r.region}</span>
+                      <span className="font-mono text-[10px] text-[#756D66] uppercase">{r.region}</span>
                       <span
                         className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${
                           r.status === 'approved'
-                            ? 'bg-[#0d1e17] text-[#3ba87e]'
-                            : 'bg-[#1f1910] text-[#eed27c]'
+                            ? 'bg-[#EDF3EF] text-[#52745E] border border-[#BCD0C3]'
+                            : 'bg-[#FAF4E9] text-[#A67C3F] border border-[#E8D3B2]'
                         }`}
                       >
                         {r.status}
                       </span>
                     </div>
-                    <div className="font-serif font-semibold text-[#fcf9f2] mt-1 truncate">
+                    <div className="font-heritage font-bold text-[#393331] mt-1 truncate">
                       {r.title}
                     </div>
-                    <div className="text-[11px] text-[#9c9282] truncate mt-0.5">
+                    <div className="text-[11px] text-[#756D66] font-serif truncate mt-0.5">
                       {r.heritage_type}
                     </div>
                   </button>
@@ -188,23 +184,23 @@ export default function ReviewQueueSection() {
         </div>
 
         {/* Right: Record Review Detail Panel */}
-        <div className="lg:col-span-8 rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 flex flex-col justify-between overflow-y-auto">
+        <div className="lg:col-span-8 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs space-y-4 flex flex-col justify-between overflow-y-auto">
           {selectedRecord ? (
             <div className="space-y-4">
               {/* Record Title & Metadata */}
-              <div className="pb-3 border-b border-[#201d19] space-y-1">
+              <div className="pb-3 border-b border-[#EBE4D8] space-y-1">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono text-[10px] text-[#d4af37] uppercase">
+                  <span className="font-mono text-[10px] text-[#814B52] uppercase">
                     ID: {selectedRecord.id}
                   </span>
-                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#1c1813] text-[#eed27c] border border-[#d4af37]/30">
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#EFE8DC] text-[#642F38] border border-[#DED3C2]">
                     Status: {selectedRecord.status}
                   </span>
                 </div>
-                <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage">
+                <h2 className="text-lg font-heritage font-bold text-[#642F38]">
                   {selectedRecord.title}
                 </h2>
-                <div className="flex items-center gap-2 text-xs text-[#9c9282] font-mono">
+                <div className="flex items-center gap-2 text-xs text-[#756D66] font-mono">
                   <span>{selectedRecord.region}</span>
                   <span>•</span>
                   <span>{selectedRecord.heritage_type}</span>
@@ -215,10 +211,10 @@ export default function ReviewQueueSection() {
 
               {/* Archival Description */}
               <div className="space-y-1.5">
-                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider block">
+                <span className="text-[10px] font-mono uppercase text-[#756D66] tracking-wider block font-semibold">
                   Field Documentation Note
                 </span>
-                <p className="text-xs text-[#ded6c5] leading-relaxed font-serif bg-[#171512] p-3 rounded-xl border border-[#26221d]">
+                <p className="text-xs text-[#393331] leading-relaxed font-serif bg-[#F6F1E7] p-3 rounded-lg border border-[#DED3C2]">
                   {selectedRecord.description}
                 </p>
               </div>
@@ -226,8 +222,8 @@ export default function ReviewQueueSection() {
               {/* AI Extraction Suggestions */}
               {suggestions.length > 0 && (
                 <div className="space-y-2">
-                  <div className="flex items-center gap-1.5 text-xs text-[#eed27c] font-semibold font-serif">
-                    <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+                  <div className="flex items-center gap-1.5 text-xs text-[#642F38] font-semibold font-serif">
+                    <Sparkles className="w-3.5 h-3.5 text-[#A77C54]" />
                     <span>AI Field Suggestions for Verification</span>
                   </div>
 
@@ -235,85 +231,81 @@ export default function ReviewQueueSection() {
                     {suggestions.map((s) => (
                       <div
                         key={s.id}
-                        className="p-3 rounded-xl border border-[#26221d] bg-[#141210] text-xs space-y-1"
+                        className="p-3 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] text-xs space-y-1"
                       >
                         <div className="flex items-center justify-between text-[11px]">
-                          <span className="font-mono text-[#eed27c] uppercase">{s.field_name}</span>
-                          <span className="font-mono text-[10px] text-[#3ba87e]">
-                            Confidence: {(s.confidence * 100).toFixed(0)}%
+                          <span className="font-semibold text-[#393331] font-mono">{s.field_name}:</span>
+                          <span className="text-[10px] font-mono text-[#52745E]">
+                            {((s.confidence ?? 0) * 100).toFixed(0)}% confidence
                           </span>
                         </div>
-                        <div className="font-serif font-semibold text-[#fcf9f2]">
-                          Suggested: &ldquo;{s.suggested_value}&rdquo;
-                        </div>
-                        {s.evidence && (
-                          <div className="text-[11px] text-[#9c9282] italic">
-                            Evidence: {s.evidence}
-                          </div>
-                        )}
+                        <p className="text-[#59524E] font-serif">{s.suggested_value}</p>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Reviewer Comment Box */}
-              <div className="space-y-1.5">
-                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider block">
-                  Curator Sign-off Notes &amp; Observations
-                </span>
-                <textarea
-                  value={reviewerComment}
-                  onChange={(e) => setReviewerComment(e.target.value)}
-                  placeholder="Record verification notes, epigraphical cross-references, or correction rationales..."
-                  rows={3}
-                  className="w-full p-3 rounded-xl border border-[#26221d] bg-[#171512] text-[#fcf9f2] text-xs placeholder-[#6e6659] focus:outline-hidden focus:border-[#d4af37] transition-colors"
-                />
-              </div>
-
+              {/* Decision Message Notification */}
               {actionMessage && (
-                <div className="p-3 rounded-xl bg-[#1c1813] border border-[#d4af37]/40 text-xs text-[#eed27c] font-mono">
+                <div className="p-3 rounded-lg bg-[#EDF3EF] border border-[#BCD0C3] text-xs text-[#52745E] font-serif font-medium">
                   {actionMessage}
                 </div>
               )}
 
-              {/* Curator Decision Actions */}
-              <div className="flex flex-wrap items-center justify-end gap-2.5 pt-3 border-t border-[#201d19]">
-                <button
-                  type="button"
-                  disabled={submitting}
-                  onClick={() => handleReviewAction('rejected')}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-900/60 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-semibold transition-colors disabled:opacity-50"
-                >
-                  <XCircle className="w-3.5 h-3.5" />
-                  <span>Reject</span>
-                </button>
+              {/* Curator Decision Form */}
+              <div className="space-y-3 pt-3 border-t border-[#EBE4D8]">
+                <div>
+                  <label htmlFor="curator-comment" className="block text-xs font-semibold text-[#393331] font-heritage mb-1">
+                    Curator Notes &amp; Verification Rationale
+                  </label>
+                  <textarea
+                    id="curator-comment"
+                    rows={2}
+                    value={reviewerComment}
+                    onChange={(e) => setReviewerComment(e.target.value)}
+                    placeholder="Enter peer-review rationale, verified citation citations, or revision instructions..."
+                    className="w-full px-3 py-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-xs text-[#393331] placeholder:text-[#9E958D] font-serif focus:outline-none focus:border-[#642F38]"
+                  />
+                </div>
 
-                <button
-                  type="button"
-                  disabled={submitting}
-                  onClick={() => handleReviewAction('changes_requested')}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] text-xs font-semibold transition-colors disabled:opacity-50"
-                >
-                  <AlertTriangle className="w-3.5 h-3.5 text-[#eed27c]" />
-                  <span>Request Re-examination</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={submitting}
+                    onClick={() => handleReviewAction('approved')}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#EDF3EF] hover:bg-[#52745E] text-[#52745E] hover:text-[#FFFCF5] border border-[#BCD0C3] text-xs font-serif font-semibold transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Approve &amp; Sign Off</span>
+                  </button>
 
-                <button
-                  type="button"
-                  disabled={submitting}
-                  onClick={() => handleReviewAction('approved')}
-                  className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#2d5e4a] hover:bg-[#3ba87e] text-[#fcf9f2] text-xs font-semibold shadow-md transition-colors disabled:opacity-50"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Sign &amp; Approve Record</span>
-                </button>
+                  <button
+                    type="button"
+                    disabled={submitting}
+                    onClick={() => handleReviewAction('changes_requested')}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#FAF4E9] hover:bg-[#A67C3F] text-[#A67C3F] hover:text-[#FFFCF5] border border-[#E8D3B2] text-xs font-serif font-semibold transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    <AlertTriangle className="w-3.5 h-3.5" />
+                    <span>Request Revisions</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={submitting}
+                    onClick={() => handleReviewAction('rejected')}
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#FAEEEE] hover:bg-[#A94B43] text-[#A94B43] hover:text-[#FFFCF5] border border-[#E8BDB9] text-xs font-serif font-semibold transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    <XCircle className="w-3.5 h-3.5" />
+                    <span>Reject Record</span>
+                  </button>
+                </div>
               </div>
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center text-[#9c9282] p-8 space-y-2">
-              <FileText className="w-10 h-10 text-[#d4af37]/50" />
-              <p className="text-xs font-serif">Select an entry from the queue to inspect metadata and verify AI suggestions.</p>
+            <div className="h-full flex flex-col items-center justify-center text-center text-[#756D66] space-y-2 p-6 font-serif">
+              <ShieldCheck className="w-8 h-8 text-[#A77C54]" />
+              <p className="text-xs">Select any record from the queue to review and sign off.</p>
             </div>
           )}
         </div>

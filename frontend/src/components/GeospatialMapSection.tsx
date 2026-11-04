@@ -7,9 +7,9 @@ import {
   ExternalLink,
   CheckCircle2,
   RefreshCw,
-  Sparkles,
   Route,
   Search,
+  BookOpen,
 } from 'lucide-react';
 import { fetchMapRecords, MapRecordItem } from '@/lib/api';
 
@@ -56,7 +56,6 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
     { name: 'Kumbhalgarh Fort', coords: [25.1475, 73.5878], desc: 'Rajasthan' },
   ];
 
-  // Load map records
   const loadMapData = async () => {
     setLoading(true);
     try {
@@ -100,7 +99,6 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
     const initMap = async () => {
       const L = (await import('leaflet')).default;
 
-      // Base map instance
       if (!mapInstanceRef.current && mapContainerRef.current) {
         const map = L.map(mapContainerRef.current, {
           center: [20.5937, 74.9629],
@@ -129,7 +127,6 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         map.removeLayer(routePolylineRef.current);
       }
 
-      // Filter sites
       const filtered = sites.filter((site) => {
         const matchesType = activeFilter === 'all' || site.heritage_type === activeFilter;
         const matchesRegion = activeRegion === 'all' || site.region === activeRegion;
@@ -141,36 +138,36 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
       filtered.forEach((site) => {
         routePoints.push([site.latitude, site.longitude]);
 
-        // Custom marker colors based on typology
-        let markerColor = '#d4af37'; // gold
-        if (site.heritage_type.includes('Stepwell')) markerColor = '#2d5e4a'; // patina
-        if (site.heritage_type.includes('Monolithic')) markerColor = '#9c381e'; // terracotta
+        // Elegant branding marker colors
+        let markerColor = '#A77C54'; // bronze
+        if (site.heritage_type.includes('Stepwell')) markerColor = '#52745E'; // forest green
+        if (site.heritage_type.includes('Monolithic')) markerColor = '#642F38'; // burgundy
 
         const isCurrent = selectedSite?.id === site.id;
 
         const iconHtml = `
           <div style="
             background-color: ${markerColor};
-            width: ${isCurrent ? '26px' : '20px'};
-            height: ${isCurrent ? '26px' : '20px'};
+            width: ${isCurrent ? '24px' : '18px'};
+            height: ${isCurrent ? '24px' : '18px'};
             border-radius: 50%;
-            border: 2px solid ${isCurrent ? '#ffffff' : '#110f0d'};
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border: 2px solid ${isCurrent ? '#642F38' : '#FFFCF5'};
+            box-shadow: 0 2px 6px rgba(57,51,49,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: transform 0.2s;
           ">
-            <div style="width: 6px; height: 6px; border-radius: 50%; background-color: #ffffff;"></div>
+            <div style="width: 5px; height: 5px; border-radius: 50%; background-color: #FFFCF5;"></div>
           </div>
         `;
 
         const customIcon = L.divIcon({
           html: iconHtml,
           className: 'heritage-map-marker',
-          iconSize: [isCurrent ? 26 : 20, isCurrent ? 26 : 20],
-          iconAnchor: [isCurrent ? 13 : 10, isCurrent ? 13 : 10],
+          iconSize: [isCurrent ? 24 : 18, isCurrent ? 24 : 18],
+          iconAnchor: [isCurrent ? 12 : 9, isCurrent ? 12 : 9],
         });
 
         const marker = L.marker([site.latitude, site.longitude], { icon: customIcon });
@@ -183,20 +180,20 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         });
 
         marker.bindTooltip(
-          `<strong>${site.title}</strong><br/><span style="font-size: 10px;">${site.region} · ${site.heritage_type}</span>`,
+          `<strong>${site.title}</strong><br/><span style="font-size: 10px; color: #756D66;">${site.region} · ${site.heritage_type}</span>`,
           { direction: 'top', offset: [0, -10] }
         );
 
         markersGroup.addLayer(marker);
       });
 
-      // Connect surveyed sites with an expedition route line
+      // Connect surveyed sites with an expedition route trail
       if (showRoutes && routePoints.length > 1) {
         const polyline = L.polyline(routePoints, {
-          color: '#d4af37',
+          color: '#A77C54',
           weight: 2,
-          opacity: 0.65,
-          dashArray: '6, 8',
+          opacity: 0.7,
+          dashArray: '5, 8',
         }).addTo(map);
         routePolylineRef.current = polyline;
       }
@@ -214,16 +211,15 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
   return (
     <div className="space-y-4">
       {/* Top Header & Filter Controls */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
-            <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>Geospatial Heritage Intelligence</span>
+          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-0.5">
+            Geospatial Cartography
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
             Expedition Heritage Map
           </h1>
-          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5">
             Interactive geographical mapping of surveyed stepwells, monolithic shrines, and regional monuments
           </p>
         </div>
@@ -233,10 +229,10 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
           <button
             type="button"
             onClick={() => setShowRoutes(!showRoutes)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors cursor-pointer ${
               showRoutes
-                ? 'bg-[#1c1813] border-[#d4af37]/50 text-[#eed27c]'
-                : 'border-[#26221d] bg-[#171512] text-[#9c9282]'
+                ? 'bg-[#EFE8DC] border-[#DED3C2] text-[#642F38] font-semibold'
+                : 'border-[#DED3C2] bg-[#FFFCF5] text-[#756D66]'
             }`}
           >
             <Route className="w-3.5 h-3.5" />
@@ -246,7 +242,7 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
           <button
             type="button"
             onClick={loadMapData}
-            className="p-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] transition-colors"
+            className="p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-[#393331] transition-colors cursor-pointer"
             title="Refresh map coordinates"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -254,21 +250,21 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         </div>
       </div>
 
-      {/* Filter Pills & Quick Jumps */}
-      <div className="p-4 rounded-xl border border-[#26221d] bg-[#110f0d] shadow-md space-y-3 text-xs">
+      {/* Filter Toolbar & Quick Jumps */}
+      <div className="p-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-3 text-xs">
         {/* Quick Jump Landmark Coordinates */}
-        <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-[#201d19]">
-          <span className="text-[#9c9282] font-mono mr-1">Quick Coordinates:</span>
+        <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-[#EBE4D8]">
+          <span className="text-[#756D66] font-mono mr-1">Quick Coordinates:</span>
           {quickJumpSites.map((site) => (
             <button
               key={site.name}
               type="button"
               onClick={() => handleJumpTo(site.coords)}
-              className="px-2.5 py-1 rounded-lg border border-[#26221d] bg-[#141210] hover:bg-[#1a1714] hover:border-[#d4af37]/40 text-[#ded6c5] text-xs transition-colors flex items-center gap-1.5"
+              className="px-2.5 py-1 rounded-md border border-[#DED3C2] bg-[#F6F1E7] hover:bg-[#EFE8DC] text-[#393331] text-xs transition-colors flex items-center gap-1.5 cursor-pointer font-serif"
             >
-              <MapPin className="w-3 h-3 text-[#d4af37]" />
+              <MapPin className="w-3 h-3 text-[#A77C54]" />
               <span>{site.name}</span>
-              <span className="text-[10px] text-[#9c9282] font-mono">({site.desc})</span>
+              <span className="text-[10px] text-[#756D66] font-mono">({site.desc})</span>
             </button>
           ))}
         </div>
@@ -276,16 +272,16 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         {/* Region & Typology Selector */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[#9c9282] font-mono mr-1">Region:</span>
+            <span className="text-[#756D66] font-mono mr-1">Region:</span>
             {regions.map((r) => (
               <button
                 key={r.id}
                 type="button"
                 onClick={() => setActiveRegion(r.id)}
-                className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition-colors ${
+                className={`px-2.5 py-1 rounded-md font-mono text-[11px] transition-colors cursor-pointer ${
                   activeRegion === r.id
-                    ? 'bg-[#d4af37] text-[#080706] font-bold'
-                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d] hover:bg-[#201d19]'
+                    ? 'bg-[#642F38] text-[#FFFCF5] font-semibold shadow-xs'
+                    : 'bg-[#EFE8DC] text-[#393331] border border-[#DED3C2] hover:bg-[#E8E0D2]'
                 }`}
               >
                 {r.label}
@@ -294,11 +290,11 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[#9c9282] font-mono">Typology:</span>
+            <span className="text-[#756D66] font-mono">Typology:</span>
             <select
               value={activeFilter}
               onChange={(e) => setActiveFilter(e.target.value)}
-              className="px-2.5 py-1 rounded-lg border border-[#26221d] bg-[#171512] text-[#fcf9f2] text-xs font-medium focus:outline-hidden"
+              className="px-2.5 py-1 rounded-md border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] text-xs font-serif focus:outline-none cursor-pointer"
             >
               {typologies.map((t) => (
                 <option key={t.id} value={t.id}>
@@ -313,48 +309,48 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
       {/* Main Split Screen: Leaflet Map (7 cols) + Selected Monument Card (5 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
         {/* Interactive Map (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col rounded-2xl border border-[#26221d] overflow-hidden shadow-xl relative min-h-[460px] lg:min-h-full">
+        <div className="lg:col-span-7 flex flex-col rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs relative min-h-[460px] lg:min-h-full">
           <div ref={mapContainerRef} className="flex-1 w-full h-full min-h-[460px]" />
 
           {/* Map Legend Overlay */}
-          <div className="p-3 border-t border-[#26221d] bg-[#0c0a08]/95 backdrop-blur-xs flex flex-wrap items-center gap-4 text-xs z-10">
-            <div className="flex items-center gap-1.5 text-[#ded6c5]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#2d5e4a]" />
+          <div className="p-3 border-t border-[#DED3C2] bg-[#FFFCF5] flex flex-wrap items-center gap-4 text-xs z-10 font-serif">
+            <div className="flex items-center gap-1.5 text-[#393331]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#52745E]" />
               <span>Stepwell (Baoli)</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[#ded6c5]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#9c381e]" />
+            <div className="flex items-center gap-1.5 text-[#393331]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#642F38]" />
               <span>Monolithic Rock-Cut Temple</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[#ded6c5]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#d4af37]" />
+            <div className="flex items-center gap-1.5 text-[#393331]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#A77C54]" />
               <span>Temple / Fort Complex</span>
             </div>
-            <div className="flex items-center gap-1.5 text-[#ded6c5]">
-              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#d4af37]" />
+            <div className="flex items-center gap-1.5 text-[#393331]">
+              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#A77C54]" />
               <span>Survey Trail</span>
             </div>
           </div>
         </div>
 
         {/* Selected Landmark Exhibition Card (5 cols) */}
-        <div className="lg:col-span-5 rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 flex flex-col justify-between overflow-y-auto">
+        <div className="lg:col-span-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs space-y-4 flex flex-col justify-between overflow-y-auto">
           {selectedSite ? (
             <div className="space-y-4">
-              <div className="space-y-1 pb-3 border-b border-[#201d19]">
+              <div className="space-y-1 pb-3 border-b border-[#EBE4D8]">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#1c1813] text-[#eed27c] font-semibold border border-[#d4af37]/35">
+                  <span className="px-2 py-0.5 rounded bg-[#FAF2F3] text-[#642F38] font-semibold border border-[#642F38]/30 font-serif">
                     {selectedSite.heritage_type}
                   </span>
-                  <span className="text-[#9c9282] font-mono text-[11px]">
+                  <span className="text-[#756D66] font-mono text-[11px]">
                     {selectedSite.region}
                   </span>
                 </div>
-                <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage pt-1">
+                <h2 className="text-lg font-heritage font-bold text-[#642F38] pt-1">
                   {selectedSite.title}
                 </h2>
-                <div className="flex items-center gap-1.5 text-xs text-[#9c9282] font-mono">
-                  <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
+                <div className="flex items-center gap-1.5 text-xs text-[#756D66] font-mono">
+                  <MapPin className="w-3.5 h-3.5 text-[#A77C54]" />
                   <span>
                     {selectedSite.latitude.toFixed(4)}° N, {selectedSite.longitude.toFixed(4)}° E
                   </span>
@@ -363,19 +359,19 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
 
               {/* Field Metadata Grid */}
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-3 rounded-xl bg-[#171512] border border-[#26221d]">
-                  <span className="text-[#9c9282] block text-[10px] uppercase font-mono">
+                <div className="p-3 rounded-lg bg-[#F6F1E7] border border-[#DED3C2]">
+                  <span className="text-[#756D66] block text-[10px] uppercase font-mono">
                     Architectural Period
                   </span>
-                  <span className="font-semibold text-[#fcf9f2] mt-0.5 block font-serif">
+                  <span className="font-semibold text-[#393331] mt-0.5 block font-serif">
                     {selectedSite.period || 'Medieval (11th–15th C.)'}
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-[#171512] border border-[#26221d]">
-                  <span className="text-[#9c9282] block text-[10px] uppercase font-mono">
+                <div className="p-3 rounded-lg bg-[#F6F1E7] border border-[#DED3C2]">
+                  <span className="text-[#756D66] block text-[10px] uppercase font-mono">
                     Survey Status
                   </span>
-                  <span className="font-semibold text-[#3ba87e] mt-0.5 block flex items-center gap-1 font-serif">
+                  <span className="font-semibold text-[#52745E] mt-0.5 block flex items-center gap-1 font-serif">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                     Documented Site
                   </span>
@@ -384,21 +380,21 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
 
               {/* Curator Field Observations */}
               <div className="space-y-1.5">
-                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider block">
+                <span className="text-[10px] font-mono uppercase text-[#756D66] tracking-wider block font-semibold">
                   Archival Field Documentation
                 </span>
-                <p className="text-xs leading-relaxed text-[#ded6c5] bg-[#171512] p-3 rounded-xl border border-[#26221d] font-serif">
+                <p className="text-xs leading-relaxed text-[#393331] bg-[#F6F1E7] p-3 rounded-lg border border-[#DED3C2] font-serif">
                   {selectedSite.description}
                 </p>
               </div>
 
               {/* Fellowship Provenance */}
-              <div className="p-3 rounded-xl bg-[#0d1e17] border border-[#3ba87e]/30 space-y-1 text-xs">
-                <div className="flex items-center gap-1.5 text-[#3ba87e] font-semibold">
-                  <Sparkles className="w-3.5 h-3.5" />
+              <div className="p-3 rounded-lg bg-[#EDF3EF] border border-[#BCD0C3] space-y-1 text-xs">
+                <div className="flex items-center gap-1.5 text-[#52745E] font-semibold font-serif">
+                  <BookOpen className="w-3.5 h-3.5" />
                   <span>IIT Gandhinagar Explorer Fellowship</span>
                 </div>
-                <p className="text-[11px] text-[#9c9282] font-serif">
+                <p className="text-[11px] text-[#59524E] font-serif">
                   Photogrammetry, architectural elevation notes, and Devanagari epigraph recordings logged during field exploration.
                 </p>
               </div>
@@ -408,7 +404,7 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
                 <button
                   type="button"
                   onClick={() => onSelectRecord(selectedSite.id)}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#d4af37] hover:bg-[#e5c158] text-[#080706] text-xs font-semibold shadow-md transition-all cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium shadow-xs transition-colors cursor-pointer"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                   <span>Inspect Full Corpus Record</span>
@@ -416,9 +412,9 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
               )}
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center text-[#9c9282] space-y-2 p-6">
-              <Compass className="w-10 h-10 text-[#d4af37]/60" />
-              <p className="text-xs">Click any marker pin on the map to inspect architectural field details.</p>
+            <div className="h-full flex flex-col items-center justify-center text-center text-[#756D66] space-y-2 p-6 font-serif">
+              <Compass className="w-8 h-8 text-[#A77C54]" />
+              <p className="text-xs">Select any marker pin on the map to inspect architectural field records.</p>
             </div>
           )}
         </div>

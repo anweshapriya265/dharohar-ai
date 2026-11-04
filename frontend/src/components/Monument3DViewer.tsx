@@ -8,10 +8,8 @@ import {
   Sun,
   Sunset,
   Layers,
-  Sparkles,
   Info,
   Compass,
-  Camera,
   ShieldCheck,
   RotateCcw,
 } from 'lucide-react';
@@ -93,11 +91,12 @@ export default function Monument3DViewer() {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const bgColor = lightingMode === 'twilight' ? 0x0c0a08 : 0x12100e;
+    const isDaylight = lightingMode === 'daylight';
+    const bgColor = isDaylight ? 0xF0EAE1 : 0x1A1715;
     scene.background = new THREE.Color(bgColor);
-    scene.fog = new THREE.FogExp2(bgColor, 0.015);
+    scene.fog = new THREE.FogExp2(bgColor, isDaylight ? 0.012 : 0.018);
 
-    // 2. Camera: Isometric 3/4 cutaway overview looking down into the open trench
+    // 2. Camera
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     camera.position.set(20, 18, 26);
     camera.lookAt(0, -4, 0);
@@ -116,7 +115,7 @@ export default function Monument3DViewer() {
 
     // 4. Lighting Setup
     if (lightingMode === 'twilight') {
-      const ambient = new THREE.AmbientLight(0x28231d, 1.8);
+      const ambient = new THREE.AmbientLight(0x3a3028, 2.0);
       scene.add(ambient);
 
       const sun = new THREE.DirectionalLight(0xd47a3e, 2.4);
@@ -128,17 +127,17 @@ export default function Monument3DViewer() {
       wellGlow.position.set(0, -8, -14);
       scene.add(wellGlow);
     } else {
-      const ambient = new THREE.AmbientLight(0x504538, 2.0);
+      const ambient = new THREE.AmbientLight(0xFFF9F0, 2.4);
       scene.add(ambient);
 
-      const sunlight = new THREE.DirectionalLight(0xffeedd, 2.8);
+      const sunlight = new THREE.DirectionalLight(0xFFF2DC, 2.6);
       sunlight.position.set(20, 30, 20);
       sunlight.castShadow = true;
       sunlight.shadow.mapSize.width = 1024;
       sunlight.shadow.mapSize.height = 1024;
       scene.add(sunlight);
 
-      const fill = new THREE.DirectionalLight(0xb8cde3, 1.2);
+      const fill = new THREE.DirectionalLight(0xDCE4EC, 1.2);
       fill.position.set(-20, 15, -20);
       scene.add(fill);
     }
@@ -148,31 +147,31 @@ export default function Monument3DViewer() {
     monumentGroupRef.current = monumentGroup;
     scene.add(monumentGroup);
 
-    // Materials
-    const stoneColor = lightingMode === 'twilight' ? 0xb87333 : 0x8c7965;
+    // Materials: Warm sandstone
+    const stoneColor = lightingMode === 'twilight' ? 0xb87333 : 0xC8AD8D;
     const stoneMat = new THREE.MeshStandardMaterial({
       color: stoneColor,
       roughness: 0.85,
-      metalness: 0.08,
+      metalness: 0.05,
       wireframe: wireframe,
     });
 
     const darkStoneMat = new THREE.MeshStandardMaterial({
-      color: lightingMode === 'twilight' ? 0x2e2925 : 0x473e35,
+      color: lightingMode === 'twilight' ? 0x2e2925 : 0x756D66,
       roughness: 0.9,
       wireframe: wireframe,
     });
 
     const groundTerrainMat = new THREE.MeshStandardMaterial({
-      color: lightingMode === 'twilight' ? 0x24201c : 0x2e2923,
+      color: lightingMode === 'twilight' ? 0x24201c : 0xEFE8DC,
       roughness: 0.95,
       wireframe: wireframe,
     });
 
     const waterMat = new THREE.MeshStandardMaterial({
-      color: 0x1d7c9e,
+      color: 0x52745E,
       roughness: 0.1,
-      metalness: 0.7,
+      metalness: 0.6,
       transparent: true,
       opacity: 0.85,
     });
@@ -315,16 +314,15 @@ export default function Monument3DViewer() {
   return (
     <div className="space-y-4">
       {/* Top Banner & Control Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
-            <Box className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>Interactive Subterranean 3D Cutaway</span>
+          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-0.5">
+            Subterranean Digital Twin
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
             Adalaj Stepwell (Rudabai Vav) Digital Twin
           </h1>
-          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5">
             Volumetric structural model of the 1498 CE five-storey subterranean hydraulic monument in Gandhinagar, Gujarat
           </p>
         </div>
@@ -335,20 +333,20 @@ export default function Monument3DViewer() {
           <button
             type="button"
             onClick={() => setLightingMode(lightingMode === 'daylight' ? 'twilight' : 'daylight')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#26221d] bg-[#171512] text-[#ded6c5] hover:text-[#fcf9f2] text-xs font-mono transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] hover:bg-[#F6F1E7] text-xs font-mono transition-colors cursor-pointer"
           >
-            {lightingMode === 'daylight' ? <Sun className="w-3.5 h-3.5 text-[#eed27c]" /> : <Sunset className="w-3.5 h-3.5 text-[#d47a3e]" />}
-            <span className="capitalize">{lightingMode} Lighting</span>
+            {lightingMode === 'daylight' ? <Sun className="w-3.5 h-3.5 text-[#A67C3F]" /> : <Sunset className="w-3.5 h-3.5 text-[#642F38]" />}
+            <span className="capitalize">{lightingMode} Mode</span>
           </button>
 
           {/* Wireframe Mode */}
           <button
             type="button"
             onClick={() => setWireframe(!wireframe)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors cursor-pointer ${
               wireframe
-                ? 'bg-[#d4af37] text-[#080706] font-bold border-[#d4af37]'
-                : 'border-[#26221d] bg-[#171512] text-[#ded6c5]'
+                ? 'bg-[#642F38] text-[#FFFCF5] font-semibold border-[#642F38]'
+                : 'border-[#DED3C2] bg-[#FFFCF5] text-[#393331] hover:bg-[#F6F1E7]'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -359,10 +357,10 @@ export default function Monument3DViewer() {
           <button
             type="button"
             onClick={() => setIsRotating(!isRotating)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors cursor-pointer ${
               isRotating
-                ? 'bg-[#0d1e17] text-[#3ba87e] border-[#3ba87e]/40'
-                : 'bg-[#171512] text-[#9c9282] border-[#26221d]'
+                ? 'bg-[#EDF3EF] text-[#52745E] border-[#BCD0C3]'
+                : 'bg-[#FFFCF5] text-[#756D66] border-[#DED3C2] hover:bg-[#F6F1E7]'
             }`}
           >
             <RotateCw className={`w-3.5 h-3.5 ${isRotating ? 'animate-spin' : ''}`} />
@@ -373,7 +371,7 @@ export default function Monument3DViewer() {
           <button
             type="button"
             onClick={handleResetCamera}
-            className="p-2 rounded-xl border border-[#26221d] bg-[#171512] text-[#ded6c5] hover:text-[#fcf9f2] transition-colors"
+            className="p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] hover:bg-[#F6F1E7] transition-colors cursor-pointer"
             title="Reset to default isometric overview"
           >
             <RotateCcw className="w-4 h-4" />
@@ -384,27 +382,27 @@ export default function Monument3DViewer() {
       {/* Main 3D Canvas + Side Architectural Tier Hotspots */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
         {/* 3D WebGL Canvas (7 cols) */}
-        <div className="lg:col-span-7 relative rounded-2xl border border-[#26221d] bg-[#0c0a08] overflow-hidden shadow-xl cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
+        <div className="lg:col-span-7 relative rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
           <div ref={mountRef} className="w-full h-full" />
 
           {/* Overlay Interaction Hint */}
-          <div className="absolute bottom-3 left-3 bg-[#110f0d]/90 backdrop-blur-xs border border-[#26221d] rounded-xl px-3 py-1.5 text-[11px] text-[#9c9282] shadow-lg flex items-center gap-2 pointer-events-none">
-            <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+          <div className="absolute bottom-3 left-3 bg-[#FFFCF5]/90 backdrop-blur-xs border border-[#DED3C2] rounded-lg px-2.5 py-1 text-[11px] text-[#756D66] shadow-xs flex items-center gap-1.5 pointer-events-none font-serif">
+            <Compass className="w-3.5 h-3.5 text-[#A77C54]" />
             <span>Drag mouse to orbit 360° · Scroll to zoom into pavilions &amp; well</span>
           </div>
         </div>
 
         {/* Architectural Hotspots & Structural Insights (5 cols) */}
-        <div className="lg:col-span-5 rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 flex flex-col justify-between overflow-y-auto">
+        <div className="lg:col-span-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs space-y-4 flex flex-col justify-between overflow-y-auto">
           <div className="space-y-4">
-            <div className="border-b border-[#201d19] pb-3">
-              <span className="text-[10px] font-mono uppercase text-[#d4af37] tracking-wider block font-semibold">
+            <div className="border-b border-[#EBE4D8] pb-3">
+              <span className="text-[10px] font-mono uppercase text-[#814B52] tracking-wider block font-semibold">
                 Stratified Hydraulic Architecture
               </span>
-              <h2 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage pt-0.5">
+              <h2 className="text-base font-heritage font-bold text-[#642F38] pt-0.5">
                 Subterranean Tiers &amp; Hotspots
               </h2>
-              <p className="text-xs text-[#9c9282] mt-0.5">
+              <p className="text-xs text-[#756D66] font-serif mt-0.5">
                 Select a depth level to position camera and inspect structural details
               </p>
             </div>
@@ -418,17 +416,17 @@ export default function Monument3DViewer() {
                     key={h.id}
                     type="button"
                     onClick={() => handleSelectHotspot(h)}
-                    className={`w-full text-left p-3 rounded-xl border text-xs transition-all ${
+                    className={`w-full text-left p-3 rounded-lg border text-xs transition-colors cursor-pointer ${
                       isSelected
-                        ? 'border-[#d4af37] bg-[#1c1813] shadow-xs'
-                        : 'border-[#26221d] bg-[#141210] hover:bg-[#171512] hover:border-[#363028]'
+                        ? 'border-[#642F38] bg-[#FAF2F3] shadow-xs'
+                        : 'border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#E8E0D2]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`font-semibold ${isSelected ? 'text-[#eed27c]' : 'text-[#ded6c5]'}`}>
+                      <span className={`font-serif ${isSelected ? 'text-[#642F38] font-bold' : 'text-[#393331]'}`}>
                         {h.title}
                       </span>
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#110f0d] border border-[#26221d] text-[#eed27c]">
+                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#FFFCF5] border border-[#DED3C2] text-[#642F38]">
                         {h.level}
                       </span>
                     </div>
@@ -438,39 +436,39 @@ export default function Monument3DViewer() {
             </div>
 
             {/* Active Hotspot Deep Dive Card */}
-            <div className="p-4 rounded-xl border border-[#26221d] bg-[#141210] space-y-2 text-xs">
+            <div className="p-4 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] space-y-1.5 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase font-mono font-semibold text-[#d4af37] tracking-wider">
+                <span className="text-[10px] uppercase font-mono font-semibold text-[#814B52] tracking-wider">
                   Tier Analysis
                 </span>
-                <span className="font-mono text-[11px] text-[#9c9282]">
+                <span className="font-mono text-[11px] text-[#756D66]">
                   {activeHotspotData.documentedDepth}
                 </span>
               </div>
-              <h3 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage">
+              <h3 className="text-sm font-heritage font-bold text-[#393331]">
                 {activeHotspotData.title}
               </h3>
-              <p className="text-xs leading-relaxed text-[#ded6c5] font-serif">
+              <p className="text-xs leading-relaxed text-[#59524E] font-serif">
                 {activeHotspotData.description}
               </p>
             </div>
           </div>
 
           {/* Subterranean Engineering Note & Provenance Notice */}
-          <div className="space-y-2 pt-2 border-t border-[#201d19]">
-            <div className="p-3 rounded-xl bg-[#0d1e17] border border-[#3ba87e]/30 text-xs text-[#ded6c5] space-y-1">
-              <div className="flex items-center gap-1.5 font-semibold text-[#3ba87e]">
+          <div className="space-y-2 pt-2 border-t border-[#EBE4D8]">
+            <div className="p-3 rounded-lg bg-[#EDF3EF] border border-[#BCD0C3] text-xs text-[#393331] space-y-1">
+              <div className="flex items-center gap-1.5 font-semibold text-[#52745E] font-serif">
                 <Info className="w-3.5 h-3.5" />
                 <span>Hydraulic &amp; Microclimate Engineering</span>
               </div>
-              <p className="text-[11px] text-[#9c9282] leading-normal font-serif">
+              <p className="text-[11px] text-[#59524E] leading-normal font-serif">
                 Stepwells in arid Gujarat operated as passive geothermal cooling devices, decreasing air temperature by 5–7°C relative to the ambient surface ground.
               </p>
             </div>
 
-            <div className="p-2.5 rounded-xl bg-[#141210] border border-[#26221d] text-[10px] text-[#9c9282] flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#eed27c] shrink-0" />
-              <span>Procedural 3D cutaway representation based on published ASI field survey plans.</span>
+            <div className="p-2.5 rounded-lg bg-[#F6F1E7] border border-[#DED3C2] text-[10px] text-[#756D66] flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#A77C54] shrink-0" />
+              <span className="font-serif">Procedural 3D cutaway representation based on published ASI field survey plans.</span>
             </div>
           </div>
         </div>

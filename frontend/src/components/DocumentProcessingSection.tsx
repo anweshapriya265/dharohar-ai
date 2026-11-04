@@ -6,7 +6,7 @@ import {
   Layers,
   Sparkles,
   ShieldCheck,
-  Zap,
+  CheckCircle2,
 } from 'lucide-react';
 
 export default function DocumentProcessingSection() {
@@ -14,7 +14,7 @@ export default function DocumentProcessingSection() {
     {
       step: '01',
       title: 'Multimodal Ingestion',
-      description: 'PDF format, %PDF- signature validation & streaming upload limit',
+      description: 'PDF format, signature validation & streaming upload limit',
       status: 'Operational',
       icon: Layers,
       note: 'POST /api/documents/upload',
@@ -46,23 +46,23 @@ export default function DocumentProcessingSection() {
   ];
 
   return (
-    <div className="rounded-2xl border border-[#2e2923] bg-[#12100e] p-5 shadow-xl space-y-4">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#2e2923]">
+    <div className="rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[#DED3C2]">
         <div>
-          <h2 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
+          <h2 className="text-sm font-heritage font-bold text-[#393331] uppercase tracking-wider flex items-center gap-2">
             <span>Archival Processing &amp; Intelligence Pipeline</span>
-            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-medium bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/30">
+            <span className="text-[10px] px-2 py-0.5 rounded-full font-mono font-medium bg-[#EDF3EF] text-[#52745E] border border-[#BCD0C3]">
               Pipeline Active
             </span>
           </h2>
-          <p className="text-xs text-[#9c9282] mt-0.5">
+          <p className="text-xs text-[#756D66] font-serif mt-0.5">
             Architecture for archival text extraction, dual pagination, hybrid vector-lexical indexing, and grounded AI.
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 text-xs text-[#eed27c]">
-          <Zap className="w-3.5 h-3.5 text-[#d4af37]" />
-          <span className="font-mono text-[11px]">Real-time RAG Pipeline</span>
+        <div className="flex items-center gap-1.5 text-xs text-[#52745E]">
+          <CheckCircle2 className="w-3.5 h-3.5 text-[#52745E]" />
+          <span className="font-mono text-[11px]">Validated Architecture</span>
         </div>
       </div>
 
@@ -73,23 +73,27 @@ export default function DocumentProcessingSection() {
           return (
             <div
               key={stage.step}
-              className="p-4 rounded-xl border border-[#2e2923] bg-[#161411] flex flex-col justify-between space-y-3 hover:border-[#d4af37]/40 transition-all"
+              className="p-4 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] flex flex-col justify-between space-y-3"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] font-bold text-[#d4af37]">{stage.step}</span>
-                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/25">
+                  <span className="font-mono text-[11px] font-bold text-[#642F38]">{stage.step}</span>
+                  <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[#FFFCF5] text-[#52745E] border border-[#BCD0C3]">
                     {stage.status}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-serif font-semibold text-[#fcf9f2]">
-                  <Icon className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
-                  <span>{stage.title}</span>
+
+                <div className="flex items-center gap-2">
+                  <Icon className="w-4 h-4 text-[#A77C54]" />
+                  <h3 className="text-xs font-heritage font-bold text-[#393331]">{stage.title}</h3>
                 </div>
-                <p className="text-[11px] text-[#9c9282] leading-snug">{stage.description}</p>
+
+                <p className="text-[11px] text-[#59524E] leading-relaxed font-serif">
+                  {stage.description}
+                </p>
               </div>
 
-              <div className="pt-2 border-t border-[#24201a] font-mono text-[10px] text-[#6e6659]">
+              <div className="pt-2 border-t border-[#DED3C2] text-[10px] font-mono text-[#756D66] truncate">
                 {stage.note}
               </div>
             </div>

@@ -69,61 +69,61 @@ export default function ArchiveSummaryArea({
       {/* Bar with title + toggle */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-1">
         <div>
-          <h2 className="text-sm sm:text-base font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
-            <span>Archive Telemetry Summary</span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#181613] text-[#eed27c] border border-[#2e2923]">
-              {showSampleData ? 'Preview Schema Mode' : 'Live SQLite Baseline'}
+          <h2 className="text-sm font-heritage font-bold text-[#393331] uppercase tracking-wider flex items-center gap-2">
+            <span>Archive Storage Telemetry</span>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#EFE8DC] text-[#642F38] border border-[#DED3C2]">
+              {showSampleData ? 'Preview Schema' : 'Live SQLite Baseline'}
             </span>
           </h2>
-          <p className="text-xs text-[#9c9282]">
+          <p className="text-xs text-[#756D66] font-serif">
             {showSampleData
-              ? 'Displaying labeled temporary preview schema to preview full archive capacity'
+              ? 'Displaying labeled temporary schema to preview full archive capacity'
               : 'Authentic metrics verified directly against local backend storage'}
           </p>
         </div>
 
-        {/* Toggle between authentic empty state and labeled sample preview */}
+        {/* Toggle */}
         <div className="flex items-center gap-2 self-start sm:self-auto">
-          <label className="flex items-center gap-2 cursor-pointer text-xs text-[#ded6c5] bg-[#12100e] px-3 py-1.5 rounded-xl border border-[#2e2923] select-none hover:border-[#3d372f]">
+          <label className="flex items-center gap-2 cursor-pointer text-xs text-[#393331] bg-[#FFFCF5] px-3 py-1.5 rounded-lg border border-[#DED3C2] select-none hover:bg-[#F6F1E7]">
             <input
               type="checkbox"
               checked={showSampleData}
               onChange={(e) => onToggleSampleData(e.target.checked)}
-              className="rounded accent-[#d4af37]"
+              className="rounded accent-[#642F38]"
             />
-            <span className="font-mono text-[11px]">Preview Full Capacity Schema</span>
+            <span className="font-mono text-[11px]">Preview Full Schema</span>
           </label>
         </div>
       </div>
 
       {/* Grid of Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {metrics.map((item) => {
-          const Icon = item.icon;
-          const displayVal = showSampleData ? item.sample : item.actual;
+        {metrics.map((m) => {
+          const Icon = m.icon;
+          const displayValue = showSampleData ? m.sample : m.actual;
+
           return (
             <div
-              key={item.id}
-              className="p-5 rounded-2xl bg-[#12100e] border border-[#2e2923] hover:border-[#d4af37]/40 shadow-xl transition-all space-y-3"
+              key={m.id}
+              className="p-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-1.5"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-mono uppercase text-[#9c9282] tracking-wider">
-                  {item.title}
+              <div className="flex items-center justify-between text-[#756D66]">
+                <span className="text-[10px] font-mono uppercase tracking-wider font-semibold">
+                  {m.title}
                 </span>
-                <div className="p-2 rounded-lg bg-[#1a1714] text-[#eed27c] border border-[#2e2923]">
-                  <Icon className="w-4 h-4" />
-                </div>
+                <Icon className="w-4 h-4 text-[#A77C54]" />
               </div>
 
-              <div>
-                <div className="text-2xl font-serif font-bold text-[#fcf9f2] font-heritage">
-                  {displayVal}
-                </div>
-                <div className="text-[10px] font-mono text-[#d4af37] mt-0.5">{item.unit}</div>
+              <div className="text-2xl font-heritage font-bold text-[#642F38]">
+                {displayValue}
               </div>
 
-              <p className="text-[11px] text-[#6e6659] leading-snug pt-2 border-t border-[#1e1b17]">
-                {item.desc}
+              <div className="text-[11px] font-mono text-[#52745E] font-medium">
+                {m.unit}
+              </div>
+
+              <p className="text-[11px] text-[#756D66] leading-tight font-serif pt-1 border-t border-[#EBE4D8]">
+                {m.desc}
               </p>
             </div>
           );

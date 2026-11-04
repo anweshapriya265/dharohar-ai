@@ -9,6 +9,7 @@ import {
   CheckCircle2,
   Clock,
   Box,
+  Eye,
 } from 'lucide-react';
 import { DocumentItem } from '@/lib/api';
 
@@ -32,7 +33,6 @@ export default function DigitalArchiveExplorer({
   const [searchFilter, setSearchFilter] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'extracted' | 'needs_ocr'>('all');
 
-  // Filtered documents
   const filteredDocs = useMemo(() => {
     return documents.filter((doc) => {
       const matchesSearch =
@@ -56,39 +56,40 @@ export default function DigitalArchiveExplorer({
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
+    <div className="space-y-5 animate-in fade-in duration-200">
       {/* Explorer Top Banner */}
-      <div className="p-6 sm:p-8 rounded-2xl border border-[#2e2923] bg-gradient-to-br from-[#141210] via-[#110f0d] to-[#0a0908] shadow-2xl relative overflow-hidden">
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-serif bg-[#1d1914] border border-[#d4af37]/40 text-[#eed27c]">
-            <BookOpen className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>Digital Archival Repository &amp; Corpus Explorer</span>
+      <div className="p-5 sm:p-6 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-2 max-w-2xl">
+            <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold">
+              Archival Repository
+            </div>
+            <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
+              Digital Document Collection
+            </h1>
+            <p className="text-xs sm:text-sm text-[#59524E] leading-relaxed font-serif">
+              Browse and inspect colonial-era archaeological survey reports, gazetteers, and epigraphical
+              memoranda with dual pagination, OCR text extraction, and vector index status.
+            </p>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
-            Archival Document Collection
-          </h1>
-          <p className="text-sm text-[#ded6c5] leading-relaxed">
-            Browse and inspect high-resolution colonial-era archaeological survey reports, gazetteers, and epigraphical
-            memoranda with dual pagination, OCR text extraction, and vector index status.
-          </p>
 
-          <div className="flex flex-wrap items-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
             <button
               type="button"
               onClick={onOpenUpload}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d4af37] hover:bg-[#b89124] text-[#080706] text-xs font-serif font-semibold shadow-md transition-all"
+              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium shadow-xs transition-colors cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" />
-              <span>Ingest New Archival PDF</span>
+              <span>Ingest Monograph</span>
             </button>
             {onOpen3DExplorer && (
               <button
                 type="button"
                 onClick={onOpen3DExplorer}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#1a1714] hover:bg-[#221e1a] text-[#eed27c] border border-[#d4af37]/30 text-xs font-mono transition-all"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#EFE8DC] hover:bg-[#E8E0D2] text-[#393331] border border-[#DED3C2] text-xs font-serif transition-colors cursor-pointer"
               >
-                <Box className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>Open 3D Model Explorer</span>
+                <Box className="w-3.5 h-3.5 text-[#A77C54]" />
+                <span>3D Explorer</span>
               </button>
             )}
           </div>
@@ -96,31 +97,30 @@ export default function DigitalArchiveExplorer({
       </div>
 
       {/* Search & Filter Toolbar */}
-      <div className="p-4 rounded-xl bg-[#12100e] border border-[#2e2923] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-md">
-        {/* Search input */}
+      <div className="p-3.5 rounded-xl bg-[#FFFCF5] border border-[#DED3C2] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-xs">
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-[#9c9282] absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-[#756D66] absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
-            placeholder="Filter by document title, filename, or ID..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#181613] border border-[#2e2923] rounded-lg text-[#fcf9f2] placeholder-[#6e6659] focus:outline-none focus:border-[#d4af37]"
+            placeholder="Filter by title, filename, or ID..."
+            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#FFFCF5] border border-[#DED3C2] rounded-lg text-[#393331] placeholder:text-[#9E958D] font-serif focus:outline-none focus:border-[#642F38]"
           />
         </div>
 
-        {/* Filter Pills */}
+        {/* Filter Status Pills */}
         <div className="flex items-center gap-1.5">
-          <span className="text-[11px] font-mono text-[#9c9282] mr-1 hidden sm:inline">Status:</span>
+          <span className="text-[11px] font-mono text-[#756D66] mr-1 hidden sm:inline">Status:</span>
           {(['all', 'extracted', 'needs_ocr'] as const).map((st) => (
             <button
               key={st}
               type="button"
               onClick={() => setStatusFilter(st)}
-              className={`px-3 py-1 rounded-lg text-xs font-mono capitalize transition-all ${
+              className={`px-3 py-1 rounded-md text-xs font-mono capitalize transition-colors cursor-pointer ${
                 statusFilter === st
-                  ? 'bg-[#d4af37] text-[#080706] font-bold shadow-xs'
-                  : 'bg-[#181613] border border-[#2e2923] text-[#ded6c5] hover:border-[#3d372f]'
+                  ? 'bg-[#642F38] text-[#FFFCF5] font-semibold shadow-xs'
+                  : 'bg-[#EFE8DC] border border-[#DED3C2] text-[#393331] hover:bg-[#E8E0D2]'
               }`}
             >
               {st === 'all' ? `All (${documents.length})` : st === 'extracted' ? 'Extracted' : 'Needs OCR'}
@@ -129,105 +129,118 @@ export default function DigitalArchiveExplorer({
         </div>
       </div>
 
-      {/* Document Collection Grid */}
+      {/* Document Management Table */}
       {isLoading ? (
-        <div className="p-12 text-center rounded-2xl bg-[#12100e] border border-[#2e2923]">
-          <div className="w-8 h-8 rounded-full border-2 border-[#d4af37] border-t-transparent animate-spin mx-auto mb-3" />
-          <span className="text-xs font-serif text-[#ded6c5] uppercase tracking-wider">
+        <div className="p-12 text-center rounded-xl bg-[#FFFCF5] border border-[#DED3C2]">
+          <div className="w-6 h-6 rounded-full border-2 border-[#642F38] border-t-transparent animate-spin mx-auto mb-3" />
+          <span className="text-xs font-serif text-[#756D66]">
             Loading Archival Collection ...
           </span>
         </div>
       ) : error ? (
-        <div className="p-6 rounded-2xl bg-[#1f1212] border border-[#c53838]/40 text-[#fcf9f2] text-xs">
+        <div className="p-4 rounded-xl bg-[#FAEEEE] border border-[#E8BDB9] text-[#A94B43] text-xs font-serif">
           {error}
         </div>
       ) : filteredDocs.length === 0 ? (
-        <div className="p-12 text-center rounded-2xl bg-[#12100e] border border-[#2e2923] space-y-3">
-          <BookOpen className="w-10 h-10 text-[#6e6659] mx-auto" />
-          <p className="text-sm font-serif text-[#ded6c5]">No documents match the active filter criteria.</p>
+        <div className="p-12 text-center rounded-xl bg-[#FFFCF5] border border-[#DED3C2] space-y-3">
+          <BookOpen className="w-8 h-8 text-[#A77C54] mx-auto" />
+          <p className="text-xs sm:text-sm font-serif text-[#393331]">No documents match the active filter criteria.</p>
           <button
             type="button"
             onClick={() => {
               setSearchFilter('');
               setStatusFilter('all');
             }}
-            className="px-3.5 py-1.5 rounded-lg text-xs font-mono bg-[#1a1714] border border-[#2e2923] text-[#eed27c]"
+            className="px-3.5 py-1.5 rounded-lg text-xs font-serif bg-[#EFE8DC] border border-[#DED3C2] text-[#393331] hover:bg-[#E8E0D2] cursor-pointer"
           >
             Clear Filters
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredDocs.map((doc) => (
-            <div
-              key={doc.id}
-              className="p-5 rounded-2xl bg-[#141210] border border-[#2e2923] hover:border-[#d4af37]/50 shadow-xl transition-all flex flex-col justify-between group"
-            >
-              <div className="space-y-3">
-                {/* Header status pills */}
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#1d1914] border border-[#d4af37]/30 text-[#eed27c]">
-                    PDF Archive
-                  </span>
+        <div className="rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead>
+                <tr className="border-b border-[#DED3C2] bg-[#F6F1E7] text-[10px] font-mono text-[#756D66] uppercase tracking-wider">
+                  <th className="py-3 px-4 font-semibold">Document Title</th>
+                  <th className="py-3 px-3 font-semibold">Collection</th>
+                  <th className="py-3 px-3 font-semibold text-right">Folios</th>
+                  <th className="py-3 px-3 font-semibold">File Size</th>
+                  <th className="py-3 px-3 font-semibold">Extraction Status</th>
+                  <th className="py-3 px-3 font-semibold">Pagination</th>
+                  <th className="py-3 px-4 text-right font-semibold">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#EBE4D8]">
+                {filteredDocs.map((doc) => {
+                  const isExtracted = doc.extraction_status === 'extracted';
+                  const isOCR = doc.extraction_status === 'needs_ocr';
 
-                  {doc.extraction_status === 'extracted' ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[#3ba87e] bg-[#0d1e17] px-2 py-0.5 rounded border border-[#3ba87e]/30">
-                      <CheckCircle2 className="w-3 h-3" />
-                      Extracted
-                    </span>
-                  ) : doc.extraction_status === 'needs_ocr' ? (
-                    <span className="inline-flex items-center gap-1 text-[10px] font-mono text-[#eed27c] bg-[#1e1910] px-2 py-0.5 rounded border border-[#eed27c]/30">
-                      <Clock className="w-3 h-3" />
-                      Needs OCR
-                    </span>
-                  ) : (
-                    <span className="text-[10px] font-mono text-[#9c9282]">{doc.extraction_status}</span>
-                  )}
-                </div>
+                  return (
+                    <tr key={doc.id} className="hover:bg-[#F6F1E7]/70 transition-colors">
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2.5">
+                          <FileText className="w-4 h-4 text-[#A77C54] shrink-0" />
+                          <div className="min-w-0">
+                            <span className="font-serif font-bold text-[#393331] text-xs block truncate max-w-xs sm:max-w-md">
+                              {doc.original_filename.replace('.pdf', '').replace(/_/g, ' ')}
+                            </span>
+                            <span className="font-mono text-[10px] text-[#756D66]">
+                              ID: {doc.id}
+                            </span>
+                          </div>
+                        </div>
+                      </td>
 
-                {/* Document Title & Filename */}
-                <div>
-                  <h3 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage group-hover:text-[#eed27c] transition-colors line-clamp-2">
-                    {doc.original_filename.replace('.pdf', '')}
-                  </h3>
-                  <p className="text-[11px] font-mono text-[#6e6659] mt-0.5 truncate">
-                    ID: {doc.id}
-                  </p>
-                </div>
+                      <td className="py-3 px-3 font-serif text-[#59524E]">
+                        IITGN Explorer Fellowship
+                      </td>
 
-                {/* Metadata Table */}
-                <div className="space-y-1.5 p-3 rounded-xl bg-[#181613] border border-[#2e2923] text-[11px]">
-                  <div className="flex justify-between text-[#9c9282]">
-                    <span>Page Count:</span>
-                    <span className="font-mono text-[#fcf9f2] font-semibold">{doc.page_count || 1} pages</span>
-                  </div>
-                  <div className="flex justify-between text-[#9c9282]">
-                    <span>File Size:</span>
-                    <span className="font-mono text-[#ded6c5]">{formatFileSize(doc.file_size)}</span>
-                  </div>
-                  <div className="flex justify-between text-[#9c9282]">
-                    <span>Pagination Mode:</span>
-                    <span className="font-mono text-[#3ba87e]">Dual (Printed &amp; PDF)</span>
-                  </div>
-                </div>
-              </div>
+                      <td className="py-3 px-3 text-right font-mono text-[11px] text-[#393331] font-semibold">
+                        {doc.page_count ?? 1}
+                      </td>
 
-              {/* Action Buttons */}
-              <div className="pt-4 mt-4 border-t border-[#2e2923] flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => onViewDocument(doc)}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-[#d4af37] hover:bg-[#b89124] text-[#080706] text-xs font-serif font-semibold shadow-xs transition-all"
-                >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Inspect Document</span>
-                </button>
-              </div>
-            </div>
-          ))}
+                      <td className="py-3 px-3 font-mono text-[11px] text-[#756D66]">
+                        {formatFileSize(doc.file_size)}
+                      </td>
+
+                      <td className="py-3 px-3">
+                        <span
+                          className={`inline-flex items-center gap-1 font-mono text-[10px] px-2 py-0.5 rounded-full font-medium ${
+                            isExtracted
+                              ? 'bg-[#EDF3EF] text-[#52745E] border border-[#BCD0C3]'
+                              : isOCR
+                              ? 'bg-[#FAF4E9] text-[#A67C3F] border border-[#E8D3B2]'
+                              : 'bg-[#EFE8DC] text-[#756D66] border border-[#DED3C2]'
+                          }`}
+                        >
+                          {isExtracted ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
+                          <span className="capitalize">{doc.extraction_status}</span>
+                        </span>
+                      </td>
+
+                      <td className="py-3 px-3 font-mono text-[10px] text-[#52745E]">
+                        Dual (Printed &amp; PDF)
+                      </td>
+
+                      <td className="py-3 px-4 text-right">
+                        <button
+                          type="button"
+                          onClick={() => onViewDocument(doc)}
+                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#EFE8DC] hover:bg-[#642F38] text-[#393331] hover:text-[#FFFCF5] font-serif text-xs transition-colors cursor-pointer"
+                        >
+                          <Eye className="w-3 h-3" />
+                          <span>Inspect</span>
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
   );
 }
-

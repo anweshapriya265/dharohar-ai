@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full dark">
+    <html lang="en" className="h-full">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -42,7 +42,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#080706] text-[#fcf9f2] selection:bg-[#d4af37]/30 selection:text-[#fcf9f2] antialiased">
+      <body className="min-h-full flex flex-col bg-[#F6F1E7] text-[#393331] selection:bg-[#642F38]/20 selection:text-[#642F38] antialiased">
         {children}
       </body>
     </html>

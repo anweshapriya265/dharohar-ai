@@ -1,49 +1,59 @@
 @import "tailwindcss";
 
 /* --------------------------------------------------------------------------
- * DHAROHAR AI — Enterprise Digital Heritage Intelligence Design System
- * Architecture: Monolithic rock-cut stone, obsidian, antique gold, and warm ivory.
+ * DHAROHAR AI — Premium Digital Heritage Intelligence Design System
+ * Visual Identity: Parchment & Burgundy
+ * Aesthetic: Prestigious Digital Archive, Scholarly Research & Museum Platform
  * -------------------------------------------------------------------------- */
 
 :root {
-  /* Obsidian & Charcoal Surfaces */
-  --bg-obsidian-deep: #080706;
-  --bg-obsidian-card: #110f0d;
-  --bg-obsidian-surface: #171512;
-  --bg-obsidian-elevated: #201d19;
-  --bg-obsidian-highlight: #28241f;
+  /* Surfaces */
+  --bg-parchment: #F6F1E7;
+  --bg-ivory: #FFFCF5;
+  --bg-parchment-pale: #EFE8DC;
+  --bg-parchment-subtle: #F0E9DF;
 
-  /* Stone Borders */
-  --border-stone: #26221d;
-  --border-stone-light: #363028;
-  --border-gold-subtle: rgba(212, 175, 55, 0.2);
-  --border-gold-glow: rgba(212, 175, 55, 0.45);
-
-  /* Typography */
-  --text-ivory-primary: #fcf9f2;
-  --text-ivory-secondary: #ded6c5;
-  --text-stone-muted: #9c9282;
-  --text-stone-dim: #6e6659;
+  /* Brand Burgundy */
+  --brand-burgundy: #642F38;
+  --brand-burgundy-hover: #50252C;
+  --brand-wine: #814B52;
 
   /* Accents */
-  --accent-gold: #d4af37;
-  --accent-gold-hover: #e5c158;
-  --accent-gold-dark: #b89124;
-  --accent-gold-dim: rgba(212, 175, 55, 0.12);
-  --accent-terracotta: #9c381e;
-  --accent-terracotta-light: #fbeee9;
-  --accent-patina: #2d5e4a;
-  --accent-patina-light: #edf5f1;
-  --accent-azure: #2563eb;
-  --accent-crimson: #c53838;
+  --accent-bronze: #A77C54;
+  --accent-sandstone: #C8AD8D;
+  --accent-sandstone-light: #DFD3C3;
 
-  /* Universal Tokens */
-  --background: var(--bg-obsidian-deep);
-  --foreground: var(--text-ivory-primary);
-  --card: var(--bg-obsidian-card);
-  --card-foreground: var(--text-ivory-primary);
-  --muted: var(--bg-obsidian-elevated);
-  --muted-foreground: var(--text-stone-muted);
+  /* Typography */
+  --text-charcoal: #393331;
+  --text-charcoal-muted: #59524E;
+  --text-warm-grey: #756D66;
+  --text-warm-grey-light: #9E958D;
+
+  /* Borders & Dividers */
+  --border-stone: #DED3C2;
+  --border-stone-light: #EBE4D8;
+  --border-stone-dark: #C9BBA7;
+
+  /* Semantic Feedback */
+  --status-success: #52745E;
+  --status-success-bg: #EDF3EF;
+  --status-success-border: #BCD0C3;
+
+  --status-warning: #A67C3F;
+  --status-warning-bg: #FAF4E9;
+  --status-warning-border: #E8D3B2;
+
+  --status-error: #A94B43;
+  --status-error-bg: #FAEEEE;
+  --status-error-border: #E8BDB9;
+
+  /* Universal Mappings */
+  --background: var(--bg-parchment);
+  --foreground: var(--text-charcoal);
+  --card: var(--bg-ivory);
+  --card-foreground: var(--text-charcoal);
+  --muted: var(--bg-parchment-pale);
+  --muted-foreground: var(--text-warm-grey);
   --border: var(--border-stone);
 }
 
@@ -57,103 +67,85 @@ body {
   overflow-x: hidden;
 }
 
-/* Classical Heritage Serif Typography - Used selectively for titles & quotes */
+/* Editorial Serif Typography */
 .font-heritage {
-  font-family: "Cinzel", "Playfair Display", Georgia, serif;
-  letter-spacing: 0.02em;
+  font-family: "Playfair Display", Georgia, serif;
+  letter-spacing: -0.01em;
 }
 
 .font-editorial {
   font-family: "Playfair Display", Georgia, serif;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 .font-mono-heritage {
   font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
 }
 
-/* Architectural Stone Card Surfaces */
-.stone-card {
-  background: var(--bg-obsidian-card);
+/* Parchment & Ivory Content Containers */
+.parchment-card {
+  background: var(--bg-ivory);
   border: 1px solid var(--border-stone);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(57, 51, 49, 0.04), 0 1px 2px -1px rgba(57, 51, 49, 0.04);
+  border-radius: 0.75rem;
 }
 
-.stone-card-elevated {
-  background: var(--bg-obsidian-surface);
-  border: 1px solid var(--border-stone-light);
-  box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  border-radius: 1rem;
+.parchment-card-elevated {
+  background: var(--bg-ivory);
+  border: 1px solid var(--border-stone);
+  box-shadow: 0 4px 12px -2px rgba(57, 51, 49, 0.06), 0 2px 4px -2px rgba(57, 51, 49, 0.04);
+  border-radius: 0.75rem;
 }
 
-.gold-border-glow {
-  border-color: var(--border-gold-subtle);
-  box-shadow: 0 0 20px -4px rgba(212, 175, 55, 0.12);
-}
-
-.gold-border-glow:hover {
-  border-color: var(--border-gold-glow);
-  box-shadow: 0 0 26px -2px rgba(212, 175, 55, 0.22);
-}
-
-/* Subtle Excavation Blueprint Grid */
-.heritage-grid-bg {
-  background-size: 32px 32px;
-  background-image: 
-    linear-gradient(to right, rgba(212, 175, 55, 0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(212, 175, 55, 0.025) 1px, transparent 1px);
-}
-
-/* Scrollbars */
+/* Clean Custom Scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-obsidian-deep);
+  background: var(--bg-parchment);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-stone-light);
+  background: var(--border-stone-dark);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-gold-dark);
+  background: var(--brand-wine);
 }
 
-/* Leaflet dark container overrides */
+/* Leaflet Container Overrides — Clean Ivory & Stone */
 .leaflet-container {
-  background: #0c0a08 !important;
+  background: #EFE8DC !important;
   font-family: inherit !important;
 }
 
 .leaflet-bar a {
-  background-color: #171512 !important;
-  border-color: #26221d !important;
-  color: #ded6c5 !important;
+  background-color: #FFFCF5 !important;
+  border-color: #DED3C2 !important;
+  color: #393331 !important;
 }
 
 .leaflet-bar a:hover {
-  background-color: #201d19 !important;
-  color: #d4af37 !important;
+  background-color: #F6F1E7 !important;
+  color: #642F38 !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #110f0d !important;
-  color: #fcf9f2 !important;
-  border: 1px solid #26221d !important;
-  border-radius: 12px !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7) !important;
+  background: #FFFCF5 !important;
+  color: #393331 !important;
+  border: 1px solid #DED3C2 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(57, 51, 49, 0.15) !important;
 }
 
 .leaflet-popup-tip {
-  background: #110f0d !important;
+  background: #FFFCF5 !important;
 }
 
-/* Reduced motion preference */
+/* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;

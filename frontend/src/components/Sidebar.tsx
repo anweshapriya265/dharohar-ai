@@ -6,7 +6,6 @@ import {
   Sparkles,
   Search,
   Box,
-  Layers,
   MapPin,
   BookOpen,
   FileText,
@@ -58,15 +57,15 @@ export default function Sidebar({
           label: 'Overview',
           shortLabel: 'Overview',
           icon: LayoutDashboard,
-          tooltip: 'Executive summary & collection statistics',
+          tooltip: 'Archive overview & research pathways',
         },
         {
           id: 'assistant',
           label: 'Research Assistant',
           shortLabel: 'Assistant',
           icon: Sparkles,
-          badge: 'AI Core',
-          tooltip: 'Evidence-grounded scholarly inquiry',
+          badge: 'Grounded AI',
+          tooltip: 'Evidence-grounded historical inquiry',
         },
         {
           id: 'search',
@@ -74,7 +73,7 @@ export default function Sidebar({
           shortLabel: 'Search',
           icon: Search,
           badge: 'RRF',
-          tooltip: 'Dense semantic + SQLite FTS5 BM25 retrieval',
+          tooltip: 'Dense semantic + SQLite FTS5 lexical retrieval',
         },
       ],
     },
@@ -87,7 +86,7 @@ export default function Sidebar({
           shortLabel: 'Kailasa',
           icon: Compass,
           badge: 'Monolith',
-          tooltip: 'Ellora Kailasa 3D architectural study',
+          tooltip: 'Ellora Kailasa 3D architectural workspace',
         },
         {
           id: '3d-viewer',
@@ -95,7 +94,7 @@ export default function Sidebar({
           shortLabel: 'Stepwell',
           icon: Box,
           badge: 'WebGL',
-          tooltip: 'Adalaj subterranean 3D cutaway twin',
+          tooltip: 'Adalaj Vav subterranean architectural model',
         },
         {
           id: 'cartography',
@@ -131,29 +130,28 @@ export default function Sidebar({
           label: 'Curator Review',
           shortLabel: 'Review',
           icon: ShieldCheck,
-          badge: 'Human-in-Loop',
-          tooltip: 'Verification queue for AI suggestions',
+          badge: 'Curation',
+          tooltip: 'Human-in-the-loop verification queue',
         },
       ],
     },
     {
-      groupTitle: 'System & Audit',
+      groupTitle: 'System',
       items: [
         {
           id: 'admin',
           label: 'Analytics & Audit',
           shortLabel: 'Audit',
           icon: Activity,
-          badge: 'Admin',
-          tooltip: 'System metrics & provenance audit logs',
+          badge: 'Audit',
+          tooltip: 'System metrics & immutable provenance logs',
         },
         {
           id: 'diagnostics',
           label: 'System Telemetry',
           shortLabel: 'Health',
           icon: Server,
-          badge: 'FastAPI',
-          tooltip: 'Service health, embeddings & WAL store',
+          tooltip: 'Service health, embeddings & storage status',
         },
       ],
     },
@@ -165,36 +163,36 @@ export default function Sidebar({
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 z-40 bg-black/80 backdrop-blur-xs lg:hidden transition-opacity"
+          className="fixed inset-0 z-40 bg-[#393331]/40 backdrop-blur-xs lg:hidden transition-opacity"
           aria-hidden="true"
         />
       )}
 
       {/* Main Sidebar Container */}
       <aside
-        className={`fixed lg:sticky top-0 lg:top-16 z-50 lg:z-20 h-full lg:h-[calc(100vh-4rem)] border-r border-[#26221d] bg-[#0c0a08] flex flex-col justify-between transition-all duration-200 ease-in-out shrink-0 select-none ${
+        className={`fixed lg:sticky top-0 lg:top-16 z-50 lg:z-20 h-full lg:h-[calc(100vh-4rem)] border-r border-[#DED3C2] bg-[#FFFCF5] flex flex-col justify-between transition-all duration-200 ease-in-out shrink-0 select-none ${
           /* Mobile Drawer Position */
-          isOpen ? 'translate-x-0 w-72' : '-translate-x-full lg:translate-x-0'
+          isOpen ? 'translate-x-0 w-64 shadow-xl' : '-translate-x-full lg:translate-x-0'
         } ${
-          /* Desktop Width */
-          isCollapsed ? 'lg:w-[68px]' : 'lg:w-64 xl:w-72'
+          /* Desktop Width (240px expanded, 64px collapsed) */
+          isCollapsed ? 'lg:w-16' : 'lg:w-60'
         }`}
         aria-label="Application Navigation"
       >
-        {/* Navigation Content Area */}
-        <div className="flex-1 overflow-y-auto py-4 px-2.5 sm:px-3 space-y-5 scrollbar-thin">
+        {/* Navigation Content Area (Independently scrollable) */}
+        <div className="flex-1 overflow-y-auto py-3.5 px-2.5 sm:px-3 space-y-4">
           {/* Mobile Header with Brand & Close Button */}
-          <div className="flex items-center justify-between pb-3 mb-2 border-b border-[#26221d] lg:hidden">
+          <div className="flex items-center justify-between pb-3 mb-1 border-b border-[#DED3C2] lg:hidden">
             <div className="flex items-center gap-2">
               <DharoharLogo size={28} />
-              <span className="font-serif font-bold text-sm text-[#fcf9f2] font-heritage">
+              <span className="font-heritage font-bold text-sm text-[#642F38]">
                 DHAROHAR AI
               </span>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-lg text-[#9c9282] hover:text-[#fcf9f2] hover:bg-[#171512]"
+              className="p-1.5 rounded-lg text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC]"
               aria-label="Close navigation drawer"
             >
               <X className="w-5 h-5" />
@@ -206,7 +204,7 @@ export default function Sidebar({
             <div key={group.groupTitle} className="space-y-1">
               {/* Group Title (Hidden when collapsed on desktop) */}
               <div
-                className={`px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-[#9c9282] font-semibold ${
+                className={`px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-[#756D66] font-semibold ${
                   isCollapsed ? 'lg:hidden' : 'block'
                 }`}
               >
@@ -215,7 +213,7 @@ export default function Sidebar({
 
               {/* Collapsed divider on desktop */}
               {isCollapsed && (
-                <div className="hidden lg:block my-2 border-t border-[#26221d]/60 mx-2" />
+                <div className="hidden lg:block my-2 border-t border-[#DED3C2] mx-2" />
               )}
 
               {/* Group Items */}
@@ -232,26 +230,26 @@ export default function Sidebar({
                       onClose();
                     }}
                     title={isCollapsed ? `${item.label} (${group.groupTitle})` : item.tooltip}
-                    className={`w-full flex items-center rounded-xl text-left transition-all group relative ${
+                    className={`w-full flex items-center rounded-lg text-left transition-colors group relative cursor-pointer ${
                       isCollapsed
-                        ? 'lg:justify-center lg:px-2.5 lg:py-2.5 px-3 py-2'
+                        ? 'lg:justify-center lg:px-2 lg:py-2.5 px-3 py-2'
                         : 'justify-between px-3 py-2'
                     } ${
                       isActive
-                        ? 'bg-[#d4af37] text-[#080706] font-semibold shadow-xs'
-                        : 'text-[#ded6c5] hover:text-[#fcf9f2] hover:bg-[#171512]'
+                        ? 'bg-[#642F38] text-[#FFFCF5] font-medium shadow-xs'
+                        : 'text-[#393331] hover:text-[#642F38] hover:bg-[#F6F1E7]'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <Icon
                         className={`w-4 h-4 shrink-0 transition-colors ${
                           isActive
-                            ? 'text-[#080706]'
-                            : 'text-[#9c9282] group-hover:text-[#d4af37]'
+                            ? 'text-[#FFFCF5]'
+                            : 'text-[#756D66] group-hover:text-[#642F38]'
                         }`}
                       />
                       <span
-                        className={`text-xs font-medium truncate ${
+                        className={`text-xs truncate ${
                           isCollapsed ? 'lg:hidden' : 'block'
                         }`}
                       >
@@ -266,8 +264,8 @@ export default function Sidebar({
                           isCollapsed ? 'lg:hidden' : 'inline-block'
                         } ${
                           isActive
-                            ? 'bg-black/20 text-[#080706] font-bold'
-                            : 'bg-[#1b1814] text-[#9c9282] border border-[#26221d]'
+                            ? 'bg-white/20 text-[#FFFCF5] font-medium'
+                            : 'bg-[#EFE8DC] text-[#756D66] border border-[#DED3C2]'
                         }`}
                       >
                         {item.badge}
@@ -280,46 +278,46 @@ export default function Sidebar({
           ))}
         </div>
 
-        {/* Sidebar Footer */}
+        {/* Stable Sidebar Footer (Never overlaps navigation!) */}
         <div
-          className={`p-3 border-t border-[#26221d] bg-[#0a0807] space-y-2 ${
+          className={`p-3 border-t border-[#DED3C2] bg-[#F6F1E7] space-y-2 shrink-0 ${
             isCollapsed ? 'lg:p-2' : 'p-3'
           }`}
         >
           {/* Integrity Pill (Hidden when collapsed on desktop) */}
           <div
-            className={`p-2.5 rounded-xl bg-[#110f0d] border border-[#26221d] text-xs space-y-1 ${
+            className={`p-2.5 rounded-lg bg-[#FFFCF5] border border-[#DED3C2] text-xs space-y-1 ${
               isCollapsed ? 'lg:hidden' : 'block'
             }`}
           >
             <div className="flex items-center justify-between text-[10px] font-mono uppercase">
-              <span className="flex items-center gap-1.5 text-[#eed27c]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
-                <span>Strict Provenance</span>
+              <span className="flex items-center gap-1.5 text-[#642F38]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#52745E]" />
+                <span className="font-semibold">Provenance Verified</span>
               </span>
               <span
                 className={`w-2 h-2 rounded-full ${
-                  backendConnected ? 'bg-[#3ba87e]' : 'bg-rose-500'
+                  backendConnected ? 'bg-[#52745E]' : 'bg-[#A94B43]'
                 }`}
-                title={backendConnected ? 'FastAPI Connected' : 'Backend Disconnected'}
+                title={backendConnected ? 'API Connected' : 'API Disconnected'}
               />
             </div>
-            <p className="text-[10px] text-[#9c9282] leading-tight">
-              Dual-pagination verified evidence linkage for colonial archival gazetteers.
+            <p className="text-[10px] text-[#756D66] leading-tight font-serif">
+              Dual-pagination evidence linkage for archival folios.
             </p>
           </div>
 
           {/* Institutional Stamp */}
           <div
-            className={`text-center py-1 ${
+            className={`text-center py-0.5 ${
               isCollapsed ? 'lg:hidden' : 'block'
             }`}
           >
-            <div className="text-[10px] font-serif font-bold text-[#ded6c5] font-heritage">
+            <div className="text-[10px] font-heritage font-bold text-[#642F38]">
               IIT Gandhinagar · Explorer Fellowship
             </div>
-            <div className="text-[9px] font-mono text-[#6e6659]">
-              Cultural Heritage Intelligence Platform
+            <div className="text-[9px] font-mono text-[#756D66]">
+              Digital Heritage Intelligence Platform
             </div>
           </div>
 
@@ -328,9 +326,9 @@ export default function Sidebar({
             <div className="hidden lg:flex items-center justify-center py-1">
               <span
                 className={`w-2 h-2 rounded-full ${
-                  backendConnected ? 'bg-[#3ba87e]' : 'bg-rose-500'
+                  backendConnected ? 'bg-[#52745E]' : 'bg-[#A94B43]'
                 }`}
-                title={backendConnected ? 'FastAPI Connected' : 'Backend Disconnected'}
+                title={backendConnected ? 'API Connected' : 'API Disconnected'}
               />
             </div>
           )}

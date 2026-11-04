@@ -546,7 +546,7 @@ export default function HeroHeritageCanvas({
   };
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-[#2e2923] bg-[#0c0a08] shadow-2xl">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#DED3C2] bg-[#F0EAE1] shadow-2xl">
       {/* 3D Canvas / 2D Fallback Container */}
       <div
         ref={containerRef}
@@ -561,10 +561,10 @@ export default function HeroHeritageCanvas({
           <>
             <canvas ref={canvasRef} className="w-full h-full block" />
             {isLoading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-[#0a0908] z-20">
+              <div className="absolute inset-0 flex items-center justify-center bg-[#F0EAE1] z-20">
                 <div className="flex flex-col items-center gap-3">
-                  <div className="w-8 h-8 rounded-full border-2 border-[#d4af37] border-t-transparent animate-spin" />
-                  <span className="text-xs font-serif text-[#ded6c5] tracking-widest uppercase">
+                  <div className="w-8 h-8 rounded-full border-2 border-[#642F38] border-t-transparent animate-spin" />
+                  <span className="text-xs font-serif text-[#756D66] tracking-widest uppercase">
                     Initializing Monolithic Sanctuary ...
                   </span>
                 </div>
@@ -573,37 +573,37 @@ export default function HeroHeritageCanvas({
           </>
         ) : (
           /* 2D Heritage Architectural Plate Fallback */
-          <div className="w-full h-full relative bg-[#12100e] flex flex-col items-center justify-center p-6 text-center">
+          <div className="w-full h-full relative bg-[#FFFCF5] flex flex-col items-center justify-center p-6 text-center">
             {/* Antiquarian Architectural Engraving Backdrop */}
-            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#d4af37_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#A77C54_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
             
             <div className="relative z-10 max-w-lg space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-serif bg-[#1f1a14] border border-[#d4af37]/40 text-[#eed27c]">
-                <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-serif bg-[#F6F1E7] border border-[#DED3C2] text-[#642F38]">
+                <Compass className="w-3.5 h-3.5 text-[#A77C54]" />
                 <span>2D Architectural Plate Mode Active</span>
               </div>
 
               <div className="space-y-1">
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage">
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#642F38] font-heritage">
                   Monolithic Rock-Cut Sanctuary Facade
                 </h3>
-                <p className="text-xs sm:text-sm text-[#ded6c5] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#756D66] leading-relaxed">
                   Classical antiquarian elevation based on James Burgess (1880) architectural drawings.
                   Features the horseshoe Chaitya arch, free-standing Dhwajastambha pillar, and excavated courtyard.
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-[#191612] border border-[#2e2923] text-left text-xs space-y-2">
-                <div className="flex justify-between border-b border-[#2e2923] pb-1.5">
-                  <span className="text-[#9c9282]">Courtyard Excavation:</span>
-                  <span className="font-mono text-[#eed27c]">276 ft deep × 154 ft wide</span>
+              <div className="p-4 rounded-xl bg-[#F6F1E7] border border-[#DED3C2] text-left text-xs space-y-2">
+                <div className="flex justify-between border-b border-[#DED3C2] pb-1.5">
+                  <span className="text-[#756D66]">Courtyard Excavation:</span>
+                  <span className="font-mono text-[#642F38]">276 ft deep × 154 ft wide</span>
                 </div>
-                <div className="flex justify-between border-b border-[#2e2923] pb-1.5">
-                  <span className="text-[#9c9282]">Dhwajastambha Pillar:</span>
-                  <span className="font-mono text-[#eed27c]">Height 49 ft (with Trisula)</span>
+                <div className="flex justify-between border-b border-[#DED3C2] pb-1.5">
+                  <span className="text-[#756D66]">Dhwajastambha Pillar:</span>
+                  <span className="font-mono text-[#642F38]">Height 49 ft (with Trisula)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#9c9282]">Archival Reference:</span>
+                  <span className="text-[#756D66]">Archival Reference:</span>
                   <span className="font-mono text-[#3ba87e]">Fergusson &amp; Burgess (1880), p. 453</span>
                 </div>
               </div>
@@ -612,7 +612,7 @@ export default function HeroHeritageCanvas({
                 <button
                   type="button"
                   onClick={() => setIs2DFallback(false)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d4af37] hover:bg-[#b89124] text-[#080706] text-xs font-semibold shadow-md transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#642F38] hover:bg-[#814B52] text-[#FFFCF5] text-xs font-semibold shadow-md transition-colors"
                 >
                   <Eye className="w-3.5 h-3.5" />
                   <span>Resume Interactive 3D Experience</span>
@@ -624,12 +624,12 @@ export default function HeroHeritageCanvas({
 
         {/* Top Overlay: Title & Provenance Badge */}
         <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-10 max-w-md pointer-events-none">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-serif font-medium bg-[#0a0908]/85 border border-[#d4af37]/40 text-[#eed27c] backdrop-blur-md shadow-lg pointer-events-auto">
-            <Sparkles className="w-3 h-3 text-[#d4af37]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-serif font-medium bg-[#0a0908]/85 border border-[#642F38]/40 text-[#642F38] backdrop-blur-md shadow-lg pointer-events-auto">
+            <Sparkles className="w-3 h-3 text-[#A77C54]" />
             <span>Interactive 3D Heritage Intelligence</span>
           </div>
 
-          <h1 className="mt-2 text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight leading-tight drop-shadow-md">
+          <h1 className="mt-2 text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-[#642F38] font-heritage tracking-tight leading-tight drop-shadow-md">
             Monolithic Cave Sanctuary
           </h1>
           <p className="text-xs sm:text-sm text-[#ded6c5] mt-1 line-clamp-2 drop-shadow-sm">
@@ -645,8 +645,8 @@ export default function HeroHeritageCanvas({
             onClick={toggleWireframe}
             className={`p-2 rounded-xl text-xs border backdrop-blur-md transition-all shadow-md ${
               wireframeMode
-                ? 'bg-[#d4af37] text-[#0a0908] border-[#d4af37]'
-                : 'bg-[#0e0d0b]/80 border-[#3d372f] text-[#ded6c5] hover:border-[#d4af37]/60'
+                ? 'bg-[#642F38] text-[#FFFCF5] border-[#642F38]'
+                : 'bg-[#F6F1E7] border-[#DED3C2] text-[#393331] hover:border-[#642F38]/60'
             }`}
             title="Toggle Architectural Wireframe Mesh"
             aria-label="Toggle Wireframe Mode"
@@ -661,11 +661,11 @@ export default function HeroHeritageCanvas({
               const next = lightingMode === 'dawn' ? 'noon' : lightingMode === 'noon' ? 'twilight' : 'dawn';
               applyLighting(next);
             }}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs bg-[#0e0d0b]/80 border border-[#3d372f] text-[#ded6c5] hover:border-[#d4af37]/60 backdrop-blur-md shadow-md transition-all"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs bg-[#0e0d0b]/80 border border-[#DED3C2] text-[#ded6c5] hover:border-[#642F38]/60 backdrop-blur-md shadow-md transition-all"
             title={`Current Lighting: ${lightingMode}. Click to cycle.`}
             aria-label="Cycle Lighting Atmosphere"
           >
-            <Sun className="w-3.5 h-3.5 text-[#d4af37]" />
+            <Sun className="w-3.5 h-3.5 text-[#A77C54]" />
             <span className="hidden sm:inline capitalize font-mono text-[11px]">{lightingMode}</span>
           </button>
 
@@ -673,7 +673,7 @@ export default function HeroHeritageCanvas({
           <button
             type="button"
             onClick={handleResetCamera}
-            className="p-2 rounded-xl text-xs bg-[#0e0d0b]/80 border border-[#3d372f] text-[#ded6c5] hover:border-[#d4af37]/60 backdrop-blur-md shadow-md transition-all"
+            className="p-2 rounded-xl text-xs bg-[#0e0d0b]/80 border border-[#DED3C2] text-[#ded6c5] hover:border-[#642F38]/60 backdrop-blur-md shadow-md transition-all"
             title="Reset Camera Orientation & Zoom"
             aria-label="Reset Camera View"
           >
@@ -686,8 +686,8 @@ export default function HeroHeritageCanvas({
             onClick={() => setIs2DFallback(!is2DFallback)}
             className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs border backdrop-blur-md transition-all shadow-md ${
               is2DFallback
-                ? 'bg-[#d4af37] text-[#0a0908] border-[#d4af37]'
-                : 'bg-[#0e0d0b]/80 border-[#3d372f] text-[#ded6c5] hover:border-[#d4af37]/60'
+                ? 'bg-[#642F38] text-[#FFFCF5] border-[#642F38]'
+                : 'bg-[#F6F1E7] border-[#DED3C2] text-[#393331] hover:border-[#642F38]/60'
             }`}
             title="Switch between 3D scene and 2D architectural plate"
             aria-label="Toggle 2D Plate View"
@@ -701,7 +701,7 @@ export default function HeroHeritageCanvas({
 
         {/* Bottom Left: Camera Angle Presets */}
         <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 z-10 flex flex-wrap items-center gap-1.5">
-          <span className="hidden sm:inline-block text-[11px] font-mono uppercase text-[#9c9282] mr-1">
+          <span className="hidden sm:inline-block text-[11px] font-mono uppercase text-[#756D66] mr-1">
             Perspectives:
           </span>
           {[
@@ -716,8 +716,8 @@ export default function HeroHeritageCanvas({
               onClick={() => applyPreset(preset.id as 'panoramic' | 'pillar' | 'sanctum' | 'aerial')}
               className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all backdrop-blur-md ${
                 cameraPreset === preset.id
-                  ? 'bg-[#d4af37] text-[#0a0908] font-bold shadow-md'
-                  : 'bg-[#0e0d0b]/80 border border-[#2e2923] text-[#ded6c5] hover:border-[#d4af37]/50'
+                  ? 'bg-[#642F38] text-[#FFFCF5] font-bold shadow-md'
+                  : 'bg-[#F6F1E7] border border-[#DED3C2] text-[#393331] hover:border-[#642F38]/50'
               }`}
             >
               {preset.label}
@@ -731,9 +731,9 @@ export default function HeroHeritageCanvas({
             <button
               type="button"
               onClick={onExploreArchive}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-serif font-semibold bg-[#1a1713]/90 hover:bg-[#252019] text-[#ded6c5] border border-[#2e2923] hover:border-[#d4af37]/40 shadow-lg backdrop-blur-md transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-serif font-semibold bg-[#1a1713]/90 hover:bg-[#252019] text-[#ded6c5] border border-[#DED3C2] hover:border-[#642F38]/40 shadow-lg backdrop-blur-md transition-all"
             >
-              <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+              <Compass className="w-3.5 h-3.5 text-[#A77C54]" />
               <span>Explore Archive</span>
             </button>
           )}
@@ -742,9 +742,9 @@ export default function HeroHeritageCanvas({
             <button
               type="button"
               onClick={onOpenAssistant}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-serif font-semibold bg-[#1a1713]/90 hover:bg-[#252019] text-[#ded6c5] border border-[#2e2923] hover:border-[#d4af37]/40 shadow-lg backdrop-blur-md transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-serif font-semibold bg-[#1a1713]/90 hover:bg-[#252019] text-[#ded6c5] border border-[#DED3C2] hover:border-[#642F38]/40 shadow-lg backdrop-blur-md transition-all"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+              <Sparkles className="w-3.5 h-3.5 text-[#A77C54]" />
               <span>AI Assistant</span>
             </button>
           )}
@@ -753,9 +753,9 @@ export default function HeroHeritageCanvas({
             <button
               type="button"
               onClick={onInspect3DStudio}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-serif font-semibold bg-[#1a1713]/90 hover:bg-[#252019] text-[#eed27c] border border-[#d4af37]/40 shadow-lg backdrop-blur-md transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-serif font-semibold bg-[#1a1713]/90 hover:bg-[#252019] text-[#642F38] border border-[#642F38]/40 shadow-lg backdrop-blur-md transition-all"
             >
-              <Maximize2 className="w-3.5 h-3.5 text-[#d4af37]" />
+              <Maximize2 className="w-3.5 h-3.5 text-[#A77C54]" />
               <span>3D Explorer Studio</span>
             </button>
           )}
@@ -763,9 +763,9 @@ export default function HeroHeritageCanvas({
       </div>
 
       {/* Mandatory Historical Provenance & Disclaimers Footer */}
-      <div className="px-4 py-3 sm:px-6 bg-[#080706] border-t border-[#2e2923] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[11px] text-[#9c9282]">
+      <div className="px-4 py-3 sm:px-6 bg-[#F6F1E7] border-t border-[#DED3C2] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[11px] text-[#756D66]">
         <div className="flex items-center gap-2">
-          <Info className="w-3.5 h-3.5 text-[#d4af37] shrink-0" />
+          <Info className="w-3.5 h-3.5 text-[#A77C54] shrink-0" />
           <span>
             <strong className="text-[#ded6c5]">Historical Provenance:</strong> Illustrative architectural study
             inspired by James Burgess (1880/1883) surveys of Western Indian rock temples. Not an archaeological laser scan.
@@ -777,7 +777,7 @@ export default function HeroHeritageCanvas({
             <span className="w-1.5 h-1.5 rounded-full bg-[#3ba87e]" />
             Evidence-Linked Corpus
           </span>
-          <span className="font-mono text-[#eed27c]">WebGL 2.0 Shader</span>
+          <span className="font-mono text-[#642F38]">WebGL 2.0 Shader</span>
         </div>
       </div>
     </div>

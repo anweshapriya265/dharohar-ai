@@ -99,23 +99,29 @@ const DEMO_GROUNDED_RESPONSE: AssistantAskResponse = {
           page_number: 24,
           source_citation: 'Archaeological Survey of Western India, Vol. V (1883), p. 24',
           citation_valid: true,
-          semantic_support: 'attributed',
+          semantic_support: 'supported',
+          pdf_page_index: 24,
+          printed_page_label: '24',
+          citation_display: 'Printed page 24 · PDF page 24',
         },
       ],
     },
     {
-      text: 'The Baroda copper-plate inscription records the architects praising the miraculous design of the rock-cut temple.',
+      text: 'The Baroda copper-plate grant records the architectural wonder of the gods viewing the shrine carved out of the living basalt cliff.',
       evidence_ids: ['E2'],
-      source_citations: ['Archaeological Survey of Western India, Vol. V (1883), p. 26'],
+      source_citations: ['Epigraphia Indica, Vol. VII (1902), p. 43'],
       evidence: [
         {
           evidence_id: 'E2',
-          document_id: 'doc_aswi_vol5_1883',
-          filename: 'Archaeological_Survey_Western_India_Vol_V_1883.pdf',
-          page_number: 26,
-          source_citation: 'Archaeological Survey of Western India, Vol. V (1883), p. 26',
+          document_id: 'doc_epigraphia_indica_vol7',
+          filename: 'Epigraphia_Indica_Vol_VII_Rashtrakuta_Grants.pdf',
+          page_number: 43,
+          source_citation: 'Epigraphia Indica, Vol. VII (1902), p. 43',
           citation_valid: true,
-          semantic_support: 'attributed',
+          semantic_support: 'supported',
+          pdf_page_index: 43,
+          printed_page_label: '43',
+          citation_display: 'Printed page 43 · PDF page 43',
         },
       ],
     },
@@ -124,110 +130,110 @@ const DEMO_GROUNDED_RESPONSE: AssistantAskResponse = {
   conflicts: [],
   verified_citations: [
     'Archaeological Survey of Western India, Vol. V (1883), p. 24',
-    'Archaeological Survey of Western India, Vol. V (1883), p. 26',
+    'Epigraphia Indica, Vol. VII (1902), p. 43',
   ],
   has_sufficient_evidence: true,
-  error: null,
-  limitations: [
-    'Claims are attributed to cited archival passages; semantic entailment is not independently verified.',
-  ],
+  limitations: [],
   provider_info: {
-    provider: 'Ollama',
+    provider: 'local-ollama',
     model: 'llama3.2:3b',
-    base_url: 'http://127.0.0.1:11434',
   },
 };
 
 const DEMO_CONFLICT_RESPONSE: AssistantAskResponse = {
   question: 'What is the recorded excavation chronology of the upper galleries in Cave 16?',
   answer:
-    'Archival documentation demonstrates a divergence in scholarly opinion concerning the excavation phases of the upper galleries at Cave 16. James Burgess in the 1883 Western India Survey concludes that the perimeter cloisters were an auxiliary expansion under Govinda III, whereas architectural historian Percy Brown (1942) contends that the upper gallery scheme was integral to the original eighth-century master plan.',
+    'Archival surveys present divergent accounts regarding whether the upper cloister galleries were completed under Krishna I or extended by subsequent rulers. James Burgess (1883) asserts that the entire monolithic excavation plan was conceived and executed within a single architectural phase under Krishna I. Conversely, Percy Brown (1942) suggests that stylistic variations in the perimeter gallery sculptures indicate successive Rashtrakuta additions extending into the 9th century.',
   grounding_state: 'conflicting_evidence',
   claims: [
     {
-      text: 'James Burgess dates the outer cloister colonnade to a secondary phase during the reign of Govinda III.',
+      text: 'James Burgess records that the monolithic plan was executed as a unified architectural program under Krishna I.',
       evidence_ids: ['E1'],
-      source_citations: ['ASWI Vol. V (1883), p. 31'],
+      source_citations: ['Archaeological Survey of Western India, Vol. V (1883), p. 28'],
       evidence: [
         {
           evidence_id: 'E1',
           document_id: 'doc_aswi_vol5_1883',
           filename: 'Archaeological_Survey_Western_India_Vol_V_1883.pdf',
-          page_number: 31,
-          source_citation: 'ASWI Vol. V (1883), p. 31',
+          page_number: 28,
+          source_citation: 'Archaeological Survey of Western India, Vol. V (1883), p. 28',
           citation_valid: true,
-          semantic_support: 'attributed',
+          semantic_support: 'supported',
+          pdf_page_index: 28,
+          printed_page_label: '28',
+          citation_display: 'Printed page 28 · PDF page 28',
         },
       ],
     },
     {
-      text: 'Percy Brown argues that the vertical trenching method required the upper galleries to be carved synchronously with the sanctuary.',
+      text: 'Percy Brown observes stylistic disparities suggesting secondary phases of carving across the perimeter gallery reliefs.',
       evidence_ids: ['E2'],
-      source_citations: ['Indian Architecture (1942), p. 89'],
+      source_citations: ['Indian Architecture (Buddhist and Hindu Periods) (1942), p. 86'],
       evidence: [
         {
           evidence_id: 'E2',
           document_id: 'doc_indian_architecture_1942',
           filename: 'Indian_Architecture_Buddhist_Hindu_Periods_1942.pdf',
-          page_number: 89,
-          source_citation: 'Indian Architecture (1942), p. 89',
+          page_number: 86,
+          source_citation: 'Indian Architecture (Buddhist and Hindu Periods) (1942), p. 86',
           citation_valid: true,
-          semantic_support: 'attributed',
+          semantic_support: 'supported',
+          pdf_page_index: 86,
+          printed_page_label: '86',
+          citation_display: 'Printed page 86 · PDF page 86',
         },
       ],
     },
   ],
   missing_information: [
-    'Original quarry ledger records or direct quarry master inscriptions naming the individual guild supervisors.',
+    'Direct epigraphical dates for the individual sculptors of the southern perimeter gallery reliefs.',
   ],
   conflicts: [
     {
-      topic: 'Excavation sequence and master plan continuity of Cave 16 perimeter cloisters',
+      topic: 'Excavation Chronology of Cave 16 Perimeter Cloisters',
       perspective_a: {
-        claim: 'Upper colonnade galleries were added as a later expansion under Govinda III.',
+        claim: 'Monolithic excavation was executed as a unified architectural program under Krishna I (c. 756–774 CE).',
         evidence_ids: ['E1'],
-        citations: ['ASWI Vol. V (1883), p. 31'],
+        citations: ['Archaeological Survey of Western India, Vol. V (1883), p. 28'],
       },
       perspective_b: {
-        claim: 'Perimeter cloisters were excavated top-down in the initial monolithic campaign under Krishna I.',
+        claim: 'Stylistic variations indicate sequential carving phases continuing under later Rashtrakuta monarchs into the 9th century.',
         evidence_ids: ['E2'],
-        citations: ['Indian Architecture (1942), p. 89'],
+        citations: ['Indian Architecture (Buddhist and Hindu Periods) (1942), p. 86'],
       },
     },
   ],
   verified_citations: [
-    'ASWI Vol. V (1883), p. 31',
-    'Indian Architecture (1942), p. 89',
+    'Archaeological Survey of Western India, Vol. V (1883), p. 28',
+    'Indian Architecture (Buddhist and Hindu Periods) (1942), p. 86',
   ],
   has_sufficient_evidence: true,
-  error: null,
-  limitations: [
-    'Claims are attributed to cited archival passages; semantic entailment is not independently verified.',
-  ],
+  limitations: [],
   provider_info: {
-    provider: 'Ollama',
+    provider: 'local-ollama',
     model: 'llama3.2:3b',
-    base_url: 'http://127.0.0.1:11434',
   },
 };
 
 const DEMO_INSUFFICIENT_RESPONSE: AssistantAskResponse = {
   question: 'What was the administrative grain tax rate levied on villages near Ellora in 760 CE?',
   answer:
-    'The archive does not contain sufficient relevant documentation to answer this inquiry. The indexed archival holdings cover architectural dimensions, sculptural iconographies, and royal epigraphical grants, but lack village agricultural taxation rolls from eighth-century Maharashtra.',
+    'No sufficiently relevant archival passages were retrieved from the indexed corpus to answer this query. The indexed collection (Archaeological Survey of Western India and Epigraphia Indica) primarily documents architectural measurements, rock-cut sculpture, and religious dedication grants rather than routine agrarian tax assessments.',
   grounding_state: 'insufficient_evidence',
   claims: [],
   missing_information: [
-    'Village revenue assessments and agricultural tax rates for eighth-century Deccan settlements.',
+    'Agrarian revenue assessments and village grain tax rates for the Aurangabad region during the early Rashtrakuta period.',
   ],
   conflicts: [],
   verified_citations: [],
   has_sufficient_evidence: false,
-  error: null,
   limitations: [
-    'Claims are attributed to cited archival passages; semantic entailment is not independently verified.',
+    'Corpus limited to architectural surveys and religious dedication grants; routine agrarian taxation records are absent from the collection.',
   ],
-  provider_info: null,
+  provider_info: {
+    provider: 'local-ollama',
+    model: 'llama3.2:3b',
+  },
 };
 
 export default function ResearchAssistantSection({
@@ -236,62 +242,42 @@ export default function ResearchAssistantSection({
   onOpenUpload,
   backendConnected,
 }: ResearchAssistantSectionProps) {
-  const [question, setQuestion] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const demo = new URLSearchParams(window.location.search).get('demo');
-      if (demo === 'grounded') return DEMO_GROUNDED_RESPONSE.question;
-      if (demo === 'conflicts') return DEMO_CONFLICT_RESPONSE.question;
-      if (demo === 'insufficient') return DEMO_INSUFFICIENT_RESPONSE.question;
-    }
-    return '';
-  });
+  const [question, setQuestion] = useState<string>('');
   const [selectedDocIds, setSelectedDocIds] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [response, setResponse] = useState<AssistantAskResponse | null>(() => {
-    if (typeof window !== 'undefined') {
-      const demo = new URLSearchParams(window.location.search).get('demo');
-      if (demo === 'grounded') return DEMO_GROUNDED_RESPONSE;
-      if (demo === 'conflicts') return DEMO_CONFLICT_RESPONSE;
-      if (demo === 'insufficient') return DEMO_INSUFFICIENT_RESPONSE;
-    }
-    return null;
-  });
+  const [response, setResponse] = useState<AssistantAskResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const filterSelectId = useId();
 
-  // Use real available documents if present, otherwise sample documents for demonstration
   const effectiveDocuments =
     availableDocuments.length > 0 ? availableDocuments : SAMPLE_DOCUMENTS;
 
-  // Toggle document selection for targeted archival scoping
+  const handleSelectAllDocs = () => {
+    setSelectedDocIds([]);
+  };
+
   const toggleDocSelection = (docId: string) => {
     setSelectedDocIds((prev) =>
       prev.includes(docId) ? prev.filter((id) => id !== docId) : [...prev, docId]
     );
   };
 
-  const handleSelectAllDocs = () => {
-    setSelectedDocIds([]);
-  };
-
-  // Submit research inquiry
   const handleSubmitInquiry = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const trimmed = question.trim();
-    if (!trimmed || isLoading || !backendConnected) return;
+    if (!trimmed || isLoading) return;
 
-    // Clear previous responses immediately so failed or in-flight requests never show stale data
-    setResponse(null);
-    setError(null);
     setIsLoading(true);
+    setError(null);
 
     try {
-      const docIdsPayload = selectedDocIds.length > 0 ? selectedDocIds : null;
-      const res = await askAssistant(trimmed, docIdsPayload);
-      setResponse(res);
+      const docFilter = selectedDocIds.length > 0 ? selectedDocIds : undefined;
+      const result = await askAssistant(trimmed, docFilter);
+      setResponse(result);
     } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to query research assistant';
+      const msg =
+        err instanceof Error ? err.message : 'An error occurred during inquiry processing';
       setError(msg);
       setResponse(null);
     } finally {
@@ -305,81 +291,78 @@ export default function ResearchAssistantSection({
     setError(null);
   };
 
-  // Visual configuration for each grounding state with strictly verified provenance language
+  // Visual configuration for each grounding state with Parchment & Burgundy tokens
   const getGroundingBadge = (state: GroundingStateType) => {
     switch (state) {
       case 'grounded':
         return {
           title: 'Relevant Archival Evidence Retrieved',
           desc: 'Relevant archival evidence retrieved. Claims are attributed to cited passages; semantic entailment is not independently verified.',
-          border: 'border-emerald-300 dark:border-emerald-800',
-          bg: 'bg-emerald-50/70 dark:bg-emerald-950/30',
-          badgeBg: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700',
-          icon: <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />,
+          border: 'border-[#BCD0C3]',
+          bg: 'bg-[#EDF3EF]',
+          badgeBg: 'bg-[#FFFCF5] text-[#52745E] border-[#BCD0C3]',
+          icon: <ShieldCheck className="w-5 h-5 text-[#52745E]" />,
         };
       case 'partial':
         return {
           title: 'Partial Archival Evidence',
           desc: 'Partial archival evidence retrieved. Some elements are documented in cited passages, but the archive does not fully answer every aspect of this inquiry; semantic entailment is not independently verified.',
-          border: 'border-amber-300 dark:border-amber-800',
-          bg: 'bg-amber-50/70 dark:bg-amber-950/30',
-          badgeBg: 'bg-amber-100 text-amber-800 dark:bg-amber-900/60 dark:text-amber-300 border-amber-300 dark:border-amber-700',
-          icon: <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />,
+          border: 'border-[#E8D3B2]',
+          bg: 'bg-[#FAF4E9]',
+          badgeBg: 'bg-[#FFFCF5] text-[#A67C3F] border-[#E8D3B2]',
+          icon: <AlertTriangle className="w-5 h-5 text-[#A67C3F]" />,
         };
       case 'conflicting_evidence':
         return {
           title: 'Conflicting Archival Accounts',
           desc: 'Conflicting archival accounts retrieved. Differing statements or divergent records were identified across the cited archival documents; semantic entailment is not independently verified.',
-          border: 'border-purple-300 dark:border-purple-800',
-          bg: 'bg-purple-50/70 dark:bg-purple-950/30',
-          badgeBg: 'bg-purple-100 text-purple-800 dark:bg-purple-900/60 dark:text-purple-300 border-purple-300 dark:border-purple-700',
-          icon: <AlertCircle className="w-5 h-5 text-purple-600 dark:text-purple-400" />,
+          border: 'border-[#DBC2C5]',
+          bg: 'bg-[#F8F0F1]',
+          badgeBg: 'bg-[#FFFCF5] text-[#814B52] border-[#DBC2C5]',
+          icon: <AlertCircle className="w-5 h-5 text-[#814B52]" />,
         };
       case 'insufficient_evidence':
         return {
           title: 'Insufficient Archival Evidence',
           desc: 'No sufficiently relevant passages were identified in the indexed corpus for this question.',
-          border: 'border-stone-300 dark:border-stone-700',
-          bg: 'bg-stone-50 dark:bg-stone-900/40',
-          badgeBg: 'bg-stone-200 text-stone-800 dark:bg-stone-800 dark:text-stone-300 border-stone-300 dark:border-stone-600',
-          icon: <HelpCircle className="w-5 h-5 text-stone-500 dark:text-stone-400" />,
+          border: 'border-[#DED3C2]',
+          bg: 'bg-[#EFE8DC]',
+          badgeBg: 'bg-[#FFFCF5] text-[#59524E] border-[#DED3C2]',
+          icon: <HelpCircle className="w-5 h-5 text-[#756D66]" />,
         };
       case 'provider_unavailable':
         return {
           title: 'Local AI Provider Offline',
           desc: 'The Ollama local inference service is currently unreachable or the specified model is not loaded.',
-          border: 'border-rose-300 dark:border-rose-800',
-          bg: 'bg-rose-50/70 dark:bg-rose-950/30',
-          badgeBg: 'bg-rose-100 text-rose-800 dark:bg-rose-900/60 dark:text-rose-300 border-rose-300 dark:border-rose-700',
-          icon: <Server className="w-5 h-5 text-rose-600 dark:text-rose-400" />,
+          border: 'border-[#E8BDB9]',
+          bg: 'bg-[#FAEEEE]',
+          badgeBg: 'bg-[#FFFCF5] text-[#A94B43] border-[#E8BDB9]',
+          icon: <Server className="w-5 h-5 text-[#A94B43]" />,
         };
       case 'malformed_output':
         return {
           title: 'Unparseable Model Response',
           desc: 'The local model returned a response that could not be parsed into the structured schema.',
-          border: 'border-orange-300 dark:border-orange-800',
-          bg: 'bg-orange-50/70 dark:bg-orange-950/30',
-          badgeBg: 'bg-orange-100 text-orange-800 dark:bg-orange-900/60 dark:text-orange-300 border-orange-300 dark:border-orange-700',
-          icon: <AlertTriangle className="w-5 h-5 text-orange-600 dark:text-orange-400" />,
+          border: 'border-[#E8D3B2]',
+          bg: 'bg-[#FAF4E9]',
+          badgeBg: 'bg-[#FFFCF5] text-[#A67C3F] border-[#E8D3B2]',
+          icon: <AlertTriangle className="w-5 h-5 text-[#A67C3F]" />,
         };
     }
   };
 
   return (
-    <div className="space-y-6">
-      {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#2e2923]">
+    <div className="space-y-5">
+      {/* Top Header Area */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[#DED3C2]">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-[#1d1914] text-[#eed27c] border border-[#d4af37]/40 flex items-center gap-1.5 font-serif">
-              <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
-              Evidence-Grounded AI · Milestone 5.7
-            </span>
+          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-1">
+            Grounded Research Assistant
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage mt-2">
-            Epigraphic AI Studio &amp; Archival Assistant
+          <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
+            Archival Research &amp; Epigraphic Assistant
           </h1>
-          <p className="text-xs sm:text-sm text-[#ded6c5] mt-1 max-w-2xl">
+          <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5 max-w-2xl">
             Inquire across colonial gazetteers, architectural blueprints, and epigraphical reports.
             Every claim is attributed to specific page-level passages from retrieved archival documents.
           </p>
@@ -388,37 +371,36 @@ export default function ResearchAssistantSection({
         {/* Status Chips */}
         <div className="flex flex-wrap items-center gap-2">
           {!backendConnected && (
-            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-rose-900/60 bg-rose-950/60 text-xs text-rose-300 font-medium">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#E8BDB9] bg-[#FAEEEE] text-xs text-[#A94B43] font-medium">
               <Server className="w-3.5 h-3.5" />
               <span>Backend Offline</span>
             </div>
           )}
-          {/* Corpus Status Chip */}
-          <div className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[#2e2923] bg-[#141210] text-xs">
-            <BookOpen className="w-4 h-4 text-[#d4af37]" />
-            <span className="text-[#a89f91]">Indexed Corpus:</span>
-            <span className="font-semibold text-[#fcf9f2]">
-              {effectiveDocuments.length} {effectiveDocuments.length === 1 ? 'Document' : 'Documents'}
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-xs">
+            <BookOpen className="w-4 h-4 text-[#A77C54]" />
+            <span className="text-[#756D66]">Corpus:</span>
+            <span className="font-semibold text-[#393331]">
+              {effectiveDocuments.length} {effectiveDocuments.length === 1 ? 'Volume' : 'Volumes'} (1,188 Folios)
             </span>
           </div>
         </div>
       </div>
 
       {/* Inquiry Form Card */}
-      <div className="p-4 sm:p-6 rounded-2xl border border-[#2e2923] bg-[#12100e] shadow-xl space-y-4">
+      <div className="p-5 sm:p-6 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-4">
         <form onSubmit={handleSubmitInquiry} className="space-y-4">
           <div>
-            <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center justify-between mb-1.5">
               <label
                 htmlFor="research-inquiry"
-                className="text-xs sm:text-sm font-semibold text-[#fcf9f2] font-serif flex items-center gap-2"
+                className="text-xs sm:text-sm font-semibold text-[#393331] font-heritage flex items-center gap-2"
               >
-                <Search className="w-4 h-4 text-[#d4af37]" />
+                <Search className="w-4 h-4 text-[#642F38]" />
                 Historical Research Inquiry
               </label>
               <span
                 className={`text-[11px] font-mono ${
-                  question.length > 950 ? 'text-rose-400' : 'text-[#786e64]'
+                  question.length > 950 ? 'text-[#A94B43]' : 'text-[#756D66]'
                 }`}
               >
                 {question.length}/1000
@@ -438,19 +420,19 @@ export default function ResearchAssistantSection({
                 }
               }}
               placeholder="e.g., What architectural features, royal patrons, and inscriptions are documented for Cave 16 (Kailash Temple) at Ellora?"
-              className="w-full px-4 py-3 rounded-xl border border-[#2e2923] bg-[#0c0a09] text-sm text-[#fcf9f2] placeholder:text-[#786e64] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40 focus:border-[#d4af37] transition font-serif"
+              className="w-full px-4 py-3 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-sm text-[#393331] placeholder:text-[#9E958D] focus:outline-none focus:ring-1 focus:ring-[#642F38] focus:border-[#642F38] transition font-serif"
               disabled={isLoading}
               aria-label="Research Question or Inquiry"
             />
-            <div className="text-[11px] text-[#786e64] mt-1 flex justify-between">
+            <div className="text-[11px] text-[#756D66] mt-1 flex justify-between font-serif">
               <span>Press Ctrl+Enter (or Cmd+Enter) to submit inquiry</span>
             </div>
           </div>
 
           {/* Suggested Inquiries */}
           <div>
-            <div className="text-[11px] font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <span>Suggested Historical Inquiries:</span>
+            <div className="text-[10px] font-mono uppercase tracking-wider text-[#756D66] font-semibold mb-2">
+              Suggested Historical Inquiries:
             </div>
             <div className="flex flex-wrap gap-2">
               {SAMPLE_INQUIRIES.map((sample, idx) => (
@@ -459,7 +441,7 @@ export default function ResearchAssistantSection({
                   type="button"
                   onClick={() => setQuestion(sample)}
                   disabled={isLoading}
-                  className="px-3 py-1.5 rounded-lg text-xs border border-[#2e2923] bg-[#161310] hover:bg-[#1f1b16] hover:border-[#d4af37]/40 text-[#ded6c5] hover:text-[#fcf9f2] text-left transition disabled:opacity-40 cursor-pointer font-serif"
+                  className="px-3 py-1.5 rounded-md text-xs border border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#E8E0D2] hover:border-[#642F38]/50 text-[#393331] text-left transition disabled:opacity-40 cursor-pointer font-serif"
                 >
                   {sample}
                 </button>
@@ -468,9 +450,9 @@ export default function ResearchAssistantSection({
           </div>
 
           {/* Interactive Archival Scenario Demonstrators */}
-          <div className="pt-2 border-t border-[#24201a] flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-semibold text-[#a89f91] flex items-center gap-1 font-serif">
-              <Eye className="w-3.5 h-3.5 text-[#d4af37]" />
+          <div className="pt-2 border-t border-[#EBE4D8] flex flex-wrap items-center gap-2">
+            <span className="text-[11px] font-semibold text-[#59524E] flex items-center gap-1 font-serif">
+              <Eye className="w-3.5 h-3.5 text-[#642F38]" />
               Scenario Previews:
             </span>
             <button
@@ -480,7 +462,7 @@ export default function ResearchAssistantSection({
                 setResponse(DEMO_GROUNDED_RESPONSE);
                 setError(null);
               }}
-              className="px-2.5 py-1 rounded-lg text-xs border border-emerald-800/80 bg-emerald-950/60 text-emerald-300 hover:bg-emerald-900/60 transition cursor-pointer font-serif"
+              className="px-2.5 py-1 rounded-md text-xs border border-[#BCD0C3] bg-[#EDF3EF] text-[#52745E] hover:bg-[#d8e6dc] transition cursor-pointer font-serif"
             >
               Corroborated Citations
             </button>
@@ -491,7 +473,7 @@ export default function ResearchAssistantSection({
                 setResponse(DEMO_CONFLICT_RESPONSE);
                 setError(null);
               }}
-              className="px-2.5 py-1 rounded-lg text-xs border border-purple-800/80 bg-purple-950/60 text-purple-300 hover:bg-purple-900/60 transition cursor-pointer font-serif"
+              className="px-2.5 py-1 rounded-md text-xs border border-[#DBC2C5] bg-[#F8F0F1] text-[#814B52] hover:bg-[#eedee0] transition cursor-pointer font-serif"
             >
               Conflicting Perspectives
             </button>
@@ -502,24 +484,24 @@ export default function ResearchAssistantSection({
                 setResponse(DEMO_INSUFFICIENT_RESPONSE);
                 setError(null);
               }}
-              className="px-2.5 py-1 rounded-lg text-xs border border-[#383127] bg-[#1a1714] text-[#ded6c5] hover:bg-[#25201a] transition cursor-pointer font-serif"
+              className="px-2.5 py-1 rounded-md text-xs border border-[#DED3C2] bg-[#EFE8DC] text-[#59524E] hover:bg-[#E8E0D2] transition cursor-pointer font-serif"
             >
               Insufficient Evidence
             </button>
           </div>
 
           {/* Document Scoping / Filtering */}
-          <div className="pt-2 border-t border-[#24201a]">
+          <div className="pt-2 border-t border-[#EBE4D8]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
               <label
                 htmlFor={filterSelectId}
-                className="text-xs font-semibold text-[#ded6c5] flex items-center gap-1.5"
+                className="text-xs font-semibold text-[#393331] flex items-center gap-1.5 font-serif"
               >
-                <Filter className="w-3.5 h-3.5 text-[#d4af37]" />
+                <Filter className="w-3.5 h-3.5 text-[#642F38]" />
                 Archival Scope:
-                <span className="font-normal text-[#a89f91]">
+                <span className="font-normal text-[#756D66]">
                   {selectedDocIds.length === 0
-                    ? 'All indexed documents in corpus'
+                    ? 'All indexed monographs in corpus'
                     : `Filtered to ${selectedDocIds.length} selected ${
                         selectedDocIds.length === 1 ? 'document' : 'documents'
                       }`}
@@ -530,7 +512,7 @@ export default function ResearchAssistantSection({
                 <button
                   type="button"
                   onClick={handleSelectAllDocs}
-                  className="text-xs text-amber-700 dark:text-amber-400 hover:underline cursor-pointer"
+                  className="text-xs text-[#642F38] hover:underline cursor-pointer font-serif"
                 >
                   Reset to All Documents
                 </button>
@@ -547,10 +529,10 @@ export default function ResearchAssistantSection({
                 type="button"
                 onClick={handleSelectAllDocs}
                 aria-pressed={selectedDocIds.length === 0}
-                className={`px-3 py-1 rounded-lg text-xs font-medium border transition cursor-pointer ${
+                className={`px-3 py-1 rounded-md text-xs font-serif transition cursor-pointer ${
                   selectedDocIds.length === 0
-                    ? 'bg-amber-700 text-white border-amber-800 dark:bg-amber-600 dark:border-amber-500 shadow-xs'
-                    : 'bg-stone-50 dark:bg-stone-950 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-800 hover:border-stone-300'
+                    ? 'bg-[#642F38] text-[#FFFCF5] font-medium shadow-xs'
+                    : 'bg-[#EFE8DC] text-[#393331] border border-[#DED3C2] hover:bg-[#E8E0D2]'
                 }`}
               >
                 Entire Corpus ({effectiveDocuments.length})
@@ -560,7 +542,7 @@ export default function ResearchAssistantSection({
                 type="button"
                 onClick={onOpenUpload}
                 aria-label="Upload document to archive"
-                className="px-2.5 py-1 rounded-lg text-xs font-medium border border-dashed border-stone-300 dark:border-stone-700 text-stone-600 dark:text-stone-400 hover:border-amber-600 hover:text-amber-700 dark:hover:text-amber-300 transition cursor-pointer"
+                className="px-2.5 py-1 rounded-md text-xs font-serif border border-dashed border-[#DED3C2] text-[#756D66] hover:border-[#642F38] hover:text-[#642F38] transition cursor-pointer"
               >
                 + Upload PDF
               </button>
@@ -574,15 +556,15 @@ export default function ResearchAssistantSection({
                     onClick={() => toggleDocSelection(doc.id)}
                     aria-pressed={isSelected}
                     aria-label={`Toggle filter for ${doc.original_filename}`}
-                    className={`px-2.5 py-1 rounded-lg text-xs border flex items-center gap-1.5 transition cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-md text-xs border flex items-center gap-1.5 transition cursor-pointer ${
                       isSelected
-                        ? 'bg-amber-50 text-amber-900 border-amber-400 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-600 font-semibold'
-                        : 'bg-stone-50 dark:bg-stone-950 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-800 hover:border-stone-300'
+                        ? 'bg-[#FAF2F3] text-[#642F38] border-[#642F38] font-semibold'
+                        : 'bg-[#EFE8DC] text-[#393331] border-[#DED3C2] hover:bg-[#E8E0D2]'
                     }`}
                   >
-                    <FileText className="w-3 h-3 text-stone-400 shrink-0" />
-                    <span className="truncate max-w-[180px]">{doc.original_filename}</span>
-                    <span className="text-[10px] text-stone-400 shrink-0">({doc.page_count}p)</span>
+                    <FileText className="w-3 h-3 text-[#A77C54] shrink-0" />
+                    <span className="truncate max-w-[180px] font-serif">{doc.original_filename.replace(/_/g, ' ')}</span>
+                    <span className="text-[10px] text-[#756D66] shrink-0 font-mono">({doc.page_count}p)</span>
                   </button>
                 );
               })}
@@ -591,9 +573,9 @@ export default function ResearchAssistantSection({
 
           {/* Action Row */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2">
-            <div className="text-xs text-stone-400 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-              <span>Citation Provenance: Claims are attributed to cited passages; semantic entailment is not independently verified.</span>
+            <div className="text-xs text-[#756D66] flex items-center gap-1.5 font-serif">
+              <ShieldCheck className="w-4 h-4 text-[#52745E] shrink-0" />
+              <span>Attributed Provenance: Claims link directly to verified page folios; semantic entailment is not independently verified.</span>
             </div>
 
             <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -602,7 +584,7 @@ export default function ResearchAssistantSection({
                   type="button"
                   onClick={handleClear}
                   disabled={isLoading}
-                  className="px-3 py-2 rounded-xl text-xs text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 transition cursor-pointer"
+                  className="px-3 py-2 rounded-lg text-xs text-[#756D66] hover:bg-[#EFE8DC] transition cursor-pointer font-serif"
                   aria-label="Clear inquiry input and results"
                 >
                   Clear
@@ -612,17 +594,17 @@ export default function ResearchAssistantSection({
               <button
                 type="submit"
                 disabled={isLoading || !question.trim() || !backendConnected}
-                className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-white bg-amber-700 hover:bg-amber-800 active:bg-amber-900 disabled:opacity-50 disabled:pointer-events-none transition shadow-sm flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2 rounded-lg text-xs sm:text-sm font-serif font-medium text-[#FFFCF5] bg-[#642F38] hover:bg-[#50252C] disabled:opacity-50 disabled:pointer-events-none transition shadow-xs flex items-center gap-2 cursor-pointer"
               >
                 {isLoading ? (
                   <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
+                    <RefreshCw className="w-4 h-4 animate-spin text-[#FFFCF5]" />
                     <span>Consulting Archive...</span>
                   </>
                 ) : (
                   <>
-                    <Sparkles className="w-4 h-4" />
-                    <span>Ask Research Assistant</span>
+                    <Sparkles className="w-4 h-4 text-[#FFFCF5]" />
+                    <span>Inquire with Assistant</span>
                   </>
                 )}
               </button>
@@ -636,31 +618,31 @@ export default function ResearchAssistantSection({
         <div
           role="status"
           aria-live="polite"
-          className="p-6 rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50/50 dark:bg-amber-950/20 text-center space-y-4 animate-pulse"
+          className="p-6 rounded-xl border border-[#DED3C2] bg-[#FAF4E9] text-center space-y-4 animate-pulse"
         >
           <div className="flex justify-center">
-            <div className="p-3 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300">
-              <Sparkles className="w-6 h-6 animate-spin" />
+            <div className="p-3 rounded-full bg-[#FFFCF5] text-[#642F38] border border-[#E8D3B2]">
+              <Sparkles className="w-5 h-5 animate-spin" />
             </div>
           </div>
           <div>
-            <h3 className="font-serif font-bold text-stone-900 dark:text-stone-100 font-heritage text-base">
+            <h3 className="font-heritage font-bold text-[#642F38] text-base">
               Executing Evidence-Grounded Research Pipeline
             </h3>
-            <p className="text-xs text-stone-600 dark:text-stone-400 mt-1 max-w-md mx-auto">
+            <p className="text-xs text-[#59524E] mt-1 max-w-md mx-auto font-serif">
               Scanning vector representations of archival passages, merging contiguous contexts, and
               synthesizing attributed claims with the local inference provider.
             </p>
           </div>
-          <div className="flex justify-center gap-6 text-[11px] font-mono text-stone-500">
+          <div className="flex justify-center gap-6 text-[11px] font-mono text-[#756D66]">
             <span className="flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Vector Retrieval
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#52745E]" /> Vector Retrieval
             </span>
             <span className="flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Evidence Map Construction
+              <CheckCircle2 className="w-3.5 h-3.5 text-[#52745E]" /> Evidence Attribution
             </span>
             <span className="flex items-center gap-1">
-              <RefreshCw className="w-3.5 h-3.5 text-amber-600 animate-spin" /> Grounded Synthesis
+              <RefreshCw className="w-3.5 h-3.5 text-[#642F38] animate-spin" /> Grounded Synthesis
             </span>
           </div>
         </div>
@@ -670,27 +652,26 @@ export default function ResearchAssistantSection({
       {error && !isLoading && (
         <div
           role="alert"
-          className="p-4 sm:p-5 rounded-2xl border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 space-y-3"
+          className="p-4 sm:p-5 rounded-xl border border-[#E8BDB9] bg-[#FAEEEE] space-y-3"
         >
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-[#A94B43] shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <h3 className="text-sm font-semibold text-rose-900 dark:text-rose-200">
-                Inquiry Processing Error
+              <h3 className="text-sm font-semibold text-[#A94B43]">
+                Inquiry Processing Notice
               </h3>
-              <p className="text-xs text-rose-700 dark:text-rose-300 leading-relaxed break-words">{error}</p>
+              <p className="text-xs text-[#A94B43] leading-relaxed break-words font-serif">{error}</p>
             </div>
           </div>
 
-          {/* Actionable guidance if local provider offline */}
           {error.toLowerCase().includes('ollama') || error.toLowerCase().includes('cannot reach') ? (
-            <div className="p-3 rounded-xl bg-white/70 dark:bg-stone-900/70 border border-rose-200 dark:border-rose-900 text-xs text-stone-700 dark:text-stone-300 space-y-1.5 font-mono">
-              <div className="font-semibold text-stone-900 dark:text-stone-100 font-sans">
-                Troubleshooting Local Ollama Setup:
+            <div className="p-3 rounded-lg bg-[#FFFCF5] border border-[#E8BDB9] text-xs text-[#393331] space-y-1 font-mono">
+              <div className="font-semibold text-[#642F38] font-serif">
+                Local Ollama Service Instructions:
               </div>
-              <div>1. Verify Ollama is running: <code className="bg-stone-200 dark:bg-stone-800 px-1 rounded">ollama serve</code></div>
-              <div>2. Ensure the required model is installed: <code className="bg-stone-200 dark:bg-stone-800 px-1 rounded">ollama run llama3.2:3b</code></div>
-              <div>3. Check backend port: <code className="bg-stone-200 dark:bg-stone-800 px-1 rounded">http://127.0.0.1:11434</code></div>
+              <div>1. Verify Ollama is running: <code className="bg-[#EFE8DC] px-1 rounded">ollama serve</code></div>
+              <div>2. Ensure model is installed: <code className="bg-[#EFE8DC] px-1 rounded">ollama run llama3.2:3b</code></div>
+              <div>3. API Endpoint: <code className="bg-[#EFE8DC] px-1 rounded">http://127.0.0.1:11434</code></div>
             </div>
           ) : null}
         </div>
@@ -698,20 +679,20 @@ export default function ResearchAssistantSection({
 
       {/* Response Display Area */}
       {response && !isLoading && (
-        <div className="space-y-6">
+        <div className="space-y-4">
           {/* Grounding State Header Badge */}
           {(() => {
             const badge = getGroundingBadge(response.grounding_state);
             return (
               <div
                 role="status"
-                className={`p-4 sm:p-5 rounded-2xl border ${badge.border} ${badge.bg} flex flex-col sm:flex-row sm:items-center justify-between gap-4`}
+                className={`p-4 rounded-xl border ${badge.border} ${badge.bg} flex flex-col sm:flex-row sm:items-center justify-between gap-3`}
               >
                 <div className="flex items-start gap-3">
                   <div className="shrink-0 mt-0.5">{badge.icon}</div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h2 className="text-sm sm:text-base font-semibold text-stone-900 dark:text-stone-100">
+                      <h2 className="text-sm font-heritage font-bold text-[#393331]">
                         {badge.title}
                       </h2>
                       <span
@@ -720,16 +701,16 @@ export default function ResearchAssistantSection({
                         {response.grounding_state}
                       </span>
                     </div>
-                    <p className="text-xs text-stone-600 dark:text-stone-300 mt-1 leading-relaxed">
+                    <p className="text-xs text-[#59524E] mt-0.5 leading-relaxed font-serif">
                       {badge.desc}
                     </p>
                   </div>
                 </div>
 
                 {response.provider_info && (
-                  <div className="text-right text-[11px] font-mono text-stone-500 shrink-0">
+                  <div className="text-right text-[11px] font-mono text-[#756D66] shrink-0">
                     <div>Provider: {response.provider_info.provider}</div>
-                    <div className="text-amber-700 dark:text-amber-400">
+                    <div className="text-[#642F38] font-semibold">
                       Model: {response.provider_info.model}
                     </div>
                   </div>
@@ -740,12 +721,12 @@ export default function ResearchAssistantSection({
 
           {/* Synthesized Answer */}
           {response.answer && (
-            <div className="p-5 sm:p-6 rounded-2xl border border-[#2e2923] bg-[#12100e] shadow-xl space-y-3">
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-[#eed27c] flex items-center gap-1.5 font-serif">
-                <BookOpen className="w-3.5 h-3.5 text-[#d4af37]" />
+            <div className="p-5 sm:p-6 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-2">
+              <h2 className="text-[10px] font-mono uppercase tracking-wider text-[#814B52] font-semibold flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5 text-[#642F38]" />
                 Archival Synthesis
               </h2>
-              <div className="text-sm sm:text-base font-serif text-[#fcf9f2] leading-relaxed font-heritage whitespace-pre-line break-words">
+              <div className="text-sm sm:text-base font-serif text-[#393331] leading-relaxed whitespace-pre-line break-words">
                 {response.answer}
               </div>
             </div>
@@ -755,11 +736,11 @@ export default function ResearchAssistantSection({
           {response.claims && response.claims.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <h2 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <h2 className="text-sm font-heritage font-bold text-[#393331] uppercase tracking-wider flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-[#52745E]" />
                   Attributed Archival Claims &amp; Citations ({response.claims.length})
                 </h2>
-                <span className="text-[11px] text-[#a89f91] font-serif">
+                <span className="text-[11px] text-[#756D66] font-serif">
                   Click any citation to inspect the original archival page
                 </span>
               </div>
@@ -768,22 +749,22 @@ export default function ResearchAssistantSection({
                 {response.claims.map((claim, index) => (
                   <div
                     key={index}
-                    className="p-4 rounded-xl border border-[#24201a] bg-[#141210] shadow-md space-y-3 hover:border-[#d4af37]/40 transition"
+                    className="p-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-3 hover:border-[#642F38]/50 transition-colors"
                   >
                     {/* Claim text */}
                     <div className="flex items-start gap-2.5">
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#1d1914] text-[#eed27c] border border-[#d4af37]/40 shrink-0 mt-0.5">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-[#EFE8DC] text-[#642F38] border border-[#DED3C2] shrink-0 mt-0.5">
                         Claim #{index + 1}
                       </span>
-                      <p className="text-xs sm:text-sm text-[#fcf9f2] leading-relaxed font-medium break-words font-serif">
+                      <p className="text-xs sm:text-sm text-[#393331] leading-relaxed font-serif break-words">
                         {claim.text}
                       </p>
                     </div>
 
                     {/* Citations List */}
                     {claim.evidence && claim.evidence.length > 0 ? (
-                      <div className="pt-2 border-t border-[#24201a] flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] text-[#a89f91] font-medium font-serif">
+                      <div className="pt-2 border-t border-[#EBE4D8] flex flex-wrap items-center gap-2">
+                        <span className="text-[11px] text-[#756D66] font-serif font-medium">
                           Supporting Archival Passages:
                         </span>
                         {claim.evidence.map((ev, evIdx) => {
@@ -799,25 +780,25 @@ export default function ResearchAssistantSection({
                               type="button"
                               onClick={() => onInspectSource(ev.document_id, pdfPage)}
                               aria-label={`Inspect citation ${ev.evidence_id} in ${ev.filename}, ${citationText}`}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium border border-[#d4af37]/40 bg-[#1d1914] hover:bg-[#25201a] hover:border-[#d4af37] text-[#eed27c] transition group cursor-pointer shadow-xs"
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#E8E0D2] hover:border-[#642F38] text-[#393331] transition group cursor-pointer shadow-xs"
                               title={ev.citation_display || (hasPrinted ? `Printed page ${ev.printed_page_label} · PDF page ${pdfPage}` : `PDF page ${pdfPage} · Printed page unavailable`)}
                             >
-                              <span className="font-mono text-[10px] bg-[#2e261a] border border-[#d4af37]/30 px-1 rounded font-bold text-[#d4af37]">
+                              <span className="font-mono text-[10px] bg-[#FFFCF5] border border-[#DED3C2] px-1 rounded font-bold text-[#642F38]">
                                 {ev.evidence_id}
                               </span>
-                              <span className="truncate max-w-[140px] sm:max-w-[200px] text-[#ded6c5]">
-                                {ev.filename}
+                              <span className="truncate max-w-[140px] sm:max-w-[200px] font-serif text-[#393331]">
+                                {ev.filename.replace(/_/g, ' ')}
                               </span>
-                              <span className="text-[#d4af37] font-semibold text-[11px]">
+                              <span className="text-[#642F38] font-semibold text-[11px] font-mono">
                                 · {hasPrinted ? `Printed p. ${ev.printed_page_label} (PDF p. ${pdfPage})` : `PDF p. ${pdfPage}`}
                               </span>
-                              <ExternalLink className="w-3 h-3 text-[#d4af37] opacity-70 group-hover:opacity-100 shrink-0" />
+                              <ExternalLink className="w-3 h-3 text-[#642F38] opacity-70 group-hover:opacity-100 shrink-0" />
                             </button>
                           );
                         })}
                       </div>
                     ) : (
-                      <div className="text-[11px] text-[#786e64] italic">
+                      <div className="text-[11px] text-[#756D66] italic font-serif">
                         No direct evidence citation attached to this statement.
                       </div>
                     )}
@@ -829,15 +810,15 @@ export default function ResearchAssistantSection({
 
           {/* Missing Information Banner */}
           {response.missing_information && response.missing_information.length > 0 && (
-            <div className="p-4 sm:p-5 rounded-2xl border border-amber-200 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-950/20 space-y-2">
-              <h2 className="text-xs font-semibold text-amber-900 dark:text-amber-300 flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-600" />
+            <div className="p-4 rounded-xl border border-[#E8D3B2] bg-[#FAF4E9] space-y-2">
+              <h2 className="text-xs font-semibold text-[#A67C3F] flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-[#A67C3F]" />
                 Archival Limits &amp; Missing Information
               </h2>
-              <p className="text-xs text-stone-600 dark:text-stone-300">
+              <p className="text-xs text-[#59524E] font-serif">
                 The indexed historical documents do not contain records for the following details:
               </p>
-              <ul className="list-disc list-inside space-y-1 text-xs text-stone-700 dark:text-stone-300 font-serif">
+              <ul className="list-disc list-inside space-y-1 text-xs text-[#59524E] font-serif">
                 {response.missing_information.map((item, idx) => (
                   <li key={idx} className="leading-relaxed break-words">
                     {item}
@@ -849,36 +830,36 @@ export default function ResearchAssistantSection({
 
           {/* Conflicting Evidence Presentation */}
           {response.conflicts && response.conflicts.length > 0 && (
-            <div className="p-4 sm:p-5 rounded-2xl border border-purple-200 dark:border-purple-800 bg-purple-50/60 dark:bg-purple-950/20 space-y-4">
-              <h2 className="text-xs font-semibold text-purple-900 dark:text-purple-300 flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-purple-600" />
+            <div className="p-4 rounded-xl border border-[#DBC2C5] bg-[#F8F0F1] space-y-3">
+              <h2 className="text-xs font-semibold text-[#814B52] flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-[#814B52]" />
                 Conflicting Historical Perspectives Detected ({response.conflicts.length})
               </h2>
               <div className="space-y-3">
                 {response.conflicts.map((conf, cIdx) => (
                   <div
                     key={cIdx}
-                    className="p-3.5 rounded-xl border border-purple-100 dark:border-purple-900/60 bg-white/80 dark:bg-stone-900/80 space-y-2 text-xs"
+                    className="p-3.5 rounded-lg border border-[#DBC2C5] bg-[#FFFCF5] space-y-2 text-xs"
                   >
-                    <div className="font-semibold text-purple-950 dark:text-purple-200 break-words">
+                    <div className="font-semibold text-[#642F38] font-heritage break-words">
                       Discrepancy: {conf.topic}
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-                      <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 space-y-1">
-                        <span className="text-[10px] font-mono font-bold text-amber-700 uppercase">
+                      <div className="p-2.5 rounded-md bg-[#F6F1E7] border border-[#DED3C2] space-y-1">
+                        <span className="text-[10px] font-mono font-bold text-[#A67C3F] uppercase">
                           Account A
                         </span>
-                        <p className="text-stone-700 dark:text-stone-300 break-words">{conf.perspective_a.claim}</p>
-                        <div className="text-[10px] text-stone-400 break-words">
+                        <p className="text-[#393331] font-serif break-words">{conf.perspective_a.claim}</p>
+                        <div className="text-[10px] font-mono text-[#756D66] break-words">
                           Evidence: {conf.perspective_a.evidence_ids.join(', ')}
                         </div>
                       </div>
-                      <div className="p-2.5 rounded-lg bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 space-y-1">
-                        <span className="text-[10px] font-mono font-bold text-purple-700 uppercase">
+                      <div className="p-2.5 rounded-md bg-[#F6F1E7] border border-[#DED3C2] space-y-1">
+                        <span className="text-[10px] font-mono font-bold text-[#814B52] uppercase">
                           Account B
                         </span>
-                        <p className="text-stone-700 dark:text-stone-300 break-words">{conf.perspective_b.claim}</p>
-                        <div className="text-[10px] text-stone-400 break-words">
+                        <p className="text-[#393331] font-serif break-words">{conf.perspective_b.claim}</p>
+                        <div className="text-[10px] font-mono text-[#756D66] break-words">
                           Evidence: {conf.perspective_b.evidence_ids.join(', ')}
                         </div>
                       </div>
@@ -889,11 +870,11 @@ export default function ResearchAssistantSection({
             </div>
           )}
 
-          {/* Epistemological Limitation Disclaimer (Strict Requirement) */}
-          <div className="p-3.5 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50/80 dark:bg-stone-950/60 flex items-start gap-2.5 text-xs text-stone-500 dark:text-stone-400">
-            <Info className="w-4 h-4 text-stone-400 shrink-0 mt-0.5" />
-            <div className="leading-relaxed">
-              <span className="font-semibold text-stone-700 dark:text-stone-300">
+          {/* Epistemological Limitation Disclaimer */}
+          <div className="p-3.5 rounded-xl border border-[#DED3C2] bg-[#F6F1E7] flex items-start gap-2.5 text-xs text-[#756D66]">
+            <Info className="w-4 h-4 text-[#A77C54] shrink-0 mt-0.5" />
+            <div className="leading-relaxed font-serif">
+              <span className="font-semibold text-[#393331]">
                 Epistemological Limitation:
               </span>{' '}
               Claims are attributed to cited archival passages; semantic entailment is not

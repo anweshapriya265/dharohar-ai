@@ -158,3 +158,4 @@ Route (app)
    - Click **Research Assistant** and click one of the suggested inquiries or scenario previews to observe dual-pagination citation linkage.
 6. **Verify Geospatial Coordinates:**
    - Click **Expedition Map** to explore verified archaeological sites on the Leaflet map.
+

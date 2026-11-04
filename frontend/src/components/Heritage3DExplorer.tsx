@@ -7,14 +7,12 @@ import {
   Layers,
   FileText,
   ShieldCheck,
-  Info,
   Compass,
   ArrowRight,
-  BookOpen,
   Eye,
-  Maximize2,
   Sun,
-  Camera,
+  Moon,
+  Info,
 } from 'lucide-react';
 import { DocumentItem } from '@/lib/api';
 
@@ -117,6 +115,7 @@ export default function Heritage3DExplorer({
 }: Heritage3DExplorerProps) {
   const [selectedModel, setSelectedModel] = useState<HeritageModelItem>(HERITAGE_MODELS[0]);
   const [shadingMode, setShadingMode] = useState<'textured' | 'clay' | 'wireframe'>('textured');
+  const [viewingEnvironment, setViewingEnvironment] = useState<'light' | 'dark'>('light');
   const [is2DPlateView, setIs2DPlateView] = useState<boolean>(false);
   const [isAutoRotating, setIsAutoRotating] = useState<boolean>(true);
 
@@ -153,12 +152,12 @@ export default function Heritage3DExplorer({
     canvas.height = 256;
     const ctx = canvas.getContext('2d');
     if (ctx) {
-      ctx.fillStyle = '#6e6559';
+      ctx.fillStyle = '#7a7063';
       ctx.fillRect(0, 0, 256, 256);
       for (let i = 0; i < 4000; i++) {
         const x = Math.random() * 256;
         const y = Math.random() * 256;
-        const c = Math.floor(Math.random() * 60);
+        const c = Math.floor(Math.random() * 50);
         ctx.fillStyle = `rgba(${c},${c},${c},0.15)`;
         ctx.fillRect(x, y, 2, 2);
       }
@@ -176,39 +175,39 @@ export default function Heritage3DExplorer({
       materialsList.current.forEach((m) => m.dispose());
       materialsList.current = [];
 
-      // Warm weathered basalt tone (clear relief, not pitch black)
-      const basaltColor = shadingMode === 'clay' ? 0xc2b5a1 : 0x685f52;
-      const darkPlinthColor = shadingMode === 'clay' ? 0xa89b88 : 0x3d372f;
+      // Warm weathered basalt tone (clear relief, visible chisel marks)
+      const basaltColor = shadingMode === 'clay' ? 0xd1c5b4 : 0x72695c;
+      const darkPlinthColor = shadingMode === 'clay' ? 0xb5a897 : 0x484138;
 
       const basaltMat = new THREE.MeshStandardMaterial({
         color: basaltColor,
-        roughness: 0.85,
-        metalness: shadingMode === 'clay' ? 0.0 : 0.08,
+        roughness: 0.8,
+        metalness: shadingMode === 'clay' ? 0.0 : 0.06,
         bumpMap: shadingMode === 'textured' ? stoneTex : null,
-        bumpScale: 0.05,
+        bumpScale: 0.06,
         wireframe: shadingMode === 'wireframe',
       });
       materialsList.current.push(basaltMat);
 
       const darkMat = new THREE.MeshStandardMaterial({
         color: darkPlinthColor,
-        roughness: 0.9,
+        roughness: 0.88,
         bumpMap: shadingMode === 'textured' ? stoneTex : null,
         bumpScale: 0.06,
         wireframe: shadingMode === 'wireframe',
       });
       materialsList.current.push(darkMat);
 
-      const goldMat = new THREE.MeshStandardMaterial({
-        color: 0xd4af37,
-        roughness: 0.35,
-        metalness: 0.75,
+      const bronzeMat = new THREE.MeshStandardMaterial({
+        color: 0xa77c54,
+        roughness: 0.4,
+        metalness: 0.65,
         wireframe: shadingMode === 'wireframe',
       });
-      materialsList.current.push(goldMat);
+      materialsList.current.push(bronzeMat);
 
       if (type === 'kailasa') {
-        // Courtyard Plinths
+        // Courtyard Plinth
         const plinth = new THREE.Mesh(new THREE.BoxGeometry(14, 0.6, 10), darkMat);
         plinth.position.y = -1.8;
         plinth.receiveShadow = true;
@@ -218,6 +217,7 @@ export default function Heritage3DExplorer({
         const sanctuary = new THREE.Mesh(new THREE.BoxGeometry(5.4, 4.4, 4.4), basaltMat);
         sanctuary.position.set(0, 0.7, -1.2);
         sanctuary.castShadow = true;
+        sanctuary.receiveShadow = true;
         group.add(sanctuary);
 
         // Shikhara Spire
@@ -228,7 +228,7 @@ export default function Heritage3DExplorer({
           spireTier.castShadow = true;
           group.add(spireTier);
         }
-        const spireTop = new THREE.Mesh(new THREE.OctahedronGeometry(0.55), goldMat);
+        const spireTop = new THREE.Mesh(new THREE.OctahedronGeometry(0.55), bronzeMat);
         spireTop.position.set(0, 6.2, -1.2);
         group.add(spireTop);
 
@@ -244,7 +244,7 @@ export default function Heritage3DExplorer({
         const pBell = new THREE.Mesh(new THREE.CylinderGeometry(0.65, 0.4, 0.5, 16), basaltMat);
         pBell.position.y = 5.35;
         pillarGroup.add(pBell);
-        const pTrisula = new THREE.Mesh(new THREE.OctahedronGeometry(0.4), goldMat);
+        const pTrisula = new THREE.Mesh(new THREE.OctahedronGeometry(0.4), bronzeMat);
         pTrisula.position.y = 5.85;
         pillarGroup.add(pTrisula);
         group.add(pillarGroup);
@@ -260,7 +260,7 @@ export default function Heritage3DExplorer({
           tMesh.position.y = 2.6 + t * 0.4;
           nandiGroup.add(tMesh);
         }
-        const nFinial = new THREE.Mesh(new THREE.SphereGeometry(0.25, 12, 12), goldMat);
+        const nFinial = new THREE.Mesh(new THREE.SphereGeometry(0.25, 12, 12), bronzeMat);
         nFinial.position.y = 3.9;
         nandiGroup.add(nFinial);
         group.add(nandiGroup);
@@ -271,7 +271,6 @@ export default function Heritage3DExplorer({
         cliffBack.receiveShadow = true;
         group.add(cliffBack);
       } else if (type === 'kuda_cistern') {
-        // Kuda Cisterns
         const rockBase = new THREE.Mesh(new THREE.BoxGeometry(12, 1.2, 10), darkMat);
         rockBase.position.y = -1.8;
         group.add(rockBase);
@@ -289,18 +288,18 @@ export default function Heritage3DExplorer({
 
           const cWater = new THREE.Mesh(
             new THREE.BoxGeometry(2.6, 0.2, 2.6),
-            new THREE.MeshStandardMaterial({ color: 0x1d7c9e, roughness: 0.1, metalness: 0.6 })
+            new THREE.MeshStandardMaterial({ color: 0x52745e, roughness: 0.1, metalness: 0.6 })
           );
           cWater.position.set(x, -0.2, 0.8);
           group.add(cWater);
         }
 
         // Inscription Tablet Slab
-        const tablet = new THREE.Mesh(new THREE.BoxGeometry(3.6, 1.2, 0.2), goldMat);
+        const tablet = new THREE.Mesh(new THREE.BoxGeometry(3.6, 1.2, 0.2), bronzeMat);
         tablet.position.set(0, 2.2, -1.6);
         group.add(tablet);
       } else {
-        // Dumar Lena: Massive 26-column Hypostyle Hall
+        // Dumar Lena
         const floor = new THREE.Mesh(new THREE.BoxGeometry(14, 0.6, 14), darkMat);
         floor.position.y = -1.8;
         group.add(floor);
@@ -335,7 +334,7 @@ export default function Heritage3DExplorer({
         roof.position.set(0, 2.8, 0);
         group.add(roof);
 
-        const altar = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.9, 1.0, 8), goldMat);
+        const altar = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.9, 1.0, 8), bronzeMat);
         altar.position.set(0, -1.0, -1.5);
         group.add(altar);
       }
@@ -357,8 +356,10 @@ export default function Heritage3DExplorer({
     const height = container.clientHeight || 520;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0c0a08);
-    scene.fog = new THREE.FogExp2(0x0c0a08, 0.015);
+    const isLightMode = viewingEnvironment === 'light';
+    const bgColor = isLightMode ? 0xF0EAE1 : 0x1A1715;
+    scene.background = new THREE.Color(bgColor);
+    scene.fog = new THREE.FogExp2(bgColor, isLightMode ? 0.012 : 0.018);
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
@@ -380,28 +381,42 @@ export default function Heritage3DExplorer({
     modelGroupRef.current = modelGroup;
     scene.add(modelGroup);
 
-    // Warm, Multi-Directional Gallery Lighting (Legible reliefs, no pitch black)
-    const ambientLight = new THREE.AmbientLight(0x504538, 2.2);
-    scene.add(ambientLight);
+    // Architectural Gallery Lighting
+    if (isLightMode) {
+      const ambientLight = new THREE.AmbientLight(0xFFF9F0, 2.4);
+      scene.add(ambientLight);
 
-    const keySunlight = new THREE.DirectionalLight(0xffeedd, 3.2);
-    keySunlight.position.set(10, 16, 10);
-    keySunlight.castShadow = true;
-    keySunlight.shadow.mapSize.width = 1024;
-    keySunlight.shadow.mapSize.height = 1024;
-    scene.add(keySunlight);
+      const keySunlight = new THREE.DirectionalLight(0xFFF2DC, 2.6);
+      keySunlight.position.set(12, 18, 12);
+      keySunlight.castShadow = true;
+      keySunlight.shadow.mapSize.width = 1024;
+      keySunlight.shadow.mapSize.height = 1024;
+      scene.add(keySunlight);
 
-    const fillSkylight = new THREE.DirectionalLight(0xb8cde3, 1.4);
-    fillSkylight.position.set(-10, 8, -8);
-    scene.add(fillSkylight);
+      const fillSkylight = new THREE.DirectionalLight(0xDCE4EC, 1.2);
+      fillSkylight.position.set(-10, 8, -8);
+      scene.add(fillSkylight);
 
-    const rimLight = new THREE.DirectionalLight(0xd4af37, 1.0);
-    rimLight.position.set(0, -6, 10);
-    scene.add(rimLight);
+      const rimLight = new THREE.DirectionalLight(0x814B52, 0.8);
+      rimLight.position.set(0, -6, 10);
+      scene.add(rimLight);
+    } else {
+      const ambientLight = new THREE.AmbientLight(0x504538, 2.2);
+      scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0xffb84d, 3.0, 14);
-    pointLight.position.set(0, 2.0, 0);
-    scene.add(pointLight);
+      const keySunlight = new THREE.DirectionalLight(0xffeedd, 3.2);
+      keySunlight.position.set(10, 16, 10);
+      keySunlight.castShadow = true;
+      scene.add(keySunlight);
+
+      const fillSkylight = new THREE.DirectionalLight(0xb8cde3, 1.4);
+      fillSkylight.position.set(-10, 8, -8);
+      scene.add(fillSkylight);
+
+      const rimLight = new THREE.DirectionalLight(0xa77c54, 1.0);
+      rimLight.position.set(0, -6, 10);
+      scene.add(rimLight);
+    }
 
     let animId: number;
     const renderLoop = () => {
@@ -447,7 +462,7 @@ export default function Heritage3DExplorer({
       renderer.dispose();
       scene.clear();
     };
-  }, [selectedModel, shadingMode, is2DPlateView, createTexture, buildModelGeometry, isAutoRotating]);
+  }, [selectedModel, shadingMode, viewingEnvironment, is2DPlateView, createTexture, buildModelGeometry, isAutoRotating]);
 
   // Mouse & Touch Orbit Controls
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -483,16 +498,15 @@ export default function Heritage3DExplorer({
   return (
     <div className="space-y-4">
       {/* Header & Model Selector Tabs */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
-            <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>Interactive 3D Architectural Study</span>
+          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-0.5">
+            Architectural Workspace
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
             3D Heritage Explorer
           </h1>
-          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+          <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5">
             Procedural volumetric studies derived from 19th-century ASI elevation plates and gazetteer measurements
           </p>
         </div>
@@ -504,10 +518,10 @@ export default function Heritage3DExplorer({
               key={model.id}
               type="button"
               onClick={() => setSelectedModel(model)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-serif transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-serif transition-colors cursor-pointer ${
                 selectedModel.id === model.id
-                  ? 'bg-[#d4af37] text-[#080706] font-bold shadow-sm'
-                  : 'bg-[#171512] text-[#ded6c5] border border-[#26221d] hover:border-[#363028] hover:text-[#fcf9f2]'
+                  ? 'bg-[#642F38] text-[#FFFCF5] font-semibold shadow-xs'
+                  : 'bg-[#EFE8DC] text-[#393331] border border-[#DED3C2] hover:bg-[#E8E0D2]'
               }`}
             >
               {model.name.split('&')[0].trim()}
@@ -519,27 +533,27 @@ export default function Heritage3DExplorer({
       {/* Main Split Screen: 3D Viewport on Left + Curatorial Evidence Panel on Right */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
         {/* Left: 3D WebGL Viewport (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col rounded-2xl border border-[#26221d] bg-[#0c0a08] overflow-hidden shadow-xl relative min-h-[460px] lg:min-h-full">
+        <div className="lg:col-span-7 flex flex-col rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs relative min-h-[460px] lg:min-h-full">
           {/* Top Viewport Controls Bar */}
-          <div className="p-3 border-b border-[#26221d] bg-[#12100e] flex flex-wrap items-center justify-between gap-2 z-10 text-xs">
+          <div className="p-3 border-b border-[#DED3C2] bg-[#F6F1E7] flex flex-wrap items-center justify-between gap-2 z-10 text-xs">
             <div className="flex items-center gap-2">
-              <span className="font-serif font-semibold text-[#fcf9f2] text-xs">
+              <span className="font-heritage font-bold text-[#642F38] text-xs">
                 {selectedModel.name}
               </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1c1813] text-[#eed27c] border border-[#d4af37]/30">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FFFCF5] text-[#756D66] border border-[#DED3C2]">
                 {shadingMode} mode
               </span>
             </div>
 
-            {/* Shading & Control Buttons */}
+            {/* Shading, Lighting & View Controls */}
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
                 onClick={() => setShadingMode('textured')}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors ${
+                className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors cursor-pointer ${
                   shadingMode === 'textured'
-                    ? 'bg-[#d4af37] text-[#080706] font-semibold'
-                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d]'
+                    ? 'bg-[#642F38] text-[#FFFCF5] font-semibold'
+                    : 'bg-[#FFFCF5] text-[#393331] border border-[#DED3C2] hover:bg-[#EFE8DC]'
                 }`}
               >
                 Textured
@@ -547,10 +561,10 @@ export default function Heritage3DExplorer({
               <button
                 type="button"
                 onClick={() => setShadingMode('clay')}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors ${
+                className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors cursor-pointer ${
                   shadingMode === 'clay'
-                    ? 'bg-[#d4af37] text-[#080706] font-semibold'
-                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d]'
+                    ? 'bg-[#642F38] text-[#FFFCF5] font-semibold'
+                    : 'bg-[#FFFCF5] text-[#393331] border border-[#DED3C2] hover:bg-[#EFE8DC]'
                 }`}
               >
                 Clay
@@ -558,39 +572,56 @@ export default function Heritage3DExplorer({
               <button
                 type="button"
                 onClick={() => setShadingMode('wireframe')}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors ${
+                className={`px-2 py-0.5 rounded text-[11px] font-mono transition-colors cursor-pointer ${
                   shadingMode === 'wireframe'
-                    ? 'bg-[#d4af37] text-[#080706] font-semibold'
-                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d]'
+                    ? 'bg-[#642F38] text-[#FFFCF5] font-semibold'
+                    : 'bg-[#FFFCF5] text-[#393331] border border-[#DED3C2] hover:bg-[#EFE8DC]'
                 }`}
               >
                 Wireframe
               </button>
+
+              {/* Light/Dark Environment Toggle */}
+              <button
+                type="button"
+                onClick={() => setViewingEnvironment(viewingEnvironment === 'light' ? 'dark' : 'light')}
+                className="p-1 rounded text-[#756D66] hover:text-[#393331] hover:bg-[#EFE8DC] transition-colors cursor-pointer"
+                title={`Switch to ${viewingEnvironment === 'light' ? 'dark contrast' : 'light gallery'} mode`}
+              >
+                {viewingEnvironment === 'light' ? (
+                  <Moon className="w-3.5 h-3.5" />
+                ) : (
+                  <Sun className="w-3.5 h-3.5 text-[#A67C3F]" />
+                )}
+              </button>
+
               <button
                 type="button"
                 onClick={() => setIsAutoRotating(!isAutoRotating)}
-                className={`p-1.5 rounded-lg border border-[#26221d] transition-colors ${
-                  isAutoRotating ? 'text-[#3ba87e] bg-[#0d1e17]' : 'text-[#9c9282] bg-[#171512]'
+                className={`p-1 rounded transition-colors cursor-pointer ${
+                  isAutoRotating ? 'text-[#52745E] bg-[#EDF3EF]' : 'text-[#756D66] hover:bg-[#EFE8DC]'
                 }`}
                 title={isAutoRotating ? 'Pause orbit' : 'Resume orbit'}
               >
                 <Sun className="w-3.5 h-3.5" />
               </button>
+
               <button
                 type="button"
                 onClick={handleResetCamera}
-                className="p-1.5 rounded-lg border border-[#26221d] bg-[#171512] text-[#ded6c5] hover:text-[#fcf9f2] transition-colors"
+                className="p-1 rounded text-[#756D66] hover:text-[#393331] hover:bg-[#EFE8DC] transition-colors cursor-pointer"
                 title="Reset camera viewpoint"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
               </button>
+
               <button
                 type="button"
                 onClick={() => setIs2DPlateView(!is2DPlateView)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono border transition-colors ${
+                className={`px-2 py-0.5 rounded text-[11px] font-mono border transition-colors cursor-pointer ${
                   is2DPlateView
-                    ? 'bg-[#d4af37] text-[#080706] font-bold border-[#d4af37]'
-                    : 'bg-[#171512] text-[#ded6c5] border-[#26221d]'
+                    ? 'bg-[#642F38] text-[#FFFCF5] font-bold border-[#642F38]'
+                    : 'bg-[#FFFCF5] text-[#393331] border-[#DED3C2] hover:bg-[#EFE8DC]'
                 }`}
               >
                 {is2DPlateView ? '3D View' : '2D Folio'}
@@ -609,18 +640,18 @@ export default function Heritage3DExplorer({
             onWheel={handleWheel}
           >
             {is2DPlateView ? (
-              <div className="absolute inset-0 bg-[#0d0b09] p-6 flex flex-col items-center justify-center text-center space-y-3">
-                <FileText className="w-12 h-12 text-[#d4af37]" />
-                <h3 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage">
+              <div className="absolute inset-0 bg-[#F6F1E7] p-6 flex flex-col items-center justify-center text-center space-y-3">
+                <FileText className="w-10 h-10 text-[#642F38]" />
+                <h3 className="text-base font-heritage font-bold text-[#642F38]">
                   Historical Architectural Plate: {selectedModel.name}
                 </h3>
-                <p className="text-xs text-[#ded6c5] max-w-md font-serif leading-relaxed">
+                <p className="text-xs text-[#59524E] max-w-md font-serif leading-relaxed">
                   Published in {selectedModel.citationString}. Plate illustrates the ground plan, cross-section, and vertical rock scarp elevations.
                 </p>
                 <button
                   type="button"
                   onClick={() => onInspectSource(selectedModel.documentId, selectedModel.pdfPageIndex)}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d4af37] text-[#080706] text-xs font-semibold shadow-md hover:bg-[#e5c158] transition-colors"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#642F38] text-[#FFFCF5] text-xs font-serif shadow-xs hover:bg-[#50252C] transition-colors cursor-pointer"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Inspect Original Ingested PDF Page</span>
@@ -630,8 +661,8 @@ export default function Heritage3DExplorer({
               <>
                 <canvas ref={canvasRef} className="w-full h-full block" />
                 {/* Floating Orbit Overlay Hint */}
-                <div className="absolute bottom-3 left-3 bg-[#110f0d]/90 backdrop-blur-xs border border-[#26221d] rounded-xl px-3 py-1.5 text-[11px] text-[#9c9282] shadow-lg flex items-center gap-2 pointer-events-none">
-                  <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+                <div className="absolute bottom-3 left-3 bg-[#FFFCF5]/90 backdrop-blur-xs border border-[#DED3C2] rounded-lg px-2.5 py-1 text-[11px] text-[#756D66] shadow-xs flex items-center gap-1.5 pointer-events-none font-serif">
+                  <Compass className="w-3.5 h-3.5 text-[#A77C54]" />
                   <span>Drag to orbit 360° · Scroll to zoom</span>
                 </div>
               </>
@@ -640,30 +671,30 @@ export default function Heritage3DExplorer({
         </div>
 
         {/* Right: Curatorial Evidence & Dimension Provenance Panel (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 overflow-y-auto">
+        <div className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs space-y-4 overflow-y-auto">
           <div className="space-y-4">
             {/* Monument Heading */}
-            <div className="space-y-1 pb-3 border-b border-[#201d19]">
-              <span className="text-[10px] font-mono uppercase text-[#d4af37] tracking-wider block font-semibold">
+            <div className="space-y-1 pb-3 border-b border-[#EBE4D8]">
+              <span className="text-[10px] font-mono uppercase text-[#814B52] tracking-wider block font-semibold">
                 {selectedModel.category}
               </span>
-              <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage leading-snug">
+              <h2 className="text-lg font-heritage font-bold text-[#642F38] leading-snug">
                 {selectedModel.name}
               </h2>
-              <div className="text-xs text-[#9c9282] font-mono">
+              <div className="text-xs text-[#756D66] font-mono">
                 {selectedModel.location}
               </div>
-              <div className="text-xs text-[#eed27c] font-serif pt-0.5">
+              <div className="text-xs text-[#A77C54] font-serif pt-0.5">
                 {selectedModel.historicalPeriod}
               </div>
             </div>
 
             {/* Historical Architectural Description */}
             <div className="space-y-1.5">
-              <span className="text-[10px] font-mono uppercase text-[#9c9282] block tracking-wider">
+              <span className="text-[10px] font-mono uppercase text-[#756D66] block tracking-wider font-semibold">
                 Documented Architecture
               </span>
-              <p className="text-xs text-[#ded6c5] leading-relaxed font-serif bg-[#171512] p-3 rounded-xl border border-[#26221d]">
+              <p className="text-xs text-[#393331] leading-relaxed font-serif bg-[#F6F1E7] p-3 rounded-lg border border-[#DED3C2]">
                 {selectedModel.historicalNotes}
               </p>
             </div>
@@ -671,32 +702,32 @@ export default function Heritage3DExplorer({
             {/* Documented Dimensions Table with Provenance Tagging */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider font-semibold">
+                <span className="text-[10px] font-mono uppercase text-[#756D66] tracking-wider font-semibold">
                   Architectural Measurements
                 </span>
-                <span className="text-[10px] font-mono text-[#eed27c]">
+                <span className="text-[10px] font-mono text-[#814B52]">
                   Archival Provenance
                 </span>
               </div>
 
-              <div className="rounded-xl border border-[#26221d] overflow-hidden text-xs">
+              <div className="rounded-lg border border-[#DED3C2] overflow-hidden text-xs">
                 {selectedModel.dimensions.map((dim, idx) => (
                   <div
                     key={dim.label}
                     className={`flex items-center justify-between p-2.5 ${
-                      idx % 2 === 0 ? 'bg-[#141210]' : 'bg-[#171512]'
-                    } border-b border-[#201d19] last:border-b-0`}
+                      idx % 2 === 0 ? 'bg-[#FFFCF5]' : 'bg-[#F6F1E7]'
+                    } border-b border-[#EBE4D8] last:border-b-0`}
                   >
-                    <span className="text-[#ded6c5] font-medium">{dim.label}</span>
+                    <span className="text-[#393331] font-serif">{dim.label}</span>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-[#fcf9f2] font-semibold">{dim.value}</span>
+                      <span className="font-mono text-[#393331] font-semibold">{dim.value}</span>
                       <span
                         className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${
                           dim.type === 'Documented'
-                            ? 'bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/30'
+                            ? 'bg-[#EDF3EF] text-[#52745E] border border-[#BCD0C3]'
                             : dim.type === 'Approximate'
-                            ? 'bg-[#1f1910] text-[#eed27c] border border-[#d4af37]/30'
-                            : 'bg-[#171512] text-[#9c9282] border border-[#26221d]'
+                            ? 'bg-[#FAF4E9] text-[#A67C3F] border border-[#E8D3B2]'
+                            : 'bg-[#EFE8DC] text-[#756D66] border border-[#DED3C2]'
                         }`}
                       >
                         {dim.type}
@@ -708,23 +739,23 @@ export default function Heritage3DExplorer({
             </div>
 
             {/* Scientific Accuracy & Interpretation Disclaimer */}
-            <div className="p-3 rounded-xl bg-[#171512] border border-[#26221d] space-y-1 text-xs text-[#9c9282]">
-              <div className="flex items-center gap-1.5 text-[#eed27c] font-semibold text-[11px]">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
+            <div className="p-3 rounded-lg bg-[#F6F1E7] border border-[#DED3C2] space-y-1 text-xs text-[#756D66]">
+              <div className="flex items-center gap-1.5 text-[#642F38] font-semibold text-[11px] font-serif">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#52745E]" />
                 <span>Model Provenance &amp; Interpretation Notice</span>
               </div>
-              <p className="text-[11px] text-[#9c9282] leading-tight font-serif">
+              <p className="text-[11px] text-[#59524E] leading-tight font-serif">
                 This 3D model is a procedural volumetric study reconstructed directly from measurements documented in 19th-century ASI gazetteers. Dimensions labeled <em>Documented</em> cite published survey records.
               </p>
             </div>
           </div>
 
           {/* Primary Action Button: Inspect Ingested Archival PDF */}
-          <div className="pt-2 border-t border-[#201d19]">
+          <div className="pt-2 border-t border-[#EBE4D8]">
             <button
               type="button"
               onClick={() => onInspectSource(selectedModel.documentId, selectedModel.pdfPageIndex)}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#d4af37] hover:bg-[#e5c158] text-[#080706] text-xs font-semibold shadow-md transition-all cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium shadow-xs transition-colors cursor-pointer"
             >
               <Eye className="w-4 h-4" />
               <span>Inspect Source Monograph ({selectedModel.citationString.split(',')[0]})</span>

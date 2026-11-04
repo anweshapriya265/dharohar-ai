@@ -179,27 +179,27 @@ The octagonal well shaft provides direct downward solar illumination while keepi
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#393331]/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div
-        className="w-full max-w-lg rounded-2xl border border-[#2e2923] bg-[#0c0a09] text-[#fcf9f2] shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150"
+        className="w-full max-w-lg rounded-2xl border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150"
         role="dialog"
         aria-modal="true"
         aria-labelledby="upload-modal-title"
       >
         {/* Header */}
-        <div className="flex items-center justify-between pb-3 border-b border-[#24201a]">
+        <div className="flex items-center justify-between pb-3 border-b border-[#DED3C2]">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#1d1914] border border-[#d4af37]/40 text-[#eed27c] flex items-center justify-center shadow-xs">
-              <Upload className="w-4 h-4 text-[#d4af37]" />
+            <div className="w-9 h-9 rounded-xl bg-[#F6F1E7] border border-[#DED3C2] text-[#642F38] flex items-center justify-center shadow-xs">
+              <Upload className="w-4 h-4 text-[#642F38]" />
             </div>
             <div>
               <h2
                 id="upload-modal-title"
-                className="text-base font-serif font-bold text-[#fcf9f2] font-heritage"
+                className="text-base font-serif font-bold text-[#642F38] font-heritage"
               >
                 Contribute Cultural Heritage Asset
               </h2>
-              <p className="text-xs text-[#a89f91]">
+              <p className="text-xs text-[#756D66]">
                 PDF Monographs, Scanned Plates, Field Notes &amp; Photographs
               </p>
             </div>
@@ -209,7 +209,7 @@ The octagonal well shaft provides direct downward solar illumination while keepi
             type="button"
             onClick={handleClose}
             disabled={isUploading}
-            className="p-1.5 rounded-lg text-[#a89f91] hover:text-[#fcf9f2] hover:bg-[#1d1914] transition-colors disabled:opacity-40"
+            className="p-1.5 rounded-lg text-[#756D66] hover:text-[#393331] hover:bg-[#F0EAE1] transition-colors disabled:opacity-40"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -219,42 +219,42 @@ The octagonal well shaft provides direct downward solar illumination while keepi
         {/* Success View */}
         {uploadedDoc ? (
           <div className="space-y-4 py-2">
-            <div className="p-4 rounded-xl bg-emerald-950/60 border border-emerald-800/80 space-y-2">
-              <div className="flex items-center gap-2 text-emerald-300 font-semibold text-sm">
-                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+            <div className="p-4 rounded-xl bg-[#F0F5F2] border border-[#D2DFD6] space-y-2">
+              <div className="flex items-center gap-2 text-[#52745E] font-semibold text-sm">
+                <CheckCircle2 className="w-5 h-5 text-[#52745E]" />
                 <span>Asset Successfully Ingested &amp; Indexed!</span>
               </div>
-              <p className="text-xs text-emerald-300/80 leading-relaxed font-serif">
+              <p className="text-xs text-[#52745E]/90 leading-relaxed font-serif">
                 Text extracted and indexed into the SQLite archive repository. Grounded retrieval and dual pagination ready.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-[#24201a] bg-[#141210] space-y-2 text-xs">
-              <div className="flex justify-between py-1 border-b border-[#24201a]">
-                <span className="text-[#a89f91]">Filename:</span>
-                <span className="font-semibold text-[#fcf9f2] truncate max-w-[240px]">
+            <div className="p-4 rounded-xl border border-[#DED3C2] bg-[#F6F1E7] space-y-2 text-xs">
+              <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                <span className="text-[#756D66]">Filename:</span>
+                <span className="font-semibold text-[#393331] truncate max-w-[240px]">
                   {uploadedDoc.original_filename}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#24201a]">
-                <span className="text-[#a89f91]">Document ID:</span>
-                <span className="font-mono text-[#eed27c]">
+              <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                <span className="text-[#756D66]">Document ID:</span>
+                <span className="font-mono text-[#642F38] font-medium">
                   {uploadedDoc.id}
                 </span>
               </div>
-              <div className="flex justify-between py-1 border-b border-[#24201a]">
-                <span className="text-[#a89f91]">Pages Processed:</span>
-                <span className="font-semibold text-[#fcf9f2]">
+              <div className="flex justify-between py-1 border-b border-[#DED3C2]">
+                <span className="text-[#756D66]">Pages Processed:</span>
+                <span className="font-semibold text-[#393331]">
                   {uploadedDoc.page_count} {uploadedDoc.page_count === 1 ? 'page' : 'pages'}
                 </span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-[#a89f91]">Extraction Status:</span>
+                <span className="text-[#756D66]">Extraction Status:</span>
                 <span
                   className={`font-semibold capitalize ${
                     uploadedDoc.extraction_status === 'extracted'
-                      ? 'text-emerald-400'
-                      : 'text-[#d4af37]'
+                      ? 'text-[#52745E]'
+                      : 'text-[#A67C3F]'
                   }`}
                 >
                   {uploadedDoc.extraction_status === 'extracted'
@@ -271,7 +271,7 @@ The octagonal well shaft provides direct downward solar illumination while keepi
                   setUploadedDoc(null);
                   setSelectedFile(null);
                 }}
-                className="px-4 py-2 rounded-xl border border-[#2e2923] hover:border-[#383127] hover:bg-[#1a1714] text-[#ded6c5] text-xs font-medium transition-colors"
+                className="px-4 py-2 rounded-xl border border-[#DED3C2] hover:bg-[#F0EAE1] text-[#393331] text-xs font-medium transition-colors"
               >
                 Upload Another
               </button>
@@ -282,7 +282,7 @@ The octagonal well shaft provides direct downward solar illumination while keepi
                     handleClose();
                     onViewDocument(uploadedDoc);
                   }}
-                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b38f2a] text-[#080706] font-semibold text-xs shadow-md hover:brightness-110 transition-all"
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#642F38] text-[#FFFCF5] font-semibold text-xs shadow-xs hover:bg-[#814B52] transition-all"
                 >
                   <Eye className="w-4 h-4" />
                   <span>Inspect Extracted Text</span>
@@ -296,11 +296,11 @@ The octagonal well shaft provides direct downward solar illumination while keepi
             {/* Metadata Context Inputs */}
             <div className="grid grid-cols-2 gap-3 text-xs">
               <div className="space-y-1">
-                <label className="text-[#ded6c5] font-semibold block">Region</label>
+                <label className="text-[#393331] font-semibold block">Region</label>
                 <select
                   value={region}
                   onChange={(e) => setRegion(e.target.value)}
-                  className="w-full p-2 rounded-lg border border-[#2e2923] bg-[#141210] text-[#fcf9f2] font-medium focus:outline-hidden"
+                  className="w-full p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] font-medium focus:border-[#642F38] focus:outline-hidden"
                 >
                   <option value="Gujarat">Gujarat</option>
                   <option value="Maharashtra">Maharashtra</option>
@@ -311,11 +311,11 @@ The octagonal well shaft provides direct downward solar illumination while keepi
               </div>
 
               <div className="space-y-1">
-                <label className="text-[#ded6c5] font-semibold block">Typology</label>
+                <label className="text-[#393331] font-semibold block">Typology</label>
                 <select
                   value={heritageType}
                   onChange={(e) => setHeritageType(e.target.value)}
-                  className="w-full p-2 rounded-lg border border-[#2e2923] bg-[#141210] text-[#fcf9f2] font-medium focus:outline-hidden"
+                  className="w-full p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] font-medium focus:border-[#642F38] focus:outline-hidden"
                 >
                   <option value="Stepwell / Baoli">Stepwell (Baoli)</option>
                   <option value="Temple">Temple</option>
@@ -333,10 +333,10 @@ The octagonal well shaft provides direct downward solar illumination while keepi
               onClick={() => fileInputRef.current?.click()}
               className={`p-6 rounded-2xl border-2 border-dashed text-center cursor-pointer transition-all ${
                 isDragging
-                  ? 'border-[#d4af37] bg-[#1d1914]'
+                  ? 'border-[#642F38] bg-[#F0EAE1]'
                   : selectedFile
-                  ? 'border-emerald-600 bg-emerald-950/20'
-                  : 'border-[#2e2923] bg-[#12100e] hover:border-[#d4af37]/60'
+                  ? 'border-[#52745E] bg-[#F0F5F2]'
+                  : 'border-[#DED3C2] bg-[#F6F1E7] hover:border-[#642F38]/60'
               }`}
             >
               <input
@@ -347,28 +347,28 @@ The octagonal well shaft provides direct downward solar illumination while keepi
                 className="hidden"
               />
 
-              <div className="w-12 h-12 mx-auto rounded-xl bg-[#1d1914] border border-[#d4af37]/30 text-[#eed27c] flex items-center justify-center mb-3">
-                <FileText className="w-6 h-6 text-[#d4af37]" />
+              <div className="w-12 h-12 mx-auto rounded-xl bg-[#FFFCF5] border border-[#DED3C2] text-[#642F38] flex items-center justify-center mb-3 shadow-xs">
+                <FileText className="w-6 h-6 text-[#642F38]" />
               </div>
 
               {selectedFile ? (
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-[#fcf9f2] truncate max-w-sm mx-auto font-serif">
+                  <p className="text-xs font-semibold text-[#393331] truncate max-w-sm mx-auto font-serif">
                     {selectedFile.name}
                   </p>
-                  <p className="text-[11px] text-[#eed27c] font-mono">
+                  <p className="text-[11px] text-[#642F38] font-mono font-medium">
                     {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB • Ready for ingestion
                   </p>
-                  <p className="text-[10px] text-[#a89f91] pt-1">
+                  <p className="text-[10px] text-[#756D66] pt-1">
                     Click or drop to replace file
                   </p>
                 </div>
               ) : (
                 <div className="space-y-1">
-                  <p className="text-xs font-semibold text-[#fcf9f2] font-serif">
+                  <p className="text-xs font-semibold text-[#393331] font-serif">
                     Click to browse or drop historical PDF / field notes here
                   </p>
-                  <p className="text-[11px] text-[#a89f91]">
+                  <p className="text-[11px] text-[#756D66]">
                     Maximum upload size: 15 MB • PDF monographs, JPG/PNG plates, TXT notes
                   </p>
                 </div>
@@ -377,38 +377,38 @@ The octagonal well shaft provides direct downward solar illumination while keepi
 
             {/* Quick Sample Note Seeder for fast test */}
             <div className="flex items-center justify-between text-xs pt-1">
-              <span className="text-[#9c9282] font-medium">Testing quickly?</span>
+              <span className="text-[#756D66] font-medium">Testing quickly?</span>
               <button
                 type="button"
                 onClick={handleLoadSampleNote}
-                className="inline-flex items-center gap-1.5 text-[#eed27c] hover:underline font-semibold text-[11px]"
+                className="inline-flex items-center gap-1.5 text-[#642F38] hover:underline font-semibold text-[11px]"
               >
-                <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+                <Sparkles className="w-3.5 h-3.5 text-[#A77C54]" />
                 <span>Load Sample IITGN Adalaj Field Notes</span>
               </button>
             </div>
 
             {/* Error Message */}
             {error && (
-              <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-900/60 text-xs text-rose-300 flex items-start gap-2">
-                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+              <div className="p-3 rounded-xl bg-[#FDF2F2] border border-[#F5C2C0] text-xs text-[#A94B43] flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 text-[#A94B43] shrink-0 mt-0.5" />
                 <span className="leading-relaxed">{error}</span>
               </div>
             )}
 
             {/* Evidence Policy Reminder */}
-            <div className="flex items-center gap-2 text-[#a89f91] text-xs font-serif">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+            <div className="flex items-center gap-2 text-[#756D66] text-xs font-serif">
+              <ShieldCheck className="w-4 h-4 text-[#52745E] shrink-0" />
               <span>PyMuPDF extracts text page-by-page. Scanned plates are flagged for OCR.</span>
             </div>
 
             {/* Actions */}
-            <div className="pt-3 border-t border-[#24201a] flex justify-end gap-2">
+            <div className="pt-3 border-t border-[#DED3C2] flex justify-end gap-2">
               <button
                 type="button"
                 onClick={handleClose}
                 disabled={isUploading}
-                className="px-4 py-2 rounded-xl border border-[#2e2923] hover:bg-[#1a1714] text-[#ded6c5] text-xs font-medium transition-colors disabled:opacity-40"
+                className="px-4 py-2 rounded-xl border border-[#DED3C2] hover:bg-[#F0EAE1] text-[#756D66] hover:text-[#393331] text-xs font-medium transition-colors disabled:opacity-40"
               >
                 Cancel
               </button>
@@ -417,7 +417,7 @@ The octagonal well shaft provides direct downward solar illumination while keepi
                 type="button"
                 onClick={handleSubmitUpload}
                 disabled={!selectedFile || isUploading}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d4af37] to-[#b38f2a] text-[#080706] text-xs font-semibold shadow-sm hover:brightness-110 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-[#642F38] text-[#FFFCF5] text-xs font-semibold shadow-xs hover:bg-[#814B52] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {isUploading ? (
                   <>
