@@ -349,8 +349,8 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
       {/* Main Split Screen: Leaflet Map (7 cols) + Selected Monument Card (5 cols) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
         {/* Interactive Map (7 cols) */}
-        <div className="lg:col-span-7 flex flex-col rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs relative min-h-[460px] lg:min-h-full">
-          <div ref={mapContainerRef} className="flex-1 w-full h-full min-h-[460px]" />
+        <div className="lg:col-span-7 flex flex-col rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs relative z-0 isolate min-h-[460px] lg:min-h-full">
+          <div ref={mapContainerRef} className="flex-1 w-full h-full min-h-[460px] relative z-0" />
 
           {/* Map Legend Overlay */}
           <div className="p-3 border-t border-[#DED3C2] bg-[#FFFCF5] flex flex-wrap items-center gap-4 text-xs z-10 font-serif">

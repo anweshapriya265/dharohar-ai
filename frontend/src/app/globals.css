@@ -120,6 +120,8 @@ body {
 .leaflet-container {
   background: #EFE8DC !important;
   font-family: inherit !important;
+  isolation: isolate !important;
+  z-index: 0 !important;
 }
 
 .leaflet-bar a {

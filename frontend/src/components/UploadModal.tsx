@@ -179,9 +179,9 @@ The octagonal well shaft provides direct downward solar illumination while keepi
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#393331]/60 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-[#393331]/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div
-        className="w-full max-w-lg rounded-2xl border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150"
+        className="w-full max-w-lg rounded-2xl border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] shadow-2xl p-6 space-y-5 animate-in zoom-in-95 duration-150 relative z-10"
         role="dialog"
         aria-modal="true"
         aria-labelledby="upload-modal-title"

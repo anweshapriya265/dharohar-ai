@@ -101,7 +101,7 @@ export default function DocumentViewerModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#393331]/60 backdrop-blur-xs animate-in fade-in duration-150">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-[#393331]/60 backdrop-blur-xs animate-in fade-in duration-150">
       <div
         className="w-full max-w-4xl max-h-[92vh] flex flex-col rounded-2xl border border-[#DED3C2] bg-[#FFFCF5] shadow-2xl overflow-hidden text-[#393331]"
         role="dialog"
