@@ -53,7 +53,7 @@ export default function Header({
   const isConnected = healthState.status === 'connected';
 
   return (
-    <header className="sticky top-0 z-30 h-16 border-b border-[#DED3C2] bg-[#FFFCF5] transition-colors w-full">
+    <header className="sticky top-0 z-30 h-16 border-b border-[#DED3C2] bg-[#FFFCF5]/95 backdrop-blur-md shadow-[0_1px_4px_rgba(57,51,49,0.04)] transition-all w-full">
       <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
         {/* Left: Sidebar Toggle + Brand Identity + Collection Indicator */}
         <div className="flex items-center gap-3">
@@ -62,7 +62,7 @@ export default function Header({
             <button
               type="button"
               onClick={onToggleSidebar}
-              className="lg:hidden p-2 rounded-lg text-[#393331] hover:text-[#642F38] hover:bg-[#EFE8DC] border border-[#DED3C2] focus:outline-none cursor-pointer"
+              className="lg:hidden p-2 rounded-xl text-[#393331] hover:text-[#642F38] hover:bg-[#EFE8DC] border border-[#DED3C2] focus:outline-none cursor-pointer"
               aria-label="Toggle navigation drawer"
             >
               <Menu className="w-4 h-4" />
@@ -74,7 +74,7 @@ export default function Header({
             <button
               type="button"
               onClick={onToggleSidebarCollapse}
-              className="hidden lg:flex p-2 rounded-lg text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC] border border-[#DED3C2] transition-colors cursor-pointer"
+              className="hidden lg:flex p-2 rounded-xl text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC] border border-[#DED3C2] transition-colors cursor-pointer"
               aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
               title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
@@ -94,11 +94,11 @@ export default function Header({
                 <span className="font-heritage text-base sm:text-lg font-bold tracking-tight text-[#642F38]">
                   DHAROHAR AI
                 </span>
-                <span className="hidden sm:inline-block px-2 py-0.5 rounded text-[10px] font-serif font-medium bg-[#EFE8DC] text-[#642F38] border border-[#DED3C2]">
+                <span className="hidden sm:inline-block px-2 py-0.5 rounded-full text-[10px] font-serif font-medium bg-[#FAF4EC] text-[#642F38] border border-[#E4D5C2]">
                   धरोहर
                 </span>
               </div>
-              <span className="hidden md:inline-block text-[11px] text-[#756D66] leading-none mt-0.5">
+              <span className="hidden md:inline-block text-[11px] text-[#756D66] leading-none mt-0.5 font-serif">
                 Digital Heritage Intelligence &amp; Archival Platform
               </span>
             </div>
@@ -106,7 +106,7 @@ export default function Header({
 
           {/* Collection Status Pill */}
           <div className="hidden xl:flex items-center gap-2 ml-4 pl-4 border-l border-[#DED3C2]">
-            <span className="text-[11px] font-mono text-[#756D66] flex items-center gap-1.5 bg-[#F6F1E7] px-2.5 py-1 rounded-md border border-[#DED3C2]">
+            <span className="text-[11px] font-mono text-[#756D66] flex items-center gap-1.5 bg-[#F6F1E7] px-2.5 py-1 rounded-full border border-[#DED3C2]">
               <Database className="w-3.5 h-3.5 text-[#A77C54]" />
               <span>Corpus:</span>
               <strong className="text-[#393331] font-semibold">{documentCount} Vol ({totalPageCount} Folios)</strong>
@@ -125,7 +125,7 @@ export default function Header({
                   id="user-role-selector"
                   value={currentRole}
                   onChange={(e) => onSelectRole(e.target.value)}
-                  className="text-xs bg-[#FFFCF5] hover:bg-[#F6F1E7] text-[#393331] border border-[#DED3C2] rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-[#642F38] transition-colors cursor-pointer font-serif"
+                  className="text-xs bg-[#FFFCF5] hover:bg-[#F6F1E7] text-[#393331] border border-[#DED3C2] rounded-xl px-3 py-1.5 focus:outline-none focus:border-[#642F38] transition-colors cursor-pointer font-serif"
                 >
                   {roles.map((r) => (
                     <option key={r.id} value={r.id}>
@@ -142,7 +142,7 @@ export default function Header({
             <button
               type="button"
               onClick={() => setShowHealthMenu(!showHealthMenu)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-xs font-mono text-[#393331] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-xs font-mono text-[#393331] transition-colors cursor-pointer shadow-2xs"
               title="Click to view API Telemetry"
             >
               <span
@@ -157,7 +157,7 @@ export default function Header({
 
             {/* Telemetry Popover */}
             {showHealthMenu && (
-              <div className="absolute right-0 mt-2 w-72 rounded-xl bg-[#FFFCF5] border border-[#DED3C2] p-4 shadow-lg z-50 text-xs text-[#393331] space-y-3">
+              <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-[#FFFCF5] border border-[#DED3C2] p-4 shadow-xl z-50 text-xs text-[#393331] space-y-3">
                 <div className="flex items-center justify-between border-b border-[#DED3C2] pb-2">
                   <span className="font-semibold text-xs text-[#642F38] font-heritage flex items-center gap-1.5">
                     <Activity className="w-3.5 h-3.5 text-[#642F38]" />
@@ -206,7 +206,7 @@ export default function Header({
           <button
             type="button"
             onClick={onOpenUpload}
-            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium transition-colors shadow-sm cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-xl bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium transition-all shadow-sm hover:shadow-md cursor-pointer"
           >
             <Upload className="w-3.5 h-3.5 text-[#FFFCF5]" />
             <span>Contribute Record</span>
