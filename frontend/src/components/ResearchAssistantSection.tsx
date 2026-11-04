@@ -420,7 +420,7 @@ export default function ResearchAssistantSection({
                 }
               }}
               placeholder="e.g., What architectural features, royal patrons, and inscriptions are documented for Cave 16 (Kailash Temple) at Ellora?"
-              className="w-full px-4 py-3 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-sm text-[#393331] placeholder:text-[#9E958D] focus:outline-none focus:ring-1 focus:ring-[#642F38] focus:border-[#642F38] transition font-serif"
+              className="w-full px-4 py-3.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] text-sm text-[#393331] placeholder:text-[#9E958D] focus:outline-none focus:ring-2 focus:ring-[#642F38]/20 focus:border-[#642F38] transition font-serif shadow-2xs"
               disabled={isLoading}
               aria-label="Research Question or Inquiry"
             />
@@ -594,7 +594,7 @@ export default function ResearchAssistantSection({
               <button
                 type="submit"
                 disabled={isLoading || !question.trim() || !backendConnected}
-                className="px-5 py-2 rounded-lg text-xs sm:text-sm font-serif font-medium text-[#FFFCF5] bg-[#642F38] hover:bg-[#50252C] disabled:opacity-50 disabled:pointer-events-none transition shadow-xs flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-serif font-medium text-[#FFFCF5] bg-[#642F38] hover:bg-[#50252C] disabled:opacity-50 disabled:pointer-events-none transition-all duration-150 shadow-sm hover:shadow-md flex items-center gap-2 cursor-pointer"
               >
                 {isLoading ? (
                   <>
@@ -749,7 +749,7 @@ export default function ResearchAssistantSection({
                 {response.claims.map((claim, index) => (
                   <div
                     key={index}
-                    className="p-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs space-y-3 hover:border-[#642F38]/50 transition-colors"
+                    className="p-4 sm:p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-2xs space-y-3 hover:border-[#642F38] hover:shadow-[0_4px_16px_-2px_rgba(57,51,49,0.08)] transition-all duration-150 group"
                   >
                     {/* Claim text */}
                     <div className="flex items-start gap-2.5">
@@ -780,7 +780,7 @@ export default function ResearchAssistantSection({
                               type="button"
                               onClick={() => onInspectSource(ev.document_id, pdfPage)}
                               aria-label={`Inspect citation ${ev.evidence_id} in ${ev.filename}, ${citationText}`}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium border border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#E8E0D2] hover:border-[#642F38] text-[#393331] transition group cursor-pointer shadow-xs"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#FAF2F3] hover:border-[#642F38] text-[#393331] transition-all duration-150 group cursor-pointer shadow-2xs hover:shadow-xs"
                               title={ev.citation_display || (hasPrinted ? `Printed page ${ev.printed_page_label} · PDF page ${pdfPage}` : `PDF page ${pdfPage} · Printed page unavailable`)}
                             >
                               <span className="font-mono text-[10px] bg-[#FFFCF5] border border-[#DED3C2] px-1 rounded font-bold text-[#642F38]">

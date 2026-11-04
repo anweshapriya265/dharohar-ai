@@ -77,7 +77,7 @@ export default function DigitalArchiveExplorer({
             <button
               type="button"
               onClick={onOpenUpload}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium shadow-xs transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs font-serif font-medium shadow-xs hover:shadow-md transition-all duration-150 cursor-pointer"
             >
               <Upload className="w-3.5 h-3.5" />
               <span>Ingest Monograph</span>
@@ -105,7 +105,7 @@ export default function DigitalArchiveExplorer({
             value={searchFilter}
             onChange={(e) => setSearchFilter(e.target.value)}
             placeholder="Filter by title, filename, or ID..."
-            className="w-full pl-9 pr-3 py-1.5 text-xs bg-[#FFFCF5] border border-[#DED3C2] rounded-lg text-[#393331] placeholder:text-[#9E958D] font-serif focus:outline-none focus:border-[#642F38]"
+            className="w-full pl-9 pr-3 py-2 text-xs bg-[#FFFCF5] border border-[#DED3C2] rounded-xl text-[#393331] placeholder:text-[#9E958D] font-serif focus:outline-none focus:ring-2 focus:ring-[#642F38]/20 focus:border-[#642F38] shadow-2xs"
           />
         </div>
 
@@ -227,7 +227,7 @@ export default function DigitalArchiveExplorer({
                         <button
                           type="button"
                           onClick={() => onViewDocument(doc)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#EFE8DC] hover:bg-[#642F38] text-[#393331] hover:text-[#FFFCF5] font-serif text-xs transition-colors cursor-pointer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#EFE8DC] hover:bg-[#642F38] text-[#393331] hover:text-[#FFFCF5] font-serif text-xs transition-all duration-150 cursor-pointer shadow-2xs"
                         >
                           <Eye className="w-3 h-3" />
                           <span>Inspect</span>

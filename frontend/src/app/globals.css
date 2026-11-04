@@ -2,7 +2,7 @@
 
 /* --------------------------------------------------------------------------
  * DHAROHAR AI — Premium Digital Heritage Intelligence Design System
- * Visual Identity: Parchment & Burgundy
+ * Visual Identity: Parchment & Imperial Burgundy
  * Aesthetic: Prestigious Digital Archive, Scholarly Research & Museum Platform
  * -------------------------------------------------------------------------- */
 
@@ -16,10 +16,12 @@
   /* Brand Burgundy */
   --brand-burgundy: #642F38;
   --brand-burgundy-hover: #50252C;
+  --brand-burgundy-subtle: #FAF2F3;
   --brand-wine: #814B52;
 
   /* Accents */
   --accent-bronze: #A77C54;
+  --accent-bronze-light: #C49E78;
   --accent-sandstone: #C8AD8D;
   --accent-sandstone-light: #DFD3C3;
 
@@ -34,7 +36,7 @@
   --border-stone-light: #EBE4D8;
   --border-stone-dark: #C9BBA7;
 
-  /* Semantic Feedback */
+  /* Semantic Feedback (Mineral Pigments) */
   --status-success: #52745E;
   --status-success-bg: #EDF3EF;
   --status-success-border: #BCD0C3;
@@ -46,6 +48,11 @@
   --status-error: #A94B43;
   --status-error-bg: #FAEEEE;
   --status-error-border: #E8BDB9;
+
+  /* Shadows (Natural Stone & Ink Diffuse) */
+  --shadow-heritage-sm: 0 1px 3px 0 rgba(57, 51, 49, 0.04), 0 1px 2px -1px rgba(57, 51, 49, 0.03);
+  --shadow-heritage-md: 0 4px 14px -2px rgba(57, 51, 49, 0.06), 0 2px 5px -2px rgba(57, 51, 49, 0.04);
+  --shadow-heritage-lg: 0 12px 28px -4px rgba(57, 51, 49, 0.09), 0 4px 10px -2px rgba(57, 51, 49, 0.04);
 
   /* Universal Mappings */
   --background: var(--bg-parchment);
@@ -78,6 +85,11 @@ body {
   letter-spacing: -0.015em;
 }
 
+.font-monument {
+  font-family: "Cinzel", "Playfair Display", Georgia, serif;
+  letter-spacing: 0.02em;
+}
+
 .font-mono-heritage {
   font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
 }
@@ -86,15 +98,92 @@ body {
 .parchment-card {
   background: var(--bg-ivory);
   border: 1px solid var(--border-stone);
-  box-shadow: 0 1px 3px 0 rgba(57, 51, 49, 0.04), 0 1px 2px -1px rgba(57, 51, 49, 0.04);
+  box-shadow: var(--shadow-heritage-sm);
   border-radius: 0.75rem;
 }
 
 .parchment-card-elevated {
   background: var(--bg-ivory);
   border: 1px solid var(--border-stone);
-  box-shadow: 0 4px 12px -2px rgba(57, 51, 49, 0.06), 0 2px 4px -2px rgba(57, 51, 49, 0.04);
+  box-shadow: var(--shadow-heritage-md);
   border-radius: 0.75rem;
+}
+
+/* Interactive Card & Button Micro-Transitions */
+.heritage-interactive {
+  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heritage-interactive:hover {
+  transform: translateY(-1px);
+  border-color: var(--brand-burgundy);
+  box-shadow: var(--shadow-heritage-md);
+}
+
+.heritage-interactive:active {
+  transform: translateY(0);
+}
+
+/* Heritage Buttons */
+.btn-heritage-primary {
+  background-color: var(--brand-burgundy);
+  color: var(--bg-ivory);
+  border: 1px solid transparent;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  transition: all 150ms ease-out;
+  cursor: pointer;
+}
+
+.btn-heritage-primary:hover {
+  background-color: var(--brand-burgundy-hover);
+  box-shadow: 0 2px 8px -1px rgba(100, 47, 56, 0.3);
+}
+
+.btn-heritage-secondary {
+  background-color: var(--bg-ivory);
+  color: var(--text-charcoal);
+  border: 1px solid var(--border-stone);
+  font-family: 'Playfair Display', Georgia, serif;
+  transition: all 150ms ease-out;
+  cursor: pointer;
+}
+
+.btn-heritage-secondary:hover {
+  background-color: var(--bg-parchment);
+  border-color: var(--brand-burgundy);
+  color: var(--brand-burgundy);
+}
+
+/* Heritage Badges & Status Pills */
+.badge-malachite {
+  background-color: var(--status-success-bg);
+  color: var(--status-success);
+  border: 1px solid var(--status-success-border);
+}
+
+.badge-ochre {
+  background-color: var(--status-warning-bg);
+  color: var(--status-warning);
+  border: 1px solid var(--status-warning-border);
+}
+
+.badge-terracotta {
+  background-color: var(--status-error-bg);
+  color: var(--status-error);
+  border: 1px solid var(--status-error-border);
+}
+
+.badge-burgundy {
+  background-color: var(--brand-burgundy-subtle);
+  color: var(--brand-burgundy);
+  border: 1px solid rgba(100, 47, 56, 0.25);
+}
+
+.badge-stone {
+  background-color: var(--bg-parchment-pale);
+  color: var(--text-charcoal-muted);
+  border: 1px solid var(--border-stone);
 }
 
 /* Clean Custom Scrollbars */

@@ -12,10 +12,14 @@ import {
   Compass,
   ShieldCheck,
   RotateCcw,
+  Maximize2,
+  Minimize2,
 } from 'lucide-react';
 
 export default function Monument3DViewer() {
   const mountRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [wireframe, setWireframe] = useState<boolean>(false);
   const [lightingMode, setLightingMode] = useState<'daylight' | 'twilight'>('daylight');
   const [activeHotspot, setActiveHotspot] = useState<number>(1);
@@ -88,6 +92,25 @@ export default function Monument3DViewer() {
     setActiveHotspot(hotspot.id);
     triggerTransition(hotspot.cameraPos, hotspot.target);
   };
+
+  const toggleFullscreen = () => {
+    if (!containerRef.current) return;
+    if (!document.fullscreenElement) {
+      containerRef.current.requestFullscreen().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen().catch(() => {});
+      setIsFullscreen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
 
   const handleResetCamera = () => {
     setActiveHotspot(1);
@@ -226,17 +249,18 @@ export default function Monument3DViewer() {
     });
 
     const cutawayBaseMat = new THREE.MeshStandardMaterial({
-      color: lightingMode === 'twilight' ? 0x3d3029 : 0x5C5248,
-      roughness: 0.95,
+      color: lightingMode === 'twilight' ? 0x48362B : 0x968674,
+      roughness: 0.92,
+      metalness: 0.02,
       wireframe: wireframe,
     });
 
     const waterMat = new THREE.MeshStandardMaterial({
-      color: 0x2A7366,
-      roughness: 0.08,
-      metalness: 0.75,
+      color: 0x1E7067,
+      roughness: 0.12,
+      metalness: 0.35,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.90,
     });
 
     // 7. Procedural Stepwell Construction Group
@@ -644,106 +668,156 @@ export default function Monument3DViewer() {
   const activeHotspotData = hotspots.find((h) => h.id === activeHotspot) || hotspots[0];
 
   return (
-    <div className="space-y-4">
-      {/* Top Banner & Control Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] shadow-xs">
+    <div ref={containerRef} className="space-y-4 max-w-full">
+      {/* 1. Refined Scholarly Header & Stratigraphic Context */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-2 border-b border-[#DED3C2]">
         <div>
-          <div className="inline-block text-[11px] font-mono tracking-wider uppercase text-[#814B52] font-semibold mb-0.5">
-            Subterranean Digital Twin
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[10px] font-mono tracking-wider uppercase text-[#814B52] font-semibold bg-[#814B52]/10 px-2.5 py-0.5 rounded-full border border-[#814B52]/20">
+              Subterranean Hydraulic Architecture
+            </span>
+            <span className="text-xs text-[#756D66] font-mono">1498 CE · Solanki-Vaghela</span>
           </div>
           <h1 className="text-xl sm:text-2xl font-heritage font-bold text-[#642F38] tracking-tight">
             Adalaj Stepwell (Rudabai Vav) Digital Twin
           </h1>
           <p className="text-xs sm:text-sm text-[#59524E] font-serif mt-0.5">
-            Volumetric structural model of the 1498 CE five-storey subterranean hydraulic monument in Gandhinagar, Gujarat
+            Volumetric structural model of the five-storey subterranean hydraulic monument in Gandhinagar, Gujarat
           </p>
         </div>
 
-        {/* Viewport Presets & Lighting Controls */}
-        <div className="flex items-center gap-2">
-          {/* Daylight / Twilight Toggle */}
-          <button
-            type="button"
-            onClick={() => setLightingMode(lightingMode === 'daylight' ? 'twilight' : 'daylight')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] hover:bg-[#F6F1E7] text-xs font-mono transition-colors cursor-pointer"
-          >
-            {lightingMode === 'daylight' ? <Sun className="w-3.5 h-3.5 text-[#A67C3F]" /> : <Sunset className="w-3.5 h-3.5 text-[#642F38]" />}
-            <span className="capitalize">{lightingMode} Mode</span>
-          </button>
-
-          {/* Wireframe Mode */}
-          <button
-            type="button"
-            onClick={() => setWireframe(!wireframe)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors cursor-pointer ${
-              wireframe
-                ? 'bg-[#642F38] text-[#FFFCF5] font-semibold border-[#642F38]'
-                : 'border-[#DED3C2] bg-[#FFFCF5] text-[#393331] hover:bg-[#F6F1E7]'
-            }`}
-          >
-            <Layers className="w-3.5 h-3.5" />
-            <span>{wireframe ? 'Solid' : 'Wireframe'}</span>
-          </button>
-
-          {/* Auto Rotation Toggle */}
-          <button
-            type="button"
-            onClick={() => setIsRotating(!isRotating)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors cursor-pointer ${
-              isRotating
-                ? 'bg-[#EDF3EF] text-[#52745E] border-[#BCD0C3]'
-                : 'bg-[#FFFCF5] text-[#756D66] border-[#DED3C2] hover:bg-[#F6F1E7]'
-            }`}
-          >
-            <RotateCw className={`w-3.5 h-3.5 ${isRotating ? 'animate-spin' : ''}`} />
-            <span>{isRotating ? 'Orbiting' : 'Paused'}</span>
-          </button>
-
-          {/* Reset Camera View */}
-          <button
-            type="button"
-            onClick={handleResetCamera}
-            className="p-2 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] hover:bg-[#F6F1E7] transition-colors cursor-pointer"
-            title="Reset to default isometric overview"
-          >
-            <RotateCcw className="w-4 h-4" />
-          </button>
+        {/* Stratigraphy Badges */}
+        <div className="hidden sm:flex items-center gap-2">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] text-xs font-mono text-[#393331] shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#52745E]" />
+            <span>5 Subterranean Tiers</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] text-xs font-mono text-[#642F38] shadow-2xs">
+            <span className="w-2 h-2 rounded-full bg-[#A77C54]" />
+            <span>Octagonal Shaft Mandapa</span>
+          </div>
         </div>
       </div>
 
-      {/* Main 3D Canvas + Side Architectural Tier Hotspots */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
-        {/* 3D WebGL Canvas (7 cols) */}
-        <div className="lg:col-span-7 relative rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
+      {/* 2. Main Studio Workspace: 3D Canvas + Architectural Inspector */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px] lg:h-[calc(100vh-14rem)]">
+        {/* 3D WebGL Canvas (7 cols on lg, 8 cols on xl) */}
+        <div className="lg:col-span-7 xl:col-span-8 relative rounded-2xl border border-[#DED3C2] bg-[#FAF6EE] overflow-hidden shadow-sm cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
+          {/* Mount Three.js Renderer */}
           <div ref={mountRef} className="w-full h-full" />
 
-          {/* Overlay Interaction Hint with Explicit Control Indicators */}
-          <div className="absolute bottom-3 left-3 bg-[#FFFCF5]/92 backdrop-blur-xs border border-[#DED3C2] rounded-lg px-3 py-1.5 text-[11px] text-[#59524E] shadow-xs flex items-center gap-2 pointer-events-none font-serif">
-            <Compass className="w-4 h-4 text-[#A77C54] shrink-0" />
+          {/* Floating Top-Left Model Stamp */}
+          <div className="absolute top-3.5 left-3.5 z-10 pointer-events-none">
+            <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FFFCF5]/90 backdrop-blur-md border border-[#DED3C2] shadow-xs text-xs">
+              <span className="w-2 h-2 rounded-full bg-[#A77C54] animate-pulse" />
+              <span className="font-heritage font-bold text-[#642F38]">Rudabai ni Vav</span>
+              <span className="text-[10px] font-mono text-[#756D66] border-l border-[#DED3C2] pl-2">
+                ASI Mon. GJR-14
+              </span>
+            </div>
+          </div>
+
+          {/* Floating Top-Right Studio Toolbar (Never scrolls off!) */}
+          <div className="absolute top-3.5 right-3.5 z-10 flex items-center gap-1.5 p-1.5 rounded-xl bg-[#FFFCF5]/90 backdrop-blur-md border border-[#DED3C2] shadow-md">
+            {/* Daylight / Twilight Toggle */}
+            <button
+              type="button"
+              onClick={() => setLightingMode(lightingMode === 'daylight' ? 'twilight' : 'daylight')}
+              className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono rounded-lg hover:bg-[#EFE8DC] transition-all text-[#393331] cursor-pointer"
+              title="Toggle architectural lighting environment"
+            >
+              {lightingMode === 'daylight' ? (
+                <Sun className="w-3.5 h-3.5 text-[#A77C54]" />
+              ) : (
+                <Sunset className="w-3.5 h-3.5 text-[#642F38]" />
+              )}
+              <span className="capitalize">{lightingMode}</span>
+            </button>
+
+            <div className="w-px h-4 bg-[#DED3C2]" />
+
+            {/* Solid / Wireframe Toggle */}
+            <button
+              type="button"
+              onClick={() => setWireframe(!wireframe)}
+              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                wireframe
+                  ? 'bg-[#642F38] text-[#FFFCF5]'
+                  : 'text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC]'
+              }`}
+              title={wireframe ? 'Show solid masonry' : 'Show structural wireframe'}
+            >
+              <Layers className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Orbit / Pause Toggle */}
+            <button
+              type="button"
+              onClick={() => setIsRotating(!isRotating)}
+              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                isRotating
+                  ? 'text-[#52745E] hover:bg-[#EDF3EF]'
+                  : 'text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC]'
+              }`}
+              title={isRotating ? 'Pause auto-orbit' : 'Resume auto-orbit'}
+            >
+              <RotateCw className={`w-3.5 h-3.5 ${isRotating ? 'animate-spin' : ''}`} />
+            </button>
+
+            {/* Reset Camera View */}
+            <button
+              type="button"
+              onClick={handleResetCamera}
+              className="p-1.5 rounded-lg text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC] transition-colors cursor-pointer"
+              title="Reset to default isometric overview"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+            </button>
+
+            {/* Fullscreen Toggle */}
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="p-1.5 rounded-lg text-[#756D66] hover:text-[#642F38] hover:bg-[#EFE8DC] transition-colors cursor-pointer"
+              title={isFullscreen ? 'Exit fullscreen' : 'Enter immersive fullscreen'}
+            >
+              {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+          {/* Floating Bottom-Left Interaction Guide */}
+          <div className="absolute bottom-3.5 left-3.5 bg-[#FFFCF5]/90 backdrop-blur-md border border-[#DED3C2] rounded-xl px-3 py-1.5 text-[11px] text-[#756D66] shadow-xs flex items-center gap-2 pointer-events-none font-serif">
+            <Compass className="w-3.5 h-3.5 text-[#A77C54] shrink-0" />
             <span>
-              <strong className="text-[#642F38] font-mono">Left-drag:</strong> Orbit 360° ·{' '}
+              <strong className="text-[#642F38] font-mono">Left-drag:</strong> Orbit ·{' '}
               <strong className="text-[#642F38] font-mono">Right-drag:</strong> Pan ·{' '}
               <strong className="text-[#642F38] font-mono">Scroll:</strong> Zoom
             </span>
           </div>
+
+          {/* Floating Bottom-Right Depth Datum Indicator */}
+          <div className="absolute bottom-3.5 right-3.5 bg-[#FFFCF5]/90 backdrop-blur-md border border-[#DED3C2] rounded-xl px-3 py-1.5 text-xs text-[#393331] shadow-xs flex items-center gap-2 font-mono">
+            <span className="w-2 h-2 rounded-full bg-[#642F38] animate-pulse" />
+            <span className="text-[#814B52] font-semibold">{activeHotspotData.documentedDepth}</span>
+          </div>
         </div>
 
-        {/* Architectural Hotspots & Structural Insights (5 cols) */}
-        <div className="lg:col-span-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs space-y-4 flex flex-col justify-between overflow-y-auto">
+        {/* Architectural Hotspots & Structural Insights (5 cols on lg, 4 cols on xl) */}
+        <div className="lg:col-span-5 xl:col-span-4 rounded-2xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs flex flex-col justify-between overflow-y-auto space-y-4">
           <div className="space-y-4">
             <div className="border-b border-[#EBE4D8] pb-3">
               <span className="text-[10px] font-mono uppercase text-[#814B52] tracking-wider block font-semibold">
-                Stratified Hydraulic Architecture
+                Stratified Architecture
               </span>
               <h2 className="text-base font-heritage font-bold text-[#642F38] pt-0.5">
                 Subterranean Tiers &amp; Hotspots
               </h2>
               <p className="text-xs text-[#756D66] font-serif mt-0.5">
-                Select a depth level to glide camera and inspect architectural components
+                Select a depth tier to glide camera and inspect structural details
               </p>
             </div>
 
-            {/* Hotspot Tier Buttons */}
+            {/* Hotspot Tier Buttons with Zero-Wrap Refined Layout */}
             <div className="space-y-2">
               {hotspots.map((h) => {
                 const isSelected = activeHotspot === h.id;
@@ -752,17 +826,32 @@ export default function Monument3DViewer() {
                     key={h.id}
                     type="button"
                     onClick={() => handleSelectHotspot(h)}
-                    className={`w-full text-left p-3 rounded-lg border text-xs transition-colors cursor-pointer ${
+                    className={`w-full text-left p-3 rounded-xl border transition-all duration-150 cursor-pointer ${
                       isSelected
-                        ? 'border-[#642F38] bg-[#FAF2F3] shadow-xs'
-                        : 'border-[#DED3C2] bg-[#EFE8DC] hover:bg-[#E8E0D2]'
+                        ? 'border-l-4 border-l-[#642F38] border-y border-r border-[#DED3C2] bg-[#FAF4EC] shadow-xs'
+                        : 'border-[#DED3C2]/70 bg-[#FFFCF5] hover:bg-[#F6F1E7]'
                     }`}
                   >
-                    <div className="flex items-center justify-between">
-                      <span className={`font-serif ${isSelected ? 'text-[#642F38] font-bold' : 'text-[#393331]'}`}>
-                        {h.title}
-                      </span>
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#FFFCF5] border border-[#DED3C2] text-[#642F38]">
+                    <div className="flex items-start justify-between gap-2.5">
+                      <div className="flex flex-col min-w-0">
+                        <span
+                          className={`font-serif text-xs leading-snug ${
+                            isSelected ? 'text-[#642F38] font-bold' : 'text-[#393331] font-medium'
+                          }`}
+                        >
+                          {h.title}
+                        </span>
+                        <span className="text-[10px] text-[#756D66] font-mono mt-0.5">
+                          {h.documentedDepth}
+                        </span>
+                      </div>
+                      <span
+                        className={`shrink-0 text-[10px] font-mono px-2 py-0.5 rounded-full border whitespace-nowrap ${
+                          isSelected
+                            ? 'bg-[#642F38] text-[#FFFCF5] border-[#642F38] font-medium'
+                            : 'bg-[#F6F1E7] text-[#814B52] border-[#DED3C2]'
+                        }`}
+                      >
                         {h.level}
                       </span>
                     </div>
@@ -772,7 +861,7 @@ export default function Monument3DViewer() {
             </div>
 
             {/* Active Hotspot Deep Dive Card */}
-            <div className="p-4 rounded-lg border border-[#DED3C2] bg-[#F6F1E7] space-y-1.5 text-xs">
+            <div className="p-4 rounded-xl border border-[#DED3C2] bg-[#F9F4EB] space-y-1.5 text-xs shadow-2xs">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase font-mono font-semibold text-[#814B52] tracking-wider">
                   Tier Analysis
@@ -791,20 +880,24 @@ export default function Monument3DViewer() {
           </div>
 
           {/* Subterranean Engineering Note & Provenance Notice */}
-          <div className="space-y-2 pt-2 border-t border-[#EBE4D8]">
-            <div className="p-3 rounded-lg bg-[#EDF3EF] border border-[#BCD0C3] text-xs text-[#393331] space-y-1">
-              <div className="flex items-center gap-1.5 font-semibold text-[#52745E] font-serif">
+          <div className="space-y-2.5 pt-3 border-t border-[#EBE4D8]">
+            {/* Heritage Geothermal Cooling Callout */}
+            <div className="p-3 rounded-xl bg-[#FAF4EC] border border-[#DFD3C2] text-xs text-[#393331] space-y-1">
+              <div className="flex items-center gap-1.5 font-semibold text-[#A77C54] font-serif">
                 <Info className="w-3.5 h-3.5" />
                 <span>Hydraulic &amp; Microclimate Engineering</span>
               </div>
               <p className="text-[11px] text-[#59524E] leading-normal font-serif">
-                Stepwells in arid Gujarat operated as passive geothermal cooling devices, decreasing air temperature by 5–7°C relative to the ambient surface ground.
+                Stepwells in arid Gujarat functioned as passive geothermal cooling sanctuaries, decreasing air temperature by 5–7°C relative to the ambient surface ground.
               </p>
             </div>
 
-            <div className="p-2.5 rounded-lg bg-[#F6F1E7] border border-[#DED3C2] text-[10px] text-[#756D66] flex items-center gap-2">
+            {/* Institutional Provenance Notice */}
+            <div className="p-2.5 rounded-xl bg-[#F6F1E7] border border-[#DED3C2] text-[10px] text-[#756D66] flex items-center gap-2">
               <ShieldCheck className="w-4 h-4 text-[#A77C54] shrink-0" />
-              <span className="font-serif">Procedural 3D cutaway representation based on published ASI field survey plans.</span>
+              <span className="font-serif leading-tight">
+                Procedural 3D cutaway representation based on published Archaeological Survey of India (ASI) field survey plans.
+              </span>
             </div>
           </div>
         </div>

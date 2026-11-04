@@ -94,7 +94,7 @@ export default function SearchSection({
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search historical terms, dimensions, or inscriptions (e.g. '107 feet deep', 'Dantidurga reign', 'Cave 16')..."
-              className="w-full pl-10 pr-20 py-2.5 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] placeholder:text-[#9E958D] text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#642F38] focus:border-[#642F38] transition font-serif"
+              className="w-full pl-10 pr-20 py-2.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] text-[#393331] placeholder:text-[#9E958D] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#642F38]/20 focus:border-[#642F38] transition font-serif shadow-2xs"
             />
 
             {searchQuery && (
@@ -118,7 +118,7 @@ export default function SearchSection({
           <button
             type="submit"
             disabled={!searchQuery.trim() || isSearching}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs sm:text-sm font-serif font-medium shadow-xs transition disabled:opacity-50 disabled:cursor-not-allowed shrink-0 cursor-pointer"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#642F38] hover:bg-[#50252C] text-[#FFFCF5] text-xs sm:text-sm font-serif font-medium shadow-xs hover:shadow-md transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed shrink-0 cursor-pointer"
           >
             {isSearching ? (
               <>
@@ -234,7 +234,7 @@ export default function SearchSection({
                 {searchResults.map((item) => (
                   <div
                     key={item.chunk_id}
-                    className="p-4 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] space-y-3 hover:border-[#642F38]/50 transition-colors shadow-xs"
+                    className="p-4 sm:p-5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] space-y-3 hover:border-[#642F38] hover:shadow-[0_4px_16px_-2px_rgba(57,51,49,0.08)] transition-all duration-150 shadow-2xs group"
                   >
                     {/* Header: Document, Page, Score */}
                     <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
@@ -290,7 +290,7 @@ export default function SearchSection({
                       <button
                         type="button"
                         onClick={() => onInspectSource(item.document_id, item.pdf_page_index ?? item.page_number)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#EFE8DC] hover:bg-[#642F38] text-[#393331] hover:text-[#FFFCF5] text-xs font-serif font-medium border border-[#DED3C2] transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#EFE8DC] hover:bg-[#642F38] text-[#393331] hover:text-[#FFFCF5] text-xs font-serif font-medium border border-[#DED3C2] hover:border-[#642F38] transition-all duration-150 shadow-2xs cursor-pointer"
                         title={item.citation_display || (item.printed_page_label ? `Printed page ${item.printed_page_label} · PDF page ${item.pdf_page_index ?? item.page_number}` : `PDF page ${item.pdf_page_index ?? item.page_number} · Printed page unavailable`)}
                       >
                         <Eye className="w-3.5 h-3.5" />
