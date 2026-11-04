@@ -13,7 +13,8 @@ import {
 } from 'lucide-react';
 import { fetchMapRecords, MapRecordItem } from '@/lib/api';
 
-import type { Map as LeafletMap, LayerGroup, Polyline } from 'leaflet';
+import type { Map as LeafletMap, LayerGroup, Polyline, TileLayer } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 interface GeospatialMapSectionProps {
   onSelectRecord?: (recordId: string) => void;
@@ -26,11 +27,13 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [activeRegion, setActiveRegion] = useState<string>('all');
   const [showRoutes, setShowRoutes] = useState<boolean>(true);
+  const [baseLayer, setBaseLayer] = useState<'osm' | 'topo'>('osm');
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<LeafletMap | null>(null);
   const markersGroupRef = useRef<LayerGroup | null>(null);
   const routePolylineRef = useRef<Polyline | null>(null);
+  const tileLayerRef = useRef<TileLayer | null>(null);
 
   const regions = [
     { id: 'all', label: 'All Regions' },
@@ -108,19 +111,45 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
 
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // CartoDB Voyager Tile Layer (High legibility for cultural geography)
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        // OpenStreetMap Canonical Subdomains Tile Layer (Free, no API key required)
+        const tile = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors',
           maxZoom: 19,
+          subdomains: ['a', 'b', 'c'],
         }).addTo(map);
+        tileLayerRef.current = tile;
 
         markersGroupRef.current = L.layerGroup().addTo(map);
         mapInstanceRef.current = map;
+
+        setTimeout(() => {
+          map.invalidateSize();
+        }, 150);
       }
 
       const map = mapInstanceRef.current;
       const markersGroup = markersGroupRef.current;
       if (!map || !markersGroup) return;
+
+      // Update tile layer if baseLayer switched
+      if (tileLayerRef.current) {
+        map.removeLayer(tileLayerRef.current);
+        const tileUrl =
+          baseLayer === 'topo'
+            ? 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+            : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        const tileAttribution =
+          baseLayer === 'topo'
+            ? 'Tiles &copy; Esri &mdash; Sources: GEBCO, USGS, NOAA, National Geographic'
+            : '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a> contributors';
+
+        const newTile = L.tileLayer(tileUrl, {
+          attribution: tileAttribution,
+          maxZoom: baseLayer === 'topo' ? 18 : 19,
+          subdomains: ['a', 'b', 'c'],
+        }).addTo(map);
+        tileLayerRef.current = newTile;
+      }
 
       markersGroup.clearLayers();
       if (routePolylineRef.current) {
@@ -200,7 +229,7 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
     };
 
     void initMap();
-  }, [sites, selectedSite, activeFilter, activeRegion, showRoutes]);
+  }, [sites, selectedSite, activeFilter, activeRegion, showRoutes, baseLayer]);
 
   const handleJumpTo = (coords: number[]) => {
     if (mapInstanceRef.current) {
@@ -225,6 +254,17 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Base Layer Switcher (OSM Streets vs Topographic Relief) */}
+          <button
+            type="button"
+            onClick={() => setBaseLayer(baseLayer === 'osm' ? 'topo' : 'osm')}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-xs font-mono text-[#393331] transition-colors cursor-pointer"
+            title="Toggle between OpenStreetMap Streets and Esri Topographic Relief"
+          >
+            <Compass className="w-3.5 h-3.5 text-[#A77C54]" />
+            <span>{baseLayer === 'osm' ? 'OSM Streets' : 'Topo Relief'}</span>
+          </button>
+
           {/* Toggle Route Trail */}
           <button
             type="button"
