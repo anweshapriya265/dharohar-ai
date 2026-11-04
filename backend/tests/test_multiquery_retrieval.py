@@ -37,7 +37,19 @@ class MockTestLLMProvider(BaseLLMProvider):
         return self.response_text
 
 
-VALIDATION_DB_PATH = Path("backend/data/dharohar_sample_validation.db")
+def _resolve_validation_db_path() -> Path:
+    candidates = [
+        Path("backend/data/dharohar_sample_validation.db"),
+        Path("data/dharohar_sample_validation.db"),
+        Path(__file__).resolve().parent.parent / "data" / "dharohar_sample_validation.db",
+    ]
+    for c in candidates:
+        if c.exists() and c.stat().st_size > 0:
+            return c.resolve()
+    return candidates[0].resolve()
+
+
+VALIDATION_DB_PATH = _resolve_validation_db_path()
 
 
 def test_single_query_decomposition():
