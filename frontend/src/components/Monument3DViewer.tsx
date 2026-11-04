@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import {
   RotateCw,
   Sun,
@@ -23,13 +24,16 @@ export default function Monument3DViewer() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const controlsRef = useRef<OrbitControls | null>(null);
   const monumentGroupRef = useRef<THREE.Group | null>(null);
 
-  // Smooth camera interpolation targets
-  const targetCameraPosRef = useRef<THREE.Vector3>(new THREE.Vector3(22, 20, 28));
-  const currentCameraPosRef = useRef<THREE.Vector3>(new THREE.Vector3(22, 20, 28));
-  const targetLookAtRef = useRef<THREE.Vector3>(new THREE.Vector3(0, -4.5, 0));
-  const currentLookAtRef = useRef<THREE.Vector3>(new THREE.Vector3(0, -4.5, 0));
+  // Cinematic camera transition refs
+  const isTransitioningRef = useRef<boolean>(false);
+  const transitionProgressRef = useRef<number>(1);
+  const startCamPosRef = useRef<THREE.Vector3>(new THREE.Vector3());
+  const endCamPosRef = useRef<THREE.Vector3>(new THREE.Vector3());
+  const startTargetRef = useRef<THREE.Vector3>(new THREE.Vector3());
+  const endTargetRef = useRef<THREE.Vector3>(new THREE.Vector3());
 
   const hotspots = [
     {
@@ -38,7 +42,7 @@ export default function Monument3DViewer() {
       level: 'Ground Level (0.0 m)',
       documentedDepth: '0.0 meters (Surface Datum)',
       description: 'Single-entry Solanki portico with square pillared chhatri pavilion, initiating the downward axial subterranean descent.',
-      cameraPos: { x: 0, y: 8, z: 24 },
+      cameraPos: { x: 0, y: 7, z: 23 },
       target: { x: 0, y: 1.5, z: 14 },
     },
     {
@@ -47,8 +51,8 @@ export default function Monument3DViewer() {
       level: 'Intermediate Tier (-6.6 m)',
       documentedDepth: '-6.6 meters below surface',
       description: 'Open octagonal light well allowing atmospheric sunlight to cascade down onto carved sandstone friezes and hypostyle pillars.',
-      cameraPos: { x: 12, y: 1, z: -2 },
-      target: { x: 0, y: -5, z: -4 },
+      cameraPos: { x: 10, y: -1, z: -1 },
+      target: { x: 0, y: -5, z: -4.5 },
     },
     {
       id: 3,
@@ -56,7 +60,7 @@ export default function Monument3DViewer() {
       level: 'Deep Tier (-8.8 m)',
       documentedDepth: '-8.8 meters below surface',
       description: 'Descending flights of stepped stone terraces and colonnaded landings engineered to moderate ambient air by geothermal cooling.',
-      cameraPos: { x: -14, y: 2, z: 4 },
+      cameraPos: { x: -12, y: 0, z: 3 },
       target: { x: 0, y: -4, z: 2 },
     },
     {
@@ -65,22 +69,37 @@ export default function Monument3DViewer() {
       level: 'Basal Water Table (-11.0 m)',
       documentedDepth: '-11.0 meters below surface',
       description: 'Deep circular masonry reservoir catching subterranean groundwater, providing constant community water and drought insurance.',
-      cameraPos: { x: 4, y: -2, z: -23 },
-      target: { x: 0, y: -9, z: -15 },
+      cameraPos: { x: 3, y: -3, z: -22 },
+      target: { x: 0, y: -9, z: -16.5 },
     },
   ];
 
+  const triggerTransition = (targetCam: { x: number; y: number; z: number }, targetLook: { x: number; y: number; z: number }) => {
+    if (!cameraRef.current || !controlsRef.current) return;
+    startCamPosRef.current.copy(cameraRef.current.position);
+    endCamPosRef.current.set(targetCam.x, targetCam.y, targetCam.z);
+    startTargetRef.current.copy(controlsRef.current.target);
+    endTargetRef.current.set(targetLook.x, targetLook.y, targetLook.z);
+    transitionProgressRef.current = 0;
+    isTransitioningRef.current = true;
+  };
+
   const handleSelectHotspot = (hotspot: (typeof hotspots)[0]) => {
     setActiveHotspot(hotspot.id);
-    targetCameraPosRef.current.set(hotspot.cameraPos.x, hotspot.cameraPos.y, hotspot.cameraPos.z);
-    targetLookAtRef.current.set(hotspot.target.x, hotspot.target.y, hotspot.target.z);
+    triggerTransition(hotspot.cameraPos, hotspot.target);
   };
 
   const handleResetCamera = () => {
-    targetCameraPosRef.current.set(22, 20, 28);
-    targetLookAtRef.current.set(0, -4.5, 0);
     setActiveHotspot(1);
+    triggerTransition({ x: 22, y: 20, z: 28 }, { x: 0, y: -4.5, z: 0 });
   };
+
+  // Sync auto-rotation dynamically without remounting the entire scene
+  useEffect(() => {
+    if (controlsRef.current) {
+      controlsRef.current.autoRotate = isRotating;
+    }
+  }, [isRotating]);
 
   useEffect(() => {
     if (!mountRef.current) return;
@@ -99,8 +118,7 @@ export default function Monument3DViewer() {
 
     // 2. Camera Setup
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.copy(currentCameraPosRef.current);
-    camera.lookAt(currentLookAtRef.current);
+    camera.position.set(22, 20, 28);
     cameraRef.current = camera;
 
     // 3. WebGL Renderer
@@ -114,7 +132,24 @@ export default function Monument3DViewer() {
     mountRef.current.innerHTML = '';
     mountRef.current.appendChild(renderer.domElement);
 
-    // 4. Lighting Configuration
+    // 4. OrbitControls Integration
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.autoRotate = isRotating;
+    controls.autoRotateSpeed = 0.75;
+    controls.minDistance = 5;
+    controls.maxDistance = 60;
+    // Prevent camera from flipping below the cutaway bedrock
+    controls.maxPolarAngle = Math.PI / 2 + 0.12;
+    controls.target.set(0, -4.5, 0);
+    controls.addEventListener('start', () => {
+      // User started manual interaction, cancel automated transition
+      isTransitioningRef.current = false;
+    });
+    controlsRef.current = controls;
+
+    // 5. Lighting Configuration
     if (lightingMode === 'twilight') {
       const ambient = new THREE.AmbientLight(0x28201a, 1.8);
       scene.add(ambient);
@@ -160,7 +195,7 @@ export default function Monument3DViewer() {
       scene.add(fillLight);
     }
 
-    // 5. Materials (Gujarat Dhrangadhra Sandstone Palette)
+    // 6. Materials (Gujarat Dhrangadhra Sandstone Palette)
     const stoneColor = lightingMode === 'twilight' ? 0xb57b4c : 0xD5BE9E;
     const stoneMat = new THREE.MeshStandardMaterial({
       color: stoneColor,
@@ -204,7 +239,7 @@ export default function Monument3DViewer() {
       opacity: 0.85,
     });
 
-    // 6. Procedural Stepwell Construction Group
+    // 7. Procedural Stepwell Construction Group
     const monumentGroup = new THREE.Group();
     monumentGroupRef.current = monumentGroup;
     scene.add(monumentGroup);
@@ -293,21 +328,18 @@ export default function Monument3DViewer() {
     };
 
     // --- 1. Foundational Geological Bedrock Plinth (Cutaway Base) ---
-    // A clean architectural cutaway plinth at the base, never obstructing line of sight
     const plinth = new THREE.Mesh(new THREE.BoxGeometry(20, 1.2, 42), cutawayBaseMat);
     plinth.position.set(0, -12.0, 0);
     plinth.receiveShadow = true;
     monumentGroup.add(plinth);
 
     // --- 2. Lateral Masonry Retaining Walls with Stringcourses & Niches ---
-    // Left retaining wall (X = -4.3)
     const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.6, 12, 34), retainingWallMat);
     leftWall.position.set(-4.3, -5.5, 0.5);
     leftWall.castShadow = true;
     leftWall.receiveShadow = true;
     monumentGroup.add(leftWall);
 
-    // Right retaining wall (X = +4.3)
     const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.6, 12, 34), retainingWallMat);
     rightWall.position.set(4.3, -5.5, 0.5);
     rightWall.castShadow = true;
@@ -333,19 +365,16 @@ export default function Monument3DViewer() {
       { y: -7.8, z: -9.0 },
     ];
     for (const pos of nichePositions) {
-      // Left niche frame
       const leftNiche = new THREE.Mesh(new THREE.BoxGeometry(0.18, 1.1, 0.7), darkStoneMat);
       leftNiche.position.set(-3.95, pos.y, pos.z);
       monumentGroup.add(leftNiche);
 
-      // Right niche frame
       const rightNiche = new THREE.Mesh(new THREE.BoxGeometry(0.18, 1.1, 0.7), darkStoneMat);
       rightNiche.position.set(3.95, pos.y, pos.z);
       monumentGroup.add(rightNiche);
     }
 
     // --- 3. Ground Level Entrance Chhatri & Jagati (Z = +16.0, Y = 0.0) ---
-    // Jagati plinth platform
     const jagati = new THREE.Mesh(new THREE.BoxGeometry(6.4, 0.5, 5.2), darkStoneMat);
     jagati.position.set(0, 0.25, 16.0);
     jagati.receiveShadow = true;
@@ -397,7 +426,6 @@ export default function Monument3DViewer() {
     monumentGroup.add(kalasha);
 
     // --- 4. TIER 1 (Y = -2.2m): Descent Flight 1 & First Pavilion ---
-    // Flight 1: from Entrance (Y = 0.0, Z = +13.5) down to Tier 1 Landing (Y = -2.2, Z = +10.2)
     monumentGroup.add(createStairFlight(0.0, -2.2, 13.5, 10.2, 5.0, 8));
 
     // Tier 1 Landing Platform
@@ -406,7 +434,7 @@ export default function Monument3DViewer() {
     landing1.receiveShadow = true;
     monumentGroup.add(landing1);
 
-    // Tier 1 Pavilion Pillars (height 2.2m up to ground level beam)
+    // Tier 1 Pavilion Pillars
     monumentGroup.add(createSolankiPillar(-2.0, -2.2, 2.2, 9.6));
     monumentGroup.add(createSolankiPillar(2.0, -2.2, 2.2, 9.6));
     monumentGroup.add(createSolankiPillar(-2.0, -2.2, 2.2, 7.8));
@@ -419,7 +447,6 @@ export default function Monument3DViewer() {
     monumentGroup.add(createArchitrave(2.0, 0.05, 8.7, 0.4, 0.25, 2.2));
 
     // --- 5. TIER 2 (Y = -4.4m): Descent Flight 2 & Two-Storey Pavilion ---
-    // Flight 2: from Tier 1 (Y = -2.2, Z = +7.3) down to Tier 2 (Y = -4.4, Z = +4.0)
     monumentGroup.add(createStairFlight(-2.2, -4.4, 7.3, 4.0, 5.0, 8));
 
     // Tier 2 Landing Platform
@@ -449,7 +476,6 @@ export default function Monument3DViewer() {
     }
 
     // --- 6. TIER 3 (Y = -6.6m): Grand Octagonal Mandapa & Light Well Atrium ---
-    // Flight 3: from Tier 2 (Y = -4.4, Z = +1.1) down to Octagonal Mandapa (Y = -6.6, Z = -2.0)
     monumentGroup.add(createStairFlight(-4.4, -6.6, 1.1, -2.0, 5.0, 8));
 
     // Octagonal Mandapa Base Platform
@@ -502,7 +528,6 @@ export default function Monument3DViewer() {
     }
 
     // --- 7. TIER 4 (Y = -8.8m): Descent Flight 4 & Deep Subterranean Terraces ---
-    // Flight 4: from Octagonal Mandapa (Y = -6.6, Z = -7.0) down to Tier 4 (Y = -8.8, Z = -10.5)
     monumentGroup.add(createStairFlight(-6.6, -8.8, -7.0, -10.5, 4.4, 8));
 
     // Deep Landing Platform
@@ -518,7 +543,6 @@ export default function Monument3DViewer() {
     monumentGroup.add(createSolankiPillar(1.8, -8.8, 2.2, -12.4));
 
     // --- 8. TIER 5 (Y = -11.0m): Basal Water Pool & Circular Well Shaft (Kupa) ---
-    // Final descent flight leading directly into the reservoir
     monumentGroup.add(createStairFlight(-8.8, -10.8, -12.9, -14.2, 4.2, 6));
 
     // Deep Circular Masonry Well (Kupa) centered at (0, y, -16.5)
@@ -564,79 +588,7 @@ export default function Monument3DViewer() {
     waterPool.position.set(0, -10.9, -16.5);
     monumentGroup.add(waterPool);
 
-    // 7. Mouse Orbit Drag & Zoom Handlers
-    let isDragging = false;
-    let prevMouseX = 0;
-    let prevMouseY = 0;
-
-    const handleMouseDown = (e: MouseEvent) => {
-      isDragging = true;
-      prevMouseX = e.clientX;
-      prevMouseY = e.clientY;
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!isDragging || !monumentGroupRef.current) return;
-      const dx = e.clientX - prevMouseX;
-      const dy = e.clientY - prevMouseY;
-      prevMouseX = e.clientX;
-      prevMouseY = e.clientY;
-
-      monumentGroupRef.current.rotation.y += dx * 0.006;
-      targetCameraPosRef.current.y = THREE.MathUtils.clamp(
-        targetCameraPosRef.current.y - dy * 0.06,
-        -4,
-        35
-      );
-    };
-
-    const handleMouseUp = () => {
-      isDragging = false;
-    };
-
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      const zoomFactor = e.deltaY * 0.035;
-      const dir = targetCameraPosRef.current.clone().sub(targetLookAtRef.current).normalize();
-      const dist = targetCameraPosRef.current.distanceTo(targetLookAtRef.current);
-      const newDist = THREE.MathUtils.clamp(dist + zoomFactor, 8, 55);
-      targetCameraPosRef.current.copy(targetLookAtRef.current).addScaledVector(dir, newDist);
-    };
-
-    const domElement = mountRef.current;
-    domElement.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    domElement.addEventListener('wheel', handleWheel, { passive: false });
-
-    // Touch support for mobile / tablets
-    let touchStartX = 0;
-    let touchStartY = 0;
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      }
-    };
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 1 && monumentGroupRef.current) {
-        const dx = e.touches[0].clientX - touchStartX;
-        const dy = e.touches[0].clientY - touchStartY;
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-
-        monumentGroupRef.current.rotation.y += dx * 0.008;
-        targetCameraPosRef.current.y = THREE.MathUtils.clamp(
-          targetCameraPosRef.current.y - dy * 0.06,
-          -4,
-          35
-        );
-      }
-    };
-    domElement.addEventListener('touchstart', handleTouchStart, { passive: true });
-    domElement.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-    // 8. Animation & Render Loop with Smooth Camera Lerp
+    // 8. Animation & Render Loop with Smooth Camera Flight
     let animationId: number;
     const clock = new THREE.Clock();
 
@@ -644,16 +596,22 @@ export default function Monument3DViewer() {
       animationId = requestAnimationFrame(animate);
       const elapsed = clock.getElapsedTime();
 
-      // Smooth camera interpolation towards target (ease-in-out feel)
-      currentCameraPosRef.current.lerp(targetCameraPosRef.current, 0.07);
-      currentLookAtRef.current.lerp(targetLookAtRef.current, 0.07);
+      // Smooth camera interpolation towards target if flying to a hotspot
+      if (isTransitioningRef.current) {
+        transitionProgressRef.current += 0.024;
+        const t = Math.min(1, transitionProgressRef.current);
+        // Smooth cubic ease-in-out
+        const ease = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-      camera.position.copy(currentCameraPosRef.current);
-      camera.lookAt(currentLookAtRef.current);
+        camera.position.lerpVectors(startCamPosRef.current, endCamPosRef.current, ease);
+        controls.target.lerpVectors(startTargetRef.current, endTargetRef.current, ease);
+        controls.update();
 
-      // Gentle auto-rotation when orbit is enabled and not manually dragging
-      if (isRotating && !isDragging && monumentGroupRef.current) {
-        monumentGroupRef.current.rotation.y += 0.002;
+        if (t >= 1) {
+          isTransitioningRef.current = false;
+        }
+      } else {
+        controls.update();
       }
 
       // Subtle water shimmer pulsation
@@ -676,17 +634,12 @@ export default function Monument3DViewer() {
 
     return () => {
       cancelAnimationFrame(animationId);
-      domElement.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-      domElement.removeEventListener('wheel', handleWheel);
-      domElement.removeEventListener('touchstart', handleTouchStart);
-      domElement.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('resize', handleResize);
+      controls.dispose();
       renderer.dispose();
       scene.clear();
     };
-  }, [wireframe, lightingMode, isRotating]);
+  }, [wireframe, lightingMode]);
 
   const activeHotspotData = hotspots.find((h) => h.id === activeHotspot) || hotspots[0];
 
@@ -764,10 +717,14 @@ export default function Monument3DViewer() {
         <div className="lg:col-span-7 relative rounded-xl border border-[#DED3C2] bg-[#FFFCF5] overflow-hidden shadow-xs cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
           <div ref={mountRef} className="w-full h-full" />
 
-          {/* Overlay Interaction Hint */}
-          <div className="absolute bottom-3 left-3 bg-[#FFFCF5]/90 backdrop-blur-xs border border-[#DED3C2] rounded-lg px-2.5 py-1 text-[11px] text-[#756D66] shadow-xs flex items-center gap-1.5 pointer-events-none font-serif">
-            <Compass className="w-3.5 h-3.5 text-[#A77C54]" />
-            <span>Drag mouse to orbit 360° · Scroll to zoom into pavilions &amp; well</span>
+          {/* Overlay Interaction Hint with Explicit Control Indicators */}
+          <div className="absolute bottom-3 left-3 bg-[#FFFCF5]/92 backdrop-blur-xs border border-[#DED3C2] rounded-lg px-3 py-1.5 text-[11px] text-[#59524E] shadow-xs flex items-center gap-2 pointer-events-none font-serif">
+            <Compass className="w-4 h-4 text-[#A77C54] shrink-0" />
+            <span>
+              <strong className="text-[#642F38] font-mono">Left-drag:</strong> Orbit 360° ·{' '}
+              <strong className="text-[#642F38] font-mono">Right-drag:</strong> Pan ·{' '}
+              <strong className="text-[#642F38] font-mono">Scroll:</strong> Zoom
+            </span>
           </div>
         </div>
 
@@ -782,7 +739,7 @@ export default function Monument3DViewer() {
                 Subterranean Tiers &amp; Hotspots
               </h2>
               <p className="text-xs text-[#756D66] font-serif mt-0.5">
-                Select a depth level to position camera and inspect structural details
+                Select a depth level to glide camera and inspect architectural components
               </p>
             </div>
 
