@@ -53,8 +53,8 @@ export default function Header({
   const isConnected = healthState.status === 'connected';
 
   return (
-    <header className="sticky top-0 z-30 h-16 border-b border-[#DED3C2] bg-[#FFFCF5] transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-30 h-16 border-b border-[#DED3C2] bg-[#FFFCF5] transition-colors w-full">
+      <div className="w-full px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
         {/* Left: Sidebar Toggle + Brand Identity + Collection Indicator */}
         <div className="flex items-center gap-3">
           {/* Mobile Drawer Toggle */}

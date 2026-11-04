@@ -306,7 +306,7 @@ export default function Home() {
       />
 
       {/* Main Container */}
-      <div className="flex-1 flex max-w-7xl w-full mx-auto">
+      <div className="flex-1 flex w-full">
         <Sidebar
           currentTab={currentTab}
           onSelectTab={(tab) => {
@@ -320,7 +320,7 @@ export default function Home() {
         />
 
         {/* Dynamic Content Views */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-x-hidden">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-6 overflow-x-hidden min-w-0">
           {/* TAB 1: RESEARCH ASSISTANT (Milestone 5.3-5.6) */}
           {currentTab === 'assistant' && (
             <ResearchAssistantSection
