@@ -51,14 +51,7 @@ const Heritage3DExplorer = dynamic(() => import('@/components/Heritage3DExplorer
 
 export default function Home() {
   // Navigation & Role state
-  const [currentTab, setCurrentTab] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      const params = new URLSearchParams(window.location.search);
-      const tab = params.get('tab');
-      if (tab) return tab;
-    }
-    return 'assistant';
-  });
+  const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [currentRole, setCurrentRole] = useState<string>('archivist');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
@@ -91,6 +84,26 @@ export default function Home() {
   const [docsError, setDocsError] = useState<string | null>(null);
 
   const searchRef = useRef<HTMLDivElement>(null);
+
+  // Tab navigation handler with URL synchronization
+  const handleSelectTab = useCallback((tab: string) => {
+    setCurrentTab(tab);
+    setIsSidebarOpen(false);
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', tab);
+      window.history.replaceState({}, '', url.toString());
+    }
+  }, []);
+
+  // Sync tab with URL search parameter on client mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if (tab) {
+      setCurrentTab(tab);
+    }
+  }, []);
 
   // Health check worker
   const checkHealth = useCallback(async () => {
@@ -260,7 +273,7 @@ export default function Home() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === '/' && document.activeElement?.tagName !== 'INPUT') {
         e.preventDefault();
-        setCurrentTab('dashboard');
+        handleSelectTab('dashboard');
         setTimeout(() => {
           const input = searchRef.current?.querySelector('input');
           input?.focus();
@@ -273,7 +286,7 @@ export default function Home() {
 
   const handleScrollToSearch = () => {
     if (currentTab !== 'dashboard') {
-      setCurrentTab('dashboard');
+      handleSelectTab('dashboard');
     }
     setTimeout(() => {
       searchRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -309,10 +322,7 @@ export default function Home() {
       <div className="flex-1 flex w-full">
         <Sidebar
           currentTab={currentTab}
-          onSelectTab={(tab) => {
-            setCurrentTab(tab);
-            setIsSidebarOpen(false);
-          }}
+          onSelectTab={handleSelectTab}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
           isCollapsed={isSidebarCollapsed}
@@ -395,7 +405,7 @@ export default function Home() {
           {currentTab === 'cartography' && (
             <GeospatialMapSection
               onSelectRecord={(_recId) => {
-                setCurrentTab('records');
+                handleSelectTab('records');
               }}
             />
           )}
@@ -405,7 +415,7 @@ export default function Home() {
             <HeritageRecordsSection
               onOpenUpload={() => setIsUploadOpen(true)}
               onInspectRecord={(_recId) => {
-                setCurrentTab('dashboard');
+                handleSelectTab('dashboard');
                 handleScrollToSearch();
               }}
             />
@@ -428,7 +438,7 @@ export default function Home() {
                 setSelectedViewerDoc(doc);
                 setSelectedViewerPage(undefined);
               }}
-              onOpen3DExplorer={() => setCurrentTab('heritage-3d')}
+              onOpen3DExplorer={() => handleSelectTab('heritage-3d')}
             />
           )}
 
@@ -515,7 +525,7 @@ export default function Home() {
               {/* Welcome Hero */}
               <WelcomeHero
                 onOpenUpload={() => setIsUploadOpen(true)}
-                onNavigateTab={setCurrentTab}
+                onNavigateTab={handleSelectTab}
                 documentCount={documents.length}
                 totalPageCount={totalPagesCount}
               />
