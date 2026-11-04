@@ -34,6 +34,7 @@ import {
   Server,
   ShieldCheck,
   Compass,
+  Sparkles,
 } from 'lucide-react';
 
 const HeroHeritageCanvas = dynamic(() => import('@/components/HeroHeritageCanvas'), {
@@ -72,6 +73,7 @@ export default function Home() {
   });
   const [currentRole, setCurrentRole] = useState<string>('archivist');
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
   const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false);
   const [selectedViewerDoc, setSelectedViewerDoc] = useState<DocumentItem | null>(null);
   const [selectedViewerPage, setSelectedViewerPage] = useState<number | undefined>(undefined);
@@ -307,19 +309,25 @@ export default function Home() {
         onRefreshHealth={handleManualRefresh}
         onOpenUpload={() => setIsUploadOpen(true)}
         onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+        isSidebarCollapsed={isSidebarCollapsed}
+        onToggleSidebarCollapse={() => setIsSidebarCollapsed((prev) => !prev)}
         currentRole={currentRole}
         onSelectRole={setCurrentRole}
-        currentTab={currentTab}
-        onSelectTab={setCurrentTab}
+        documentCount={documents.length}
+        totalPageCount={totalPagesCount}
       />
 
       {/* Main Container */}
       <div className="flex-1 flex max-w-7xl w-full mx-auto">
         <Sidebar
           currentTab={currentTab}
-          onSelectTab={setCurrentTab}
+          onSelectTab={(tab) => {
+            setCurrentTab(tab);
+            setIsSidebarOpen(false);
+          }}
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
+          isCollapsed={isSidebarCollapsed}
           backendConnected={healthState.status === 'connected'}
         />
 
@@ -333,6 +341,55 @@ export default function Home() {
               onOpenUpload={() => setIsUploadOpen(true)}
               backendConnected={healthState.status === 'connected'}
             />
+          )}
+
+          {/* TAB: HYBRID RETRIEVAL WORKSPACE */}
+          {currentTab === 'search' && (
+            <div className="space-y-6">
+              <div ref={searchRef}>
+                <SearchSection
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  onSearchSubmit={handleSearchSubmit}
+                  isSearching={isSearching}
+                  searchResults={searchResults}
+                  searchResponse={searchResponse}
+                  searchError={searchError}
+                  hasSearched={hasSearched}
+                  totalIndexedDocs={documents.length + 8}
+                  onInspectSource={handleInspectSource}
+                  onClearSearch={handleClearSearch}
+                />
+              </div>
+
+              {/* Technical Architecture & Algorithm Explanation Card */}
+              <div className="p-6 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl space-y-4">
+                <div className="flex items-center gap-2 text-xs font-serif font-bold text-[#fcf9f2]">
+                  <Sparkles className="w-4 h-4 text-[#d4af37]" />
+                  <span>Hybrid Retrieval Architecture &amp; Calibration (Milestone 5.6.3.3)</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                  <div className="p-4 rounded-xl border border-[#26221d] bg-[#161411] space-y-2">
+                    <span className="font-mono text-[11px] text-[#eed27c] uppercase tracking-wider font-semibold">1. Dense Semantic</span>
+                    <p className="text-[#9c9282] leading-relaxed font-serif">
+                      Encodes queries and chunks into 384-dimensional dense vectors via <span className="text-[#ded6c5] font-mono">all-MiniLM-L6-v2</span>. Cosine similarity threshold calibrated at <span className="text-[#ded6c5] font-mono">0.32</span>.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl border border-[#26221d] bg-[#161411] space-y-2">
+                    <span className="font-mono text-[11px] text-[#eed27c] uppercase tracking-wider font-semibold">2. SQLite FTS5 BM25</span>
+                    <p className="text-[#9c9282] leading-relaxed font-serif">
+                      Indexes exact historical terminology, dates, Sanskrit transliterations, and dimension measurements with Porter stemming and OCR-aware token normalization.
+                    </p>
+                  </div>
+                  <div className="p-4 rounded-xl border border-[#26221d] bg-[#161411] space-y-2">
+                    <span className="font-mono text-[11px] text-[#eed27c] uppercase tracking-wider font-semibold">3. Reciprocal Rank Fusion</span>
+                    <p className="text-[#9c9282] leading-relaxed font-serif">
+                      Fuses ranks via <span className="text-[#ded6c5] font-mono">RRF(d) = &sum; 1 / (60 + r_i)</span>. Lexical candidate recovery floor at <span className="text-[#ded6c5] font-mono">0.10</span> prevents false dropouts while blocking out-of-domain noise.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* TAB 2: 3D MONUMENT DIGITAL TWIN (Stepwell WebGL) */}
@@ -471,7 +528,8 @@ export default function Home() {
               <WelcomeHero
                 onOpenUpload={() => setIsUploadOpen(true)}
                 onNavigateTab={setCurrentTab}
-                totalRecordsCount={documents.length + 8}
+                documentCount={documents.length}
+                totalPageCount={totalPagesCount}
               />
 
               {/* Semantic Knowledge Search Section */}

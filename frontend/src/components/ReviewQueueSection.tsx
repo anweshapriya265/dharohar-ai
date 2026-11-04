@@ -10,6 +10,8 @@ import {
   FileText,
   MessageSquare,
   RefreshCw,
+  Clock,
+  ArrowRight,
 } from 'lucide-react';
 import {
   fetchHeritageRecords,
@@ -62,14 +64,7 @@ export default function ReviewQueueSection() {
         if (!isMounted) return;
         setRecords(res.records || []);
         if (res.records && res.records.length > 0) {
-          fetchHeritageRecordDetail(res.records[0].id)
-            .then((d) => {
-              if (isMounted) {
-                setSelectedRecord(d.record);
-                setSuggestions(d.ai_suggestions || []);
-              }
-            })
-            .catch(() => {});
+          loadRecordDetails(res.records[0].id);
         }
         setLoading(false);
       })
@@ -83,23 +78,23 @@ export default function ReviewQueueSection() {
     };
   }, []);
 
-  const handleDecision = async (decision: 'approved' | 'rejected' | 'changes_requested') => {
+  const handleReviewAction = async (action: 'approved' | 'rejected' | 'changes_requested') => {
     if (!selectedRecord) return;
     setSubmitting(true);
     setActionMessage(null);
     try {
-      await reviewHeritageRecord(
+      const res = await reviewHeritageRecord(
         selectedRecord.id,
-        decision,
-        'Lead Cultural Curator',
-        'Reviewer',
-        reviewerComment || `Action ${decision} applied by curator.`
+        action,
+        'Senior Curator',
+        'Fellowship Archival Reviewer',
+        reviewerComment || `Action: ${action}`
       );
-      setActionMessage(`Record successfully ${decision}!`);
-      await loadPendingRecords();
-    } catch (err) {
-      console.error('Error submitting review:', err);
-      setActionMessage('Failed to submit decision.');
+      setActionMessage(`Decision recorded: ${res.decision.toUpperCase()}`);
+      loadPendingRecords();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Review action failed';
+      setActionMessage(`Error: ${msg}`);
     } finally {
       setSubmitting(false);
     }
@@ -107,213 +102,218 @@ export default function ReviewQueueSection() {
 
   return (
     <div className="space-y-4">
-      {/* Top Header Card */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage">
+      {/* Header Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#edf5f1] text-[#2d5e4a] mb-1">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Human-in-the-Loop Verification</span>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
+            <span>Human-in-the-Loop Curator Workspace</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
-            Curator Curation &amp; Review Workspace
+          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+            Archival Verification &amp; Review Queue
           </h1>
-          <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
-            Strict human oversight verifying AI-generated architectural typology suggestions before public catalog publication
+          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+            Peer review and provenance sign-off for newly ingested heritage assets and AI field suggestions
           </p>
         </div>
 
         <button
+          type="button"
           onClick={loadPendingRecords}
-          className="text-xs px-3.5 py-2 rounded-xl border border-[#e5dfd5] hover:bg-stone-50 text-stone-700 font-semibold flex items-center gap-2 transition-colors shadow-2xs"
+          className="p-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] transition-colors self-start sm:self-auto"
+          title="Refresh queue"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-          <span>Refresh Queue</span>
+          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
         </button>
       </div>
 
-      {/* Main Grid: Queue List + Inspection/Decision Workspace */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Pending Records Queue List */}
-        <div className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-3">
-          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
-            <span className="text-xs font-semibold text-stone-800">
-              Submissions Queue
-            </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-stone-100 text-stone-600">
-              {records.length} items
+      {/* Main Split Layout: Records List (4 cols) + Inspection Panel (8 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
+        {/* Left: Queue List */}
+        <div className="lg:col-span-4 rounded-2xl border border-[#26221d] bg-[#110f0d] p-4 shadow-xl space-y-3 overflow-y-auto max-h-[680px]">
+          <div className="flex items-center justify-between pb-2 border-b border-[#201d19] text-xs">
+            <span className="font-semibold text-[#fcf9f2] font-serif">Queue Entries</span>
+            <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#171512] text-[#eed27c] border border-[#26221d]">
+              {records.length} records
             </span>
           </div>
 
-          <div className="space-y-2 max-h-[560px] overflow-y-auto pr-1">
-            {records.map((r) => {
-              const isSelected = selectedRecord?.id === r.id;
-              const isPending = r.status === 'pending_review' || r.status === 'pending';
-              const isApproved = r.status === 'approved';
-
-              return (
-                <div
-                  key={r.id}
-                  onClick={() => loadRecordDetails(r.id)}
-                  className={`p-3 rounded-xl border text-xs cursor-pointer transition-all ${
-                    isSelected
-                      ? 'border-[#9c381e] bg-[#fbeee9] shadow-2xs'
-                      : 'border-[#e5dfd5] bg-white hover:bg-[#f7f5f0]'
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold text-stone-900 truncate">
+          {loading ? (
+            <div className="p-8 text-center text-[#9c9282] text-xs font-mono">
+              <RefreshCw className="w-5 h-5 animate-spin mx-auto text-[#d4af37] mb-2" />
+              Loading review queue...
+            </div>
+          ) : records.length === 0 ? (
+            <div className="p-8 text-center text-[#9c9282] text-xs font-serif">
+              Queue is clear. No records currently pending review.
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {records.map((r) => {
+                const isSelected = selectedRecord?.id === r.id;
+                return (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => loadRecordDetails(r.id)}
+                    className={`w-full text-left p-3 rounded-xl border text-xs transition-all ${
+                      isSelected
+                        ? 'border-[#d4af37] bg-[#1c1813] shadow-xs'
+                        : 'border-[#26221d] bg-[#141210] hover:bg-[#171512]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-[10px] text-[#9c9282] uppercase">{r.region}</span>
+                      <span
+                        className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${
+                          r.status === 'approved'
+                            ? 'bg-[#0d1e17] text-[#3ba87e]'
+                            : 'bg-[#1f1910] text-[#eed27c]'
+                        }`}
+                      >
+                        {r.status}
+                      </span>
+                    </div>
+                    <div className="font-serif font-semibold text-[#fcf9f2] mt-1 truncate">
                       {r.title}
-                    </span>
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider shrink-0 ${
-                        isApproved
-                          ? 'bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0]'
-                          : isPending
-                          ? 'bg-[#fbf5eb] text-[#b67322] border border-[#f0dec3]'
-                          : 'bg-stone-100 text-stone-600'
-                      }`}
-                    >
-                      {r.status.replace('_', ' ')}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] text-stone-500 mt-1.5">
-                    <span>{r.region} · {r.heritage_type}</span>
-                    <span className="font-mono text-[10px]">{r.period || 'Historical'}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                    </div>
+                    <div className="text-[11px] text-[#9c9282] truncate mt-0.5">
+                      {r.heritage_type}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
 
-        {/* Curator Decision Workspace */}
-        <div className="lg:col-span-2 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-4">
+        {/* Right: Record Review Detail Panel */}
+        <div className="lg:col-span-8 rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 flex flex-col justify-between overflow-y-auto">
           {selectedRecord ? (
             <div className="space-y-4">
-              {/* Record Title & Metadata Header */}
-              <div className="border-b border-stone-100 pb-3">
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-stone-100 text-stone-600">
+              {/* Record Title & Metadata */}
+              <div className="pb-3 border-b border-[#201d19] space-y-1">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-mono text-[10px] text-[#d4af37] uppercase">
                     ID: {selectedRecord.id}
                   </span>
-                  <span className="text-[11px] text-stone-400">
-                    Logged by: {selectedRecord.created_by || 'IITGN Fellow'}
+                  <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#1c1813] text-[#eed27c] border border-[#d4af37]/30">
+                    Status: {selectedRecord.status}
                   </span>
                 </div>
-                <h2 className="text-lg font-serif font-bold text-stone-900 font-heritage mt-2">
+                <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage">
                   {selectedRecord.title}
                 </h2>
-                <div className="flex items-center gap-3 text-xs text-stone-500 mt-1">
-                  <span>Typology: <strong className="text-stone-800">{selectedRecord.heritage_type}</strong></span>
-                  <span>Region: <strong className="text-stone-800">{selectedRecord.region}</strong></span>
-                  <span>Status: <strong className="text-[#9c381e] uppercase">{selectedRecord.status.replace('_', ' ')}</strong></span>
+                <div className="flex items-center gap-2 text-xs text-[#9c9282] font-mono">
+                  <span>{selectedRecord.region}</span>
+                  <span>•</span>
+                  <span>{selectedRecord.heritage_type}</span>
+                  <span>•</span>
+                  <span>{selectedRecord.period || 'Medieval'}</span>
                 </div>
               </div>
 
-              {/* Original Field Notes Text */}
+              {/* Archival Description */}
               <div className="space-y-1.5">
-                <h3 className="text-xs font-semibold text-stone-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <FileText className="w-3.5 h-3.5 text-[#9c381e]" />
-                  <span>Archival Documentation Text</span>
-                </h3>
-                <div className="p-3.5 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5] text-xs leading-relaxed text-stone-800 font-serif">
+                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider block">
+                  Field Documentation Note
+                </span>
+                <p className="text-xs text-[#ded6c5] leading-relaxed font-serif bg-[#171512] p-3 rounded-xl border border-[#26221d]">
                   {selectedRecord.description}
-                </div>
+                </p>
               </div>
 
-              {/* AI-Generated Suggestions for Curator Review */}
-              <div className="space-y-2">
-                <h3 className="text-xs font-semibold text-stone-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-[#b67322]" />
-                  <span>AI Structural Suggestions (Awaiting Human Verdict)</span>
-                </h3>
-
-                {suggestions.length === 0 ? (
-                  <div className="p-3 rounded-xl bg-stone-50 border border-stone-200 text-xs text-stone-500">
-                    No pending AI suggestions for this record.
+              {/* AI Extraction Suggestions */}
+              {suggestions.length > 0 && (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1.5 text-xs text-[#eed27c] font-semibold font-serif">
+                    <Sparkles className="w-3.5 h-3.5 text-[#d4af37]" />
+                    <span>AI Field Suggestions for Verification</span>
                   </div>
-                ) : (
+
                   <div className="space-y-2">
-                    {suggestions.map((sug) => (
+                    {suggestions.map((s) => (
                       <div
-                        key={sug.id}
-                        className="p-3 rounded-xl border border-[#e5dfd5] bg-white flex items-center justify-between gap-3 text-xs shadow-2xs"
+                        key={s.id}
+                        className="p-3 rounded-xl border border-[#26221d] bg-[#141210] text-xs space-y-1"
                       >
-                        <div className="space-y-0.5">
-                          <span className="font-mono text-[10px] text-stone-400 uppercase">
-                            Field: {sug.field_name}
-                          </span>
-                          <p className="font-semibold text-stone-900">
-                            Suggested: &ldquo;{sug.suggested_value}&rdquo;
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="font-mono text-[10px] px-2 py-0.5 rounded-full bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0] font-semibold">
-                            {Math.round((sug.confidence || 0.85) * 100)}% Confidence
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="font-mono text-[#eed27c] uppercase">{s.field_name}</span>
+                          <span className="font-mono text-[10px] text-[#3ba87e]">
+                            Confidence: {(s.confidence * 100).toFixed(0)}%
                           </span>
                         </div>
+                        <div className="font-serif font-semibold text-[#fcf9f2]">
+                          Suggested: &ldquo;{s.suggested_value}&rdquo;
+                        </div>
+                        {s.evidence && (
+                          <div className="text-[11px] text-[#9c9282] italic">
+                            Evidence: {s.evidence}
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
-                )}
+                </div>
+              )}
+
+              {/* Reviewer Comment Box */}
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider block">
+                  Curator Sign-off Notes &amp; Observations
+                </span>
+                <textarea
+                  value={reviewerComment}
+                  onChange={(e) => setReviewerComment(e.target.value)}
+                  placeholder="Record verification notes, epigraphical cross-references, or correction rationales..."
+                  rows={3}
+                  className="w-full p-3 rounded-xl border border-[#26221d] bg-[#171512] text-[#fcf9f2] text-xs placeholder-[#6e6659] focus:outline-hidden focus:border-[#d4af37] transition-colors"
+                />
               </div>
 
-              {/* Curator Feedback & Decision Actions */}
-              <div className="pt-2 border-t border-stone-100 space-y-3">
-                <div className="space-y-1">
-                  <label className="text-xs font-semibold text-stone-700 flex items-center gap-1.5">
-                    <MessageSquare className="w-3.5 h-3.5 text-stone-500" />
-                    <span>Curator Audit Rationale / Verification Notes</span>
-                  </label>
-                  <textarea
-                    rows={2}
-                    value={reviewerComment}
-                    onChange={(e) => setReviewerComment(e.target.value)}
-                    placeholder="Document justification for approving or requesting revisions on this archival record..."
-                    className="w-full p-2.5 rounded-xl border border-[#e5dfd5] bg-[#f7f5f0]/60 text-xs text-stone-900 placeholder-stone-400 focus:outline-hidden focus:ring-1 focus:ring-[#9c381e]"
-                  />
+              {actionMessage && (
+                <div className="p-3 rounded-xl bg-[#1c1813] border border-[#d4af37]/40 text-xs text-[#eed27c] font-mono">
+                  {actionMessage}
                 </div>
+              )}
 
-                {actionMessage && (
-                  <div className="p-2.5 rounded-xl bg-[#edf5f1] border border-[#c3dcd0] text-xs text-[#2d5e4a] font-medium">
-                    {actionMessage}
-                  </div>
-                )}
+              {/* Curator Decision Actions */}
+              <div className="flex flex-wrap items-center justify-end gap-2.5 pt-3 border-t border-[#201d19]">
+                <button
+                  type="button"
+                  disabled={submitting}
+                  onClick={() => handleReviewAction('rejected')}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-rose-900/60 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-semibold transition-colors disabled:opacity-50"
+                >
+                  <XCircle className="w-3.5 h-3.5" />
+                  <span>Reject</span>
+                </button>
 
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <button
-                    disabled={submitting}
-                    onClick={() => handleDecision('approved')}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#2d5e4a] hover:bg-[#234a3b] text-white text-xs font-semibold shadow-2xs transition-all disabled:opacity-50"
-                  >
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Approve &amp; Publish to Public Catalog</span>
-                  </button>
+                <button
+                  type="button"
+                  disabled={submitting}
+                  onClick={() => handleReviewAction('changes_requested')}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] text-xs font-semibold transition-colors disabled:opacity-50"
+                >
+                  <AlertTriangle className="w-3.5 h-3.5 text-[#eed27c]" />
+                  <span>Request Re-examination</span>
+                </button>
 
-                  <button
-                    disabled={submitting}
-                    onClick={() => handleDecision('changes_requested')}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#f0dec3] bg-[#fbf5eb] hover:bg-[#faebd5] text-[#b67322] text-xs font-semibold transition-all disabled:opacity-50"
-                  >
-                    <AlertTriangle className="w-4 h-4" />
-                    <span>Request Changes</span>
-                  </button>
-
-                  <button
-                    disabled={submitting}
-                    onClick={() => handleDecision('rejected')}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[#f4cbc5] bg-[#fdf0ee] hover:bg-[#fadcd8] text-[#a6382a] text-xs font-semibold transition-all disabled:opacity-50"
-                  >
-                    <XCircle className="w-4 h-4" />
-                    <span>Reject Submission</span>
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  disabled={submitting}
+                  onClick={() => handleReviewAction('approved')}
+                  className="flex items-center gap-1.5 px-5 py-2 rounded-xl bg-[#2d5e4a] hover:bg-[#3ba87e] text-[#fcf9f2] text-xs font-semibold shadow-md transition-colors disabled:opacity-50"
+                >
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Sign &amp; Approve Record</span>
+                </button>
               </div>
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center text-stone-400 p-8 space-y-2">
-              <ShieldCheck className="w-10 h-10 stroke-1" />
-              <p className="text-xs">Select a record from the submissions queue to inspect and curate.</p>
+            <div className="h-full flex flex-col items-center justify-center text-center text-[#9c9282] p-8 space-y-2">
+              <FileText className="w-10 h-10 text-[#d4af37]/50" />
+              <p className="text-xs font-serif">Select an entry from the queue to inspect metadata and verify AI suggestions.</p>
             </div>
           )}
         </div>

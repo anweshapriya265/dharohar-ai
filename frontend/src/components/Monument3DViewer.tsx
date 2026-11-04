@@ -12,6 +12,8 @@ import {
   Info,
   Compass,
   Camera,
+  ShieldCheck,
+  RotateCcw,
 } from 'lucide-react';
 
 export default function Monument3DViewer() {
@@ -31,7 +33,8 @@ export default function Monument3DViewer() {
       id: 1,
       title: 'Entrance Portico & Stepped Pavilion',
       level: 'Ground Level (0.0 m)',
-      description: 'Single-entry Solanki portico with pyramidal chhatri roof, leading into the subterranean axial descent.',
+      documentedDepth: '0.0 meters (Surface Datum)',
+      description: 'Single-entry Solanki portico with square pillared chhatri pavilion, initiating the downward axial subterranean descent.',
       cameraPos: { x: 0, y: 10, z: 24 },
       target: { x: 0, y: 0, z: 12 },
     },
@@ -39,7 +42,8 @@ export default function Monument3DViewer() {
       id: 2,
       title: 'Octagonal Shaft & Carved Mandapa',
       level: 'Intermediate Tier (-6.6 m)',
-      description: 'Open octagonal light well allowing atmospheric sunlight to cascade down onto carved friezes and hypostyle pillars.',
+      documentedDepth: '-6.6 meters below surface',
+      description: 'Open octagonal light well allowing atmospheric sunlight to cascade down onto carved sandstone friezes and hypostyle pillars.',
       cameraPos: { x: 12, y: 2, z: 4 },
       target: { x: 0, y: -5, z: -3 },
     },
@@ -47,21 +51,23 @@ export default function Monument3DViewer() {
       id: 3,
       title: 'Subterranean Stepped Terraces',
       level: 'Deep Tier (-8.8 m)',
-      description: 'Descending flights of sandstone steps and colonnaded landings engineered to moderate ambient air by 5–7°C.',
+      documentedDepth: '-8.8 meters below surface',
+      description: 'Descending flights of stepped stone terraces and colonnaded landings engineered to moderate ambient air by geothermal cooling.',
       cameraPos: { x: -14, y: -2, z: 2 },
       target: { x: 0, y: -6, z: -6 },
     },
     {
       id: 4,
-      title: 'Aquifer Spring Basin',
+      title: 'Aquifer Spring Basin & Well Shaft',
       level: 'Basal Water Table (-11.0 m)',
-      description: 'Deep circular masonry reservoir catching subterranean groundwater, providing constant cooling and drought insurance.',
+      documentedDepth: '-11.0 meters below surface',
+      description: 'Deep circular masonry reservoir catching subterranean groundwater, providing constant community water and drought insurance.',
       cameraPos: { x: 0, y: 4, z: -22 },
       target: { x: 0, y: -10, z: -14 },
     },
   ];
 
-  const handleSelectHotspot = (hotspot: typeof hotspots[0]) => {
+  const handleSelectHotspot = (hotspot: (typeof hotspots)[0]) => {
     setActiveHotspot(hotspot.id);
     if (cameraRef.current) {
       cameraRef.current.position.set(hotspot.cameraPos.x, hotspot.cameraPos.y, hotspot.cameraPos.z);
@@ -87,8 +93,9 @@ export default function Monument3DViewer() {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const bgColor = lightingMode === 'twilight' ? 0x1c1917 : 0xf4f1eb;
+    const bgColor = lightingMode === 'twilight' ? 0x0c0a08 : 0x12100e;
     scene.background = new THREE.Color(bgColor);
+    scene.fog = new THREE.FogExp2(bgColor, 0.015);
 
     // 2. Camera: Isometric 3/4 cutaway overview looking down into the open trench
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -97,45 +104,41 @@ export default function Monument3DViewer() {
     cameraRef.current = camera;
 
     // 3. WebGL Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     rendererRef.current = renderer;
 
-    mountRef.current.replaceChildren(renderer.domElement);
+    mountRef.current.innerHTML = '';
+    mountRef.current.appendChild(renderer.domElement);
 
-    // 4. Lighting Rig
+    // 4. Lighting Setup
     if (lightingMode === 'twilight') {
-      const ambient = new THREE.AmbientLight(0xffecd2, 0.5);
+      const ambient = new THREE.AmbientLight(0x28231d, 1.8);
       scene.add(ambient);
 
-      // Sunset sun angle
-      const sun = new THREE.DirectionalLight(0xe88a43, 1.6);
-      sun.position.set(24, 22, 20);
+      const sun = new THREE.DirectionalLight(0xd47a3e, 2.4);
+      sun.position.set(-18, 12, 10);
       sun.castShadow = true;
-      sun.shadow.mapSize.width = 1024;
-      sun.shadow.mapSize.height = 1024;
       scene.add(sun);
 
-      // Warm glow from deep inside the well
       const wellGlow = new THREE.PointLight(0xffaa44, 2.5, 35);
       wellGlow.position.set(0, -8, -14);
       scene.add(wellGlow);
     } else {
-      // Gallery daylight
-      const ambient = new THREE.AmbientLight(0xffffff, 0.75);
+      const ambient = new THREE.AmbientLight(0x504538, 2.0);
       scene.add(ambient);
 
-      const sunlight = new THREE.DirectionalLight(0xfff7ed, 1.3);
+      const sunlight = new THREE.DirectionalLight(0xffeedd, 2.8);
       sunlight.position.set(20, 30, 20);
       sunlight.castShadow = true;
       sunlight.shadow.mapSize.width = 1024;
       sunlight.shadow.mapSize.height = 1024;
       scene.add(sunlight);
 
-      const fill = new THREE.DirectionalLight(0xd9e2ec, 0.4);
+      const fill = new THREE.DirectionalLight(0xb8cde3, 1.2);
       fill.position.set(-20, 15, -20);
       scene.add(fill);
     }
@@ -146,22 +149,22 @@ export default function Monument3DViewer() {
     scene.add(monumentGroup);
 
     // Materials
-    const stoneColor = lightingMode === 'twilight' ? 0xd47a3e : 0xb8885b;
+    const stoneColor = lightingMode === 'twilight' ? 0xb87333 : 0x8c7965;
     const stoneMat = new THREE.MeshStandardMaterial({
       color: stoneColor,
-      roughness: 0.8,
-      metalness: 0.05,
+      roughness: 0.85,
+      metalness: 0.08,
       wireframe: wireframe,
     });
 
     const darkStoneMat = new THREE.MeshStandardMaterial({
-      color: lightingMode === 'twilight' ? 0x2e2925 : 0x8a6b4b,
+      color: lightingMode === 'twilight' ? 0x2e2925 : 0x473e35,
       roughness: 0.9,
       wireframe: wireframe,
     });
 
     const groundTerrainMat = new THREE.MeshStandardMaterial({
-      color: lightingMode === 'twilight' ? 0x24201c : 0xd8d2c4,
+      color: lightingMode === 'twilight' ? 0x24201c : 0x2e2923,
       roughness: 0.95,
       wireframe: wireframe,
     });
@@ -174,266 +177,136 @@ export default function Monument3DViewer() {
       opacity: 0.85,
     });
 
-    // A. SURROUNDING GROUND EMBANKMENTS (Cutaway Trench Open in Center)
-    // Left embankment (x < -4.5)
-    const leftEmbankGeo = new THREE.BoxGeometry(10, 4, 38);
-    const leftEmbank = new THREE.Mesh(leftEmbankGeo, groundTerrainMat);
+    // Surrounding Ground Embankments
+    const leftEmbank = new THREE.Mesh(new THREE.BoxGeometry(10, 4, 38), groundTerrainMat);
     leftEmbank.position.set(-9.5, -2, 0);
     leftEmbank.receiveShadow = true;
     monumentGroup.add(leftEmbank);
 
-    // Right embankment (x > +4.5)
-    const rightEmbankGeo = new THREE.BoxGeometry(10, 4, 38);
-    const rightEmbank = new THREE.Mesh(rightEmbankGeo, groundTerrainMat);
+    const rightEmbank = new THREE.Mesh(new THREE.BoxGeometry(10, 4, 38), groundTerrainMat);
     rightEmbank.position.set(9.5, -2, 0);
     rightEmbank.receiveShadow = true;
     monumentGroup.add(rightEmbank);
 
-    // Back embankment behind the circular well
-    const backEmbankGeo = new THREE.BoxGeometry(29, 4, 8);
-    const backEmbank = new THREE.Mesh(backEmbankGeo, groundTerrainMat);
+    const backEmbank = new THREE.Mesh(new THREE.BoxGeometry(29, 4, 8), groundTerrainMat);
     backEmbank.position.set(0, -2, -23);
     backEmbank.receiveShadow = true;
     monumentGroup.add(backEmbank);
 
-    // B. MASONRY RETAINING WALLS ALONG THE OPEN TRENCH
-    // Left retaining wall (x = -4.5)
-    const leftWallGeo = new THREE.BoxGeometry(0.6, 12, 34);
-    const leftWall = new THREE.Mesh(leftWallGeo, stoneMat);
+    // Retaining Walls
+    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.6, 12, 34), stoneMat);
     leftWall.position.set(-4.5, -6, 0);
     leftWall.castShadow = true;
     leftWall.receiveShadow = true;
     monumentGroup.add(leftWall);
 
-    // Right retaining wall (x = +4.5)
-    const rightWallGeo = new THREE.BoxGeometry(0.6, 12, 34);
-    const rightWall = new THREE.Mesh(rightWallGeo, stoneMat);
+    const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.6, 12, 34), stoneMat);
     rightWall.position.set(4.5, -6, 0);
     rightWall.castShadow = true;
     rightWall.receiveShadow = true;
     monumentGroup.add(rightWall);
 
-    // C. GROUND ENTRANCE CHHATRI / PORTICO (z = +16, y = 0)
-    const porticoRoofGeo = new THREE.ConeGeometry(3, 1.8, 4);
-    const porticoRoof = new THREE.Mesh(porticoRoofGeo, darkStoneMat);
+    // Ground Entrance Chhatri
+    const porticoRoof = new THREE.Mesh(new THREE.ConeGeometry(3, 1.8, 4), darkStoneMat);
     porticoRoof.position.set(0, 3.8, 16);
     porticoRoof.rotation.y = Math.PI / 4;
-    porticoRoof.castShadow = true;
     monumentGroup.add(porticoRoof);
 
-    // Portico plinth
-    const plinthGeo = new THREE.BoxGeometry(6, 0.6, 6);
-    const plinth = new THREE.Mesh(plinthGeo, stoneMat);
-    plinth.position.set(0, 0.3, 16);
-    monumentGroup.add(plinth);
+    // Octagonal Shaft
+    const shaftGeo = new THREE.CylinderGeometry(4.2, 4.2, 12, 8, 1, true);
+    const shaftMesh = new THREE.Mesh(shaftGeo, stoneMat);
+    shaftMesh.position.set(0, -6, -3);
+    monumentGroup.add(shaftMesh);
 
-    // Portico entrance pillars
-    for (let i = 0; i < 4; i++) {
-      const px = (i % 2 === 0 ? 1 : -1) * 2.2;
-      const pz = (i < 2 ? 1 : -1) * 2.2 + 16;
-      const pilGeo = new THREE.CylinderGeometry(0.25, 0.3, 2.6, 8);
-      const pil = new THREE.Mesh(pilGeo, stoneMat);
-      pil.position.set(px, 1.6, pz);
-      pil.castShadow = true;
-      monumentGroup.add(pil);
-    }
+    // Basal Circular Well & Water
+    const wellCylinder = new THREE.Mesh(new THREE.CylinderGeometry(3.6, 3.6, 14, 24, 1, true), darkStoneMat);
+    wellCylinder.position.set(0, -7, -14);
+    monumentGroup.add(wellCylinder);
 
-    // D. DESCENDING TIERS & FLIGHTS OF STEPS
-    const tierLevels = [
-      { y: 0.0, zStart: 16, zEnd: 11, label: 'Entry Flight' },
-      { y: -2.4, zStart: 11, zEnd: 6, label: 'Pavilion Tier 1' },
-      { y: -4.8, zStart: 6, zEnd: 1, label: 'Pavilion Tier 2' },
-      { y: -7.2, zStart: 1, zEnd: -5, label: 'Octagonal Mandapa Tier 3' },
-      { y: -9.6, zStart: -5, zEnd: -10, label: 'Deep Hypostyle Tier 4' },
-    ];
+    const waterDisk = new THREE.Mesh(new THREE.CylinderGeometry(3.5, 3.5, 0.4, 24), waterMat);
+    waterDisk.position.set(0, -11.0, -14);
+    monumentGroup.add(waterDisk);
 
-    tierLevels.forEach((tier, tIdx) => {
-      // 1. Landing Platform
-      const landingLength = 3.5;
-      const landingZ = (tier.zStart + tier.zEnd) / 2;
-      const landingGeo = new THREE.BoxGeometry(8.2, 0.5, landingLength);
-      const landingMesh = new THREE.Mesh(landingGeo, stoneMat);
-      landingMesh.position.set(0, tier.y, landingZ);
-      landingMesh.receiveShadow = true;
-      monumentGroup.add(landingMesh);
-
-      // 2. Colonnaded Pillars on this Landing
-      if (tIdx > 0 && tIdx < 5) {
-        const pillarPositions = [
-          [-3, landingZ - 1.2],
-          [3, landingZ - 1.2],
-          [-3, landingZ + 1.2],
-          [3, landingZ + 1.2],
-        ];
-
-        // Pillar height up to ground level
-        const pHeight = Math.abs(tier.y) + 1.2;
-        pillarPositions.forEach(([px, pz]) => {
-          const colGeo = new THREE.CylinderGeometry(0.22, 0.28, pHeight, 10);
-          const col = new THREE.Mesh(colGeo, stoneMat);
-          col.position.set(px, tier.y + pHeight / 2, pz);
-          col.castShadow = true;
-          monumentGroup.add(col);
-
-          // Capital bracket on top
-          const capGeo = new THREE.BoxGeometry(0.8, 0.3, 0.8);
-          const cap = new THREE.Mesh(capGeo, darkStoneMat);
-          cap.position.set(px, tier.y + pHeight, pz);
-          monumentGroup.add(cap);
-        });
-
-        // Architrave cross-beams connecting pillar tops
-        const beamGeo = new THREE.BoxGeometry(6.6, 0.35, 0.5);
-        const beam1 = new THREE.Mesh(beamGeo, darkStoneMat);
-        beam1.position.set(0, tier.y + pHeight + 0.2, landingZ - 1.2);
-        monumentGroup.add(beam1);
-
-        const beam2 = new THREE.Mesh(beamGeo, darkStoneMat);
-        beam2.position.set(0, tier.y + pHeight + 0.2, landingZ + 1.2);
-        monumentGroup.add(beam2);
+    // Animation Loop
+    let animationId: number;
+    const animate = () => {
+      animationId = requestAnimationFrame(animate);
+      if (isRotating && monumentGroupRef.current) {
+        monumentGroupRef.current.rotation.y += 0.002;
       }
+      renderer.render(scene, camera);
+    };
+    animate();
 
-      // 3. Flight of descending stairs leading down to next tier
-      if (tIdx < tierLevels.length - 1) {
-        const nextY = tierLevels[tIdx + 1].y;
-        const stepsCount = 7;
-        const stepDz = 0.35;
-        const stepDy = (nextY - tier.y) / stepsCount;
-
-        for (let s = 0; s < stepsCount; s++) {
-          const sGeo = new THREE.BoxGeometry(7.8, 0.38, 0.45);
-          const sMesh = new THREE.Mesh(sGeo, darkStoneMat);
-          const sZ = tier.zEnd - s * stepDz;
-          const sY = tier.y + s * stepDy;
-          sMesh.position.set(0, sY, sZ);
-          sMesh.receiveShadow = true;
-          monumentGroup.add(sMesh);
-        }
-      }
-    });
-
-    // E. OCTAGONAL LIGHT WELL AT TIER 3 (z = -2)
-    const octRadius = 3.2;
-    for (let o = 0; o < 8; o++) {
-      const angle = (o * Math.PI) / 4;
-      const ox = Math.cos(angle) * octRadius;
-      const oz = Math.sin(angle) * octRadius - 2;
-      const octColGeo = new THREE.CylinderGeometry(0.24, 0.3, 9, 8);
-      const octCol = new THREE.Mesh(octColGeo, stoneMat);
-      octCol.position.set(ox, -2.7, oz);
-      octCol.castShadow = true;
-      monumentGroup.add(octCol);
-    }
-
-    // F. DEEP CIRCULAR WELL SHAFT AT FAR END (z = -15)
-    const wellCenterZ = -15.5;
-    const wellRadius = 4.2;
-    const wellDepth = 12;
-
-    // Outer masonry cylinder
-    const wellWallGeo = new THREE.CylinderGeometry(
-      wellRadius + 0.8,
-      wellRadius + 0.8,
-      wellDepth,
-      32,
-      1,
-      true
-    );
-    const wellWall = new THREE.Mesh(wellWallGeo, stoneMat);
-    wellWall.position.set(0, -6, wellCenterZ);
-    wellWall.castShadow = true;
-    wellWall.receiveShadow = true;
-    monumentGroup.add(wellWall);
-
-    // Stone spiral brackets inside well
-    for (let w = 0; w < 5; w++) {
-      const ringGeo = new THREE.TorusGeometry(wellRadius, 0.35, 8, 32);
-      const ring = new THREE.Mesh(ringGeo, darkStoneMat);
-      ring.rotation.x = Math.PI / 2;
-      ring.position.set(0, -2.2 - w * 2.2, wellCenterZ);
-      monumentGroup.add(ring);
-    }
-
-    // Water pool at bottom of well
-    const waterGeo = new THREE.CircleGeometry(wellRadius - 0.1, 32);
-    const waterMesh = new THREE.Mesh(waterGeo, waterMat);
-    waterMesh.rotation.x = -Math.PI / 2;
-    waterMesh.position.set(0, -11.2, wellCenterZ);
-    monumentGroup.add(waterMesh);
-
-    // G. Subtle architectural ground grid below the well
-    const gridHelper = new THREE.GridHelper(
-      50,
-      25,
-      lightingMode === 'twilight' ? 0xb67322 : 0x9c381e,
-      lightingMode === 'twilight' ? 0x44403c : 0xc7c1b5
-    );
-    gridHelper.position.y = -12.5;
-    scene.add(gridHelper);
-
-    // 6. Mouse Drag Orbit Controls
+    // Mouse drag interaction
     let isDragging = false;
-    let prevMousePos = { x: 0, y: 0 };
+    let prevMouseX = 0;
+    let prevMouseY = 0;
 
     const handleMouseDown = (e: MouseEvent) => {
       isDragging = true;
-      prevMousePos = { x: e.clientX, y: e.clientY };
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!isDragging || !monumentGroupRef.current) return;
-      const deltaX = e.clientX - prevMousePos.x;
-      const deltaY = e.clientY - prevMousePos.y;
+      const dx = e.clientX - prevMouseX;
+      const dy = e.clientY - prevMouseY;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
 
-      monumentGroupRef.current.rotation.y += deltaX * 0.007;
-      monumentGroupRef.current.rotation.x = Math.max(
-        -0.5,
-        Math.min(0.5, monumentGroupRef.current.rotation.x + deltaY * 0.005)
-      );
-
-      prevMousePos = { x: e.clientX, y: e.clientY };
+      monumentGroupRef.current.rotation.y += dx * 0.005;
+      if (cameraRef.current) {
+        cameraRef.current.position.y = THREE.MathUtils.clamp(
+          cameraRef.current.position.y - dy * 0.05,
+          -5,
+          40
+        );
+      }
     };
 
     const handleMouseUp = () => {
       isDragging = false;
     };
 
-    const dom = renderer.domElement;
-    dom.addEventListener('mousedown', handleMouseDown);
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (!cameraRef.current) return;
+      const zoomFactor = e.deltaY * 0.04;
+      cameraRef.current.position.z = THREE.MathUtils.clamp(
+        cameraRef.current.position.z + zoomFactor,
+        10,
+        60
+      );
+    };
+
+    const domElement = mountRef.current;
+    domElement.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    domElement.addEventListener('wheel', handleWheel, { passive: false });
 
-    // 7. Animation Loop
-    let animId: number;
-    const animate = () => {
-      animId = requestAnimationFrame(animate);
-
-      if (isRotating && !isDragging && monumentGroupRef.current) {
-        monumentGroupRef.current.rotation.y += 0.002;
-      }
-
-      renderer.render(scene, camera);
-    };
-    animate();
-
-    // 8. Resize Handler
     const handleResize = () => {
-      if (!mountRef.current || !rendererRef.current || !cameraRef.current) return;
-      const newW = mountRef.current.clientWidth;
-      const newH = mountRef.current.clientHeight;
-      cameraRef.current.aspect = newW / newH;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(newW, newH);
+      if (!mountRef.current || !renderer || !camera) return;
+      const w = mountRef.current.clientWidth;
+      const h = mountRef.current.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
     };
+
     window.addEventListener('resize', handleResize);
 
     return () => {
-      cancelAnimationFrame(animId);
-      dom.removeEventListener('mousedown', handleMouseDown);
+      cancelAnimationFrame(animationId);
+      domElement.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      domElement.removeEventListener('wheel', handleWheel);
       window.removeEventListener('resize', handleResize);
       renderer.dispose();
+      scene.clear();
     };
   }, [wireframe, lightingMode, isRotating]);
 
@@ -441,101 +314,98 @@ export default function Monument3DViewer() {
 
   return (
     <div className="space-y-4">
-      {/* Top Header Card */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage">
+      {/* Top Banner & Control Bar */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#fbeee9] text-[#9c381e] mb-1">
-            <Box className="w-3.5 h-3.5" />
-            <span>Pathway 1: Computer Vision &amp; 3D Digital Twin</span>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
+            <Box className="w-3.5 h-3.5 text-[#d4af37]" />
+            <span>Interactive Subterranean 3D Cutaway</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
-            Adalaj Subterranean Stepwell (Baoli) — Interactive 3D Cutaway
+          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+            Adalaj Stepwell (Rudabai Vav) Digital Twin
           </h1>
-          <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
-            Photogrammetric reconstruction of open subterranean tiers, flights of stairs, hypostyle pavilions, and aquifer water well
+          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+            Volumetric structural model of the 1498 CE five-storey subterranean hydraulic monument in Gandhinagar, Gujarat
           </p>
         </div>
 
-        {/* 3D Control Toolbar */}
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Lighting Mode Toggle */}
+        {/* Viewport Presets & Lighting Controls */}
+        <div className="flex items-center gap-2">
+          {/* Daylight / Twilight Toggle */}
           <button
+            type="button"
             onClick={() => setLightingMode(lightingMode === 'daylight' ? 'twilight' : 'daylight')}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#e5dfd5] bg-white hover:bg-[#f7f5f0] text-stone-700 text-xs font-medium transition-colors shadow-2xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#26221d] bg-[#171512] text-[#ded6c5] hover:text-[#fcf9f2] text-xs font-mono transition-colors"
           >
-            {lightingMode === 'daylight' ? (
-              <>
-                <Sun className="w-3.5 h-3.5 text-[#b67322]" />
-                <span>Gallery Lighting</span>
-              </>
-            ) : (
-              <>
-                <Sunset className="w-3.5 h-3.5 text-[#9c381e]" />
-                <span>Sunset Bronze</span>
-              </>
-            )}
+            {lightingMode === 'daylight' ? <Sun className="w-3.5 h-3.5 text-[#eed27c]" /> : <Sunset className="w-3.5 h-3.5 text-[#d47a3e]" />}
+            <span className="capitalize">{lightingMode} Lighting</span>
           </button>
 
-          {/* Wireframe Mesh Toggle */}
+          {/* Wireframe Mode */}
           <button
+            type="button"
             onClick={() => setWireframe(!wireframe)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-colors ${
               wireframe
-                ? 'border-[#9c381e] bg-[#fbeee9] text-[#9c381e] font-semibold'
-                : 'border-[#e5dfd5] bg-white hover:bg-[#f7f5f0] text-stone-700'
+                ? 'bg-[#d4af37] text-[#080706] font-bold border-[#d4af37]'
+                : 'border-[#26221d] bg-[#171512] text-[#ded6c5]'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
-            <span>{wireframe ? 'Mesh Wireframe' : 'Solid Sandstone'}</span>
+            <span>{wireframe ? 'Solid' : 'Wireframe'}</span>
           </button>
 
           {/* Auto Rotation Toggle */}
           <button
+            type="button"
             onClick={() => setIsRotating(!isRotating)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-colors ${
               isRotating
-                ? 'border-[#c3dcd0] bg-[#edf5f1] text-[#2d5e4a]'
-                : 'border-stone-200 bg-stone-100 text-stone-500'
+                ? 'bg-[#0d1e17] text-[#3ba87e] border-[#3ba87e]/40'
+                : 'bg-[#171512] text-[#9c9282] border-[#26221d]'
             }`}
           >
             <RotateCw className={`w-3.5 h-3.5 ${isRotating ? 'animate-spin' : ''}`} />
-            <span>{isRotating ? 'Orbit Active' : 'Orbit Paused'}</span>
+            <span>{isRotating ? 'Orbiting' : 'Paused'}</span>
           </button>
 
-          {/* Reset Camera */}
+          {/* Reset Camera View */}
           <button
+            type="button"
             onClick={handleResetCamera}
-            className="p-1.5 rounded-lg border border-[#e5dfd5] hover:bg-stone-50 text-stone-600 transition-colors"
-            title="Reset to default camera view"
+            className="p-2 rounded-xl border border-[#26221d] bg-[#171512] text-[#ded6c5] hover:text-[#fcf9f2] transition-colors"
+            title="Reset to default isometric overview"
           >
-            <Camera className="w-4 h-4" />
+            <RotateCcw className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      {/* Main 3D Canvas + Side Architectural Hotspots Split */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[600px]">
-        {/* 3D WebGL Canvas */}
-        <div className="lg:col-span-2 relative rounded-2xl border border-[#e5dfd5] overflow-hidden shadow-heritage cursor-grab active:cursor-grabbing">
+      {/* Main 3D Canvas + Side Architectural Tier Hotspots */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
+        {/* 3D WebGL Canvas (7 cols) */}
+        <div className="lg:col-span-7 relative rounded-2xl border border-[#26221d] bg-[#0c0a08] overflow-hidden shadow-xl cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
           <div ref={mountRef} className="w-full h-full" />
 
           {/* Overlay Interaction Hint */}
-          <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm border border-[#e5dfd5] rounded-xl px-3 py-1.5 text-[11px] text-stone-600 shadow-heritage flex items-center gap-2 pointer-events-none">
-            <Compass className="w-3.5 h-3.5 text-[#9c381e]" />
-            <span>Click &amp; drag mouse to orbit 360° · Scroll to zoom into subterranean pavilions &amp; well</span>
+          <div className="absolute bottom-3 left-3 bg-[#110f0d]/90 backdrop-blur-xs border border-[#26221d] rounded-xl px-3 py-1.5 text-[11px] text-[#9c9282] shadow-lg flex items-center gap-2 pointer-events-none">
+            <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+            <span>Drag mouse to orbit 360° · Scroll to zoom into pavilions &amp; well</span>
           </div>
         </div>
 
-        {/* Architectural Hotspots & Structural Insights */}
-        <div className="h-full overflow-y-auto rounded-2xl border border-[#e5dfd5] bg-white p-5 shadow-heritage space-y-4 flex flex-col justify-between">
+        {/* Architectural Hotspots & Structural Insights (5 cols) */}
+        <div className="lg:col-span-5 rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 flex flex-col justify-between overflow-y-auto">
           <div className="space-y-4">
-            <div className="border-b border-stone-100 pb-2">
-              <h3 className="text-sm font-serif font-bold text-stone-900 font-heritage flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-[#9c381e]" />
-                <span>Architectural Tiers &amp; Hotspots</span>
-              </h3>
-              <p className="text-xs text-stone-500 mt-0.5">
-                Select a subterranean tier to position camera and inspect structural details
+            <div className="border-b border-[#201d19] pb-3">
+              <span className="text-[10px] font-mono uppercase text-[#d4af37] tracking-wider block font-semibold">
+                Stratified Hydraulic Architecture
+              </span>
+              <h2 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage pt-0.5">
+                Subterranean Tiers &amp; Hotspots
+              </h2>
+              <p className="text-xs text-[#9c9282] mt-0.5">
+                Select a depth level to position camera and inspect structural details
               </p>
             </div>
 
@@ -546,18 +416,19 @@ export default function Monument3DViewer() {
                 return (
                   <button
                     key={h.id}
+                    type="button"
                     onClick={() => handleSelectHotspot(h)}
                     className={`w-full text-left p-3 rounded-xl border text-xs transition-all ${
                       isSelected
-                        ? 'border-[#9c381e] bg-[#fbeee9] shadow-2xs'
-                        : 'border-[#e5dfd5] bg-[#f7f5f0]/50 hover:bg-[#f7f5f0] hover:border-stone-300'
+                        ? 'border-[#d4af37] bg-[#1c1813] shadow-xs'
+                        : 'border-[#26221d] bg-[#141210] hover:bg-[#171512] hover:border-[#363028]'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className={`font-semibold ${isSelected ? 'text-[#9c381e]' : 'text-stone-900'}`}>
+                      <span className={`font-semibold ${isSelected ? 'text-[#eed27c]' : 'text-[#ded6c5]'}`}>
                         {h.title}
                       </span>
-                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white border border-[#e5dfd5] text-stone-600">
+                      <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-[#110f0d] border border-[#26221d] text-[#eed27c]">
                         {h.level}
                       </span>
                     </div>
@@ -567,33 +438,40 @@ export default function Monument3DViewer() {
             </div>
 
             {/* Active Hotspot Deep Dive Card */}
-            <div className="p-4 rounded-xl border border-[#e5dfd5] bg-[#f7f5f0] space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-[10px] uppercase font-semibold text-[#9c381e] tracking-wider">
+            <div className="p-4 rounded-xl border border-[#26221d] bg-[#141210] space-y-2 text-xs">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] uppercase font-mono font-semibold text-[#d4af37] tracking-wider">
                   Tier Analysis
                 </span>
-                <span className="font-mono text-[11px] text-stone-500">
-                  {activeHotspotData.level}
+                <span className="font-mono text-[11px] text-[#9c9282]">
+                  {activeHotspotData.documentedDepth}
                 </span>
               </div>
-              <h4 className="text-sm font-serif font-bold text-stone-900 font-heritage">
+              <h3 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage">
                 {activeHotspotData.title}
-              </h4>
-              <p className="text-xs leading-relaxed text-stone-700 font-serif">
+              </h3>
+              <p className="text-xs leading-relaxed text-[#ded6c5] font-serif">
                 {activeHotspotData.description}
               </p>
             </div>
           </div>
 
-          {/* Subterranean Engineering Note */}
-          <div className="p-3 rounded-xl bg-[#edf5f1] border border-[#c3dcd0] text-xs text-[#2d5e4a] space-y-1">
-            <div className="flex items-center gap-1.5 font-semibold">
-              <Info className="w-3.5 h-3.5" />
-              <span>Hydraulic &amp; Microclimate Engineering</span>
+          {/* Subterranean Engineering Note & Provenance Notice */}
+          <div className="space-y-2 pt-2 border-t border-[#201d19]">
+            <div className="p-3 rounded-xl bg-[#0d1e17] border border-[#3ba87e]/30 text-xs text-[#ded6c5] space-y-1">
+              <div className="flex items-center gap-1.5 font-semibold text-[#3ba87e]">
+                <Info className="w-3.5 h-3.5" />
+                <span>Hydraulic &amp; Microclimate Engineering</span>
+              </div>
+              <p className="text-[11px] text-[#9c9282] leading-normal font-serif">
+                Stepwells in arid Gujarat operated as passive geothermal cooling devices, decreasing air temperature by 5–7°C relative to the ambient surface ground.
+              </p>
             </div>
-            <p className="text-[11px] text-[#2d5e4a]/90 leading-normal">
-              Stepwells in arid Gujarat operated as passive geothermal cooling devices, decreasing air temperature by up to 6°C relative to the scorching surface ground.
-            </p>
+
+            <div className="p-2.5 rounded-xl bg-[#141210] border border-[#26221d] text-[10px] text-[#9c9282] flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#eed27c] shrink-0" />
+              <span>Procedural 3D cutaway representation based on published ASI field survey plans.</span>
+            </div>
           </div>
         </div>
       </div>

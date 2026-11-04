@@ -9,6 +9,7 @@ import {
   RefreshCw,
   Sparkles,
   Route,
+  Search,
 } from 'lucide-react';
 import { fetchMapRecords, MapRecordItem } from '@/lib/api';
 
@@ -99,286 +100,261 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
     const initMap = async () => {
       const L = (await import('leaflet')).default;
 
-      // Ensure leaflet styles are injected
-      if (!document.getElementById('leaflet-css')) {
-        const link = document.createElement('link');
-        link.id = 'leaflet-css';
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        document.head.appendChild(link);
-      }
-
+      // Base map instance
       if (!mapInstanceRef.current && mapContainerRef.current) {
-        // Center on Western India / Gujarat (IIT Gandhinagar area)
         const map = L.map(mapContainerRef.current, {
-          center: [22.5, 74.0], // Centered across western Indian heritage corridor
-          zoom: 6,
+          center: [20.5937, 74.9629],
+          zoom: 5.5,
           zoomControl: false,
         });
 
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // 100% Free OpenStreetMap raster tiles (Zero API key required, no watermarks)
-        L.tileLayer(
-          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            maxZoom: 19,
-          }
-        ).addTo(map);
+        // CartoDB Voyager Tile Layer (High legibility for cultural geography)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+          maxZoom: 19,
+        }).addTo(map);
 
-        const markersGroup = L.layerGroup().addTo(map);
-        markersGroupRef.current = markersGroup;
+        markersGroupRef.current = L.layerGroup().addTo(map);
         mapInstanceRef.current = map;
       }
 
       const map = mapInstanceRef.current;
       const markersGroup = markersGroupRef.current;
-
       if (!map || !markersGroup) return;
 
       markersGroup.clearLayers();
+      if (routePolylineRef.current) {
+        map.removeLayer(routePolylineRef.current);
+      }
 
       // Filter sites
       const filtered = sites.filter((site) => {
-        const typeMatch = activeFilter === 'all' || site.heritage_type === activeFilter;
-        const regionMatch = activeRegion === 'all' || site.region === activeRegion;
-        return typeMatch && regionMatch;
+        const matchesType = activeFilter === 'all' || site.heritage_type === activeFilter;
+        const matchesRegion = activeRegion === 'all' || site.region === activeRegion;
+        return matchesType && matchesRegion;
       });
 
-      // Pin icon generator
+      const routePoints: [number, number][] = [];
+
       filtered.forEach((site) => {
-        const isSelected = selectedSite?.id === site.id;
-        const isStepwell = site.heritage_type.toLowerCase().includes('stepwell');
-        const isCave = site.heritage_type.toLowerCase().includes('rock-cut');
-        const isFort = site.heritage_type.toLowerCase().includes('fort');
+        routePoints.push([site.latitude, site.longitude]);
 
-        const pinColor = isSelected ? '#832e17' : isStepwell ? '#9c381e' : isCave ? '#59443b' : isFort ? '#785b34' : '#b67322';
-        const symbol = isStepwell ? '💧' : isCave ? '🗿' : isFort ? '🏰' : '🏛️';
+        // Custom marker colors based on typology
+        let markerColor = '#d4af37'; // gold
+        if (site.heritage_type.includes('Stepwell')) markerColor = '#2d5e4a'; // patina
+        if (site.heritage_type.includes('Monolithic')) markerColor = '#9c381e'; // terracotta
 
-        const markerHtml = `
+        const isCurrent = selectedSite?.id === site.id;
+
+        const iconHtml = `
           <div style="
-            position: relative;
-            cursor: pointer;
-            width: ${isSelected ? '42px' : '36px'};
-            height: ${isSelected ? '42px' : '36px'};
-            background: ${pinColor};
-            border: 2.5px solid #ffffff;
+            background-color: ${markerColor};
+            width: ${isCurrent ? '26px' : '20px'};
+            height: ${isCurrent ? '26px' : '20px'};
             border-radius: 50%;
-            box-shadow: 0 4px 10px rgba(28,25,23,0.3);
+            border: 2px solid ${isCurrent ? '#ffffff' : '#110f0d'};
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            font-size: ${isSelected ? '18px' : '15px'};
-            transform: ${isSelected ? 'scale(1.15)' : 'scale(1.0)'};
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            transition: transform 0.2s;
           ">
-            <span>${symbol}</span>
+            <div style="width: 6px; height: 6px; border-radius: 50%; background-color: #ffffff;"></div>
           </div>
         `;
 
-        const icon = L.divIcon({
-          html: markerHtml,
-          className: 'custom-heritage-pin',
-          iconSize: [isSelected ? 42 : 36, isSelected ? 42 : 36],
-          iconAnchor: [isSelected ? 21 : 18, isSelected ? 21 : 18],
+        const customIcon = L.divIcon({
+          html: iconHtml,
+          className: 'heritage-map-marker',
+          iconSize: [isCurrent ? 26 : 20, isCurrent ? 26 : 20],
+          iconAnchor: [isCurrent ? 13 : 10, isCurrent ? 13 : 10],
         });
 
-        const marker = L.marker([site.latitude, site.longitude], { icon }).addTo(markersGroup);
+        const marker = L.marker([site.latitude, site.longitude], { icon: customIcon });
 
         marker.on('click', () => {
           setSelectedSite(site);
-          map.panTo([site.latitude, site.longitude], { animate: true, duration: 0.8 });
+          map.setView([site.latitude, site.longitude], Math.max(map.getZoom(), 8), {
+            animate: true,
+          });
         });
+
+        marker.bindTooltip(
+          `<strong>${site.title}</strong><br/><span style="font-size: 10px;">${site.region} · ${site.heritage_type}</span>`,
+          { direction: 'top', offset: [0, -10] }
+        );
+
+        markersGroup.addLayer(marker);
       });
 
-      // IIT Gandhinagar Explorer Fellowship Route
-      if (routePolylineRef.current) {
-        map.removeLayer(routePolylineRef.current);
-        routePolylineRef.current = null;
-      }
-
-      if (showRoutes) {
-        // Route: IITGN Gandhinagar -> Adalaj -> Modhera -> Patan -> Kumbhalgarh -> Ellora -> Hampi
-        const iitgnRouteCoords: [number, number][] = [
-          [23.2156, 72.684], // IIT Gandhinagar Campus (Palaj)
-          [23.1667, 72.5833], // Adalaj Stepwell
-          [23.5835, 72.1331], // Modhera Sun Temple
-          [23.8589, 72.1017], // Rani ki Vav (Patan)
-          [25.1475, 73.5878], // Kumbhalgarh Fort (Rajasthan)
-          [20.0268, 75.1793], // Ellora Kailasa Temple (Maharashtra)
-          [15.335, 76.46], // Hampi Vijayanagara (Karnataka)
-        ];
-
-        const polyline = L.polyline(iitgnRouteCoords, {
-          color: '#9c381e',
-          weight: 3.5,
-          opacity: 0.85,
-          dashArray: '8, 8',
-          lineJoin: 'round',
+      // Connect surveyed sites with an expedition route line
+      if (showRoutes && routePoints.length > 1) {
+        const polyline = L.polyline(routePoints, {
+          color: '#d4af37',
+          weight: 2,
+          opacity: 0.65,
+          dashArray: '6, 8',
         }).addTo(map);
-
         routePolylineRef.current = polyline;
       }
     };
 
     void initMap();
-  }, [sites, activeFilter, activeRegion, selectedSite, showRoutes]);
+  }, [sites, selectedSite, activeFilter, activeRegion, showRoutes]);
 
-  const handleQuickJump = (coords: number[]) => {
+  const handleJumpTo = (coords: number[]) => {
     if (mapInstanceRef.current) {
-      mapInstanceRef.current.setView([coords[0], coords[1]], 10, { animate: true });
-    }
-    const matched = sites.find(
-      (s) => Math.abs(s.latitude - coords[0]) < 0.1 && Math.abs(s.longitude - coords[1]) < 0.1
-    );
-    if (matched) {
-      setSelectedSite(matched);
+      mapInstanceRef.current.setView([coords[0], coords[1]], 9, { animate: true });
     }
   };
 
   return (
     <div className="space-y-4">
-      {/* Top Header Card */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage">
+      {/* Top Header & Filter Controls */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#fbeee9] text-[#9c381e] mb-1">
-            <Route className="w-3.5 h-3.5" />
-            <span>Pathway 3: Geospatial Cartography</span>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
+            <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+            <span>Geospatial Heritage Intelligence</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
-            IIT Gandhinagar Explorer Fellowship Heritage Trail
+          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+            Expedition Heritage Map
           </h1>
-          <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
-            Dynamic spatial mapping of field expedition routes, subterranean stepwells, and epigraphical landmarks
+          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+            Interactive geographical mapping of surveyed stepwells, monolithic shrines, and regional monuments
           </p>
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Toggle Route Trail */}
           <button
+            type="button"
             onClick={() => setShowRoutes(!showRoutes)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-mono transition-colors ${
               showRoutes
-                ? 'border-[#f0d4ca] bg-[#fbeee9] text-[#9c381e]'
-                : 'border-stone-200 bg-stone-100 text-stone-600'
+                ? 'bg-[#1c1813] border-[#d4af37]/50 text-[#eed27c]'
+                : 'border-[#26221d] bg-[#171512] text-[#9c9282]'
             }`}
           >
             <Route className="w-3.5 h-3.5" />
-            <span>{showRoutes ? 'Expedition Trail Active' : 'Trail Hidden'}</span>
+            <span>{showRoutes ? 'Route Visible' : 'Route Hidden'}</span>
           </button>
 
           <button
+            type="button"
             onClick={loadMapData}
-            className="p-2 rounded-lg border border-[#e5dfd5] hover:bg-stone-50 text-stone-600 transition-colors"
-            title="Refresh map markers"
+            className="p-2 rounded-xl border border-[#26221d] bg-[#171512] hover:bg-[#201d19] text-[#ded6c5] transition-colors"
+            title="Refresh map coordinates"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
       </div>
 
-      {/* Quick Jump Bar */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-        <span className="text-stone-500 font-medium whitespace-nowrap pl-1">Jump to Landmark:</span>
-        {quickJumpSites.map((item) => (
-          <button
-            key={item.name}
-            onClick={() => handleQuickJump(item.coords)}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#e5dfd5] bg-white hover:bg-[#fbeee9] hover:border-[#f0d4ca] text-stone-700 hover:text-[#9c381e] transition-colors whitespace-nowrap font-medium shadow-2xs"
-          >
-            <MapPin className="w-3.5 h-3.5 text-[#9c381e]" />
-            <span>{item.name}</span>
-            <span className="text-[10px] text-stone-400">({item.desc})</span>
-          </button>
-        ))}
-      </div>
-
-      {/* Filter Toolbar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-xl border border-[#e5dfd5] bg-white shadow-2xs text-xs">
-        {/* Typology Pills */}
-        <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-stone-400 font-medium mr-1">Typology:</span>
-          {typologies.map((t) => (
+      {/* Filter Pills & Quick Jumps */}
+      <div className="p-4 rounded-xl border border-[#26221d] bg-[#110f0d] shadow-md space-y-3 text-xs">
+        {/* Quick Jump Landmark Coordinates */}
+        <div className="flex flex-wrap items-center gap-1.5 pb-2 border-b border-[#201d19]">
+          <span className="text-[#9c9282] font-mono mr-1">Quick Coordinates:</span>
+          {quickJumpSites.map((site) => (
             <button
-              key={t.id}
-              onClick={() => setActiveFilter(t.id)}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
-                activeFilter === t.id
-                  ? 'bg-[#9c381e] text-[#f7f5f0] shadow-2xs'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-              }`}
+              key={site.name}
+              type="button"
+              onClick={() => handleJumpTo(site.coords)}
+              className="px-2.5 py-1 rounded-lg border border-[#26221d] bg-[#141210] hover:bg-[#1a1714] hover:border-[#d4af37]/40 text-[#ded6c5] text-xs transition-colors flex items-center gap-1.5"
             >
-              {t.label}
+              <MapPin className="w-3 h-3 text-[#d4af37]" />
+              <span>{site.name}</span>
+              <span className="text-[10px] text-[#9c9282] font-mono">({site.desc})</span>
             </button>
           ))}
         </div>
 
-        {/* Region Select */}
-        <div className="flex items-center gap-1.5">
-          <span className="text-stone-400 font-medium">Region:</span>
-          <select
-            value={activeRegion}
-            onChange={(e) => setActiveRegion(e.target.value)}
-            className="px-2.5 py-1 rounded-lg border border-[#e5dfd5] bg-[#f7f5f0] text-stone-800 font-medium focus:outline-hidden"
-          >
+        {/* Region & Typology Selector */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-[#9c9282] font-mono mr-1">Region:</span>
             {regions.map((r) => (
-              <option key={r.id} value={r.id}>
+              <button
+                key={r.id}
+                type="button"
+                onClick={() => setActiveRegion(r.id)}
+                className={`px-2.5 py-1 rounded-lg font-mono text-[11px] transition-colors ${
+                  activeRegion === r.id
+                    ? 'bg-[#d4af37] text-[#080706] font-bold'
+                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d] hover:bg-[#201d19]'
+                }`}
+              >
                 {r.label}
-              </option>
+              </button>
             ))}
-          </select>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-[#9c9282] font-mono">Typology:</span>
+            <select
+              value={activeFilter}
+              onChange={(e) => setActiveFilter(e.target.value)}
+              className="px-2.5 py-1 rounded-lg border border-[#26221d] bg-[#171512] text-[#fcf9f2] text-xs font-medium focus:outline-hidden"
+            >
+              {typologies.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Main Map + Side Details Split Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[600px]">
-        {/* Leaflet Map Canvas */}
-        <div className="lg:col-span-2 relative rounded-2xl border border-[#e5dfd5] overflow-hidden bg-[#e8e4dc] shadow-heritage">
-          <div ref={mapContainerRef} className="w-full h-full z-10" />
+      {/* Main Split Screen: Leaflet Map (7 cols) + Selected Monument Card (5 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
+        {/* Interactive Map (7 cols) */}
+        <div className="lg:col-span-7 flex flex-col rounded-2xl border border-[#26221d] overflow-hidden shadow-xl relative min-h-[460px] lg:min-h-full">
+          <div ref={mapContainerRef} className="flex-1 w-full h-full min-h-[460px]" />
 
           {/* Map Legend Overlay */}
-          <div className="absolute top-3 left-3 z-20 bg-white/95 backdrop-blur-sm border border-[#e5dfd5] rounded-xl p-3 shadow-heritage text-[11px] space-y-1.5 pointer-events-auto">
-            <div className="font-semibold text-stone-900 border-b border-stone-100 pb-1">
-              Explorer Expedition Legend
+          <div className="p-3 border-t border-[#26221d] bg-[#0c0a08]/95 backdrop-blur-xs flex flex-wrap items-center gap-4 text-xs z-10">
+            <div className="flex items-center gap-1.5 text-[#ded6c5]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#2d5e4a]" />
+              <span>Stepwell (Baoli)</span>
             </div>
-            <div className="flex items-center gap-2 text-stone-600">
-              <span className="w-3 h-3 rounded-full bg-[#9c381e]" />
-              <span>Stepwell / Baoli (Water Table)</span>
-            </div>
-            <div className="flex items-center gap-2 text-stone-600">
-              <span className="w-3 h-3 rounded-full bg-[#59443b]" />
+            <div className="flex items-center gap-1.5 text-[#ded6c5]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#9c381e]" />
               <span>Monolithic Rock-Cut Temple</span>
             </div>
-            <div className="flex items-center gap-2 text-stone-600">
-              <span className="w-3 h-3 rounded-full bg-[#b67322]" />
-              <span>Temple / Sacred Complex</span>
+            <div className="flex items-center gap-1.5 text-[#ded6c5]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#d4af37]" />
+              <span>Temple / Fort Complex</span>
             </div>
-            <div className="flex items-center gap-2 text-stone-600">
-              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#9c381e]" />
-              <span>IITGN Expedition Trail</span>
+            <div className="flex items-center gap-1.5 text-[#ded6c5]">
+              <span className="w-4 h-0.5 border-t-2 border-dashed border-[#d4af37]" />
+              <span>Survey Trail</span>
             </div>
           </div>
         </div>
 
-        {/* Selected Landmark Exhibition Card */}
-        <div className="h-full overflow-y-auto rounded-2xl border border-[#e5dfd5] bg-white p-5 shadow-heritage space-y-4">
+        {/* Selected Landmark Exhibition Card (5 cols) */}
+        <div className="lg:col-span-5 rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 flex flex-col justify-between overflow-y-auto">
           {selectedSite ? (
             <div className="space-y-4">
-              <div className="space-y-1 pb-3 border-b border-stone-100">
+              <div className="space-y-1 pb-3 border-b border-[#201d19]">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="px-2 py-0.5 rounded-full bg-[#fbeee9] text-[#9c381e] font-semibold border border-[#f0d4ca]">
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#1c1813] text-[#eed27c] font-semibold border border-[#d4af37]/35">
                     {selectedSite.heritage_type}
                   </span>
-                  <span className="text-stone-400 font-mono text-[11px]">
+                  <span className="text-[#9c9282] font-mono text-[11px]">
                     {selectedSite.region}
                   </span>
                 </div>
-                <h3 className="text-lg font-serif font-bold text-stone-900 font-heritage pt-1">
+                <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage pt-1">
                   {selectedSite.title}
-                </h3>
-                <div className="flex items-center gap-1.5 text-xs text-stone-500 font-mono">
-                  <MapPin className="w-3.5 h-3.5 text-[#9c381e]" />
+                </h2>
+                <div className="flex items-center gap-1.5 text-xs text-[#9c9282] font-mono">
+                  <MapPin className="w-3.5 h-3.5 text-[#d4af37]" />
                   <span>
                     {selectedSite.latitude.toFixed(4)}° N, {selectedSite.longitude.toFixed(4)}° E
                   </span>
@@ -387,42 +363,42 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
 
               {/* Field Metadata Grid */}
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-2.5 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5]">
-                  <span className="text-stone-400 block text-[10px] uppercase font-semibold">
+                <div className="p-3 rounded-xl bg-[#171512] border border-[#26221d]">
+                  <span className="text-[#9c9282] block text-[10px] uppercase font-mono">
                     Architectural Period
                   </span>
-                  <span className="font-semibold text-stone-800 mt-0.5 block">
-                    {selectedSite.period || 'Medieval (11th-15th C.)'}
+                  <span className="font-semibold text-[#fcf9f2] mt-0.5 block font-serif">
+                    {selectedSite.period || 'Medieval (11th–15th C.)'}
                   </span>
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#f7f5f0] border border-[#e5dfd5]">
-                  <span className="text-stone-400 block text-[10px] uppercase font-semibold">
-                    Expedition Status
+                <div className="p-3 rounded-xl bg-[#171512] border border-[#26221d]">
+                  <span className="text-[#9c9282] block text-[10px] uppercase font-mono">
+                    Survey Status
                   </span>
-                  <span className="font-semibold text-[#2d5e4a] mt-0.5 block flex items-center gap-1">
+                  <span className="font-semibold text-[#3ba87e] mt-0.5 block flex items-center gap-1 font-serif">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Verified by IITGN
+                    Documented Site
                   </span>
                 </div>
               </div>
 
               {/* Curator Field Observations */}
               <div className="space-y-1.5">
-                <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-400">
+                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider block">
                   Archival Field Documentation
-                </h4>
-                <p className="text-xs leading-relaxed text-stone-700 bg-[#f7f5f0]/60 p-3 rounded-xl border border-[#e5dfd5] font-serif">
+                </span>
+                <p className="text-xs leading-relaxed text-[#ded6c5] bg-[#171512] p-3 rounded-xl border border-[#26221d] font-serif">
                   {selectedSite.description}
                 </p>
               </div>
 
               {/* Fellowship Provenance */}
-              <div className="p-3 rounded-xl bg-[#edf5f1] border border-[#c3dcd0] space-y-1 text-xs">
-                <div className="flex items-center gap-1.5 text-[#2d5e4a] font-semibold">
+              <div className="p-3 rounded-xl bg-[#0d1e17] border border-[#3ba87e]/30 space-y-1 text-xs">
+                <div className="flex items-center gap-1.5 text-[#3ba87e] font-semibold">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>IIT Gandhinagar Explorer Fellowship</span>
                 </div>
-                <p className="text-[11px] text-[#2d5e4a]/90">
+                <p className="text-[11px] text-[#9c9282] font-serif">
                   Photogrammetry, architectural elevation notes, and Devanagari epigraph recordings logged during field exploration.
                 </p>
               </div>
@@ -432,7 +408,7 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
                 <button
                   type="button"
                   onClick={() => onSelectRecord(selectedSite.id)}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#9c381e] hover:bg-[#832e17] text-[#f7f5f0] text-xs font-semibold shadow-2xs transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#d4af37] hover:bg-[#e5c158] text-[#080706] text-xs font-semibold shadow-md transition-all cursor-pointer"
                 >
                   <ExternalLink className="w-3.5 h-3.5" />
                   <span>Inspect Full Corpus Record</span>
@@ -440,8 +416,8 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
               )}
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-center text-stone-400 space-y-2 p-6">
-              <Compass className="w-10 h-10 stroke-1" />
+            <div className="h-full flex flex-col items-center justify-center text-center text-[#9c9282] space-y-2 p-6">
+              <Compass className="w-10 h-10 text-[#d4af37]/60" />
               <p className="text-xs">Click any marker pin on the map to inspect architectural field details.</p>
             </div>
           )}

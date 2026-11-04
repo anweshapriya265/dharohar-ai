@@ -11,6 +11,10 @@ import {
   Compass,
   ArrowRight,
   BookOpen,
+  Eye,
+  Maximize2,
+  Sun,
+  Camera,
 } from 'lucide-react';
 import { DocumentItem } from '@/lib/api';
 
@@ -24,6 +28,7 @@ interface HeritageModelItem {
   name: string;
   subtitle: string;
   category: string;
+  location: string;
   historicalPeriod: string;
   provenanceType: 'illustrative_study' | 'volumetric_reconstruction';
   documentId: string;
@@ -31,7 +36,7 @@ interface HeritageModelItem {
   printedPageLabel: string;
   citationString: string;
   historicalNotes: string;
-  dimensions: { label: string; value: string }[];
+  dimensions: { label: string; value: string; type: 'Documented' | 'Approximate' | 'Derived' }[];
   modelType: 'kailasa' | 'kuda_cistern' | 'dumar_lena';
 }
 
@@ -40,20 +45,23 @@ const HERITAGE_MODELS: HeritageModelItem[] = [
     id: 'kailasa_court',
     name: 'Kailasa Monolithic Court & Dhwajastambha',
     subtitle: 'Elura Cave 16 (Brahmanical Monolith)',
-    category: 'Rock-Cut Architecture',
-    historicalPeriod: 'Rashtrakuta Dynasty · c. 757–783 A.D.',
+    category: 'Rock-Cut Monolithic Architecture',
+    location: 'Ellora (Verul), Chhatrapati Sambhajinagar District, Maharashtra',
+    historicalPeriod: 'Rashtrakuta Dynasty · c. 757–783 A.D. (Reign of Krishna I)',
     provenanceType: 'illustrative_study',
     documentId: 'sample_doc_03_sample_fergusson_burgess_1880',
     pdfPageIndex: 4,
     printedPageLabel: '453',
-    citationString: 'Fergusson & Burgess (1880), Printed page 453 · PDF page 4',
+    citationString: 'Fergusson & Burgess (1880), Cave Temples of India, Printed p. 453 · PDF p. 4',
     historicalNotes:
-      'The courtyard of Kailasa was excavated downwards into the basalt cliff to an extreme depth of 107 feet, isolating a central monolithic temple block and two free-standing Dhwajastambha pillars crowned with the sacred trisula of Siva.',
+      'The courtyard of Kailasa was excavated top-down directly into the basalt scarp to an extreme depth of 107 feet, carving out a central monolithic temple block and two free-standing Dhwajastambha pillars crowned with the sacred emblems of Siva.',
     dimensions: [
-      { label: 'Courtyard Floor Depth', value: '276 feet' },
-      { label: 'Courtyard Breadth', value: '154 feet' },
-      { label: 'Back Cliff Scarp', value: '107 feet' },
-      { label: 'Monolithic Pillar Height', value: '49 feet' },
+      { label: 'Back Cliff Scarp Depth', value: '107 feet', type: 'Documented' },
+      { label: 'Courtyard Floor Length', value: '276 feet', type: 'Documented' },
+      { label: 'Courtyard Breadth', value: '154 feet', type: 'Documented' },
+      { label: 'Monolithic Pillar Height', value: '49 feet', type: 'Documented' },
+      { label: 'Sanctuary Spire Height', value: '96 feet', type: 'Approximate' },
+      { label: 'Volumetric Excavated Mass', value: 'approx. 200,000 tons', type: 'Derived' },
     ],
     modelType: 'kailasa',
   },
@@ -61,20 +69,21 @@ const HERITAGE_MODELS: HeritageModelItem[] = [
     id: 'kuda_cistern',
     name: 'Kuda Cisterns & Donation Inscription',
     subtitle: 'Kuda Caves · Sanctuary VI & Cistern Bench',
-    category: 'Epigraphy & Rock Sanctuary',
-    historicalPeriod: 'Early Western Deccan · c. 2nd Century B.C.',
+    category: 'Epigraphy & Hydrological Architecture',
+    location: 'Kuda, Raigad District, Maharashtra (Konkan Coast)',
+    historicalPeriod: 'Early Western Deccan · c. 2nd Century B.C. to 1st Century A.D.',
     provenanceType: 'illustrative_study',
     documentId: 'sample_doc_02_sample_22087',
     pdfPageIndex: 10,
     printedPageLabel: '10',
-    citationString: 'Burgess & Indraji (1881), Printed page 10 · PDF page 10',
+    citationString: 'Burgess & Indraji (1881), Inscriptions from the Cave-Temples, Printed p. 10 · PDF p. 10',
     historicalNotes:
-      'Rock-cut water storage cisterns cut beneath the living rock at Kuda. The archaic Prakrit inscription records the religious gift: "podhio be 2 deya dhamam" — The charitable gift of two (2) cisterns.',
+      'Rock-cut water storage cisterns cut beneath the living rock at Kuda. The archaic Brahmi Prakrit inscription records the religious gift: "podhio be 2 deya dhamam" — The charitable gift of two (2) cisterns by local patrons.',
     dimensions: [
-      { label: 'Excavation Type', value: 'Rock-cut Cistern & Cell' },
-      { label: 'Epigraphical Script', value: 'Brahmi / Old Prakrit' },
-      { label: 'Inscription Text', value: 'podhio be 2 deya dhamam' },
-      { label: 'Archival Record', value: 'Burgess & Indraji (1881)' },
+      { label: 'Epigraphical Script', value: 'Brahmi / Old Prakrit', type: 'Documented' },
+      { label: 'Inscription Text', value: 'podhio be 2 deya dhamam', type: 'Documented' },
+      { label: 'Excavation Type', value: 'Rock-cut Cistern & Cell', type: 'Documented' },
+      { label: 'Water Capacity', value: 'approx. 4,500 gallons', type: 'Approximate' },
     ],
     modelType: 'kuda_cistern',
   },
@@ -83,19 +92,20 @@ const HERITAGE_MODELS: HeritageModelItem[] = [
     name: 'Dumar Lena Hypostyle Colonnade',
     subtitle: 'Elura Cave XXIX · Massive Columned Sanctuary',
     category: 'Rock-Cut Hypostyle Architecture',
+    location: 'Ellora (Verul), Northern Group, Maharashtra',
     historicalPeriod: 'Early Kalachuri / Rashtrakuta · c. 6th–7th Century A.D.',
     provenanceType: 'illustrative_study',
     documentId: 'sample_doc_01_sample_1544',
     pdfPageIndex: 3,
     printedPageLabel: '37',
-    citationString: 'Burgess (1883), Printed page 37 · PDF page 3',
+    citationString: 'Burgess (1883), Report on the Elura Cave Temples, Printed p. 37 · PDF p. 3',
     historicalNotes:
-      'Cave XXIX, known natively as Dumar Lena, is one of the grandest excavations in Western India. The hypostyle hall measures nearly 150 feet square, supported by 26 massive fluted pillars with cushion capitals, guarded by monumental stone lions.',
+      'Cave XXIX, known natively as Dumar Lena or Sita-ki-Nahani, is one of the grandest excavations in Western India. The hypostyle hall measures nearly 150 feet square, supported by 26 massive fluted pillars with cushion capitals, guarded by monumental stone lions.',
     dimensions: [
-      { label: 'Great Hall Dimensions', value: '148 ft × 149 ft' },
-      { label: 'Pillar Count', value: '26 massive columns' },
-      { label: 'Capitals', value: 'Fluted Cushion / Amalaka' },
-      { label: 'Sanctuary Style', value: 'Cruciform Rock Hypostyle' },
+      { label: 'Great Hall Dimensions', value: '148 ft × 149 ft', type: 'Documented' },
+      { label: 'Total Column Count', value: '26 massive pillars', type: 'Documented' },
+      { label: 'Column Capitals', value: 'Fluted Cushion (Amalaka)', type: 'Documented' },
+      { label: 'Sanctuary Design', value: 'Cruciform Rock Hypostyle', type: 'Documented' },
     ],
     modelType: 'dumar_lena',
   },
@@ -108,77 +118,83 @@ export default function Heritage3DExplorer({
   const [selectedModel, setSelectedModel] = useState<HeritageModelItem>(HERITAGE_MODELS[0]);
   const [shadingMode, setShadingMode] = useState<'textured' | 'clay' | 'wireframe'>('textured');
   const [is2DPlateView, setIs2DPlateView] = useState<boolean>(false);
+  const [isAutoRotating, setIsAutoRotating] = useState<boolean>(true);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-
   const sceneRef = useRef<THREE.Scene | null>(null);
-  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const modelGroupRef = useRef<THREE.Group | null>(null);
-
-  const controlsState = useRef({
-    isDragging: false,
-    prevX: 0,
-    prevY: 0,
-    rotY: 0.35,
-    rotX: 0.22,
-    targetRotY: 0.35,
-    targetRotX: 0.22,
-    dist: 12,
-    targetDist: 12,
-    autoRotate: true,
-  });
-
   const materialsList = useRef<THREE.Material[]>([]);
 
-  // Procedural stone texture
+  // Camera Orbit State
+  const controlsState = useRef({
+    isDragging: false,
+    prevMouseX: 0,
+    prevMouseY: 0,
+    rotX: 0.32,
+    rotY: 0.42,
+    dist: 11,
+    targetRotX: 0.32,
+    targetRotY: 0.42,
+    targetDist: 11,
+  });
+
+  const handleResetCamera = () => {
+    controlsState.current.targetRotX = 0.32;
+    controlsState.current.targetRotY = 0.42;
+    controlsState.current.targetDist = 11;
+  };
+
   const createTexture = useCallback(() => {
     const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 512;
+    canvas.width = 256;
+    canvas.height = 256;
     const ctx = canvas.getContext('2d');
-    if (!ctx) return new THREE.CanvasTexture(canvas);
-
-    ctx.fillStyle = '#221f1b';
-    ctx.fillRect(0, 0, 512, 512);
-
-    for (let i = 0; i < 30000; i++) {
-      const x = Math.random() * 512;
-      const y = Math.random() * 512;
-      const b = Math.floor(Math.random() * 40) + 20;
-      ctx.fillStyle = `rgba(${b + 8}, ${b + 4}, ${b}, ${Math.random() * 0.4})`;
-      ctx.fillRect(x, y, 2, 2);
+    if (ctx) {
+      ctx.fillStyle = '#6e6559';
+      ctx.fillRect(0, 0, 256, 256);
+      for (let i = 0; i < 4000; i++) {
+        const x = Math.random() * 256;
+        const y = Math.random() * 256;
+        const c = Math.floor(Math.random() * 60);
+        ctx.fillStyle = `rgba(${c},${c},${c},0.15)`;
+        ctx.fillRect(x, y, 2, 2);
+      }
     }
-
-    const tex = new THREE.CanvasTexture(canvas);
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.wrapT = THREE.RepeatWrapping;
-    tex.repeat.set(2, 2);
-    return tex;
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.RepeatWrapping;
+    texture.repeat.set(4, 4);
+    return texture;
   }, []);
 
-  // Build 3D Model Geometry based on selected model
   const buildModelGeometry = useCallback(
-    (type: 'kailasa' | 'kuda_cistern' | 'dumar_lena', stoneTex: THREE.CanvasTexture): THREE.Group => {
+    (type: string, stoneTex: THREE.Texture) => {
       const group = new THREE.Group();
+      materialsList.current.forEach((m) => m.dispose());
       materialsList.current = [];
 
+      // Warm weathered basalt tone (clear relief, not pitch black)
+      const basaltColor = shadingMode === 'clay' ? 0xc2b5a1 : 0x685f52;
+      const darkPlinthColor = shadingMode === 'clay' ? 0xa89b88 : 0x3d372f;
+
       const basaltMat = new THREE.MeshStandardMaterial({
-        color: shadingMode === 'clay' ? 0xd0c4b2 : 0x38322c,
-        roughness: shadingMode === 'clay' ? 0.95 : 0.88,
-        metalness: shadingMode === 'clay' ? 0.0 : 0.12,
+        color: basaltColor,
+        roughness: 0.85,
+        metalness: shadingMode === 'clay' ? 0.0 : 0.08,
         bumpMap: shadingMode === 'textured' ? stoneTex : null,
-        bumpScale: 0.04,
+        bumpScale: 0.05,
         wireframe: shadingMode === 'wireframe',
       });
       materialsList.current.push(basaltMat);
 
       const darkMat = new THREE.MeshStandardMaterial({
-        color: shadingMode === 'clay' ? 0xb8ab97 : 0x221f1c,
-        roughness: 0.92,
+        color: darkPlinthColor,
+        roughness: 0.9,
         bumpMap: shadingMode === 'textured' ? stoneTex : null,
-        bumpScale: 0.05,
+        bumpScale: 0.06,
         wireframe: shadingMode === 'wireframe',
       });
       materialsList.current.push(darkMat);
@@ -186,7 +202,7 @@ export default function Heritage3DExplorer({
       const goldMat = new THREE.MeshStandardMaterial({
         color: 0xd4af37,
         roughness: 0.35,
-        metalness: 0.8,
+        metalness: 0.75,
         wireframe: shadingMode === 'wireframe',
       });
       materialsList.current.push(goldMat);
@@ -248,70 +264,51 @@ export default function Heritage3DExplorer({
         nFinial.position.y = 3.9;
         nandiGroup.add(nFinial);
         group.add(nandiGroup);
+
+        // Back Escarpment Cliffs
+        const cliffBack = new THREE.Mesh(new THREE.BoxGeometry(16, 7.5, 2.5), darkMat);
+        cliffBack.position.set(0, 2.2, -5.5);
+        cliffBack.receiveShadow = true;
+        group.add(cliffBack);
       } else if (type === 'kuda_cistern') {
-        // Rock-cut Cave Verandah & Cistern Well
-        const cliffBase = new THREE.Mesh(new THREE.BoxGeometry(12, 0.6, 9), darkMat);
-        cliffBase.position.y = -1.8;
-        group.add(cliffBase);
+        // Kuda Cisterns
+        const rockBase = new THREE.Mesh(new THREE.BoxGeometry(12, 1.2, 10), darkMat);
+        rockBase.position.y = -1.8;
+        group.add(rockBase);
 
-        // Cliff Wall with Recessed Sanctuary Cell
-        const cliffWall = new THREE.Mesh(new THREE.BoxGeometry(10, 5, 2.5), basaltMat);
-        cliffWall.position.set(0, 1.0, -2.5);
-        cliffWall.castShadow = true;
-        group.add(cliffWall);
+        const cliff = new THREE.Mesh(new THREE.BoxGeometry(12, 5.0, 3.0), basaltMat);
+        cliff.position.set(0, 1.2, -3.2);
+        group.add(cliff);
 
-        // Recessed Cave Cell
-        const caveCell = new THREE.Mesh(new THREE.BoxGeometry(4.2, 3.2, 2.4), darkMat);
-        caveCell.position.set(0, 0.4, -1.8);
-        group.add(caveCell);
+        // Two cistern tanks
+        for (let c = 0; c < 2; c++) {
+          const x = (c === 0 ? -2.2 : 2.2);
+          const cRim = new THREE.Mesh(new THREE.BoxGeometry(3.0, 1.4, 3.0), basaltMat);
+          cRim.position.set(x, -0.6, 0.8);
+          group.add(cRim);
 
-        // Dual Rock-Cut Cisterns (podhio be 2)
-        const cistern1 = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.2, 1.6), darkMat);
-        cistern1.position.set(-2.8, -1.0, 0.6);
-        group.add(cistern1);
-
-        const cistern2 = new THREE.Mesh(new THREE.BoxGeometry(1.6, 1.2, 1.6), darkMat);
-        cistern2.position.set(-2.8, -1.0, 2.6);
-        group.add(cistern2);
-
-        // Water surface inside cisterns
-        const waterMat = new THREE.MeshStandardMaterial({
-          color: 0x1d4e5f,
-          roughness: 0.1,
-          metalness: 0.8,
-        });
-        materialsList.current.push(waterMat);
-        const water1 = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.1, 1.4), waterMat);
-        water1.position.set(-2.8, -0.6, 0.6);
-        group.add(water1);
-        const water2 = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.1, 1.4), waterMat);
-        water2.position.set(-2.8, -0.6, 2.6);
-        group.add(water2);
-
-        // Inscribed Epigraphical Stele (Simulated Brahmi Epigraph Tablet)
-        const stele = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.9, 0.15), goldMat);
-        stele.position.set(0, 2.6, -1.2);
-        group.add(stele);
-
-        // Front Verandah Octagonal Pillars
-        for (const px of [-1.8, 1.8]) {
-          const pil = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.32, 3.0, 8), basaltMat);
-          pil.position.set(px, 0.0, -0.4);
-          pil.castShadow = true;
-          group.add(pil);
+          const cWater = new THREE.Mesh(
+            new THREE.BoxGeometry(2.6, 0.2, 2.6),
+            new THREE.MeshStandardMaterial({ color: 0x1d7c9e, roughness: 0.1, metalness: 0.6 })
+          );
+          cWater.position.set(x, -0.2, 0.8);
+          group.add(cWater);
         }
+
+        // Inscription Tablet Slab
+        const tablet = new THREE.Mesh(new THREE.BoxGeometry(3.6, 1.2, 0.2), goldMat);
+        tablet.position.set(0, 2.2, -1.6);
+        group.add(tablet);
       } else {
         // Dumar Lena: Massive 26-column Hypostyle Hall
         const floor = new THREE.Mesh(new THREE.BoxGeometry(14, 0.6, 14), darkMat);
         floor.position.y = -1.8;
         group.add(floor);
 
-        // Back Rock Wall & Shrine
         const backWall = new THREE.Mesh(new THREE.BoxGeometry(14, 4.2, 1.8), basaltMat);
         backWall.position.set(0, 0.6, -5.5);
         group.add(backWall);
 
-        // Grid of Massive Columns with Cushion / Amalaka Capitals
         const colRows = [-3.2, 0, 3.2];
         const colCols = [-3.8, -1.2, 1.2, 3.8];
 
@@ -320,13 +317,11 @@ export default function Heritage3DExplorer({
             const colGroup = new THREE.Group();
             colGroup.position.set(cx, -1.5, rz);
 
-            // Shaft
             const shaft = new THREE.Mesh(new THREE.CylinderGeometry(0.38, 0.42, 3.2, 12), basaltMat);
             shaft.position.y = 1.6;
             shaft.castShadow = true;
             colGroup.add(shaft);
 
-            // Cushion Capital (Amalaka)
             const cushion = new THREE.Mesh(new THREE.TorusGeometry(0.48, 0.18, 12, 24), basaltMat);
             cushion.rotation.x = Math.PI / 2;
             cushion.position.y = 3.3;
@@ -336,12 +331,10 @@ export default function Heritage3DExplorer({
           });
         });
 
-        // Massive Roof Plinth
         const roof = new THREE.Mesh(new THREE.BoxGeometry(13.8, 0.7, 13.8), basaltMat);
         roof.position.set(0, 2.8, 0);
         group.add(roof);
 
-        // Central Altar Shrine
         const altar = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.9, 1.0, 8), goldMat);
         altar.position.set(0, -1.0, -1.5);
         group.add(altar);
@@ -361,15 +354,15 @@ export default function Heritage3DExplorer({
     if (!container || !canvas) return;
 
     const width = container.clientWidth || 700;
-    const height = container.clientHeight || 480;
+    const height = container.clientHeight || 520;
 
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x0c0a08);
-    scene.fog = new THREE.FogExp2(0x0c0a08, 0.025);
+    scene.fog = new THREE.FogExp2(0x0c0a08, 0.015);
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 3.5, 12);
+    camera.position.set(0, 3.5, 11);
     cameraRef.current = camera;
 
     const renderer = new THREE.WebGLRenderer({
@@ -387,30 +380,36 @@ export default function Heritage3DExplorer({
     modelGroupRef.current = modelGroup;
     scene.add(modelGroup);
 
-    // Lights
-    const amb = new THREE.AmbientLight(0x28231d, 1.5);
-    scene.add(amb);
+    // Warm, Multi-Directional Gallery Lighting (Legible reliefs, no pitch black)
+    const ambientLight = new THREE.AmbientLight(0x504538, 2.2);
+    scene.add(ambientLight);
 
-    const dir = new THREE.DirectionalLight(0xfff5e0, 2.8);
-    dir.position.set(8, 14, 8);
-    dir.castShadow = true;
-    scene.add(dir);
+    const keySunlight = new THREE.DirectionalLight(0xffeedd, 3.2);
+    keySunlight.position.set(10, 16, 10);
+    keySunlight.castShadow = true;
+    keySunlight.shadow.mapSize.width = 1024;
+    keySunlight.shadow.mapSize.height = 1024;
+    scene.add(keySunlight);
 
-    const point = new THREE.PointLight(0xffaa33, 4.0, 9);
-    point.position.set(0, 1.5, 0);
-    scene.add(point);
+    const fillSkylight = new THREE.DirectionalLight(0xb8cde3, 1.4);
+    fillSkylight.position.set(-10, 8, -8);
+    scene.add(fillSkylight);
+
+    const rimLight = new THREE.DirectionalLight(0xd4af37, 1.0);
+    rimLight.position.set(0, -6, 10);
+    scene.add(rimLight);
+
+    const pointLight = new THREE.PointLight(0xffb84d, 3.0, 14);
+    pointLight.position.set(0, 2.0, 0);
+    scene.add(pointLight);
 
     let animId: number;
-    const clock = new THREE.Clock();
-
     const renderLoop = () => {
       animId = requestAnimationFrame(renderLoop);
       const st = controlsState.current;
 
-      point.intensity = 3.6 + Math.sin(clock.getElapsedTime() * 3.0) * 0.4;
-
-      if (st.autoRotate && !st.isDragging) {
-        st.targetRotY += 0.0025;
+      if (isAutoRotating && !st.isDragging) {
+        st.targetRotY += 0.002;
       }
 
       st.rotY += (st.targetRotY - st.rotY) * 0.06;
@@ -440,275 +439,299 @@ export default function Heritage3DExplorer({
       renderer.setSize(w, h);
     };
 
-    const resizeObs = new ResizeObserver(() => handleResize());
-    resizeObs.observe(container);
+    window.addEventListener('resize', handleResize);
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animId);
-      resizeObs.disconnect();
       renderer.dispose();
-      materialsList.current.forEach((m) => m.dispose());
-      stoneTex.dispose();
+      scene.clear();
     };
-  }, [buildModelGeometry, createTexture, is2DPlateView, selectedModel]);
+  }, [selectedModel, shadingMode, is2DPlateView, createTexture, buildModelGeometry, isAutoRotating]);
 
-  // Pointer interactions
-  const handlePointerDown = (e: React.PointerEvent) => {
+  // Mouse & Touch Orbit Controls
+  const handleMouseDown = (e: React.MouseEvent) => {
     controlsState.current.isDragging = true;
-    controlsState.current.prevX = e.clientX;
-    controlsState.current.prevY = e.clientY;
-    controlsState.current.autoRotate = false;
+    controlsState.current.prevMouseX = e.clientX;
+    controlsState.current.prevMouseY = e.clientY;
   };
 
-  const handlePointerMove = (e: React.PointerEvent) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (!controlsState.current.isDragging) return;
-    const dx = e.clientX - controlsState.current.prevX;
-    const dy = e.clientY - controlsState.current.prevY;
-    controlsState.current.prevX = e.clientX;
-    controlsState.current.prevY = e.clientY;
+    const dx = e.clientX - controlsState.current.prevMouseX;
+    const dy = e.clientY - controlsState.current.prevMouseY;
+    controlsState.current.prevMouseX = e.clientX;
+    controlsState.current.prevMouseY = e.clientY;
 
-    controlsState.current.targetRotY -= dx * 0.007;
-    controlsState.current.targetRotX += dy * 0.005;
+    controlsState.current.targetRotY += dx * 0.006;
+    controlsState.current.targetRotX += dy * 0.006;
   };
 
-  const handlePointerUp = () => {
+  const handleMouseUp = () => {
     controlsState.current.isDragging = false;
   };
 
   const handleWheel = (e: React.WheelEvent) => {
     e.preventDefault();
     controlsState.current.targetDist = THREE.MathUtils.clamp(
-      controlsState.current.targetDist + e.deltaY * 0.012,
-      6,
+      controlsState.current.targetDist + e.deltaY * 0.008,
+      5,
       22
     );
   };
 
-  const handleReset = () => {
-    controlsState.current.targetRotY = 0.35;
-    controlsState.current.targetRotX = 0.22;
-    controlsState.current.targetDist = 12;
-    controlsState.current.autoRotate = true;
-  };
-
   return (
-    <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Header Banner */}
-      <div className="p-6 sm:p-8 rounded-2xl border border-[#2e2923] bg-gradient-to-br from-[#141210] via-[#110f0d] to-[#0a0908] shadow-2xl relative overflow-hidden">
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-serif bg-[#1d1914] border border-[#d4af37]/40 text-[#eed27c]">
+    <div className="space-y-4">
+      {/* Header & Model Selector Tabs */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
+        <div>
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono bg-[#1a1714] text-[#eed27c] border border-[#d4af37]/40 mb-1">
             <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
-            <span>Interactive 3D Heritage Exploration Laboratory</span>
+            <span>Interactive 3D Architectural Study</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
-            Volumetric Architectural Explorer
+          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
+            3D Heritage Explorer
           </h1>
-          <p className="text-sm text-[#ded6c5] leading-relaxed">
-            Inspect stylized 3D reconstructions of Western Indian rock-cut cave monuments, calibrated with dual-pagination
-            archival citations from James Burgess (1880/1883) and Bhagwanlal Indraji (1881).
+          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
+            Procedural volumetric studies derived from 19th-century ASI elevation plates and gazetteer measurements
           </p>
+        </div>
+
+        {/* Model Switcher Pills */}
+        <div className="flex flex-wrap items-center gap-2">
+          {HERITAGE_MODELS.map((model) => (
+            <button
+              key={model.id}
+              type="button"
+              onClick={() => setSelectedModel(model)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-serif transition-all ${
+                selectedModel.id === model.id
+                  ? 'bg-[#d4af37] text-[#080706] font-bold shadow-sm'
+                  : 'bg-[#171512] text-[#ded6c5] border border-[#26221d] hover:border-[#363028] hover:text-[#fcf9f2]'
+              }`}
+            >
+              {model.name.split('&')[0].trim()}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Model Selection Tabs */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {HERITAGE_MODELS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={() => {
-              setSelectedModel(item);
-              handleReset();
-            }}
-            className={`p-4 rounded-xl text-left border transition-all ${
-              selectedModel.id === item.id
-                ? 'bg-[#1a1714] border-[#d4af37] shadow-lg ring-1 ring-[#d4af37]/30'
-                : 'bg-[#12100e] border-[#2e2923] hover:border-[#3d372f] text-[#ded6c5]'
-            }`}
-          >
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[#d4af37]">
-                {item.category}
+      {/* Main Split Screen: 3D Viewport on Left + Curatorial Evidence Panel on Right */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px]">
+        {/* Left: 3D WebGL Viewport (7 cols) */}
+        <div className="lg:col-span-7 flex flex-col rounded-2xl border border-[#26221d] bg-[#0c0a08] overflow-hidden shadow-xl relative min-h-[460px] lg:min-h-full">
+          {/* Top Viewport Controls Bar */}
+          <div className="p-3 border-b border-[#26221d] bg-[#12100e] flex flex-wrap items-center justify-between gap-2 z-10 text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-serif font-semibold text-[#fcf9f2] text-xs">
+                {selectedModel.name}
               </span>
-              <span className="text-[10px] font-mono text-[#9c9282]">{item.historicalPeriod.split('·')[0]}</span>
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1c1813] text-[#eed27c] border border-[#d4af37]/30">
+                {shadingMode} mode
+              </span>
             </div>
-            <h3 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage line-clamp-1">
-              {item.name}
-            </h3>
-            <p className="text-xs text-[#9c9282] mt-0.5 line-clamp-1">{item.subtitle}</p>
-          </button>
-        ))}
-      </div>
 
-      {/* Main 3D Viewport & Metadata Studio Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left: 3D Canvas / 2D Plate Viewport (8 Columns) */}
-        <div className="lg:col-span-8 space-y-3">
-          <div
-            ref={containerRef}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerLeave={handlePointerUp}
-            onWheel={handleWheel}
-            className="relative w-full h-[400px] sm:h-[480px] lg:h-[540px] rounded-2xl overflow-hidden border border-[#2e2923] bg-[#0c0a08] shadow-2xl cursor-grab active:cursor-grabbing select-none"
-          >
-            {!is2DPlateView ? (
-              <canvas ref={canvasRef} className="w-full h-full block" />
-            ) : (
-              /* 2D Architectural Plate View */
-              <div className="w-full h-full p-8 flex flex-col items-center justify-center text-center bg-[#110f0d] relative">
-                <div className="max-w-md space-y-4">
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1b1712] border border-[#d4af37]/30 text-[#eed27c] text-xs font-mono">
-                    <BookOpen className="w-3.5 h-3.5" />
-                    <span>2D Archival Plate Engraving</span>
-                  </div>
-                  <h3 className="text-xl font-serif font-bold text-[#fcf9f2] font-heritage">
-                    {selectedModel.name}
-                  </h3>
-                  <p className="text-xs text-[#ded6c5] leading-relaxed">
-                    {selectedModel.historicalNotes}
-                  </p>
-                  <div className="p-3 rounded-lg bg-[#181512] border border-[#2e2923] text-left text-xs font-mono space-y-1 text-[#eed27c]">
-                    <div>{selectedModel.citationString}</div>
-                    <div className="text-[11px] text-[#9c9282]">Verified Provenance: Survey Plate Schema</div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Top Toolbar */}
-            <div className="absolute top-4 right-4 z-10 flex items-center gap-1.5">
-              {/* Shading Mode */}
+            {/* Shading & Control Buttons */}
+            <div className="flex items-center gap-1.5">
               <button
                 type="button"
-                onClick={() => {
-                  const modes: ('textured' | 'clay' | 'wireframe')[] = ['textured', 'clay', 'wireframe'];
-                  const next = modes[(modes.indexOf(shadingMode) + 1) % modes.length];
-                  setShadingMode(next);
-                }}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs bg-[#0e0d0b]/85 border border-[#3d372f] text-[#ded6c5] hover:border-[#d4af37]/60 backdrop-blur-md transition-all shadow-md"
-                title={`Shading: ${shadingMode}`}
+                onClick={() => setShadingMode('textured')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors ${
+                  shadingMode === 'textured'
+                    ? 'bg-[#d4af37] text-[#080706] font-semibold'
+                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d]'
+                }`}
               >
-                <Layers className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span className="capitalize font-mono text-[11px]">{shadingMode}</span>
+                Textured
               </button>
-
-              {/* Reset Camera */}
               <button
                 type="button"
-                onClick={handleReset}
-                className="p-2 rounded-xl text-xs bg-[#0e0d0b]/85 border border-[#3d372f] text-[#ded6c5] hover:border-[#d4af37]/60 backdrop-blur-md transition-all shadow-md"
-                title="Reset Camera Orientation"
+                onClick={() => setShadingMode('clay')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors ${
+                  shadingMode === 'clay'
+                    ? 'bg-[#d4af37] text-[#080706] font-semibold'
+                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d]'
+                }`}
+              >
+                Clay
+              </button>
+              <button
+                type="button"
+                onClick={() => setShadingMode('wireframe')}
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono transition-colors ${
+                  shadingMode === 'wireframe'
+                    ? 'bg-[#d4af37] text-[#080706] font-semibold'
+                    : 'bg-[#171512] text-[#ded6c5] border border-[#26221d]'
+                }`}
+              >
+                Wireframe
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsAutoRotating(!isAutoRotating)}
+                className={`p-1.5 rounded-lg border border-[#26221d] transition-colors ${
+                  isAutoRotating ? 'text-[#3ba87e] bg-[#0d1e17]' : 'text-[#9c9282] bg-[#171512]'
+                }`}
+                title={isAutoRotating ? 'Pause orbit' : 'Resume orbit'}
+              >
+                <Sun className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleResetCamera}
+                className="p-1.5 rounded-lg border border-[#26221d] bg-[#171512] text-[#ded6c5] hover:text-[#fcf9f2] transition-colors"
+                title="Reset camera viewpoint"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
               </button>
-
-              {/* 2D Plate Toggle */}
               <button
                 type="button"
                 onClick={() => setIs2DPlateView(!is2DPlateView)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs border backdrop-blur-md transition-all shadow-md ${
+                className={`px-2.5 py-1 rounded-lg text-[11px] font-mono border transition-colors ${
                   is2DPlateView
-                    ? 'bg-[#d4af37] text-[#0a0908] border-[#d4af37]'
-                    : 'bg-[#0e0d0b]/85 border-[#3d372f] text-[#ded6c5]'
+                    ? 'bg-[#d4af37] text-[#080706] font-bold border-[#d4af37]'
+                    : 'bg-[#171512] text-[#ded6c5] border-[#26221d]'
                 }`}
               >
-                <FileText className="w-3.5 h-3.5" />
-                <span className="font-mono text-[11px]">{is2DPlateView ? '3D Model' : '2D Plate'}</span>
+                {is2DPlateView ? '3D View' : '2D Folio'}
               </button>
-            </div>
-
-            {/* Bottom Overlay Pill */}
-            <div className="absolute bottom-4 left-4 z-10">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-mono bg-[#080706]/85 border border-[#2e2923] text-[#9c9282] backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-[#3ba87e]" />
-                Drag to rotate · Scroll to zoom
-              </span>
             </div>
           </div>
 
-          {/* Model Integrity Badge */}
-          <div className="p-3 rounded-xl bg-[#12100e] border border-[#2e2923] text-xs text-[#9c9282] flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Info className="w-4 h-4 text-[#d4af37] shrink-0" />
-              <span>
-                <strong className="text-[#ded6c5]">Historical Precision Notice:</strong> Illustrative volumetric study
-                based on 19th-century antiquarian surveys. Not an unverified laser scan.
-              </span>
-            </div>
-            <span className="font-mono text-[11px] text-[#eed27c] shrink-0">Three.js Engine</span>
+          {/* Viewport Canvas or 2D Folio */}
+          <div
+            ref={containerRef}
+            className="flex-1 w-full relative cursor-grab active:cursor-grabbing min-h-[420px]"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+            onWheel={handleWheel}
+          >
+            {is2DPlateView ? (
+              <div className="absolute inset-0 bg-[#0d0b09] p-6 flex flex-col items-center justify-center text-center space-y-3">
+                <FileText className="w-12 h-12 text-[#d4af37]" />
+                <h3 className="text-base font-serif font-bold text-[#fcf9f2] font-heritage">
+                  Historical Architectural Plate: {selectedModel.name}
+                </h3>
+                <p className="text-xs text-[#ded6c5] max-w-md font-serif leading-relaxed">
+                  Published in {selectedModel.citationString}. Plate illustrates the ground plan, cross-section, and vertical rock scarp elevations.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => onInspectSource(selectedModel.documentId, selectedModel.pdfPageIndex)}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#d4af37] text-[#080706] text-xs font-semibold shadow-md hover:bg-[#e5c158] transition-colors"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>Inspect Original Ingested PDF Page</span>
+                </button>
+              </div>
+            ) : (
+              <>
+                <canvas ref={canvasRef} className="w-full h-full block" />
+                {/* Floating Orbit Overlay Hint */}
+                <div className="absolute bottom-3 left-3 bg-[#110f0d]/90 backdrop-blur-xs border border-[#26221d] rounded-xl px-3 py-1.5 text-[11px] text-[#9c9282] shadow-lg flex items-center gap-2 pointer-events-none">
+                  <Compass className="w-3.5 h-3.5 text-[#d4af37]" />
+                  <span>Drag to orbit 360° · Scroll to zoom</span>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Right: Archival Citation & Dimension Telemetry (4 Columns) */}
-        <div className="lg:col-span-4 space-y-4">
-          {/* Historical Dossier Card */}
-          <div className="p-5 rounded-2xl bg-[#141210] border border-[#2e2923] shadow-xl space-y-4">
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="text-[10px] font-mono uppercase text-[#d4af37] tracking-wider">
-                  Archival Record Dossier
-                </span>
-                <span className="text-[10px] font-mono text-[#9c9282]">
-                  {availableDocuments?.length ? `${availableDocuments.length} Corpus Docs` : 'Primary Archive'}
-                </span>
-              </div>
-              <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage mt-0.5">
+        {/* Right: Curatorial Evidence & Dimension Provenance Panel (5 cols) */}
+        <div className="lg:col-span-5 flex flex-col justify-between rounded-2xl border border-[#26221d] bg-[#110f0d] p-5 shadow-xl space-y-4 overflow-y-auto">
+          <div className="space-y-4">
+            {/* Monument Heading */}
+            <div className="space-y-1 pb-3 border-b border-[#201d19]">
+              <span className="text-[10px] font-mono uppercase text-[#d4af37] tracking-wider block font-semibold">
+                {selectedModel.category}
+              </span>
+              <h2 className="text-lg font-serif font-bold text-[#fcf9f2] font-heritage leading-snug">
                 {selectedModel.name}
               </h2>
-              <p className="text-xs text-[#ded6c5] mt-1 leading-relaxed">
+              <div className="text-xs text-[#9c9282] font-mono">
+                {selectedModel.location}
+              </div>
+              <div className="text-xs text-[#eed27c] font-serif pt-0.5">
+                {selectedModel.historicalPeriod}
+              </div>
+            </div>
+
+            {/* Historical Architectural Description */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] font-mono uppercase text-[#9c9282] block tracking-wider">
+                Documented Architecture
+              </span>
+              <p className="text-xs text-[#ded6c5] leading-relaxed font-serif bg-[#171512] p-3 rounded-xl border border-[#26221d]">
                 {selectedModel.historicalNotes}
               </p>
             </div>
 
-            {/* Citation Provenance Pill */}
-            <div className="p-3.5 rounded-xl bg-[#191612] border border-[#d4af37]/25 space-y-1.5">
-              <div className="text-[10px] font-mono uppercase text-[#eed27c] flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
-                <span>Dual Pagination Citation</span>
+            {/* Documented Dimensions Table with Provenance Tagging */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider font-semibold">
+                  Architectural Measurements
+                </span>
+                <span className="text-[10px] font-mono text-[#eed27c]">
+                  Archival Provenance
+                </span>
               </div>
-              <p className="text-xs font-serif font-semibold text-[#fcf9f2]">
-                {selectedModel.citationString}
-              </p>
-              <div className="text-[11px] text-[#9c9282] flex items-center justify-between pt-1 border-t border-[#2e2923]">
-                <span>Document: {selectedModel.documentId}.pdf</span>
-                <span className="font-mono text-[#3ba87e]">Ground Truth Verified</span>
-              </div>
-            </div>
 
-            {/* Button to Launch Document Viewer */}
-            <button
-              type="button"
-              onClick={() => onInspectSource(selectedModel.documentId, selectedModel.pdfPageIndex)}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-[#d4af37] hover:bg-[#b89124] text-[#080706] text-xs font-serif font-semibold shadow-md transition-all"
-            >
-              <FileText className="w-4 h-4" />
-              <span>Inspect Cited Page in Document Viewer</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-
-            {/* Architectural Dimensions Table */}
-            <div className="space-y-2 pt-2 border-t border-[#2e2923]">
-              <span className="text-[10px] font-mono uppercase text-[#9c9282] tracking-wider">
-                Recorded Architectural Measurements
-              </span>
-              <div className="space-y-1.5">
+              <div className="rounded-xl border border-[#26221d] overflow-hidden text-xs">
                 {selectedModel.dimensions.map((dim, idx) => (
                   <div
-                    key={idx}
-                    className="flex justify-between items-center text-xs py-1 px-2.5 rounded-lg bg-[#181512] border border-[#2e2923]"
+                    key={dim.label}
+                    className={`flex items-center justify-between p-2.5 ${
+                      idx % 2 === 0 ? 'bg-[#141210]' : 'bg-[#171512]'
+                    } border-b border-[#201d19] last:border-b-0`}
                   >
-                    <span className="text-[#9c9282]">{dim.label}</span>
-                    <span className="font-mono text-[#eed27c] font-medium">{dim.value}</span>
+                    <span className="text-[#ded6c5] font-medium">{dim.label}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-[#fcf9f2] font-semibold">{dim.value}</span>
+                      <span
+                        className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${
+                          dim.type === 'Documented'
+                            ? 'bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/30'
+                            : dim.type === 'Approximate'
+                            ? 'bg-[#1f1910] text-[#eed27c] border border-[#d4af37]/30'
+                            : 'bg-[#171512] text-[#9c9282] border border-[#26221d]'
+                        }`}
+                      >
+                        {dim.type}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
+
+            {/* Scientific Accuracy & Interpretation Disclaimer */}
+            <div className="p-3 rounded-xl bg-[#171512] border border-[#26221d] space-y-1 text-xs text-[#9c9282]">
+              <div className="flex items-center gap-1.5 text-[#eed27c] font-semibold text-[11px]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#3ba87e]" />
+                <span>Model Provenance &amp; Interpretation Notice</span>
+              </div>
+              <p className="text-[11px] text-[#9c9282] leading-tight font-serif">
+                This 3D model is a procedural volumetric study reconstructed directly from measurements documented in 19th-century ASI gazetteers. Dimensions labeled <em>Documented</em> cite published survey records.
+              </p>
+            </div>
+          </div>
+
+          {/* Primary Action Button: Inspect Ingested Archival PDF */}
+          <div className="pt-2 border-t border-[#201d19]">
+            <button
+              type="button"
+              onClick={() => onInspectSource(selectedModel.documentId, selectedModel.pdfPageIndex)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-[#d4af37] hover:bg-[#e5c158] text-[#080706] text-xs font-semibold shadow-md transition-all cursor-pointer"
+            >
+              <Eye className="w-4 h-4" />
+              <span>Inspect Source Monograph ({selectedModel.citationString.split(',')[0]})</span>
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

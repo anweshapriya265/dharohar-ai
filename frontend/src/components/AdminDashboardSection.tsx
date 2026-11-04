@@ -72,16 +72,16 @@ export default function AdminDashboardSection() {
   return (
     <div className="space-y-4">
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-xl">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#fbeee9] text-[#9c381e] mb-1">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#241712] text-[#e06d53] border border-[#e06d53]/30 mb-1">
             <Activity className="w-3.5 h-3.5" />
             <span>Institutional Governance</span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-serif font-bold text-stone-900 font-heritage tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-serif font-bold text-[#fcf9f2] font-heritage tracking-tight">
             Platform Administration &amp; Audit Trail
           </h1>
-          <p className="text-xs sm:text-sm text-stone-600 mt-0.5">
+          <p className="text-xs sm:text-sm text-[#9c9282] mt-0.5">
             Immutable SQLite provenance log, real-time catalog statistics, and idempotent database seeding
           </p>
         </div>
@@ -90,7 +90,7 @@ export default function AdminDashboardSection() {
           <button
             disabled={seeding}
             onClick={handleSeed}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#9c381e] hover:bg-[#832e17] text-[#f7f5f0] text-xs font-semibold shadow-2xs transition-colors disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#e06d53] hover:bg-[#c9593f] text-[#080706] text-xs font-serif font-semibold shadow-md transition-colors disabled:opacity-50 cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>{seeding ? 'Seeding...' : 'Seed IITGN Landmarks'}</span>
@@ -98,7 +98,7 @@ export default function AdminDashboardSection() {
 
           <button
             onClick={loadMetrics}
-            className="p-2 rounded-xl border border-[#e5dfd5] hover:bg-stone-50 text-stone-600 transition-colors shadow-2xs"
+            className="p-2 rounded-xl border border-[#26221d] bg-[#161411] hover:bg-[#201c18] text-[#9c9282] hover:text-[#fcf9f2] transition-colors shadow-sm cursor-pointer"
             title="Refresh metrics"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
@@ -107,71 +107,71 @@ export default function AdminDashboardSection() {
       </div>
 
       {seedNotice && (
-        <div className="p-3 rounded-xl bg-[#edf5f1] border border-[#c3dcd0] text-xs text-[#2d5e4a] font-medium">
+        <div className="p-3 rounded-xl bg-[#0d1e17] border border-[#3ba87e]/40 text-xs text-[#3ba87e] font-serif font-medium">
           {seedNotice}
         </div>
       )}
 
       {/* KPI Stats Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-1">
-          <div className="flex items-center justify-between text-stone-400">
-            <span className="text-[11px] font-semibold uppercase tracking-wider">Total Records</span>
-            <Database className="w-4 h-4 text-[#9c381e]" />
+        <div className="p-4 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-lg space-y-1">
+          <div className="flex items-center justify-between text-[#8e8577]">
+            <span className="text-[11px] font-semibold uppercase tracking-wider font-mono">Total Records</span>
+            <Database className="w-4 h-4 text-[#e06d53]" />
           </div>
-          <div className="text-2xl font-bold font-serif text-stone-900 font-heritage">
+          <div className="text-2xl font-bold font-serif text-[#fcf9f2] font-heritage">
             {data ? data.total_records : '...'}
           </div>
-          <span className="text-[11px] text-stone-500">Ingested corpus archives</span>
+          <span className="text-[11px] text-[#8e8577]">Ingested corpus archives</span>
         </div>
 
-        <div className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-1">
-          <div className="flex items-center justify-between text-stone-400">
-            <span className="text-[11px] font-semibold uppercase tracking-wider">Approved</span>
-            <CheckCircle2 className="w-4 h-4 text-[#2d5e4a]" />
+        <div className="p-4 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-lg space-y-1">
+          <div className="flex items-center justify-between text-[#8e8577]">
+            <span className="text-[11px] font-semibold uppercase tracking-wider font-mono">Approved</span>
+            <CheckCircle2 className="w-4 h-4 text-[#3ba87e]" />
           </div>
-          <div className="text-2xl font-bold font-serif text-[#2d5e4a] font-heritage">
+          <div className="text-2xl font-bold font-serif text-[#3ba87e] font-heritage">
             {data ? data.approved_records : '...'}
           </div>
-          <span className="text-[11px] text-stone-500">Human curator verified</span>
+          <span className="text-[11px] text-[#8e8577]">Human curator verified</span>
         </div>
 
-        <div className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-1">
-          <div className="flex items-center justify-between text-stone-400">
-            <span className="text-[11px] font-semibold uppercase tracking-wider">In Review</span>
-            <Clock className="w-4 h-4 text-[#b67322]" />
+        <div className="p-4 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-lg space-y-1">
+          <div className="flex items-center justify-between text-[#8e8577]">
+            <span className="text-[11px] font-semibold uppercase tracking-wider font-mono">In Review</span>
+            <Clock className="w-4 h-4 text-[#eed27c]" />
           </div>
-          <div className="text-2xl font-bold font-serif text-[#b67322] font-heritage">
+          <div className="text-2xl font-bold font-serif text-[#eed27c] font-heritage">
             {data ? data.pending_review : '...'}
           </div>
-          <span className="text-[11px] text-stone-500">Awaiting expert review</span>
+          <span className="text-[11px] text-[#8e8577]">Awaiting expert review</span>
         </div>
 
-        <div className="p-4 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-1">
-          <div className="flex items-center justify-between text-stone-400">
-            <span className="text-[11px] font-semibold uppercase tracking-wider">Geotagged</span>
-            <MapPin className="w-4 h-4 text-[#9c381e]" />
+        <div className="p-4 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-lg space-y-1">
+          <div className="flex items-center justify-between text-[#8e8577]">
+            <span className="text-[11px] font-semibold uppercase tracking-wider font-mono">Geotagged</span>
+            <MapPin className="w-4 h-4 text-[#e06d53]" />
           </div>
-          <div className="text-2xl font-bold font-serif text-stone-900 font-heritage">
+          <div className="text-2xl font-bold font-serif text-[#fcf9f2] font-heritage">
             {data ? data.geotagged_sites : '...'}
           </div>
-          <span className="text-[11px] text-stone-500">Rendered on Leaflet map</span>
+          <span className="text-[11px] text-[#8e8577]">Rendered on Leaflet map</span>
         </div>
       </div>
 
       {/* Immutable Audit Log Table */}
-      <div className="p-5 rounded-2xl border border-[#e5dfd5] bg-white shadow-heritage space-y-3">
-        <div className="flex items-center justify-between border-b border-stone-100 pb-2">
+      <div className="p-5 rounded-2xl border border-[#26221d] bg-[#110f0d] shadow-lg space-y-3">
+        <div className="flex items-center justify-between border-b border-[#26221d] pb-3">
           <div>
-            <h3 className="text-sm font-serif font-bold text-stone-900 font-heritage flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-[#9c381e]" />
+            <h3 className="text-sm font-serif font-bold text-[#fcf9f2] font-heritage flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-[#e06d53]" />
               <span>Immutable Provenance &amp; Activity Audit Log</span>
             </h3>
-            <p className="text-xs text-stone-500 mt-0.5">
+            <p className="text-xs text-[#8e8577] mt-0.5">
               Tracks every ingestion, review action, model suggestion, and curation timestamp
             </p>
           </div>
-          <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-stone-100 text-stone-600">
+          <span className="font-mono text-[10px] px-2.5 py-0.5 rounded bg-[#161411] text-[#ded6c5] border border-[#26221d]">
             10 Most Recent Events
           </span>
         </div>
@@ -179,53 +179,53 @@ export default function AdminDashboardSection() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-stone-100 text-[10px] font-mono text-stone-400 uppercase tracking-wider">
-                <th className="py-2 pr-3">Timestamp</th>
-                <th className="py-2 px-3">Actor &amp; Role</th>
-                <th className="py-2 px-3">Action Type</th>
-                <th className="py-2 px-3">Entity Ref</th>
-                <th className="py-2 pl-3">Details / Decision</th>
+              <tr className="border-b border-[#26221d] text-[10px] font-mono text-[#8e8577] uppercase tracking-wider">
+                <th className="py-2.5 pr-3">Timestamp</th>
+                <th className="py-2.5 px-3">Actor &amp; Role</th>
+                <th className="py-2.5 px-3">Action Type</th>
+                <th className="py-2.5 px-3">Entity Ref</th>
+                <th className="py-2.5 pl-3">Details / Decision</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100">
+            <tbody className="divide-y divide-[#26221d]">
               {data && data.recent_audit_logs && data.recent_audit_logs.length > 0 ? (
                 data.recent_audit_logs.map((log) => {
                   const isApprove = log.action.includes('APPROVED');
                   const isIngest = log.action.includes('INGEST');
 
                   return (
-                    <tr key={log.id} className="hover:bg-[#f7f5f0]/50 transition-colors">
-                      <td className="py-2.5 pr-3 font-mono text-[11px] text-stone-400 whitespace-nowrap">
+                    <tr key={log.id} className="hover:bg-[#181512]/60 transition-colors">
+                      <td className="py-3 pr-3 font-mono text-[11px] text-[#8e8577] whitespace-nowrap">
                         {new Date(log.created_at).toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit',
                           second: '2-digit',
                         })}
                       </td>
-                      <td className="py-2.5 px-3">
+                      <td className="py-3 px-3">
                         <div className="flex items-center gap-1.5">
-                          <UserCheck className="w-3.5 h-3.5 text-stone-400" />
-                          <span className="font-semibold text-stone-800">{log.actor_name}</span>
-                          <span className="text-[10px] text-stone-400">({log.actor_role})</span>
+                          <UserCheck className="w-3.5 h-3.5 text-[#8e8577]" />
+                          <span className="font-semibold text-[#fcf9f2] font-serif">{log.actor_name}</span>
+                          <span className="text-[10px] font-mono text-[#8e8577]">({log.actor_role})</span>
                         </div>
                       </td>
-                      <td className="py-2.5 px-3">
+                      <td className="py-3 px-3">
                         <span
                           className={`font-mono text-[10px] px-2 py-0.5 rounded-full font-semibold ${
                             isApprove
-                              ? 'bg-[#edf5f1] text-[#2d5e4a] border border-[#c3dcd0]'
+                              ? 'bg-[#0d1e17] text-[#3ba87e] border border-[#3ba87e]/40'
                               : isIngest
-                              ? 'bg-[#fbeee9] text-[#9c381e] border border-[#f0d4ca]'
-                              : 'bg-stone-100 text-stone-600'
+                              ? 'bg-[#241712] text-[#e06d53] border border-[#e06d53]/40'
+                              : 'bg-[#181512] text-[#ded6c5] border border-[#26221d]'
                           }`}
                         >
                           {log.action}
                         </span>
                       </td>
-                      <td className="py-2.5 px-3 font-mono text-[11px] text-stone-500">
+                      <td className="py-3 px-3 font-mono text-[11px] text-[#8e8577]">
                         {log.entity_id ? log.entity_id.slice(0, 12) + '...' : '—'}
                       </td>
-                      <td className="py-2.5 pl-3 text-stone-700 font-serif max-w-xs truncate">
+                      <td className="py-3 pl-3 text-[#ded6c5] font-serif max-w-xs truncate">
                         {log.details || '—'}
                       </td>
                     </tr>
@@ -233,7 +233,7 @@ export default function AdminDashboardSection() {
                 })
               ) : (
                 <tr>
-                  <td colSpan={5} className="py-6 text-center text-stone-400">
+                  <td colSpan={5} className="py-6 text-center text-[#8e8577]">
                     No recent audit events logged yet.
                   </td>
                 </tr>
