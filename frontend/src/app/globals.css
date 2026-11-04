@@ -80,6 +80,12 @@ body {
   overflow-x: hidden;
 }
 
+/* Fullscreen Environment Harmonization (Prevent Browser Black Bars) */
+:fullscreen,
+::backdrop {
+  background-color: var(--bg-parchment) !important;
+}
+
 /* Explicit Font Family Utilities for Consistent Multi-OS Rendering */
 .font-sans {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;

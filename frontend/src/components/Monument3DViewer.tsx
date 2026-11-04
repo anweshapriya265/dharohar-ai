@@ -124,7 +124,16 @@ export default function Monument3DViewer() {
 
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
+      const active = !!document.fullscreenElement;
+      setIsFullscreen(active);
+      setTimeout(() => {
+        if (!mountRef.current || !rendererRef.current || !cameraRef.current) return;
+        const w = mountRef.current.clientWidth;
+        const h = mountRef.current.clientHeight;
+        cameraRef.current.aspect = w / h;
+        cameraRef.current.updateProjectionMatrix();
+        rendererRef.current.setSize(w, h);
+      }, 120);
     };
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
@@ -1074,7 +1083,16 @@ export default function Monument3DViewer() {
   const activeHotspotData = hotspots.find((h) => h.id === activeHotspot) || hotspots[0];
 
   return (
-    <div ref={containerRef} className="space-y-4 max-w-full">
+    <div
+      ref={containerRef}
+      className={`max-w-full transition-all duration-200 ${
+        isFullscreen
+          ? lightingMode === 'twilight'
+            ? 'fixed inset-0 z-50 bg-[#1A1614] text-[#EFE8DC] pt-14 pb-5 px-6 h-screen w-screen overflow-hidden flex flex-col justify-between'
+            : 'fixed inset-0 z-50 bg-[#F6F1E7] text-[#393331] pt-14 pb-5 px-6 h-screen w-screen overflow-hidden flex flex-col justify-between'
+          : 'space-y-4'
+      }`}
+    >
       {/* 1. Scholarly Header & Stratigraphic Context */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-2 border-b border-[#DED3C2]">
         <div>
@@ -1092,23 +1110,48 @@ export default function Monument3DViewer() {
           </p>
         </div>
 
-        {/* Stratigraphy Badges */}
+        {/* Stratigraphy Badges & Fullscreen Controls */}
         <div className="hidden sm:flex items-center gap-2">
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] text-xs font-sans text-[#393331] shadow-2xs">
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-sans shadow-2xs ${
+            isFullscreen && lightingMode === 'twilight'
+              ? 'border-[#4A3D36] bg-[#221D1A] text-[#EFE8DC]'
+              : 'border-[#DED3C2] bg-[#FFFCF5] text-[#393331]'
+          }`}>
             <span className="w-2 h-2 rounded-full bg-[#52745E]" />
             <span className="font-medium">5 Subterranean Storeys</span>
           </div>
-          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] text-xs font-sans text-[#642F38] shadow-2xs">
+          <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-sans shadow-2xs ${
+            isFullscreen && lightingMode === 'twilight'
+              ? 'border-[#4A3D36] bg-[#221D1A] text-[#A77C54]'
+              : 'border-[#DED3C2] bg-[#FFFCF5] text-[#642F38]'
+          }`}>
             <span className="w-2 h-2 rounded-full bg-[#A77C54]" />
             <span className="font-medium">Octagonal Mandapa Atrium</span>
           </div>
+          {isFullscreen && (
+            <button
+              type="button"
+              onClick={toggleFullscreen}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#EFE8DC] text-xs font-sans text-[#642F38] font-medium shadow-xs cursor-pointer transition-colors"
+              title="Exit Fullscreen (Esc)"
+            >
+              <Minimize2 className="w-3.5 h-3.5" />
+              <span>Exit Fullscreen</span>
+            </button>
+          )}
         </div>
       </div>
 
       {/* 2. Main Studio Workspace: 3D Canvas + Architectural Inspector */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 min-h-[580px] lg:h-[calc(100vh-14rem)]">
+      <div
+        className={`grid grid-cols-1 lg:grid-cols-12 gap-5 ${
+          isFullscreen
+            ? 'flex-1 min-h-0 h-full'
+            : 'min-h-[580px] lg:h-[calc(100vh-14rem)]'
+        }`}
+      >
         {/* 3D WebGL Canvas */}
-        <div className="lg:col-span-7 xl:col-span-8 relative rounded-2xl border border-[#DED3C2] bg-[#FAF6EE] overflow-hidden shadow-sm cursor-grab active:cursor-grabbing min-h-[460px] lg:min-h-full">
+        <div className="lg:col-span-7 xl:col-span-8 relative rounded-2xl border border-[#DED3C2] bg-[#FAF6EE] overflow-hidden shadow-sm cursor-grab active:cursor-grabbing min-h-[460px] h-full">
           {/* Mount Three.js Renderer */}
           <div ref={mountRef} className="w-full h-full" />
 
@@ -1207,7 +1250,15 @@ export default function Monument3DViewer() {
         </div>
 
         {/* Right Subterranean Architectural Inspector Panel */}
-        <div className="lg:col-span-5 xl:col-span-4 rounded-2xl border border-[#DED3C2] bg-[#FFFCF5] p-5 shadow-xs flex flex-col justify-between overflow-y-auto">
+        <div
+          className={`lg:col-span-5 xl:col-span-4 rounded-2xl border p-5 shadow-xs flex flex-col justify-between overflow-y-auto ${
+            isFullscreen
+              ? lightingMode === 'twilight'
+                ? 'border-[#3D3029] bg-[#241E1A] text-[#EFE8DC] h-full min-h-0'
+                : 'border-[#DED3C2] bg-[#FFFCF5] text-[#393331] h-full min-h-0'
+              : 'border-[#DED3C2] bg-[#FFFCF5] text-[#393331]'
+          }`}
+        >
           <div className="space-y-4">
             <div>
               <span className="text-[10px] uppercase font-sans font-semibold tracking-wider text-[#814B52]">
