@@ -64,7 +64,6 @@ export default function Sidebar({
           label: 'Research Assistant',
           shortLabel: 'Assistant',
           icon: Sparkles,
-          badge: 'Grounded AI',
           tooltip: 'Evidence-grounded historical inquiry',
         },
         {
@@ -84,7 +83,6 @@ export default function Sidebar({
           label: '3D Heritage Explorer',
           shortLabel: 'Kailasa',
           icon: Compass,
-          badge: '3D',
           tooltip: 'Ellora Kailasa 3D architectural workspace',
         },
         {
@@ -92,7 +90,6 @@ export default function Sidebar({
           label: 'Stepwell Digital Twin',
           shortLabel: 'Stepwell',
           icon: Box,
-          badge: 'WebGL',
           tooltip: 'Adalaj Vav subterranean architectural model',
         },
         {

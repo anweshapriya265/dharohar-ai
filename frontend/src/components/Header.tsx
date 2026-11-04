@@ -106,9 +106,9 @@ export default function Header({
 
           {/* Collection Status Pill */}
           <div className="hidden xl:flex items-center gap-2 ml-4 pl-4 border-l border-[#DED3C2]">
-            <span className="text-[11px] font-mono text-[#756D66] flex items-center gap-1.5 bg-[#F6F1E7] px-2.5 py-1 rounded-full border border-[#DED3C2]">
+            <span className="text-[11px] font-sans text-[#59524E] flex items-center gap-1.5 bg-[#F6F1E7] px-2.5 py-1 rounded-full border border-[#DED3C2]">
               <Database className="w-3.5 h-3.5 text-[#A77C54]" />
-              <span>Corpus:</span>
+              <span className="text-[#756D66]">Corpus:</span>
               <strong className="text-[#393331] font-semibold">{documentCount} Vol ({totalPageCount} Folios)</strong>
             </span>
           </div>
@@ -142,7 +142,7 @@ export default function Header({
             <button
               type="button"
               onClick={() => setShowHealthMenu(!showHealthMenu)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-xs font-mono text-[#393331] transition-colors cursor-pointer shadow-2xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#DED3C2] bg-[#FFFCF5] hover:bg-[#F6F1E7] text-xs font-sans font-medium text-[#393331] transition-colors cursor-pointer shadow-2xs"
               title="Click to view API Telemetry"
             >
               <span
