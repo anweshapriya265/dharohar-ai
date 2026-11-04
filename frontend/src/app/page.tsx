@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import LandingNavbar from '@/components/landing/LandingNavbar';
 import LandingHero from '@/components/landing/LandingHero';
 import LandingStats from '@/components/landing/LandingStats';
@@ -14,17 +14,16 @@ import LandingFooter from '@/components/landing/LandingFooter';
 import ResearchPlatformView from '@/components/ResearchPlatformView';
 
 export default function HomePage() {
-  const [legacyTab, setLegacyTab] = useState<string | null>(null);
-  const [isClient, setIsClient] = useState<boolean>(false);
-
-  useEffect(() => {
-    setIsClient(true);
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get('tab');
-    if (tab) {
-      setLegacyTab(tab);
-    }
-  }, []);
+  const isClient = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+  const legacyTab = React.useSyncExternalStore(
+    () => () => {},
+    () => (typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('tab') : null),
+    () => null
+  );
 
   // If a legacy ?tab= query parameter was explicitly supplied, open the research platform directly
   if (isClient && legacyTab) {

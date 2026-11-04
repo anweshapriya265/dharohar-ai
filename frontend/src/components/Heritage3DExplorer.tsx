@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import * as THREE from 'three';
 import {
   RotateCcw,
+  RotateCw,
   Layers,
   FileText,
   ShieldCheck,
@@ -601,9 +602,8 @@ export default function Heritage3DExplorer({
                 className={`p-1 rounded transition-colors cursor-pointer ${
                   isAutoRotating ? 'text-[#52745E] bg-[#EDF3EF]' : 'text-[#756D66] hover:bg-[#EFE8DC]'
                 }`}
-                title={isAutoRotating ? 'Pause orbit' : 'Resume orbit'}
-              >
-                <Sun className="w-3.5 h-3.5" />
+                title={isAutoRotating ? 'Pause orbit' : 'Resume orbit'}>
+                <RotateCw className={`w-3.5 h-3.5 ${isAutoRotating ? 'animate-spin' : ''}`} />
               </button>
 
               <button

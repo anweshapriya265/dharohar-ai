@@ -140,7 +140,7 @@ export default function GeospatialMapSection({ onSelectRecord }: GeospatialMapSe
         : 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
       if (tileLayerRef.current) {
-        const existingUrl = (tileLayerRef.current as any)._url as string;
+        const existingUrl = (tileLayerRef.current as unknown as { _url?: string })._url;
         if (existingUrl !== currentTileUrl) {
           map.removeLayer(tileLayerRef.current);
           const tileAttribution =
